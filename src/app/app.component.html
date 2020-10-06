@@ -1,0 +1,10 @@
+<h1>Video Demo</h1>
+
+<video
+  #video
+  autoplay
+  playsinline
+  [srcObject]="backgroundVideo$ | async"
+></video>
+
+<app-video-block videoId="G52dUQLxPzg" (playing)="videoStateChange($event)"></app-video-block>
