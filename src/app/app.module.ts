@@ -1,13 +1,21 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { VideoBlockModule } from './video-block/video-block.module';
+import { createCustomElement } from '@angular/elements';
+import { WidgetModule } from './widget/widget.module';
+import { WidgetComponent } from './widget/widget.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, VideoBlockModule ],
-  declarations: [ AppComponent ],
-  bootstrap:    [ AppComponent ]
+  imports: [BrowserModule, HttpClientModule, WidgetModule],
+  declarations: [],
+  bootstrap: [],
 })
-export class AppModule { }
+export class AppModule {
+  constructor(injector: Injector) {
+    const el = createCustomElement(WidgetComponent, { injector: injector });
+    customElements.define('sm-widget', el);
+  }
+
+  public ngDoBootstrap() {}
+}

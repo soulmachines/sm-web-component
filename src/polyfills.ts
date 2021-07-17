@@ -59,6 +59,12 @@
  */
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
+// rtc peer connection patch
+import 'zone.js/dist/webapis-rtc-peer-connection';
+
+// getUserMedia patch
+import 'zone.js/dist/zone-patch-user-media';
+
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
@@ -69,3 +75,9 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
  * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10
  */
 // import 'intl';  // Run `npm install --save intl`.
+
+/**
+ * Event Target Polyfill for RuntimeHost
+ */
+import EventTargetPolyfill from '@mattkrick/event-target-polyfill';
+window.EventTarget = EventTargetPolyfill;import 'document-register-element';

@@ -1,10 +1,15 @@
-<h1>Video Demo</h1>
+<!--video
+  autoplay
+  playsinline
+  muted
+  [srcObject]="sm.webrtc?.localStream"
+></video>
 
 <video
   #video
   autoplay
   playsinline
-  [srcObject]="backgroundVideo$ | async"
-></video>
+  [srcObject]="sm.webrtc?.remoteStream"
+></video-->
 
-<app-video-block videoId="G52dUQLxPzg" (playing)="videoStateChange($event)"></app-video-block>
+<div id="container"></div>

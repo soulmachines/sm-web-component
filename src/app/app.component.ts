@@ -1,19 +1,46 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Injector,
+  OnInit,
+} from '@angular/core';
+import { createCustomElement } from '@angular/elements';
+import { Observable } from 'rxjs';
+import { SoulMachines } from './data/soulmachines';
+import { WidgetComponent } from './widget/widget.component';
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent  {
+export class AppComponent {
+  constructor() {}
 
-  public backgroundVideo$: Observable<MediaStream>;
+  /*public localStream$: Observable<MediaStream>;
+  public remoteStream$: Observable<MediaStream>;
 
   @ViewChild('video', { static: false }) videoRef: ElementRef;
 
-  constructor() {
-    this.backgroundVideo$ = from(navigator.mediaDevices.getUserMedia({audio: true, video: true}));
+  constructor(public sm: SoulMachines, private http: HttpClient) {
+
+    http.get('/auth/authorize').subscribe((result: any) =>
+      this.startSoulMachines(result.jwt, result.url)
+    );
+
+    // this.sm.startLocalStream();
+    // this.localStream$ = from(sm.localStream);
+    // this.remoteStream$ = sm.remoteStream;
+    
+  }
+
+  private startSoulMachines(jwt: string, sessionServer: string) {
+    this.sm.connect({
+      jwt,
+      sessionServer,
+    });
   }
 
   public videoStateChange(playing: boolean) {
@@ -23,5 +50,5 @@ export class AppComponent  {
     } else {
       videoEl.play();
     }
-  }
+  }*/
 }

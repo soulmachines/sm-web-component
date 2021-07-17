@@ -1,4 +1,4 @@
-video {
+/*video {
   position: absolute;
   top: 0;
   left: 0;
@@ -7,9 +7,9 @@ video {
   border: 2px solid yellow;
   box-sizing: border-box;
   object-fit: cover;
-}
+}*/
 
-app-video-block {
+/*app-video-block {
   position: fixed;
   bottom: 12px;
   left: 12px;
@@ -17,4 +17,18 @@ app-video-block {
 
   border: 2px solid red;
   box-sizing: border-box;
-}
+}*/
+
+/*:host {
+  display: flex;
+  flex-direction: row;
+
+  width: 100vw;
+  height: 100vh;
+
+  video {
+    flex: 1;
+    border: 2px solid blue;
+  }
+
+}*/
