@@ -1,0 +1,55 @@
+# Soul Machines Web Component
+
+This project generates a single JavaScript file called `soulmachines.js` as output. Including this file into an existing website allows that site to add a digital person to the page using HTML like this:
+
+```
+<sm-widget autoconnect="true" tokenserver="https://my-token-server.com/jwt"></sm-widget>
+```
+
+The element MUST be passed a `tokenserver` url where it can request a session configuration from. The `tokenserver` may be a localhost URL if developing locally. The session configuration must be returned in JSON in the following format:
+
+```
+// GET /jwt
+
+{
+  url: SESSION_SERVER_URL,
+  jwt: SIGNED_JWT_TOKEN
+}
+
+```
+
+#### `url`
+
+The secure websocket url to the session server that hosts the digital person.
+eg. wss://dh.soulmachines.cloud
+
+#### `jwt`
+
+A valid JWT token string, signed with the credentials provided by Soul Machines.
+
+## Usage Exmples
+
+See the `demo` folder for more usage examples.
+
+## Local Development
+
+The project consists of 2 parts:
+
+- An Angular project, which builds a web component
+- A simple http server, which serves the compiled library and examples as a static site
+
+### Building the soulmachines.js library
+
+Needs to be done manually each time (sorry). Builds the Angular project and outputs to `dist` folder, then generates the file `demo/soulmachines.js` by concatenating all the Angular output into a single file.
+
+```
+npm run build && npm run package
+```
+
+### Serving the examples
+
+This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
+
+```
+npm run serve
+```

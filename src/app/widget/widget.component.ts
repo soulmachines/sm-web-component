@@ -1,44 +1,96 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild, ElementRef, Input, SimpleChanges, OnChanges, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Input,
+  SimpleChanges,
+  OnChanges,
+  AfterViewInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Observable } from 'rxjs';
-import { switchMap, catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { SoulMachines } from '../data/soulmachines';
 import { SoulMachinesConfig } from '../data/soulmachines-config';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { RtcEventName } from '../data/webrtc/events/rtc-event-name.enum';
+import { SceneEventType } from '../data/scene/events/scene-event-type.enum';
+import { PersonaResponseEvent } from '../data/scene/events/persona-response-event';
 
 @Component({
   selector: 'app-widget',
   templateUrl: './widget.component.html',
-  styleUrls: ['./widget.component.scss']
+  styleUrls: ['./widget.component.scss'],
 })
 export class WidgetComponent implements OnChanges, AfterViewInit, OnDestroy {
-
   private resizeObserver: ResizeObserver;
 
   public localStream$: Observable<MediaStream>;
   public remoteStream$: Observable<MediaStream>;
 
-  @Input() public tokenserver: string = '';
+  // required inputs
+  @Input() public tokenserver: string;
 
+  // optional inputs
+  @Input() public autoconnect: boolean = false;
+  @Input() public debug: string = 'true';
+
+  // outputs, exposed as publicly consumable events
+  @Output('connect')
+  public connectEvent = new EventEmitter<CustomEvent>();
+
+  @Output('disconnect')
+  public disconnectEvent = new EventEmitter<CustomEvent>();
+
+  @Output('speechmarker')
+  public speechmarkerEvent = new EventEmitter<CustomEvent>();
+
+  @Output('conversationResult')
+  public conversationResultEvent = new EventEmitter<CustomEvent>();
+
+  @Output('personaResponse')
+  public personaResponseEvent = new EventEmitter<PersonaResponseEvent>();
+
+  // elements
   @ViewChild('video', { static: false }) videoRef: ElementRef;
 
-  constructor(public sm: SoulMachines, private http: HttpClient, private hostRef: ElementRef) {
+  constructor(
+    public sm: SoulMachines,
+    private http: HttpClient,
+    private hostRef: ElementRef
+  ) {
+    this.log('widget: constructor', this.tokenserver);
 
-    console.log('widget: constructor', this.tokenserver);
+    // publicly accessible functions
+    this.hostRef.nativeElement.disconnect = () => this.disconnect();
+    this.hostRef.nativeElement.setMicrophoneEnabled = (value: boolean) =>
+      this.setMicrophoneEnabled(value);
 
-    this.sm.addEventListener(RtcEventName.Connected, () => this.onConnected());
-    // this.sm.session.addEventListener('connected', () => this.onConnected());
-    //this.sm.session.addEventListener('message', (msg) => this.onMessage(msg));
-    
-    // this.sm.startLocalStream();
-    // this.localStream$ = from(sm.localStream);
-    // this.remoteStream$ = sm.remoteStream;
-    
+    // mapping internal events to external events
+    this.sm.addEventListener(RtcEventName.Connected, (e) => {
+      this.onConnect();
+      this.connectEvent.emit(e.detail);
+    });
+
+    this.sm.addEventListener(RtcEventName.Close, (e) =>
+      this.disconnectEvent.emit(e.detail)
+    );
+
+    this.sm.addEventListener(SceneEventType.ConversationResult, (e) =>
+      this.conversationResultEvent.emit(e.detail)
+    );
+
+    this.sm.addEventListener(SceneEventType.PersonaResponse, (e) =>
+      this.personaResponseEvent.emit(e.detail)
+    );
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (changes.tokenserver) {
+    this.log({ changes });
+    if (this.tokenserver && this.autoconnect) {
       this.connect();
     }
   }
@@ -53,13 +105,22 @@ export class WidgetComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public connect() {
-    this.http.get<SoulMachinesConfig>(this.tokenserver).pipe(
-      tap((config) => this.sm.connect(config)),
-    ).subscribe();
+    this.http
+      .get<SoulMachinesConfig>(this.tokenserver)
+      .pipe(tap((config) => this.sm.connect(config)))
+      .subscribe();
   }
 
   public disconnect() {
-    // TODO
+    this.sm.session.close();
+  }
+
+  public setMicrophoneEnabled(enabled: boolean) {
+    if (enabled) {
+      this.sm.scene.startRecognize();
+    } else {
+      this.sm.scene.stopRecognize();
+    }
   }
 
   private initHostResizeWatcher() {
@@ -79,23 +140,13 @@ export class WidgetComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.sm.webrtc.sendVideoBounds(width, height);
   }
 
-  private onConnected() {
-    console.log('>> connected');
-
+  private onConnect() {
     this.resizeVideoStream();
   }
 
-  /*private onMessage(msg) {
-    console.log('>> message', msg);
-  }
-
-  public videoStateChange(playing: boolean) {
-    const videoEl: HTMLVideoElement = this.videoRef.nativeElement;
-    if (playing) {
-      videoEl.pause();
-    } else {
-      videoEl.play();
+  private log(...args) {
+    if (this.debug === 'true') {
+      console.log(...args);
     }
-  }*/
-
+  }
 }

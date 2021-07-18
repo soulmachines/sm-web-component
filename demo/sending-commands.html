@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <script src="./soulmachines.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      body, html {
+        margin: 0;
+      }
+
+      #widget {
+        border: none;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #user-actions {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      button {
+        font-family: 'Material Icons';
+        font-size: 1.3em;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        border: none;
+        margin: 1em 0.25em;
+        background: white;
+      }
+
+      #microphone.on::after {
+        content: 'mic';
+      }
+
+      #microphone.off::after {
+        content: 'mic_off';
+      }
+
+      #disconnect {
+        background: rgb(170, 24, 24);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+
+    <sm-widget id="widget" autoconnect="true" debug="false" tokenserver="https://us-central1-token-generator-1e618.cloudfunctions.net/auth?apiKey=abc123"></sm-widget> 
+
+    <div id="user-actions">
+      <button id="microphone" class="on"></button>
+      <button id="disconnect">call_end</button>
+    </div>
+
+    <script>
+      var widget = document.getElementById('widget');
+
+      // microphone
+      var micButton = document.getElementById('microphone');
+      micButton.addEventListener('click', function() {
+        var micEnabled = micButton.classList.contains('on');
+        if (micEnabled) {
+          // disable mic
+          widget.setMicrophoneEnabled(false);
+          // update UI to reflect the change
+          micButton.classList.remove('on');
+          micButton.classList.add('off');
+        } else {
+          // enable mic
+          widget.setMicrophoneEnabled(true);
+          // update UI to reflect the change
+          micButton.classList.remove('off');
+          micButton.classList.add('on');
+        }
+      });
+
+      // disconnect
+      var disconnectButton = document.getElementById('disconnect');
+      disconnectButton.addEventListener('click', function() {
+        widget.disconnect();
+      });
+
+    </script>
+
+  </body>
+</html>

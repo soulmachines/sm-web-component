@@ -7,17 +7,23 @@ import { Scene } from './scene/scene';
 import { WebsocketMessage } from './session/models/websocket-message';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SoulMachines extends EventTarget {
-
   public session: Session;
   public webrtc: WebRTCConnection;
   public scene: Scene;
   public persona: Persona;
 
-  public addEventListener: (type: string, listener: (event: MessageEvent) => any) => void;
-  public removeEventListener: (type: string, listener: (event: MessageEvent) => any) => void;
+  public addEventListener: (
+    type: string,
+    listener: (event: CustomEvent) => any
+  ) => void;
+
+  public removeEventListener: (
+    type: string,
+    listener: (event: CustomEvent) => any
+  ) => void;
 
   constructor() {
     super();
@@ -25,17 +31,17 @@ export class SoulMachines extends EventTarget {
 
   public connect(config: SoulMachinesConfig) {
     console.log('sm.connect', { config });
-    
+
     // create the websocket session
     this.session = new Session(config);
-    this.session.addEventListener('message', (message) => this.emitMessageAsEvent(message));
+    this.session.addEventListener('message', (message) =>
+      this.emitMessageAsEvent(message)
+    );
 
     // initialise all websocket-dependent classes
     this.webrtc = new WebRTCConnection(this.session);
     this.scene = new Scene(this.session);
     this.persona = new Persona(this.session);
-
-    
   }
 
   private emitMessageAsEvent(message: MessageEvent) {
@@ -53,5 +59,4 @@ export class SoulMachines extends EventTarget {
   /*public send(request: SMRequest): Promise {
     
   }*/
-
 }
