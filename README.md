@@ -27,7 +27,7 @@ eg. wss://dh.soulmachines.cloud
 
 A valid JWT token string, signed with the credentials provided by Soul Machines.
 
-## Usage Exmples
+## Usage Examples
 
 See the `demo` folder for more usage examples.
 
@@ -37,6 +37,10 @@ The project consists of 2 parts:
 
 - An Angular project, which builds a web component
 - A simple http server, which serves the compiled library and examples as a static site
+
+### Setup
+
+Create a `.env` file in the root folder, copied from `.env.template` with the relevant values taken from your DP in DDNA Studio -> Edit Project -> Conection Config (Advanced)
 
 ### Building the soulmachines.js library
 
@@ -48,7 +52,13 @@ npm run build && npm run package
 
 ### Serving the examples
 
-This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
+Start the local token server:
+
+```
+npm run token
+```
+
+Serve the demo - this server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
 
 ```
 npm run serve
