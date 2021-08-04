@@ -15,15 +15,9 @@ export class SoulMachines extends EventTarget {
   public scene: Scene;
   public persona: Persona;
 
-  public addEventListener: (
-    type: string,
-    listener: (event: CustomEvent) => any
-  ) => void;
+  public addEventListener: (type: string, listener: (event: CustomEvent) => any) => void;
 
-  public removeEventListener: (
-    type: string,
-    listener: (event: CustomEvent) => any
-  ) => void;
+  public removeEventListener: (type: string, listener: (event: CustomEvent) => any) => void;
 
   constructor() {
     super();
@@ -34,9 +28,7 @@ export class SoulMachines extends EventTarget {
 
     // create the websocket session
     this.session = new Session(config);
-    this.session.addEventListener('message', (message) =>
-      this.emitMessageAsEvent(message)
-    );
+    this.session.addEventListener('message', (message) => this.emitMessageAsEvent(message));
 
     // initialise all websocket-dependent classes
     this.webrtc = new WebRTCConnection(this.session);

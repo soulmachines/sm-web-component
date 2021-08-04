@@ -57,11 +57,7 @@ export class WidgetComponent implements OnChanges, AfterViewInit, OnDestroy {
   // elements
   @ViewChild('video', { static: false }) videoRef: ElementRef;
 
-  constructor(
-    public sm: SoulMachines,
-    private http: HttpClient,
-    private hostRef: ElementRef
-  ) {
+  constructor(public sm: SoulMachines, private http: HttpClient, private hostRef: ElementRef) {
     this.log('widget: constructor', this.tokenserver);
 
     // publicly accessible functions
@@ -75,16 +71,14 @@ export class WidgetComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.connectEvent.emit(e.detail);
     });
 
-    this.sm.addEventListener(RtcEventName.Close, (e) =>
-      this.disconnectEvent.emit(e.detail)
-    );
+    this.sm.addEventListener(RtcEventName.Close, (e) => this.disconnectEvent.emit(e.detail));
 
     this.sm.addEventListener(SceneEventType.ConversationResult, (e) =>
-      this.conversationResultEvent.emit(e.detail)
+      this.conversationResultEvent.emit(e.detail),
     );
 
     this.sm.addEventListener(SceneEventType.PersonaResponse, (e) =>
-      this.personaResponseEvent.emit(e.detail)
+      this.personaResponseEvent.emit(e.detail),
     );
   }
 

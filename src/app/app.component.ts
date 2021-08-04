@@ -1,11 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  Component,
-  ViewChild,
-  ElementRef,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, ViewChild, ElementRef, Injector, OnInit } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { Observable } from 'rxjs';
 import { SoulMachines } from './data/soulmachines';

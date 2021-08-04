@@ -11,22 +11,22 @@
     ></sm-widget>
 
     <script>
-      var widget = document.getElementById("widget");
+      var widget = document.getElementById('widget');
 
-      widget.addEventListener("connect", function (e) {
-        console.info("[✔] connected!", e.detail);
+      widget.addEventListener('connect', function (e) {
+        console.info('[✔] connected!', e.detail);
       });
 
-      widget.addEventListener("disconnect", function (e) {
-        console.info("[✔] disconnected!", e.detail);
+      widget.addEventListener('disconnect', function (e) {
+        console.info('[✔] disconnected!', e.detail);
       });
 
-      widget.addEventListener("speechmarker", function (e) {
-        console.info("[✔] speechmarker!", e.detail);
+      widget.addEventListener('speechmarker', function (e) {
+        console.info('[✔] speechmarker!', e.detail);
       });
 
-      widget.addEventListener("personaResponse", function (e) {
-        console.info("[✔] personaResponse!", e.detail);
+      widget.addEventListener('personaResponse', function (e) {
+        console.info('[✔] personaResponse!', e.detail);
       });
 
       /*
