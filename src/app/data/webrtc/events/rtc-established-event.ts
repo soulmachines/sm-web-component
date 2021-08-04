@@ -7,5 +7,5 @@ export interface RtcEstablishedEvent {
   }>;
   settings: {
     microphoneMuteDelay: number;
-  }
+  };
 }

@@ -1,10 +1,7 @@
 <html>
   <head>
     <script src="./soulmachines.js"></script>
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <style>
       body,
       html {
@@ -27,7 +24,7 @@
       }
 
       button {
-        font-family: "Material Icons";
+        font-family: 'Material Icons';
         font-size: 1.3em;
         width: 2em;
         height: 2em;
@@ -38,11 +35,11 @@
       }
 
       #microphone.on::after {
-        content: "mic";
+        content: 'mic';
       }
 
       #microphone.off::after {
-        content: "mic_off";
+        content: 'mic_off';
       }
 
       #disconnect {
@@ -65,30 +62,30 @@
     </div>
 
     <script>
-      var widget = document.getElementById("widget");
+      var widget = document.getElementById('widget');
 
       // microphone
-      var micButton = document.getElementById("microphone");
-      micButton.addEventListener("click", function () {
-        var micEnabled = micButton.classList.contains("on");
+      var micButton = document.getElementById('microphone');
+      micButton.addEventListener('click', function () {
+        var micEnabled = micButton.classList.contains('on');
         if (micEnabled) {
           // disable mic
           widget.setMicrophoneEnabled(false);
           // update UI to reflect the change
-          micButton.classList.remove("on");
-          micButton.classList.add("off");
+          micButton.classList.remove('on');
+          micButton.classList.add('off');
         } else {
           // enable mic
           widget.setMicrophoneEnabled(true);
           // update UI to reflect the change
-          micButton.classList.remove("off");
-          micButton.classList.add("on");
+          micButton.classList.remove('off');
+          micButton.classList.add('on');
         }
       });
 
       // disconnect
-      var disconnectButton = document.getElementById("disconnect");
-      disconnectButton.addEventListener("click", function () {
+      var disconnectButton = document.getElementById('disconnect');
+      disconnectButton.addEventListener('click', function () {
         widget.disconnect();
       });
     </script>

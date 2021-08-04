@@ -1,1 +1,1 @@
-export interface RtcOfferEvent extends RTCSessionDescriptionInit { }
+export interface RtcOfferEvent extends RTCSessionDescriptionInit {}

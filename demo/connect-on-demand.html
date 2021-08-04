@@ -3,16 +3,13 @@
     <script src="./soulmachines.js"></script>
   </head>
   <body>
-    <sm-widget
-      id="widget"
-      tokenserver="http://localhost:4210/auth/authorize"
-    ></sm-widget>
+    <sm-widget id="widget" tokenserver="http://localhost:4210/auth/authorize"></sm-widget>
     <button id="connect">Connect</button>
 
     <script>
-      var connectButton = document.getElementById("connect");
-      connectButton.addEventListener("click", function () {
-        var widget = document.getElementById("widget");
+      var connectButton = document.getElementById('connect');
+      connectButton.addEventListener('click', function () {
+        var widget = document.getElementById('widget');
         widget.connect();
       });
     </script>
