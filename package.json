@@ -23,7 +23,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.js",
+    "token": "ng serve --proxy-config proxy.conf.js --port 4210",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

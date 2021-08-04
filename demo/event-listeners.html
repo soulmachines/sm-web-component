@@ -3,34 +3,37 @@
     <script src="./soulmachines.js"></script>
   </head>
   <body>
-
-    <sm-widget id="widget" autoconnect="true" debug="false" tokenserver="https://us-central1-token-generator-1e618.cloudfunctions.net/auth?apiKey=abc123"></sm-widget> 
+    <sm-widget
+      id="widget"
+      autoconnect="true"
+      debug="false"
+      tokenserver="http://localhost:4210/auth/authorize"
+    ></sm-widget>
 
     <script>
-      var widget = document.getElementById('widget');
+      var widget = document.getElementById("widget");
 
-      widget.addEventListener('connect', function(e) {
-        console.info('[✔] connected!', e.detail);
+      widget.addEventListener("connect", function (e) {
+        console.info("[✔] connected!", e.detail);
       });
 
-      widget.addEventListener('disconnect', function(e) {
-        console.info('[✔] disconnected!', e.detail);
+      widget.addEventListener("disconnect", function (e) {
+        console.info("[✔] disconnected!", e.detail);
       });
 
-      widget.addEventListener('speechmarker', function(e) {
-        console.info('[✔] speechmarker!', e.detail);
+      widget.addEventListener("speechmarker", function (e) {
+        console.info("[✔] speechmarker!", e.detail);
       });
 
-      widget.addEventListener('personaResponse', function(e) {
-        console.info('[✔] personaResponse!', e.detail);
+      widget.addEventListener("personaResponse", function (e) {
+        console.info("[✔] personaResponse!", e.detail);
       });
-      
+
       /*
       widget.addEventListener('conversationresult', function(e) {
         console.info('[✔] conversationresult!', e);
       });
       */
     </script>
-
   </body>
 </html>
