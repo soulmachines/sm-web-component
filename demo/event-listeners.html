@@ -3,34 +3,34 @@
     <script src="./soulmachines.js"></script>
   </head>
   <body>
-    <sm-widget
-      id="widget"
+    <sm-video
+      id="video"
       autoconnect="true"
       debug="false"
       tokenserver="http://localhost:4210/auth/authorize"
-    ></sm-widget>
+    ></sm-video>
 
     <script>
-      var widget = document.getElementById('widget');
+      var video = document.getElementById('video');
 
-      widget.addEventListener('connect', function (e) {
+      video.addEventListener('connect', function (e) {
         console.info('[✔] connected!', e.detail);
       });
 
-      widget.addEventListener('disconnect', function (e) {
+      video.addEventListener('disconnect', function (e) {
         console.info('[✔] disconnected!', e.detail);
       });
 
-      widget.addEventListener('speechmarker', function (e) {
+      video.addEventListener('speechmarker', function (e) {
         console.info('[✔] speechmarker!', e.detail);
       });
 
-      widget.addEventListener('personaResponse', function (e) {
+      video.addEventListener('personaResponse', function (e) {
         console.info('[✔] personaResponse!', e.detail);
       });
 
       /*
-      widget.addEventListener('conversationresult', function(e) {
+      video.addEventListener('conversationresult', function(e) {
         console.info('[✔] conversationresult!', e);
       });
       */
