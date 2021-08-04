@@ -6,5 +6,5 @@ export enum RtcEventName {
   Established = 'established',
   Ice = 'ice',
   Offer = 'offer',
-  VideoBounds = 'videoBounds'
+  VideoBounds = 'videoBounds',
 }

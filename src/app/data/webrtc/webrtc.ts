@@ -9,7 +9,6 @@ import { Session } from '../session/session';
 import { RtcEventName } from './events/rtc-event-name.enum';
 
 export class WebRTCConnection {
-
   public localStream: MediaStream;
   public remoteStream: MediaStream;
 
@@ -17,7 +16,9 @@ export class WebRTCConnection {
 
   constructor(private session: Session) {
     console.log('>> add message listener');
-    this.session.addEventListener('message', (message) => this.onWebsocketMessage(message))
+    this.session.addEventListener('message', (message) =>
+      this.onWebsocketMessage(message)
+    );
   }
 
   public sendVideoBounds(width: number, height: number) {
@@ -28,8 +29,8 @@ export class WebRTCConnection {
       body: {
         width,
         height,
-      }
-    })
+      },
+    });
   }
 
   private onWebsocketMessage(message: MessageEvent) {
@@ -39,7 +40,7 @@ export class WebRTCConnection {
     const eventName = payload.name;
     const event = payload.body;
 
-    switch(eventName) {
+    switch (eventName) {
       case RtcEventName.Established:
         this.onEstablished(event);
         break;
@@ -80,15 +81,18 @@ export class WebRTCConnection {
   private onSdpOffer(event: RtcOfferEvent) {
     console.log('onSdpOffer', { event });
     const description = new RTCSessionDescription(event);
-    
-    this.rtcPeerConnection.setRemoteDescription(description)
+
+    this.rtcPeerConnection
+      .setRemoteDescription(description)
       .then(() => this.rtcPeerConnection.createAnswer())
-      .then((answer) => this.sendWebsocketMessage({
-        category: 'webrtc',
-        kind: 'event',
-        name: RtcEventName.Answer,
-        body: answer,
-      }));
+      .then((answer) =>
+        this.sendWebsocketMessage({
+          category: 'webrtc',
+          kind: 'event',
+          name: RtcEventName.Answer,
+          body: answer,
+        })
+      );
   }
 
   private onAccepted(event: RtcAcceptedEvent) {
@@ -108,7 +112,7 @@ export class WebRTCConnection {
 
   private onRemoteIceCandidate(event: RtcIceCandidateEvent) {
     console.log('onRemoteIceCandidate', { event });
-    
+
     // event.candidate will be null when ice gathering is complete.
     // this signal does not need to be delivered to the remote peer.
     // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/icecandidate_event
@@ -119,14 +123,18 @@ export class WebRTCConnection {
   }
 
   private connect(rtcConfig: any) {
-
-    navigator.mediaDevices.getUserMedia({audio: true, video: true})
+    navigator.mediaDevices
+      .getUserMedia({ audio: true, video: true })
       .then((stream) => {
         this.localStream = stream;
 
         this.rtcPeerConnection = new RTCPeerConnection(rtcConfig);
-        this.rtcPeerConnection.addEventListener('icecandidate', (event) => this.onLocalIceCandidate(event))
-        this.rtcPeerConnection.addEventListener('track', (event) => this.onRemoteTrackAdded(event));
+        this.rtcPeerConnection.addEventListener('icecandidate', (event) =>
+          this.onLocalIceCandidate(event)
+        );
+        this.rtcPeerConnection.addEventListener('track', (event) =>
+          this.onRemoteTrackAdded(event)
+        );
 
         this.localStream.getTracks().forEach((track) => {
           this.rtcPeerConnection.addTrack(track, this.localStream);
@@ -165,18 +173,20 @@ export class WebRTCConnection {
       offerToReceiveVideo: true,
     };
 
-    this.rtcPeerConnection.createOffer(offerOptions)
-      .then(offer => this.rtcPeerConnection.setLocalDescription(offer))
-      .then(() => this.sendWebsocketMessage({
-        category: 'webrtc',
-        kind: 'event',
-        name: RtcEventName.Offer,
-        body: this.rtcPeerConnection.localDescription.toJSON(),
-      }));
+    this.rtcPeerConnection
+      .createOffer(offerOptions)
+      .then((offer) => this.rtcPeerConnection.setLocalDescription(offer))
+      .then(() =>
+        this.sendWebsocketMessage({
+          category: 'webrtc',
+          kind: 'event',
+          name: RtcEventName.Offer,
+          body: this.rtcPeerConnection.localDescription.toJSON(),
+        })
+      );
   }
 
   private sendWebsocketMessage(message: WebsocketMessage) {
     this.session.send(JSON.stringify(message));
   }
-
 }

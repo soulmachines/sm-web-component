@@ -1,9 +1,13 @@
 <html>
   <head>
     <script src="./soulmachines.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <style>
-      body, html {
+      body,
+      html {
         margin: 0;
       }
 
@@ -48,8 +52,12 @@
     </style>
   </head>
   <body>
-
-    <sm-widget id="widget" autoconnect="true" debug="false" tokenserver="https://us-central1-token-generator-1e618.cloudfunctions.net/auth?apiKey=abc123"></sm-widget> 
+    <sm-widget
+      id="widget"
+      autoconnect="true"
+      debug="false"
+      tokenserver="https://us-central1-token-generator-1e618.cloudfunctions.net/auth?apiKey=abc123"
+    ></sm-widget>
 
     <div id="user-actions">
       <button id="microphone" class="on"></button>
@@ -61,7 +69,7 @@
 
       // microphone
       var micButton = document.getElementById('microphone');
-      micButton.addEventListener('click', function() {
+      micButton.addEventListener('click', function () {
         var micEnabled = micButton.classList.contains('on');
         if (micEnabled) {
           // disable mic
@@ -80,11 +88,9 @@
 
       // disconnect
       var disconnectButton = document.getElementById('disconnect');
-      disconnectButton.addEventListener('click', function() {
+      disconnectButton.addEventListener('click', function () {
         widget.disconnect();
       });
-
     </script>
-
   </body>
 </html>

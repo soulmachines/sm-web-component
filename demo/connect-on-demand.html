@@ -3,17 +3,18 @@
     <script src="./soulmachines.js"></script>
   </head>
   <body>
-
-    <sm-widget id="widget" tokenserver="https://us-central1-token-generator-1e618.cloudfunctions.net/auth?apiKey=abc123"></sm-widget>
+    <sm-widget
+      id="widget"
+      tokenserver="https://us-central1-token-generator-1e618.cloudfunctions.net/auth?apiKey=abc123"
+    ></sm-widget>
     <button id="connect">Connect</button>
 
     <script>
       var connectButton = document.getElementById('connect');
-      connectButton.addEventListener('click', function() {
+      connectButton.addEventListener('click', function () {
         var widget = document.getElementById('widget');
         widget.connect();
       });
     </script>
-
   </body>
 </html>

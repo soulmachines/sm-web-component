@@ -11,7 +11,7 @@ const PROXY_CONFIG = {
   '/auth': {
     secure: false,
     logLevel: 'debug',
-    bypass: function(req, res, proxyOptions) {
+    bypass: function (req, res, proxyOptions) {
       // Route cases to skip proxying requests
       switch (req.url) {
         case '/auth/authorize':
@@ -20,7 +20,7 @@ const PROXY_CONFIG = {
               success: true,
               url: `wss://${process.env.SESSION_SERVER}`,
               jwt: createJWTToken(),
-            }),
+            })
           );
           return true;
       }

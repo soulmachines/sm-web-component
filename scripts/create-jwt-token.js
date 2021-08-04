@@ -1,7 +1,11 @@
 const jsonwebtoken = require('jsonwebtoken');
 
 const createJWTToken = () => {
-  if (!process.env.JWT_PUBLIC_KEY || !process.env.JWT_PRIVATE_KEY || !process.env.SESSION_SERVER) {
+  if (
+    !process.env.JWT_PUBLIC_KEY ||
+    !process.env.JWT_PRIVATE_KEY ||
+    !process.env.SESSION_SERVER
+  ) {
     throw new Error('Your .env file is missing or missing key fields');
   }
   const publicKey = process.env.JWT_PUBLIC_KEY;
