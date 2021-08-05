@@ -11,14 +11,11 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { SoulMachines } from '../data/soulmachines';
-import { SoulMachinesConfig } from '../data/soulmachines-config';
+import { SoulMachinesConfig } from './soulmachines-config';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { RtcEventName } from '../data/webrtc/events/rtc-event-name.enum';
-import { SceneEventType } from '../data/scene/events/scene-event-type.enum';
-import { PersonaResponseEvent } from '../data/scene/events/persona-response-event';
+import { Scene, Persona } from '@soulmachines/smwebsdk';
+import { PersonaResponseEvent } from './persona-response-event';
 
 @Component({
   selector: 'app-video',
@@ -27,9 +24,8 @@ import { PersonaResponseEvent } from '../data/scene/events/persona-response-even
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private resizeObserver: ResizeObserver;
-
-  public localStream$: Observable<MediaStream>;
-  public remoteStream$: Observable<MediaStream>;
+  private persona: Persona;
+  private scene: Scene;
 
   // required inputs
   @Input() public tokenserver: string;
@@ -57,7 +53,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   // elements
   @ViewChild('video', { static: false }) videoRef: ElementRef;
 
-  constructor(public sm: SoulMachines, private http: HttpClient, private hostRef: ElementRef) {
+  constructor(private http: HttpClient, private hostRef: ElementRef) {
     this.log('video: constructor', this.tokenserver);
 
     // publicly accessible functions
@@ -65,21 +61,21 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.hostRef.nativeElement.setMicrophoneEnabled = (value: boolean) =>
       this.setMicrophoneEnabled(value);
 
-    // mapping internal events to external events
-    this.sm.addEventListener(RtcEventName.Connected, (e) => {
-      this.onConnect();
-      this.connectEvent.emit(e.detail);
-    });
+    // // mapping internal events to external events
+    // this.sm.addEventListener(RtcEventName.Connected, (e) => {
+    //   this.onConnect();
+    //   this.connectEvent.emit(e.detail);
+    // });
 
-    this.sm.addEventListener(RtcEventName.Close, (e) => this.disconnectEvent.emit(e.detail));
+    // this.sm.addEventListener(RtcEventName.Close, (e) => this.disconnectEvent.emit(e.detail));
 
-    this.sm.addEventListener(SceneEventType.ConversationResult, (e) =>
-      this.conversationResultEvent.emit(e.detail),
-    );
+    // this.sm.addEventListener(SceneEventType.ConversationResult, (e) =>
+    //   this.conversationResultEvent.emit(e.detail),
+    // );
 
-    this.sm.addEventListener(SceneEventType.PersonaResponse, (e) =>
-      this.personaResponseEvent.emit(e.detail),
-    );
+    // this.sm.addEventListener(SceneEventType.PersonaResponse, (e) =>
+    //   this.personaResponseEvent.emit(e.detail),
+    // );
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -101,19 +97,59 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public connect() {
     this.http
       .get<SoulMachinesConfig>(this.tokenserver)
-      .pipe(tap((config) => this.sm.connect(config)))
+      .pipe(tap((config) => this.initialiseScene(config)))
       .subscribe();
   }
 
+  private async initialiseScene(config: SoulMachinesConfig): Promise<any> {
+    if (!this.videoRef) {
+      return;
+    }
+
+    this.scene = new Scene(this.videoRef.nativeElement as HTMLElement);
+    const retryOptions = {
+      maxRetries: 20,
+      delayMs: 500,
+    };
+    await this.scene.connect(config.url, '', config.jwt, retryOptions);
+    this.persona = new Persona(this.scene, 1);
+
+    this.scene.onStateEvent.addListener((scene: Scene, messageBody: any) => {
+      this.onState(messageBody);
+    });
+
+    this.scene.onDisconnectedEvent.addListener((event) => {
+      this.disconnectEvent.emit(event.detail);
+    });
+
+    this.resizeVideoStream();
+  }
+
+  private onState(messageBody: any): void {
+    if (messageBody.persona) {
+      let data = messageBody.persona[1];
+      console.log(data);
+    }
+  }
+
   public disconnect() {
-    this.sm.session.close();
+    if (this.scene) {
+      this.scene.disconnect();
+    }
+  }
+
+  public isConnected(): boolean {
+    if (this.scene) {
+      return this.scene.isConnected();
+    }
+    return false;
   }
 
   public setMicrophoneEnabled(enabled: boolean) {
     if (enabled) {
-      this.sm.scene.startRecognize();
+      this.scene.startRecognize();
     } else {
-      this.sm.scene.stopRecognize();
+      this.scene.stopRecognize();
     }
   }
 
@@ -123,19 +159,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private resizeVideoStream() {
-    if (!this.sm.webrtc) {
-      return;
+    if (this.scene && this.scene.isConnected()) {
+      const element = this.hostRef.nativeElement;
+      const width = element.clientWidth;
+      const height = element.clientHeight;
+      this.scene.sendVideoBounds(width, height);
     }
-
-    const element = this.hostRef.nativeElement;
-    const width = element.clientWidth;
-    const height = element.clientHeight;
-
-    this.sm.webrtc.sendVideoBounds(width, height);
-  }
-
-  private onConnect() {
-    this.resizeVideoStream();
   }
 
   private log(...args) {
