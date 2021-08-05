@@ -1,4 +1,6 @@
 package-lock.json
 dist
 *.gz
+soulmachines.js
+
 
