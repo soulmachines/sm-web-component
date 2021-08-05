@@ -29,7 +29,7 @@
     "e2e": "ng e2e",
     "build": "ng build --prod --output-hashing=none",
     "package": "cat dist/demo/{runtime-es2015,polyfills-es2015,main-es2015}.js > demo/soulmachines.js",
-    "serve": "http-server ./demo",
+    "serve": "live-server ./demo",
     "prettier": "prettier --check ."
   },
   "devDependencies": {
@@ -42,7 +42,6 @@
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "dotenv": "^8.2.0",
-    "http-server": "^0.12.3",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "jsonwebtoken": "^8.5.1",
@@ -51,6 +50,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "live-server": "^1.2.1",
     "prettier": "2.3.2",
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
