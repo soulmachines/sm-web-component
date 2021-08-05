@@ -8,7 +8,7 @@
         margin: 0;
       }
 
-      #widget {
+      #video {
         border: none;
         width: 100vw;
         height: 100vh;
@@ -49,12 +49,12 @@
     </style>
   </head>
   <body>
-    <sm-widget
-      id="widget"
+    <sm-video
+      id="video"
       autoconnect="true"
       debug="false"
       tokenserver="http://localhost:4210/auth/authorize"
-    ></sm-widget>
+    ></sm-video>
 
     <div id="user-actions">
       <button id="microphone" class="on"></button>
@@ -62,7 +62,7 @@
     </div>
 
     <script>
-      var widget = document.getElementById('widget');
+      var video = document.getElementById('video');
 
       // microphone
       var micButton = document.getElementById('microphone');
@@ -70,13 +70,13 @@
         var micEnabled = micButton.classList.contains('on');
         if (micEnabled) {
           // disable mic
-          widget.setMicrophoneEnabled(false);
+          video.setMicrophoneEnabled(false);
           // update UI to reflect the change
           micButton.classList.remove('on');
           micButton.classList.add('off');
         } else {
           // enable mic
-          widget.setMicrophoneEnabled(true);
+          video.setMicrophoneEnabled(true);
           // update UI to reflect the change
           micButton.classList.remove('off');
           micButton.classList.add('on');
@@ -86,7 +86,7 @@
       // disconnect
       var disconnectButton = document.getElementById('disconnect');
       disconnectButton.addEventListener('click', function () {
-        widget.disconnect();
+        video.disconnect();
       });
     </script>
   </body>

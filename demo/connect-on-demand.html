@@ -3,14 +3,14 @@
     <script src="./soulmachines.js"></script>
   </head>
   <body>
-    <sm-widget id="widget" tokenserver="http://localhost:4210/auth/authorize"></sm-widget>
+    <sm-video id="video" tokenserver="http://localhost:4210/auth/authorize"></sm-video>
     <button id="connect">Connect</button>
 
     <script>
       var connectButton = document.getElementById('connect');
       connectButton.addEventListener('click', function () {
-        var widget = document.getElementById('widget');
-        widget.connect();
+        var video = document.getElementById('video');
+        video.connect();
       });
     </script>
   </body>

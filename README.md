@@ -3,7 +3,7 @@
 This project generates a single JavaScript file called `soulmachines.js` as output. Including this file into an existing website allows that site to add a digital person to the page using HTML like this:
 
 ```
-<sm-widget autoconnect="true" tokenserver="https://my-token-server.com/jwt"></sm-widget>
+<sm-video autoconnect="true" tokenserver="https://my-token-server.com/jwt"></sm-video>
 ```
 
 The element MUST be passed a `tokenserver` url where it can request a session configuration from. The `tokenserver` may be a localhost URL if developing locally. The session configuration must be returned in JSON in the following format:

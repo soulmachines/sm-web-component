@@ -21,11 +21,11 @@ import { SceneEventType } from '../data/scene/events/scene-event-type.enum';
 import { PersonaResponseEvent } from '../data/scene/events/persona-response-event';
 
 @Component({
-  selector: 'app-widget',
-  templateUrl: './widget.component.html',
-  styleUrls: ['./widget.component.scss'],
+  selector: 'app-video',
+  templateUrl: './video.component.html',
+  styleUrls: ['./video.component.scss'],
 })
-export class WidgetComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private resizeObserver: ResizeObserver;
 
   public localStream$: Observable<MediaStream>;
@@ -58,7 +58,7 @@ export class WidgetComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: false }) videoRef: ElementRef;
 
   constructor(public sm: SoulMachines, private http: HttpClient, private hostRef: ElementRef) {
-    this.log('widget: constructor', this.tokenserver);
+    this.log('video: constructor', this.tokenserver);
 
     // publicly accessible functions
     this.hostRef.nativeElement.disconnect = () => this.disconnect();
