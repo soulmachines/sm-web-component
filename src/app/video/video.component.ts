@@ -15,7 +15,6 @@ import { tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from './soulmachines-config';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { Scene, Persona } from '@soulmachines/smwebsdk';
-import { PersonaResponseEvent } from './persona-response-event';
 
 @Component({
   selector: 'app-video',
@@ -47,9 +46,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Output('conversationResult')
   public conversationResultEvent = new EventEmitter<CustomEvent>();
 
-  @Output('personaResponse')
-  public personaResponseEvent = new EventEmitter<PersonaResponseEvent>();
-
   // elements
   @ViewChild('video', { static: false }) videoRef: ElementRef;
 
@@ -60,22 +56,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.hostRef.nativeElement.disconnect = () => this.disconnect();
     this.hostRef.nativeElement.setMicrophoneEnabled = (value: boolean) =>
       this.setMicrophoneEnabled(value);
-
-    // // mapping internal events to external events
-    // this.sm.addEventListener(RtcEventName.Connected, (e) => {
-    //   this.onConnect();
-    //   this.connectEvent.emit(e.detail);
-    // });
-
-    // this.sm.addEventListener(RtcEventName.Close, (e) => this.disconnectEvent.emit(e.detail));
-
-    // this.sm.addEventListener(SceneEventType.ConversationResult, (e) =>
-    //   this.conversationResultEvent.emit(e.detail),
-    // );
-
-    // this.sm.addEventListener(SceneEventType.PersonaResponse, (e) =>
-    //   this.personaResponseEvent.emit(e.detail),
-    // );
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -87,11 +67,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public ngAfterViewInit() {
     this.initHostResizeWatcher();
-    // this.initVideoStartedListener();
   }
 
   public ngOnDestroy() {
     this.resizeObserver.unobserve(this.hostRef.nativeElement);
+    this.scene?.onStateEvent.removeListener(this.onState);
+    this.scene?.onDisconnectedEvent.removeListener(this.onDisconnected);
   }
 
   public connect() {
@@ -114,35 +95,36 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     await this.scene.connect(config.url, '', config.jwt, retryOptions);
     this.persona = new Persona(this.scene, 1);
 
-    this.scene.onStateEvent.addListener((scene: Scene, messageBody: any) => {
+    //state messageBody type is StateResponseBody in smwebsdk, but not exposed publicly.
+    //listen and log the state message is for dev process, not sure if it should be exposed outside of sm.
+    this.scene.onStateEvent.addListener((_: Scene, messageBody: any) => {
       this.onState(messageBody);
     });
 
-    this.scene.onDisconnectedEvent.addListener((event) => {
-      this.disconnectEvent.emit(event.detail);
+    this.scene.onDisconnectedEvent.addListener((event: any) => {
+      this.onDisconnected(event);
     });
 
     this.resizeVideoStream();
   }
 
-  private onState(messageBody: any): void {
+  private onState(messageBody: any) {
     if (messageBody.persona) {
-      let data = messageBody.persona[1];
+      const data = messageBody.persona[1];
       console.log(data);
     }
   }
 
+  private onDisconnected(event: any) {
+    this.disconnectEvent.emit(event.detail);
+  }
+
   public disconnect() {
-    if (this.scene) {
-      this.scene.disconnect();
-    }
+    this.scene?.disconnect();
   }
 
   public isConnected(): boolean {
-    if (this.scene) {
-      return this.scene.isConnected();
-    }
-    return false;
+    return Boolean(this.scene?.isConnected());
   }
 
   public setMicrophoneEnabled(enabled: boolean) {
@@ -159,10 +141,9 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private resizeVideoStream() {
-    if (this.scene && this.scene.isConnected()) {
+    if (this.scene?.isConnected()) {
       const element = this.hostRef.nativeElement;
-      const width = element.clientWidth;
-      const height = element.clientHeight;
+      const [width, height] = [element.clientWidth, element.height];
       this.scene.sendVideoBounds(width, height);
     }
   }

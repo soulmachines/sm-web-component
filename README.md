@@ -45,7 +45,7 @@ Create a `.env` file in the root folder, copied from `.env.template` with the re
 ### Start local development
 
 ```
-npm ci
+npm i
 npm run token
 npm run start
 ```
