@@ -42,15 +42,21 @@ The project consists of 2 parts:
 
 Create a `.env` file in the root folder, copied from `.env.template` with the relevant values taken from your DP in DDNA Studio -> Edit Project -> Conection Config (Advanced)
 
+### Start local development
+
+```
+npm i
+npm run token
+npm run start
+```
+
 ### Building the soulmachines.js library
 
-Needs to be done manually each time (sorry). Builds the Angular project and outputs to `dist` folder, then generates the file `demo/soulmachines.js` by concatenating all the Angular output into a single file.
-
 ```
-npm run build && npm run package
+npm run package
 ```
 
-### Serving the examples
+### Serving the examples in demo folder
 
 Start the local token server:
 
