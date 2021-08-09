@@ -97,21 +97,16 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     //state messageBody type is StateResponseBody in smwebsdk, but not exposed publicly.
     //listen and log the state message is for dev process, not sure if it should be exposed outside of sm.
-    this.scene.onStateEvent.addListener((_: Scene, messageBody: any) => {
-      this.onState(messageBody);
-    });
-
-    this.scene.onDisconnectedEvent.addListener((event: any) => {
-      this.onDisconnected(event);
-    });
+    this.scene.onStateEvent.addListener(this.onState);
+    this.scene.onDisconnectedEvent.addListener(this.onDisconnected);
 
     this.resizeVideoStream();
   }
 
-  private onState(messageBody: any) {
+  private onState(_: Scene, messageBody: any) {
     if (messageBody.persona) {
       const data = messageBody.persona[1];
-      console.log(data);
+      console.log('STATE: ', data);
     }
   }
 
