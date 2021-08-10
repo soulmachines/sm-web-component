@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
+import { Session } from '@soulmachines/smwebsdk/lib-esm/Session';
 import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
@@ -37,6 +38,7 @@ export class SMWebSDKService {
       switchMap((config: SoulMachinesConfig) =>
         from(this.scene.connect(config.url, '', config.jwt, retryOptions)).pipe(
           tap(() => {
+            (this.scene.session() as Session).setLogging(false);
             this.connected = true;
           }),
         ),
@@ -57,14 +59,6 @@ export class SMWebSDKService {
     this.scene.sendVideoBounds(width, height);
   }
 
-  public setMicrophoneEnabled(enabled: boolean) {
-    if (enabled) {
-      this.scene.startRecognize();
-    } else {
-      this.scene.stopRecognize();
-    }
-  }
-
   private onDisconnect(reason: string) {
     this.connected = false;
 
@@ -75,7 +69,7 @@ export class SMWebSDKService {
   private onState(_: Scene, messageBody: any) {
     if (messageBody.persona) {
       const data = messageBody.persona[1];
-      console.log('STATE MESSAGE: ', data);
+      console.log('STATE MESSAGE: ', data); // TODO should use our logging
     }
   }
 }

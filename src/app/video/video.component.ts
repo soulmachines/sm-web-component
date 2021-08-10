@@ -48,23 +48,43 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.videoRef?.nativeElement.srcObject;
   }
 
+  private get isDebug() {
+    return this.debug === 'true';
+  }
+
+  private get nativeElement() {
+    return this.hostRef.nativeElement;
+  }
+
   private resizeObserver: ResizeObserver;
+
+  private publicMethods: [string, Function][] = [
+    ['connect', this.connect],
+    ['disconnect', this.disconnect],
+    ['sendTextMessage', this.sendTextMessage],
+    ['setMicrophoneEnabled', this.setMicrophoneEnabled],
+    ['stopSpeaking', this.stopSpeaking],
+  ];
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
 
-    //publicly accessible functions
-    this.hostRef.nativeElement.connect = () => this.connect();
-    this.hostRef.nativeElement.disconnect = () => this.disconnect();
-    this.hostRef.nativeElement.setMicrophoneEnabled = (value: boolean) =>
-      this.webSDKService.setMicrophoneEnabled(value);
+    this.bindPublicMethods();
+  }
+
+  private bindPublicMethods() {
+    this.publicMethods.map(
+      ([name, implementation]) => (this.nativeElement[name] = implementation.bind(this)),
+    );
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    this.log({ changes });
+    this.log('changes: ', { changes });
   }
 
   public connect() {
+    this.log('connect');
+
     this.webSDKService
       .connect(this.tokenserver)
       .pipe(
@@ -78,6 +98,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public disconnect() {
+    this.log('disconnect');
     this.webSDKService?.disconnect();
   }
 
@@ -90,7 +111,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.resizeObserver.unobserve(this.hostRef.nativeElement);
+    this.resizeObserver.unobserve(this.nativeElement);
     this.webSDKService.disconnect();
   }
 
@@ -109,9 +130,29 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.disconnectEvent.emit(event.detail);
   }
 
+  public sendTextMessage(text: string) {
+    this.log('sendTextMessage: ', text);
+    this.webSDKService.persona.conversationSend(text, {}, {});
+  }
+
+  public setMicrophoneEnabled(enabled: boolean) {
+    this.log('setMicrophoneEnabled ', enabled);
+
+    if (enabled) {
+      this.webSDKService.scene?.startRecognize();
+    } else {
+      this.webSDKService.scene?.stopRecognize();
+    }
+  }
+
+  public stopSpeaking() {
+    this.log('stopSpeaking');
+    this.webSDKService.persona.stopSpeaking();
+  }
+
   private initHostResizeWatcher() {
     this.resizeObserver = new ResizeObserver(() => this.resizeVideoStream());
-    this.resizeObserver.observe(this.hostRef.nativeElement);
+    this.resizeObserver.observe(this.nativeElement);
   }
 
   private resizeVideoStream() {
@@ -122,8 +163,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  private log(...args) {
-    if (this.debug === 'true') {
+  private log(...args: any[]) {
+    if (this.isDebug) {
       console.log(...args);
     }
   }
