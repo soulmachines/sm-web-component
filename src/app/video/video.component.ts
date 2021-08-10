@@ -54,7 +54,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log(`video constructor: token server - ${this.tokenserver}`);
 
     //publicly accessible functions
-    this.hostRef.nativeElement.disconnect = () => this.webSDKService?.disconnect();
+    this.hostRef.nativeElement.connect = () => this.connect();
+    this.hostRef.nativeElement.disconnect = () => this.disconnect();
     this.hostRef.nativeElement.setMicrophoneEnabled = (value: boolean) =>
       this.webSDKService.setMicrophoneEnabled(value);
   }
@@ -63,25 +64,28 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log({ changes });
   }
 
-  // TODO move most of this logic into web SDK service?
   public connect() {
-    if (this.tokenserver && this.autoconnect) {
-      this.webSDKService
-        .connect(this.tokenserver)
-        .pipe(
-          tap(() => this.onConnectionSuccess()),
-          catchError((e) => {
-            this.onConnectionError(e);
-            return of(false);
-          }),
-        )
-        .subscribe();
-    }
+    this.webSDKService
+      .connect(this.tokenserver)
+      .pipe(
+        tap(() => this.onConnectionSuccess()),
+        catchError((e) => {
+          this.onConnectionError(e);
+          return of(false);
+        }),
+      )
+      .subscribe();
+  }
+
+  public disconnect() {
+    this.webSDKService?.disconnect();
   }
 
   public ngAfterViewInit() {
     this.webSDKService.initialise(this.videoRef.nativeElement);
-    this.connect(); // TODO connect within initialise?
+    if (this.autoconnect) {
+      this.connect();
+    }
     this.initHostResizeWatcher();
   }
 
@@ -100,6 +104,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log(`session connection failed, error: ${error}`);
   }
 
+  //TODO: need to monitor scene disconnect event
   private onDisconnected(event: any) {
     this.disconnectEvent.emit(event.detail);
   }

@@ -46,6 +46,11 @@
         background: rgb(170, 24, 24);
         color: white;
       }
+
+      #connect {
+        background: rgb(17, 196, 38);
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -59,6 +64,7 @@
     <div id="user-actions">
       <button id="microphone" class="on"></button>
       <button id="disconnect">call_end</button>
+      <button id="connect">connect</button>
     </div>
 
     <script>
@@ -87,6 +93,12 @@
       var disconnectButton = document.getElementById('disconnect');
       disconnectButton.addEventListener('click', function () {
         video.disconnect();
+      });
+
+      //connect
+      var connectButton = document.getElementById('connect');
+      connectButton.addEventListener('click', function () {
+        video.connect();
       });
     </script>
   </body>

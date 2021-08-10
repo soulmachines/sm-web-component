@@ -43,17 +43,16 @@ export class SMWebSDKService {
     );
   }
 
-  public disconnect(): void {
+  public disconnect() {
     if (this.scene) {
       this.scene.disconnect();
-      this.scene = null;
       // this does not actually guarantee that the ws connection
       // has been closed. this is only that the close has been requested.
       this.onDisconnect('userEnded');
     }
   }
 
-  public sendVideoBounds(width: number, height: number): void {
+  public sendVideoBounds(width: number, height: number) {
     this.scene.sendVideoBounds(width, height);
   }
 
