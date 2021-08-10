@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ViewChild,
@@ -11,20 +10,19 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { tap } from 'rxjs/operators';
-import { SoulMachinesConfig } from './soulmachines-config';
+import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { Scene, Persona } from '@soulmachines/smwebsdk';
+import { SMWebSDKService } from '../services/smwebsdk.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
+  providers: [SMWebSDKService],
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
-  private resizeObserver: ResizeObserver;
-  private persona: Persona;
-  private scene: Scene;
+  @ViewChild('video', { static: false }) videoRef: ElementRef;
 
   // required inputs
   @Input() public tokenserver: string;
@@ -46,88 +44,69 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Output('conversationResult')
   public conversationResultEvent = new EventEmitter<CustomEvent>();
 
-  // elements
-  @ViewChild('video', { static: false }) videoRef: ElementRef;
+  public get personaVideoStream() {
+    return this.videoRef?.nativeElement.srcObject;
+  }
 
-  constructor(private http: HttpClient, private hostRef: ElementRef) {
-    this.log('video: constructor', this.tokenserver);
+  private resizeObserver: ResizeObserver;
 
-    // publicly accessible functions
+  constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
+    this.log(`video constructor: token server - ${this.tokenserver}`);
+
+    //publicly accessible functions
+    this.hostRef.nativeElement.connect = () => this.connect();
     this.hostRef.nativeElement.disconnect = () => this.disconnect();
     this.hostRef.nativeElement.setMicrophoneEnabled = (value: boolean) =>
-      this.setMicrophoneEnabled(value);
+      this.webSDKService.setMicrophoneEnabled(value);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
     this.log({ changes });
-    if (this.tokenserver && this.autoconnect) {
-      this.connect();
-    }
+  }
+
+  public connect() {
+    this.webSDKService
+      .connect(this.tokenserver)
+      .pipe(
+        tap(() => this.onConnectionSuccess()),
+        catchError((e) => {
+          this.onConnectionError(e);
+          return of(false);
+        }),
+      )
+      .subscribe();
+  }
+
+  public disconnect() {
+    this.webSDKService?.disconnect();
   }
 
   public ngAfterViewInit() {
+    this.webSDKService.initialise(this.videoRef.nativeElement);
+    if (this.autoconnect) {
+      this.connect();
+    }
     this.initHostResizeWatcher();
   }
 
   public ngOnDestroy() {
     this.resizeObserver.unobserve(this.hostRef.nativeElement);
-    this.scene?.onStateEvent.removeListener(this.onState);
-    this.scene?.onDisconnectedEvent.removeListener(this.onDisconnected);
+    this.webSDKService.disconnect();
   }
 
-  public connect() {
-    this.http
-      .get<SoulMachinesConfig>(this.tokenserver)
-      .pipe(tap((config) => this.initialiseScene(config)))
-      .subscribe();
-  }
-
-  private async initialiseScene(config: SoulMachinesConfig): Promise<any> {
-    if (!this.videoRef) {
-      return;
-    }
-
-    this.scene = new Scene(this.videoRef.nativeElement as HTMLElement);
-    const retryOptions = {
-      maxRetries: 20,
-      delayMs: 500,
-    };
-    await this.scene.connect(config.url, '', config.jwt, retryOptions);
-    this.persona = new Persona(this.scene, 1);
-
-    //state messageBody type is StateResponseBody in smwebsdk, but not exposed publicly.
-    //listen and log the state message is for dev process, not sure if it should be exposed outside of sm.
-    this.scene.onStateEvent.addListener(this.onState);
-    this.scene.onDisconnectedEvent.addListener(this.onDisconnected);
+  private onConnectionSuccess() {
+    this.log(`session connected.`);
 
     this.resizeVideoStream();
   }
 
-  private onState(_: Scene, messageBody: any) {
-    if (messageBody.persona) {
-      const data = messageBody.persona[1];
-      console.log('STATE: ', data);
-    }
+  private onConnectionError(error: any) {
+    this.log(`session connection failed, error: ${error}`);
   }
 
+  //TODO: need to monitor scene disconnect event
   private onDisconnected(event: any) {
     this.disconnectEvent.emit(event.detail);
-  }
-
-  public disconnect() {
-    this.scene?.disconnect();
-  }
-
-  public isConnected(): boolean {
-    return Boolean(this.scene?.isConnected());
-  }
-
-  public setMicrophoneEnabled(enabled: boolean) {
-    if (enabled) {
-      this.scene.startRecognize();
-    } else {
-      this.scene.stopRecognize();
-    }
   }
 
   private initHostResizeWatcher() {
@@ -136,10 +115,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private resizeVideoStream() {
-    if (this.scene?.isConnected()) {
+    if (this.webSDKService?.connected) {
       const element = this.hostRef.nativeElement;
-      const [width, height] = [element.clientWidth, element.height];
-      this.scene.sendVideoBounds(width, height);
+      const [width, height] = [element.clientWidth, element.clientHeight];
+      this.webSDKService.sendVideoBounds(width, height);
     }
   }
 
