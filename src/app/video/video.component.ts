@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ViewChild,
@@ -12,9 +11,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
-import { SoulMachinesConfig } from './soulmachines-config';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of } from 'rxjs';
 
@@ -22,7 +19,7 @@ import { of } from 'rxjs';
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
-  // providers: [SMWebSDKService],
+  providers: [SMWebSDKService],
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private resizeObserver: ResizeObserver;

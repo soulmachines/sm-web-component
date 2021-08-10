@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { ElementRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class SMWebSDKService {
   public smwebsdk: any;
   public scene: Scene;
