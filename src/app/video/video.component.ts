@@ -47,7 +47,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   // elements
   @ViewChild('video', { static: false }) videoRef: ElementRef;
 
-  constructor(private hostRef: ElementRef, private webSDKService: SMWebSDKService) {
+  constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
 
     //publicly accessible functions
