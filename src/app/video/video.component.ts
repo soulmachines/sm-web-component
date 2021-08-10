@@ -22,7 +22,7 @@ import { of } from 'rxjs';
   providers: [SMWebSDKService],
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
-  private resizeObserver: ResizeObserver;
+  @ViewChild('video', { static: false }) videoRef: ElementRef;
 
   // required inputs
   @Input() public tokenserver: string;
@@ -44,8 +44,11 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Output('conversationResult')
   public conversationResultEvent = new EventEmitter<CustomEvent>();
 
-  // elements
-  @ViewChild('video', { static: false }) videoRef: ElementRef;
+  public get personaVideoStream() {
+    return this.videoRef?.nativeElement.srcObject;
+  }
+
+  private resizeObserver: ResizeObserver;
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
@@ -58,9 +61,9 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public ngOnChanges(changes: SimpleChanges) {
     this.log({ changes });
-    this.connect();
   }
 
+  // TODO move most of this logic into web SDK service?
   public connect() {
     if (this.tokenserver && this.autoconnect) {
       this.webSDKService
@@ -77,17 +80,19 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit() {
+    this.webSDKService.initialise(this.videoRef.nativeElement);
+    this.connect(); // TODO connect within initialise?
     this.initHostResizeWatcher();
   }
 
   public ngOnDestroy() {
-    this.webSDKService.personaVideoStream = null;
     this.resizeObserver.unobserve(this.hostRef.nativeElement);
     this.webSDKService.disconnect();
   }
 
   private onConnectionSuccess() {
     this.log(`session connected.`);
+
     this.resizeVideoStream();
   }
 

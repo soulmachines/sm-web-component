@@ -11,14 +11,12 @@ export class SMWebSDKService {
   public scene: Scene;
   public persona: Persona;
 
-  private videoElement: HTMLVideoElement;
-  public personaVideoStream: MediaStream | MediaSource | Blob;
-
   public connected = false;
 
-  constructor(private http: HttpClient) {
-    this.videoElement = document.createElement('video');
-    this.scene = new Scene(this.videoElement);
+  constructor(private http: HttpClient) {}
+
+  public initialise(videoElement: HTMLVideoElement) {
+    this.scene = new Scene(videoElement);
     this.persona = new Persona(this.scene, 1);
   }
 
@@ -41,7 +39,6 @@ export class SMWebSDKService {
       ),
       tap(() => {
         this.connected = true;
-        this.personaVideoStream = this.videoElement.srcObject;
       }),
     );
   }
@@ -56,7 +53,7 @@ export class SMWebSDKService {
     }
   }
 
-  public sendVideoBounds(width, height): void {
+  public sendVideoBounds(width: number, height: number): void {
     this.scene.sendVideoBounds(width, height);
   }
 
