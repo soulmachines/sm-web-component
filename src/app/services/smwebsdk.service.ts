@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
 
@@ -35,11 +35,12 @@ export class SMWebSDKService {
 
     return this.http.get<SoulMachinesConfig>(tokenServer).pipe(
       switchMap((config: SoulMachinesConfig) =>
-        this.scene.connect(config.url, '', config.jwt, retryOptions),
+        from(this.scene.connect(config.url, '', config.jwt, retryOptions)).pipe(
+          tap(() => {
+            this.connected = true;
+          }),
+        ),
       ),
-      tap(() => {
-        this.connected = true;
-      }),
     );
   }
 
