@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Persona, Scene } from '@soulmachines/smwebsdk';
+import { smwebsdk, Persona, Scene } from '@soulmachines/smwebsdk';
 import { Session } from '@soulmachines/smwebsdk/lib-esm/Session';
 import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -8,13 +8,16 @@ import { SoulMachinesConfig } from '../video/soulmachines-config';
 
 @Injectable()
 export class SMWebSDKService {
-  public smwebsdk: any;
   public scene: Scene;
   public persona: Persona;
 
   public connected = false;
 
   constructor(private http: HttpClient) {}
+
+  get smwebsdk() {
+    return smwebsdk;
+  }
 
   public initialise(videoElement: HTMLVideoElement) {
     this.scene = new Scene(videoElement);
@@ -69,7 +72,7 @@ export class SMWebSDKService {
   private onState(_: Scene, messageBody: any) {
     if (messageBody.persona) {
       const data = messageBody.persona[1];
-      console.log('STATE MESSAGE: ', data); // TODO should use our logging
+      // TODO this data needs to be passed out to video component
     }
   }
 }
