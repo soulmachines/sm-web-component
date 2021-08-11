@@ -64,6 +64,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     ['sendTextMessage', this.sendTextMessage],
     ['setMicrophoneEnabled', this.setMicrophoneEnabled],
     ['stopSpeaking', this.stopSpeaking],
+    ['persona', this.getPersona],
   ];
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
@@ -148,6 +149,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public stopSpeaking() {
     this.log('stopSpeaking');
     this.webSDKService.persona.stopSpeaking();
+  }
+
+  public getPersona() {
+    return this.webSDKService.persona;
   }
 
   private initHostResizeWatcher() {

@@ -14,6 +14,7 @@
     <button id="disable-microphone">Disable Microphone</button><br />
     <button id="send-message">Send Message</button><br />
     <button id="stop-speaking">Stop Speaking</button><br />
+    <button id="test-sdk">Test SDK</button><br />
 
     <script>
       var video = document.getElementById('video');
@@ -25,6 +26,7 @@
         { id: 'disable-microphone', action: () => video.setMicrophoneEnabled(false) },
         { id: 'send-message', action: () => video.sendTextMessage('Test Message') },
         { id: 'stop-speaking', action: () => video.stopSpeaking() },
+        { id: 'test-sdk', action: () => video.persona().stopSpeaking() },
       ];
 
       buttons.forEach((button) => {
