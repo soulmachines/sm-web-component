@@ -3,6 +3,34 @@
     <title>sm-web-component</title>
   </head>
   <body>
-    <sm-video autoconnect="true" tokenserver="http://localhost:4210/auth/authorize"></sm-video>
+    <sm-video
+      id="video"
+      autoconnect="true"
+      tokenserver="http://localhost:4210/auth/authorize"
+    ></sm-video>
+    <button id="connect">Connect</button>
+    <button id="disconnect">Disconnect</button><br />
+    <button id="enable-microphone">Enable Microphone</button>
+    <button id="disable-microphone">Disable Microphone</button><br />
+    <button id="send-message">Send Message</button><br />
+    <button id="stop-speaking">Stop Speaking</button><br />
+
+    <script>
+      var video = document.getElementById('video');
+
+      let buttons = [
+        { id: 'connect', action: () => video.connect() },
+        { id: 'disconnect', action: () => video.disconnect() },
+        { id: 'enable-microphone', action: () => video.setMicrophoneEnabled(true) },
+        { id: 'disable-microphone', action: () => video.setMicrophoneEnabled(false) },
+        { id: 'send-message', action: () => video.sendTextMessage('Test Message') },
+        { id: 'stop-speaking', action: () => video.stopSpeaking() },
+      ];
+
+      buttons.forEach((button) => {
+        let buttonElement = document.getElementById(button.id);
+        buttonElement.addEventListener('click', button.action);
+      });
+    </script>
   </body>
 </html>
