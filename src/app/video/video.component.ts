@@ -32,17 +32,17 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() public debug: string = 'true';
 
   // outputs, exposed as publicly consumable events
-  // @Output('connect')
-  // public connectEvent = new EventEmitter<CustomEvent>();
+  @Output('connect')
+  public connectEvent = new EventEmitter<CustomEvent>();
 
-  // @Output('disconnect')
-  // public disconnectEvent = new EventEmitter<CustomEvent>();
+  @Output('disconnect')
+  public disconnectEvent = new EventEmitter<CustomEvent>();
 
-  // @Output('speechmarker')
-  // public speechmarkerEvent = new EventEmitter<CustomEvent>();
+  @Output('speechmarker')
+  public speechmarkerEvent = new EventEmitter<CustomEvent>();
 
-  // @Output('conversationResult')
-  // public conversationResultEvent = new EventEmitter<CustomEvent>();
+  @Output('conversationResult')
+  public conversationResultEvent = new EventEmitter<CustomEvent>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;
@@ -59,13 +59,13 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private resizeObserver: ResizeObserver;
 
   private publicMethods: [string, Function][] = [
+    ['persona', this.getPersona],
+    ['scene', this.getScene],
     ['connect', this.connect],
     ['disconnect', this.disconnect],
     ['sendTextMessage', this.sendTextMessage],
     ['setMicrophoneEnabled', this.setMicrophoneEnabled],
     ['stopSpeaking', this.stopSpeaking],
-    ['persona', this.getPersona],
-    ['scene', this.getScene],
   ];
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
@@ -127,10 +127,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log(`session connection failed, error: ${error}`);
   }
 
-  // //TODO: need to monitor scene disconnect event
-  // private onDisconnected(event: any) {
-  //   this.disconnectEvent.emit(event.detail);
-  // }
+  //TODO: need to monitor scene disconnect event
+  private onDisconnected(event: any) {
+    this.disconnectEvent.emit(event.detail);
+  }
 
   public sendTextMessage(text: string) {
     this.log('sendTextMessage: ', text);

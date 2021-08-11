@@ -3,7 +3,11 @@
     <title>sm-web-component</title>
   </head>
   <body>
-    <sm-video id="video" tokenserver="http://localhost:4210/auth/authorize"></sm-video>
+    <sm-video
+      id="video"
+      autoconnect="true"
+      tokenserver="http://localhost:4210/auth/authorize"
+    ></sm-video>
     <button id="connect">Connect</button>
     <button id="disconnect">Disconnect</button><br />
     <button id="enable-microphone">Enable Microphone</button>
