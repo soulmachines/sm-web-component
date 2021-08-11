@@ -8,7 +8,6 @@ import { SoulMachinesConfig } from '../video/soulmachines-config';
 
 @Injectable()
 export class SMWebSDKService {
-  public smwebsdk: any;
   public scene: Scene;
   public persona: Persona;
 
@@ -69,7 +68,8 @@ export class SMWebSDKService {
   private onState(_: Scene, messageBody: any) {
     if (messageBody.persona) {
       const data = messageBody.persona[1];
-      console.log('STATE MESSAGE: ', data); // TODO should use our logging
+      // console.log('STATE MESSAGE: ', data);
+      // TODO this data needs to be passed out to video component
     }
   }
 }

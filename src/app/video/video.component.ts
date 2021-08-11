@@ -59,12 +59,13 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private resizeObserver: ResizeObserver;
 
   private publicMethods: [string, Function][] = [
+    ['persona', this.getPersona],
+    ['scene', this.getScene],
     ['connect', this.connect],
     ['disconnect', this.disconnect],
     ['sendTextMessage', this.sendTextMessage],
     ['setMicrophoneEnabled', this.setMicrophoneEnabled],
     ['stopSpeaking', this.stopSpeaking],
-    ['persona', this.getPersona],
   ];
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
@@ -153,6 +154,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public getPersona() {
     return this.webSDKService.persona;
+  }
+
+  public getScene() {
+    return this.webSDKService.scene;
   }
 
   private initHostResizeWatcher() {
