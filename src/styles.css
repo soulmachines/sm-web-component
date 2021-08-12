@@ -61,6 +61,7 @@ html {
   font-family: 'Material Icons';
   font-size: 2rem;
   border-radius: 50%;
+  border-width: 0rem;
   width: 3rem;
   height: 3rem;
   color: white;
