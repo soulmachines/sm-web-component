@@ -3,61 +3,68 @@
     <title>sm-web-component</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+    <link
+      rel="stylesheet"
+      href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700"
+      type="text/css"
+    />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </head>
+
   <body>
     <div class="container">
+      <h1 class="title">Drop-in Web Component</h1>
+      <h3 class="text">
+        This demo shows how you can embed a Digital Person inside a plain HTML website.
+      </h3>
       <sm-video
         id="video"
         autoconnect="true"
         tokenserver="http://localhost:4210/auth/authorize"
       ></sm-video>
+    </div>
 
-      <div class="user-actions">
-        <button id="mute" class="on"></button>
+    <div class="user-actions">
+      <button id="mute" class="on"></button>
 
-        <!-- <button id="enable-microphone">Enable Microphone</button>
-      <button id="disable-microphone">Disable Microphone</button><br /> -->
+      <!-- <button id="enable-microphone">Enable Microphone</button>
+        <button id="disable-microphone">Disable Microphone</button><br /> -->
 
-        <button
-          id="connect"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        >
-          Connect
-        </button>
-        <button
-          id="disconnect"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        >
-          Disconnect
-        </button>
+      <button id="connect" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        Connect
+      </button>
+      <button
+        id="disconnect"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      >
+        Disconnect
+      </button>
 
-        <button
-          id="send-message"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        >
-          Send Message
-        </button>
-        <button
-          id="stop-speaking"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        >
-          Stop Speaking
-        </button>
+      <button
+        id="send-message"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      >
+        Send Message
+      </button>
+      <button
+        id="stop-speaking"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      >
+        Stop Speaking
+      </button>
 
-        <button
-          id="test-sdk-persona"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        >
-          Test SDK Persona
-        </button>
-        <button
-          id="test-sdk-scene"
-          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        >
-          Test SDK Scene
-        </button>
-      </div>
+      <button
+        id="test-sdk-persona"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      >
+        Test SDK Persona
+      </button>
+      <button
+        id="test-sdk-scene"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      >
+        Test SDK Scene
+      </button>
     </div>
 
     <script>

@@ -6,28 +6,38 @@ html {
   background: transparent;
 }
 
-#video {
-  width: 100vw;
-  height: 100vh;
+.title {
+  font: Rubik monospace;
+  color: #364759;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: right;
+.text {
+  font: Rubik monospace;
+  color: #215489;
+  font-size: 1.2rem;
+  font-weight: normal;
+  text-align: center;
+}
+
+#video {
+  width: 50vw;
+  height: 50vh;
+  margin: auto;
 }
 
 .user-actions {
   display: grid;
   position: fixed;
-  bottom: 0;
+  bottom: 1.25rem;
+  left: 1.25rem;
   justify-items: left;
   align-items: center;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  column-gap: 50px;
-  row-gap: 6px;
+  row-gap: 0.5rem;
 
   /* position: fixed;
   bottom: 0;
@@ -38,23 +48,23 @@ html {
 }
 
 #disconnect {
-  background: rgb(235, 2, 2);
+  background: red;
   color: white;
 }
 
 #connect {
-  background: rgb(5, 112, 32);
+  background: #2ea44f;
   color: white;
 }
 
 #mute {
   font-family: 'Material Icons';
-  font-size: 2em;
+  font-size: 2rem;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
   color: white;
-  background-color: rgb(60, 80, 175);
+  background-color: #3c50af;
 }
 
 #mute.on::after {
