@@ -117,6 +117,16 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.webSDKService.disconnect();
   }
 
+  private executeCommand(command: () => any, ...logMessage: any[]) {
+    if (logMessage) {
+      this.log(logMessage);
+    }
+
+    if (this.webSDKService.connected) {
+      return command();
+    }
+  }
+
   private onConnectionSuccess() {
     this.log(`session connected.`);
 
@@ -133,27 +143,33 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public sendTextMessage(text: string) {
-    this.log('sendTextMessage: ', text);
-    this.webSDKService.persona.conversationSend(text, {}, {});
+    return this.executeCommand(
+      () => this.webSDKService.persona.conversationSend(text, {}, {}),
+      'sendTextMessage: ',
+      text,
+    );
   }
 
   public setMicrophoneEnabled(enabled: boolean) {
-    this.log('setMicrophoneEnabled ', enabled);
-
-    if (enabled) {
-      this.webSDKService.scene?.startRecognize();
-    } else {
-      this.webSDKService.scene?.stopRecognize();
-    }
+    return this.executeCommand(
+      () => {
+        if (enabled) {
+          this.webSDKService.scene?.startRecognize();
+        } else {
+          this.webSDKService.scene?.stopRecognize();
+        }
+      },
+      'setMicrophoneEnabled ',
+      enabled,
+    );
   }
 
   public stopSpeaking() {
-    this.log('stopSpeaking');
-    this.webSDKService.persona.stopSpeaking();
+    return this.executeCommand(() => this.webSDKService.persona.stopSpeaking(), 'stopSpeaking');
   }
 
   public getPersona() {
-    return this.webSDKService.persona;
+    return this.executeCommand(() => this.webSDKService.persona, 'getPersona');
   }
 
   public getScene() {
