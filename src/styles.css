@@ -5,3 +5,62 @@ html {
   padding: 0;
   background: transparent;
 }
+
+#video {
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: right;
+}
+
+.user-actions {
+  display: grid;
+  position: fixed;
+  bottom: 0;
+  justify-items: left;
+  align-items: center;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  column-gap: 50px;
+  row-gap: 6px;
+
+  /* position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+
+#disconnect {
+  background: rgb(235, 2, 2);
+  color: white;
+}
+
+#connect {
+  background: rgb(5, 112, 32);
+  color: white;
+}
+
+#mute {
+  font-family: 'Material Icons';
+  font-size: 2em;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  background-color: rgb(60, 80, 175);
+}
+
+#mute.on::after {
+  content: 'mic';
+}
+
+#mute.off::after {
+  content: 'mic_off';
+}
