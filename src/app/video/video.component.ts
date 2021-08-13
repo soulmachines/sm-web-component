@@ -118,12 +118,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private executeCommand(command: () => any, ...logMessage: any[]) {
-    if (logMessage) {
-      this.log(logMessage);
-    }
-
     if (this.webSDKService.connected) {
+      this.log(...logMessage);
       return command();
+    } else {
+      console.log('Could not execute command as you are not connected:');
+      console.log(...logMessage);
     }
   }
 
@@ -173,7 +173,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public getScene() {
-    return this.webSDKService.scene;
+    return this.executeCommand(() => this.webSDKService.scene, 'getScene');
   }
 
   private initHostResizeWatcher() {
@@ -190,7 +190,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private log(...args: any[]) {
-    if (this.isDebug) {
+    if (this.isDebug && args) {
       console.log(...args);
     }
   }
