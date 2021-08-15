@@ -117,6 +117,16 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.webSDKService.disconnect();
   }
 
+  private executeCommand(command: () => any, ...logMessage: any[]) {
+    if (this.webSDKService.connected) {
+      this.log(...logMessage);
+      return command();
+    } else {
+      console.log('Could not execute command as you are not connected:');
+      console.log(...logMessage);
+    }
+  }
+
   private onConnectionSuccess() {
     this.log(`session connected.`);
 
@@ -133,31 +143,37 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public sendTextMessage(text: string) {
-    this.log('sendTextMessage: ', text);
-    this.webSDKService.persona.conversationSend(text, {}, {});
+    return this.executeCommand(
+      () => this.webSDKService.persona.conversationSend(text, {}, {}),
+      'sendTextMessage: ',
+      text,
+    );
   }
 
   public setMicrophoneEnabled(enabled: boolean) {
-    this.log('setMicrophoneEnabled ', enabled);
-
-    if (enabled) {
-      this.webSDKService.scene?.startRecognize();
-    } else {
-      this.webSDKService.scene?.stopRecognize();
-    }
+    return this.executeCommand(
+      () => {
+        if (enabled) {
+          this.webSDKService.scene?.startRecognize();
+        } else {
+          this.webSDKService.scene?.stopRecognize();
+        }
+      },
+      'setMicrophoneEnabled ',
+      enabled,
+    );
   }
 
   public stopSpeaking() {
-    this.log('stopSpeaking');
-    this.webSDKService.persona.stopSpeaking();
+    return this.executeCommand(() => this.webSDKService.persona.stopSpeaking(), 'stopSpeaking');
   }
 
   public getPersona() {
-    return this.webSDKService.persona;
+    return this.executeCommand(() => this.webSDKService.persona, 'getPersona');
   }
 
   public getScene() {
-    return this.webSDKService.scene;
+    return this.executeCommand(() => this.webSDKService.scene, 'getScene');
   }
 
   private initHostResizeWatcher() {
@@ -174,7 +190,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private log(...args: any[]) {
-    if (this.isDebug) {
+    if (this.isDebug && args) {
       console.log(...args);
     }
   }

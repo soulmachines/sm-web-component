@@ -98,14 +98,14 @@
         {
           id: 'test-sdk-persona',
           action: () => {
-            video.persona().stopSpeaking();
+            video.persona()?.stopSpeaking();
             console.log(`test-sdk-persona stopSpeaking`);
           },
         },
         {
           id: 'test-sdk-scene',
           action: () =>
-            console.log(`test-sdk-scene isCameraConnected: ${video.scene().isCameraConnected()}`),
+            console.log(`test-sdk-scene isCameraConnected: ${video.scene()?.isCameraConnected()}`),
         },
         {
           id: 'mute',
