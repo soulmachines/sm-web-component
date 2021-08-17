@@ -29,7 +29,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build": "ng build --prod --output-hashing=none",
-    "package": "npm run build && cat dist/demo/{runtime-es2015,polyfills-es2015,main-es2015}.js > demo/soulmachines.js",
+    "package": "cat dist/demo/{runtime-es2015,polyfills-es2015,main-es2015}.js > demo/soulmachines.js",
     "serve": "live-server ./demo",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write ."
