@@ -48,9 +48,9 @@ jobs:
           path: demo/soulmachines.js
 
   deploy:
+    if: github.ref == 'refs/heads/release/*'
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.ref === 'refs/heads/release/*'
     steps:
       - name: Download assets
         uses: actions/download-artifact@v2
