@@ -36,9 +36,6 @@ jobs:
         run: npm run prettier
 
       - name: Build assets
-        run: npm run build
-
-      - name: Build package
         run: npm run package
 
       - name: Archive assets
