@@ -36,4 +36,35 @@ jobs:
         run: npm run prettier
 
       - name: Build assets
-        run: npm run build
+        run: npm run package
+
+      - name: Archive assets
+        uses: actions/upload-artifact@v2
+        with:
+          name: soulmachines.js
+          path: demo/soulmachines.js
+
+  deploy:
+    if: github.ref == 'refs/heads/release/*'
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download assets
+        uses: actions/download-artifact@v2
+        with:
+          name: soulmachines.js
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
+          aws-region: 'us-east-1'
+
+      - name: Deploy to S3 Bucket
+        run: aws s3 cp ./soulmachines.js s3://static.soulmachines.com/soulmachines-1.0.0-rc.0.js
+
+      - name: Invalidate Cloudfront CDN
+        run: aws cloudfront create-invalidation --distribution-id=$CLOUDFRONT_DISTRIBUTION_ID --paths '/*'
+        env:
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
