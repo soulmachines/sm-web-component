@@ -6,16 +6,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
 
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: '12.x'
 
-      - name: Caching dependencies
+      - name: Caching Dependencies
         uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -26,45 +26,14 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run lint
+      - name: Run Lint
         run: npm run lint
 
-      # - name: Run tests
+      # - name: Run Tests
       #   run: npm run test
 
-      - name: Run prettier
+      - name: Run Prettier
         run: npm run prettier
 
-      - name: Build assets
+      - name: Build Asset
         run: npm run package
-
-      - name: Archive assets
-        uses: actions/upload-artifact@v2
-        with:
-          name: soulmachines.js
-          path: demo/soulmachines.js
-
-  deploy:
-    if: github.ref == 'refs/heads/release/*'
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download assets
-        uses: actions/download-artifact@v2
-        with:
-          name: soulmachines.js
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
-          aws-region: 'us-east-1'
-
-      - name: Deploy to S3 Bucket
-        run: aws s3 cp ./soulmachines.js s3://static.soulmachines.com/soulmachines-1.0.0-rc.0.js
-
-      - name: Invalidate Cloudfront CDN
-        run: aws cloudfront create-invalidation --distribution-id=$CLOUDFRONT_DISTRIBUTION_ID --paths '/*'
-        env:
-          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
