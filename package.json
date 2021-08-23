@@ -15,7 +15,7 @@
     "@angular/youtube-player": "^10.2.4",
     "@juggle/resize-observer": "^3.3.1",
     "@mattkrick/event-target-polyfill": "^0.1.0",
-    "@soulmachines/smwebsdk": "^12.1.1",
+    "@soulmachines/smwebsdk": "14.0.0-rc.0",
     "document-register-element": "^1.7.2",
     "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
