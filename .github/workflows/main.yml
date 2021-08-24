@@ -23,6 +23,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      # Install with auth token so we can access @soulmachines/* private packages
+      - name: Set registry path and credentials for internal builds
+        run: echo "@soulmachines:registry=https://npm.pkg.github.com/soulmachines" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{ secrets.SMGITHUBBOT_READ_PACKAGES }}" >> .npmrc
+
       - name: Install Dependencies
         run: npm ci
 

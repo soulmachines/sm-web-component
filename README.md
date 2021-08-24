@@ -42,6 +42,26 @@ The project consists of 2 parts:
 
 Create a `.env` file in the root folder, copied from `.env.template` with the relevant values taken from your DP in DDNA Studio -> Edit Project -> Conection Config (Advanced)
 
+### Github token for local development
+
+Go to your GitHub profile -> Settings -> Developer settings -> Personal access tokens -> Generate new token ->
+Enter a note ie: 'SM private packages'
+Select scopes:
+
+repo - Full control of private repositories
+read:packages - Download packages from GitHub Package Registry
+
+Generate token -> Copy token to save later -> Enable SSO -> Authorize to soulmachines org
+
+Add your personal access token to ~/.npmrc file in the user root directory with the following line, replacing TOKEN with your personal access token. Create a new ~/.npmrc file if one doesn't exist.
+
+```
+@soulmachines:registry=https://npm.pkg.github.com/soulmachines
+//npm.pkg.github.com/:_authToken=TOKEN
+```
+
+Reference: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
+
 ### Start local development
 
 ```
