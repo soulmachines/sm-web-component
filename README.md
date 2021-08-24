@@ -72,7 +72,9 @@ npm run serve
 
 ### Github token for local development
 
-Go to your GitHub account settings -> Developer settings -> Personal access tokens ->Generate new token Select scopes:
+Go to your GitHub profile -> Settings -> Developer settings -> Personal access tokens -> Generate new token ->
+Enter a note ie: 'SM private packages' 
+Select scopes:
 
 repo - Full control of private repositories
 read:packages - Download packages from GitHub Package Registry
