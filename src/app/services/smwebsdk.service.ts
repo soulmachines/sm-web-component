@@ -2,10 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { Session } from '@soulmachines/smwebsdk/lib-esm/Session';
-import { Subject, Observable, from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
-import { SceneCallbacks } from '../models/utilities';
+
+export { Scene } from '@soulmachines/smwebsdk';
+export interface SceneCallbacks {
+  onConversationResult: Function;
+  onSpeechMarker: Function;
+}
 
 @Injectable()
 export class SMWebSDKService {
@@ -52,18 +57,14 @@ export class SMWebSDKService {
 
   public registerEventsCallbacks(callbacks: SceneCallbacks) {
     if (this.scene) {
-      this.scene.onRecognizeResultsEvent.addListener(callbacks.onRecognizeResult);
       this.scene.onConversationResultEvents[1].addListener(callbacks.onConversationResult);
-      this.scene.onUserTextEvent.addListener(callbacks.onUserText);
       this.scene.onSpeechMarkerEvents[1].addListener(callbacks.onSpeechMarker);
     }
   }
 
   public unregisterEventsCallbacks(callbacks: SceneCallbacks) {
     if (this.scene) {
-      this.scene.onRecognizeResultsEvent.removeListener(callbacks.onRecognizeResult);
-      this.scene.onConversationResultEvents[1].removeListener(callbacks.onConversationResult);
-      this.scene.onUserTextEvent.removeListener(callbacks.onUserText);
+      this.scene.onRecognizeResultsEvent.removeListener(callbacks.onConversationResult);
       this.scene.onSpeechMarkerEvents[1].removeListener(callbacks.onSpeechMarker);
     }
   }
