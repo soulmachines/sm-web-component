@@ -57,7 +57,7 @@ html {
   color: white;
 }
 
-#mute {
+#mic {
   font-family: 'Material Icons';
   font-size: 2rem;
   border-radius: 50%;
@@ -68,10 +68,10 @@ html {
   background-color: #3c50af;
 }
 
-#mute.on::after {
+#mic.on::after {
   content: 'mic';
 }
 
-#mute.off::after {
+#mic.off::after {
   content: 'mic_off';
 }

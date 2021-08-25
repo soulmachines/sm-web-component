@@ -28,7 +28,20 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() public tokenserver: string;
 
   // optional inputs
-  @Input() public autoconnect: boolean = false;
+  @Input() public autoconnect = false;
+
+  private _microphoneEnabled = true;
+  @Input('microphone-enabled')
+  public set microphoneEnabled(enabled: string) {
+    // store value for use in onConnectionSuccess - as it will
+    // fail when the component is initialised and the SDK has not being connected
+    this._microphoneEnabled = enabled === 'true';
+    // otherwise for subsequent value changes, call through to SDK
+    if (this.webSDKService.connected) {
+      this.setMicrophoneEnabled(this._microphoneEnabled);
+    }
+  }
+
   @Input() public debug: string = 'true';
 
   // outputs, exposed as publicly consumable events
@@ -130,6 +143,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private onConnectionSuccess() {
     this.log(`session connected.`);
 
+    this.setMicrophoneEnabled(this._microphoneEnabled);
     this.resizeVideoStream();
   }
 
