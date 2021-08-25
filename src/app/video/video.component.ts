@@ -14,6 +14,8 @@ import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of } from 'rxjs';
+import { SceneCallbacks } from '../models/utilities';
+import { Scene } from '@soulmachines/smwebsdk';
 
 @Component({
   selector: 'app-video',
@@ -33,16 +35,19 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // outputs, exposed as publicly consumable events
   @Output('connect')
-  public connectEvent = new EventEmitter<CustomEvent>();
+  public connectEvent = new EventEmitter();
 
   @Output('disconnect')
-  public disconnectEvent = new EventEmitter<CustomEvent>();
+  public disconnectEvent = new EventEmitter();
+
+  @Output('userSpoke')
+  public userSpokeEvent = new EventEmitter<string>();
+
+  @Output('dpSpoke')
+  public dpSpokeEvent = new EventEmitter<string>();
 
   @Output('speechmarker')
   public speechmarkerEvent = new EventEmitter<CustomEvent>();
-
-  @Output('conversationResult')
-  public conversationResultEvent = new EventEmitter<CustomEvent>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;
@@ -67,6 +72,13 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     ['setMicrophoneEnabled', this.setMicrophoneEnabled],
     ['stopSpeaking', this.stopSpeaking],
   ];
+
+  private sceneCallbacks: SceneCallbacks = {
+    onConversationResult: this.onConversationResult,
+    onRecognizeResult: this.onRecognizeResult,
+    onUserText: this.onUserText,
+    onSpeechMarker: this.onSpeechMarker,
+  };
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
@@ -102,6 +114,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public disconnect() {
     this.log('disconnect');
     this.webSDKService?.disconnect();
+    this.onDisconnected('User End.');
   }
 
   public ngAfterViewInit() {
@@ -115,6 +128,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public ngOnDestroy() {
     this.resizeObserver.unobserve(this.nativeElement);
     this.webSDKService.disconnect();
+    this.webSDKService.unregisterEventsCallbacks(this.sceneCallbacks);
   }
 
   private executeCommand(command: () => any, ...logMessage: any[]) {
@@ -125,21 +139,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       console.log('Could not execute command as you are not connected:');
       console.log(...logMessage);
     }
-  }
-
-  private onConnectionSuccess() {
-    this.log(`session connected.`);
-
-    this.resizeVideoStream();
-  }
-
-  private onConnectionError(error: any) {
-    this.log(`session connection failed, error: ${error}`);
-  }
-
-  //TODO: need to monitor scene disconnect event
-  private onDisconnected(event: any) {
-    this.disconnectEvent.emit(event.detail);
   }
 
   public sendTextMessage(text: string) {
@@ -193,5 +192,41 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (this.isDebug && args) {
       console.log(...args);
     }
+  }
+
+  private onConnectionSuccess() {
+    this.log(`session connected.`);
+    this.resizeVideoStream();
+    this.webSDKService.registerEventsCallbacks(this.sceneCallbacks);
+    this.connectEvent.emit();
+  }
+
+  private onConnectionError(error: any) {
+    this.log(`session connection failed, error: ${error}`);
+  }
+
+  private onDisconnected(reason: string) {
+    console.log('EVENTS - onDisconnected: ', reason);
+    this.disconnectEvent.emit();
+  }
+
+  private onRecognizeResult(_: Scene, event: any) {
+    console.log('EVENTS - onRecognizeResult: ', event);
+
+    this.userSpokeEvent.emit('text');
+  }
+
+  private onUserText(_: Scene, event: any) {
+    console.log('EVENTS - onUserText: ', event);
+  }
+
+  private onConversationResult(_: Scene, event: any) {
+    console.log('EVENTS - onConversationResult: ', event);
+
+    this.dpSpokeEvent.emit('output');
+  }
+
+  private onSpeechMarker(_: Scene, event: any) {
+    console.log('EVENTS - onSpeechMarker: ', event);
   }
 }
