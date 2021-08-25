@@ -20,12 +20,13 @@
       <sm-video
         id="video"
         autoconnect="true"
+        microphone-enabled="true"
         tokenserver="http://localhost:4210/auth/authorize"
       ></sm-video>
     </div>
 
     <div class="user-actions">
-      <button id="mute" class="on" class="mdl-button--raised"></button>
+      <button id="mic" class="on" class="mdl-button--raised"></button>
 
       <!-- <button id="enable-microphone">Enable Microphone</button>
         <button id="disable-microphone">Disable Microphone</button><br /> -->
@@ -72,20 +73,14 @@
 
     <script>
       const video = document.getElementById('video');
-      let isMuted = false;
-      const toggleMute = () => {
-        let micButton = document.getElementById('mute');
-        if (!isMuted) {
-          video.setMicrophoneEnabled(false);
-          micButton.classList.remove('on');
-          micButton.classList.add('off');
-          isMuted = true;
-        } else {
-          video.setMicrophoneEnabled(true);
-          micButton.classList.remove('off');
-          micButton.classList.add('on');
-          isMuted = false;
-        }
+      let micButton = document.getElementById('mic');
+      let micEnabled = true;
+
+      const toggleMic = () => {
+        micEnabled = !micEnabled;
+        video.setMicrophoneEnabled(micEnabled);
+        micButton.classList.remove(micEnabled ? 'off' : 'on');
+        micButton.classList.add(micEnabled ? 'on' : 'off');
       };
 
       let buttons = [
@@ -108,8 +103,8 @@
             console.log(`test-sdk-scene isCameraConnected: ${video.scene()?.isCameraConnected()}`),
         },
         {
-          id: 'mute',
-          action: () => toggleMute(),
+          id: 'mic',
+          action: () => toggleMic(),
         },
       ];
 
