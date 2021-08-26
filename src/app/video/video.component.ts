@@ -201,6 +201,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log(`session connected.`);
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
+    this.setMicrophoneEnabled(this._microphoneEnabled);
     this.connected.emit();
   }
 
