@@ -45,20 +45,20 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() public debug: string = 'true';
 
   // outputs, exposed as publicly consumable events
-  @Output('connect')
+  @Output()
   public connected = new EventEmitter();
 
-  @Output('disconnect')
+  @Output()
   public disconnected = new EventEmitter();
 
-  @Output('userSpoke')
+  @Output()
   public userSpoke = new EventEmitter<string>();
 
-  @Output('dpSpoke')
+  @Output()
   public dpSpoke = new EventEmitter<string>();
 
-  @Output('speechmarker')
-  public speechmarker = new EventEmitter<string>();
+  @Output()
+  public speechMarker = new EventEmitter<string>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;
