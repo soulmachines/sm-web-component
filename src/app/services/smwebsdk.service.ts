@@ -6,6 +6,14 @@ import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
 
+export { Persona } from '@soulmachines/smwebsdk';
+export interface SceneCallbacks {
+  onConversationResult: Function;
+  onSpeechMarker: Function;
+}
+
+const personaId = 1;
+
 @Injectable()
 export class SMWebSDKService {
   public scene: Scene;
@@ -17,7 +25,7 @@ export class SMWebSDKService {
 
   public initialise(videoElement: HTMLVideoElement) {
     this.scene = new Scene(videoElement);
-    this.persona = new Persona(this.scene, 1);
+    this.persona = new Persona(this.scene, personaId);
   }
 
   public connect(tokenServer: string): Observable<string> {
@@ -29,9 +37,6 @@ export class SMWebSDKService {
       maxRetries: 20,
       delayMs: 500,
     };
-
-    this.scene.onStateEvent.addListener(this.onState);
-    this.scene.onDisconnectedEvent.addListener(this.onDisconnect);
 
     return this.http.get<SoulMachinesConfig>(tokenServer).pipe(
       switchMap((config: SoulMachinesConfig) =>
@@ -48,28 +53,27 @@ export class SMWebSDKService {
   public disconnect() {
     if (this.scene) {
       this.scene.disconnect();
-      // this does not actually guarantee that the ws connection
-      // has been closed. this is only that the close has been requested.
-      this.onDisconnect('userEnded');
+      this.connected = false;
+    }
+  }
+
+  public registerEventCallbacks(callbacks: SceneCallbacks) {
+    if (this.scene) {
+      this.scene.onConversationResultEvents[personaId].addListener(callbacks.onConversationResult);
+      this.scene.onSpeechMarkerEvents[personaId].addListener(callbacks.onSpeechMarker);
+    }
+  }
+
+  public unregisterEventCallbacks(callbacks: SceneCallbacks) {
+    if (this.scene) {
+      this.scene.onConversationResultEvents[personaId].removeListener(
+        callbacks.onConversationResult,
+      );
+      this.scene.onSpeechMarkerEvents[personaId].removeListener(callbacks.onSpeechMarker);
     }
   }
 
   public sendVideoBounds(width: number, height: number) {
     this.scene.sendVideoBounds(width, height);
-  }
-
-  private onDisconnect(reason: string) {
-    this.connected = false;
-
-    this.scene?.onStateEvent.removeListener(this.onState);
-    this.scene?.onDisconnectedEvent.removeListener(this.onDisconnect);
-  }
-
-  private onState(_: Scene, messageBody: any) {
-    if (messageBody.persona) {
-      const data = messageBody.persona[1];
-      // console.log('STATE MESSAGE: ', data);
-      // TODO this data needs to be passed out to video component
-    }
   }
 }

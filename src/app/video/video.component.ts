@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { SMWebSDKService } from '../services/smwebsdk.service';
+import { SMWebSDKService, SceneCallbacks, Persona } from '../services/smwebsdk.service';
 import { of } from 'rxjs';
 
 @Component({
@@ -45,17 +45,20 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() public debug: string = 'true';
 
   // outputs, exposed as publicly consumable events
-  @Output('connect')
-  public connectEvent = new EventEmitter<CustomEvent>();
+  @Output()
+  public connected = new EventEmitter();
 
-  @Output('disconnect')
-  public disconnectEvent = new EventEmitter<CustomEvent>();
+  @Output()
+  public disconnected = new EventEmitter();
 
-  @Output('speechmarker')
-  public speechmarkerEvent = new EventEmitter<CustomEvent>();
+  @Output()
+  public userSpoke = new EventEmitter<string>();
 
-  @Output('conversationResult')
-  public conversationResultEvent = new EventEmitter<CustomEvent>();
+  @Output()
+  public dpSpoke = new EventEmitter<string>();
+
+  @Output()
+  public speechMarker = new EventEmitter<string>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;
@@ -83,14 +86,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
-
     this.bindPublicMethods();
-  }
-
-  private bindPublicMethods() {
-    this.publicMethods.map(
-      ([name, implementation]) => (this.nativeElement[name] = implementation.bind(this)),
-    );
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -115,45 +111,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public disconnect() {
     this.log('disconnect');
     this.webSDKService?.disconnect();
-  }
-
-  public ngAfterViewInit() {
-    this.webSDKService.initialise(this.videoRef.nativeElement);
-    if (this.autoconnect) {
-      this.connect();
-    }
-    this.initHostResizeWatcher();
-  }
-
-  public ngOnDestroy() {
-    this.resizeObserver.unobserve(this.nativeElement);
-    this.webSDKService.disconnect();
-  }
-
-  private executeCommand(command: () => any, ...logMessage: any[]) {
-    if (this.webSDKService.connected) {
-      this.log(...logMessage);
-      return command();
-    } else {
-      console.log('Could not execute command as you are not connected:');
-      console.log(...logMessage);
-    }
-  }
-
-  private onConnectionSuccess() {
-    this.log(`session connected.`);
-
-    this.setMicrophoneEnabled(this._microphoneEnabled);
-    this.resizeVideoStream();
-  }
-
-  private onConnectionError(error: any) {
-    this.log(`session connection failed, error: ${error}`);
-  }
-
-  //TODO: need to monitor scene disconnect event
-  private onDisconnected(event: any) {
-    this.disconnectEvent.emit(event.detail);
+    this.onDisconnected();
+    this.webSDKService.unregisterEventCallbacks(this.sceneCallbacks);
   }
 
   public sendTextMessage(text: string) {
@@ -190,6 +149,35 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.executeCommand(() => this.webSDKService.scene, 'getScene');
   }
 
+  public ngAfterViewInit() {
+    this.webSDKService.initialise(this.videoRef.nativeElement);
+    if (this.autoconnect) {
+      this.connect();
+    }
+    this.initHostResizeWatcher();
+  }
+
+  public ngOnDestroy() {
+    this.resizeObserver.unobserve(this.nativeElement);
+    this.disconnect();
+  }
+
+  private bindPublicMethods() {
+    this.publicMethods.map(
+      ([name, implementation]) => (this.nativeElement[name] = implementation.bind(this)),
+    );
+  }
+
+  private executeCommand(command: () => any, ...logMessage: any[]) {
+    if (this.webSDKService.connected) {
+      this.log(...logMessage);
+      return command();
+    } else {
+      console.log('Could not execute command as you are not connected:');
+      console.log(...logMessage);
+    }
+  }
+
   private initHostResizeWatcher() {
     this.resizeObserver = new ResizeObserver(() => this.resizeVideoStream());
     this.resizeObserver.observe(this.nativeElement);
@@ -208,4 +196,40 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       console.log(...args);
     }
   }
+
+  private onConnectionSuccess() {
+    this.log(`session connected.`);
+    this.resizeVideoStream();
+    this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
+    this.connected.emit();
+  }
+
+  private onConnectionError(error: any) {
+    this.log(`session connection failed, error: ${error}`);
+  }
+
+  private onDisconnected = () => {
+    console.log('EVENTS - onDisconnected');
+    this.disconnected.emit();
+  };
+
+  private onConversationResult = (_: Persona, data: any) => {
+    console.log('EVENTS - onConversationResult: ', data);
+    const input = data.input.text as string;
+    const output = data.output.text as string;
+    console.log(`input: ${input}`);
+    console.log(`output: ${output}`);
+
+    this.userSpoke.emit(input);
+    this.dpSpoke.emit(output);
+  };
+
+  private onSpeechMarker = (_: Persona, data: any) => {
+    console.log('EVENTS - onSpeechMarker: ', data);
+  };
+
+  private sceneCallbacks: SceneCallbacks = {
+    onConversationResult: this.onConversationResult,
+    onSpeechMarker: this.onSpeechMarker,
+  };
 }

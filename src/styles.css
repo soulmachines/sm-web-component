@@ -28,6 +28,19 @@ html {
   margin: auto;
 }
 
+.container {
+  display: flex;
+  align-items: baseline;
+  margin: 80px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 200px;
+}
+
 .user-actions {
   display: grid;
   position: fixed;
@@ -74,4 +87,12 @@ html {
 
 #mic.off::after {
   content: 'mic_off';
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
 }
