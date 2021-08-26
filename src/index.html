@@ -16,15 +16,23 @@
     <h3 class="text">
       This demo shows how you can embed a Digital Person inside a plain HTML website.
     </h3>
+    <sm-video
+      id="video"
+      autoconnect="true"
+      microphone-enabled="true"
+      tokenserver="http://localhost:4210/auth/authorize"
+    ></sm-video>
     <div class="container">
-      <sm-video
-        id="video"
-        autoconnect="true"
-        microphone-enabled="true"
-        tokenserver="http://localhost:4210/auth/authorize"
-      ></sm-video>
-      <div class="content" id="content">
-        <p id="msg">Event Messages</p>
+      <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Event Messages</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <div id="msg" class="msg"></div>
+        </div>
+      </div>
+
+      <div id="content">
         <img
           id="nzmap"
           class="hidden"
@@ -32,7 +40,6 @@
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/New_Zealand_locator_map_blank.svg/1200px-New_Zealand_locator_map_blank.svg.png"
           alt="nz"
         />
-        <button class="hidden" onclick="showImage()">Show KIWI</button>
       </div>
     </div>
 
@@ -77,6 +84,12 @@
       >
         Test SDK Scene
       </button>
+      <!-- <button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+        onclick="showImage()"
+      >
+        Show Kiwi
+      </button> -->
     </div>
 
     <script>
@@ -97,9 +110,9 @@
       const showImage = () => {
         var img = document.createElement('img');
         img.src =
-          'https://www.experiencepurangi.co.nz/wp-content/uploads/2016/08/150723083731_1_900x6001.jpg';
+          'https://www.tepapa.govt.nz/sites/default/files/styles/card_image_700x_525/public/ma_i521009_tepapa_apteryx-mantelli.jpg?itok=H4FzD8Lt';
         img.setAttribute('data-sm-content', 'nzkiwi');
-        document.getElementById('content').appendChild(img);
+        content.appendChild(img);
       };
 
       let buttons = [
@@ -134,17 +147,21 @@
         const text = e.detail.toLowerCase();
         console.log(text);
         let ele = document.createElement('p');
-        ele.innerText = text;
-        ele.style.color = 'green';
+        ele.innerText = 'USER: ' + text;
+        ele.style.color = '#00FFFF';
         msg.appendChild(ele);
+        if (text.includes('hide map')) {
+          nzmap.classList.remove('visible');
+          nzmap.classList.add('hidden');
+        }
       });
 
       video.addEventListener('dpSpoke', (e) => {
         const text = e.detail.toLowerCase();
         console.log(text);
         let ele = document.createElement('p');
-        ele.innerText = text;
-        ele.style.color = 'blue';
+        ele.innerText = 'DP: ' + text;
+        ele.style.color = '#00FF00';
         msg.appendChild(ele);
         if (text.includes('new zealand')) {
           nzmap.classList.remove('hidden');
@@ -156,13 +173,13 @@
         const { name, arguments } = e.detail;
         console.log(name, arguments);
         let ele = document.createElement('p');
-        ele.innerText = name + ': [';
+        ele.innerText = 'SPEECH MARKER: ' + name + ': [';
         arguments.forEach((e) => {
           ele.innerText += e;
-          ele.innerText += ' ';
+          ele.innerText += ',';
         });
         ele.innerText += ']';
-        ele.style.color = 'red';
+        ele.style.color = '#ED8138';
         msg.appendChild(ele);
 
         if (arguments.includes('nzkiwi')) {
