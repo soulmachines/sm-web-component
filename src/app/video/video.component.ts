@@ -58,7 +58,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public dpSpoke = new EventEmitter<string>();
 
   @Output()
-  public speechMarker = new EventEmitter<string>();
+  public speechMarker = new EventEmitter<any>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;
@@ -226,6 +226,11 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private onSpeechMarker = (_: Persona, data: any) => {
     console.log('EVENTS - onSpeechMarker: ', data);
+    const speechMarkerData = {
+      name: data.name,
+      arguments: data.arguments,
+    };
+    this.speechMarker.emit(speechMarkerData);
   };
 
   private sceneCallbacks: SceneCallbacks = {

@@ -24,6 +24,7 @@
         tokenserver="http://localhost:4210/auth/authorize"
       ></sm-video>
       <div class="content" id="content">
+        <p id="msg">Event Messages</p>
         <img
           id="nzmap"
           class="hidden"
@@ -31,7 +32,7 @@
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/New_Zealand_locator_map_blank.svg/1200px-New_Zealand_locator_map_blank.svg.png"
           alt="nz"
         />
-        <button onclick="showImage()">Show KIWI</button>
+        <button class="hidden" onclick="showImage()">Show KIWI</button>
       </div>
     </div>
 
@@ -82,7 +83,7 @@
       const video = document.getElementById('video');
       let content = document.getElementById('content');
       let nzmap = document.getElementById('nzmap');
-
+      let msg = document.getElementById('msg');
       let micButton = document.getElementById('mic');
       let micEnabled = true;
 
@@ -93,12 +94,18 @@
         micButton.classList.add(micEnabled ? 'on' : 'off');
       };
 
+      const showImage = () => {
+        var img = document.createElement('img');
+        img.src =
+          'https://www.experiencepurangi.co.nz/wp-content/uploads/2016/08/150723083731_1_900x6001.jpg';
+        img.setAttribute('data-sm-content', 'nzkiwi');
+        document.getElementById('content').appendChild(img);
+      };
+
       let buttons = [
         { id: 'connect', action: () => video.connect() },
         { id: 'disconnect', action: () => video.disconnect() },
-        // { id: 'enable-microphone', action: () => video.setMicrophoneEnabled(true) },
-        // { id: 'disable-microphone', action: () => video.setMicrophoneEnabled(false) },
-        { id: 'send-message', action: () => video.sendTextMessage('Test Message') },
+        { id: 'send-message', action: () => video.sendTextMessage('What is your national bird?') },
         { id: 'stop-speaking', action: () => video.stopSpeaking() },
         {
           id: 'test-sdk-persona',
@@ -124,25 +131,44 @@
       });
 
       video.addEventListener('userSpoke', (e) => {
-        console.log(e.detail);
+        const text = e.detail.toLowerCase();
+        console.log(text);
+        let ele = document.createElement('p');
+        ele.innerText = text;
+        ele.style.color = 'green';
+        msg.appendChild(ele);
       });
 
       video.addEventListener('dpSpoke', (e) => {
         const text = e.detail.toLowerCase();
         console.log(text);
+        let ele = document.createElement('p');
+        ele.innerText = text;
+        ele.style.color = 'blue';
+        msg.appendChild(ele);
         if (text.includes('new zealand')) {
           nzmap.classList.remove('hidden');
           nzmap.classList.add('visible');
         }
       });
 
-      const showImage = () => {
-        var img = document.createElement('img');
-        img.src =
-          'https://www.experiencepurangi.co.nz/wp-content/uploads/2016/08/150723083731_1_900x6001.jpg';
-        img.setAttribute('data-sm-content', 'nzkiwi');
-        document.getElementById('content').appendChild(img);
-      };
+      video.addEventListener('speechMarker', (e) => {
+        const { name, arguments } = e.detail;
+        console.log(name, arguments);
+        let ele = document.createElement('p');
+        ele.innerText = name + ': [';
+        arguments.forEach((e) => {
+          ele.innerText += e;
+          ele.innerText += ' ';
+        });
+        ele.innerText += ']';
+        ele.style.color = 'red';
+        msg.appendChild(ele);
+
+        if (arguments.includes('nzkiwi')) {
+          showImage();
+        }
+      });
     </script>
   </body>
 </html>
