@@ -12,24 +12,31 @@
   </head>
 
   <body>
+    <h1 class="title">Drop-in Web Component</h1>
+    <h3 class="text">
+      This demo shows how you can embed a Digital Person inside a plain HTML website.
+    </h3>
     <div class="container">
-      <h1 class="title">Drop-in Web Component</h1>
-      <h3 class="text">
-        This demo shows how you can embed a Digital Person inside a plain HTML website.
-      </h3>
       <sm-video
         id="video"
         autoconnect="true"
         microphone-enabled="true"
         tokenserver="http://localhost:4210/auth/authorize"
       ></sm-video>
+      <div class="content" id="content">
+        <img
+          id="nzmap"
+          class="hidden"
+          data-sm-content="nzmap"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/New_Zealand_locator_map_blank.svg/1200px-New_Zealand_locator_map_blank.svg.png"
+          alt="nz"
+        />
+        <button onclick="showImage()">Show KIWI</button>
+      </div>
     </div>
 
     <div class="user-actions">
       <button id="mic" class="on" class="mdl-button--raised"></button>
-
-      <!-- <button id="enable-microphone">Enable Microphone</button>
-        <button id="disable-microphone">Disable Microphone</button><br /> -->
 
       <button
         id="connect"
@@ -73,6 +80,9 @@
 
     <script>
       const video = document.getElementById('video');
+      let content = document.getElementById('content');
+      let nzmap = document.getElementById('nzmap');
+
       let micButton = document.getElementById('mic');
       let micEnabled = true;
 
@@ -112,6 +122,27 @@
         let buttonElement = document.getElementById(button.id);
         buttonElement.addEventListener('click', button.action);
       });
+
+      video.addEventListener('userSpoke', (e) => {
+        console.log(e.detail);
+      });
+
+      video.addEventListener('dpSpoke', (e) => {
+        const text = e.detail;
+        console.log(text);
+        if (text.toLowerCase().includes('new zealand')) {
+          nzmap.classList.remove('hidden');
+          nzmap.classList.add('visible');
+        }
+      });
+
+      const showImage = () => {
+        var img = document.createElement('img');
+        img.src =
+          'https://www.experiencepurangi.co.nz/wp-content/uploads/2016/08/150723083731_1_900x6001.jpg';
+        img.setAttribute('data-sm-content', 'nzkiwi');
+        document.getElementById('content').appendChild(img);
+      };
     </script>
   </body>
 </html>

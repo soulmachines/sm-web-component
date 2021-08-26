@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { SMWebSDKService, SceneCallbacks, Scene } from '../services/smwebsdk.service';
+import { SMWebSDKService, SceneCallbacks, Persona } from '../services/smwebsdk.service';
 import { of } from 'rxjs';
 
 @Component({
@@ -58,7 +58,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public dpSpokeEvent = new EventEmitter<string>();
 
   @Output('speechmarker')
-  public speechmarkerEvent = new EventEmitter<CustomEvent>();
+  public speechmarkerEvent = new EventEmitter<string>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;
@@ -213,17 +213,18 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.disconnectEvent.emit();
   };
 
-  private onConversationResult = (_: Scene, data: any) => {
+  private onConversationResult = (_: Persona, data: any) => {
     console.log('EVENTS - onConversationResult: ', data);
-    const input = data.input.text;
-    const output = data.output.text;
+    const input = data.input.text as string;
+    const output = data.output.text as string;
     console.log(`input: ${input}`);
     console.log(`output: ${output}`);
+
     this.userSpokeEvent.emit(input);
     this.dpSpokeEvent.emit(output);
   };
 
-  private onSpeechMarker = (_: Scene, data: any) => {
+  private onSpeechMarker = (_: Persona, data: any) => {
     console.log('EVENTS - onSpeechMarker: ', data);
   };
 

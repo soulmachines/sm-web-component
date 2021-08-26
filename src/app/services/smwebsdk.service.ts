@@ -6,7 +6,7 @@ import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
 
-export { Scene } from '@soulmachines/smwebsdk';
+export { Persona } from '@soulmachines/smwebsdk';
 export interface SceneCallbacks {
   onConversationResult: Function;
   onSpeechMarker: Function;
