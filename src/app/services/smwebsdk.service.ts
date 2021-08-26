@@ -12,6 +12,8 @@ export interface SceneCallbacks {
   onSpeechMarker: Function;
 }
 
+const personaId = 1;
+
 @Injectable()
 export class SMWebSDKService {
   public scene: Scene;
@@ -55,17 +57,19 @@ export class SMWebSDKService {
     }
   }
 
-  public registerEventsCallbacks(callbacks: SceneCallbacks) {
+  public registerEventCallbacks(callbacks: SceneCallbacks) {
     if (this.scene) {
-      this.scene.onConversationResultEvents[1].addListener(callbacks.onConversationResult);
-      this.scene.onSpeechMarkerEvents[1].addListener(callbacks.onSpeechMarker);
+      this.scene.onConversationResultEvents[personaId].addListener(callbacks.onConversationResult);
+      this.scene.onSpeechMarkerEvents[personaId].addListener(callbacks.onSpeechMarker);
     }
   }
 
-  public unregisterEventsCallbacks(callbacks: SceneCallbacks) {
+  public unregisterEventCallbacks(callbacks: SceneCallbacks) {
     if (this.scene) {
-      this.scene.onRecognizeResultsEvent.removeListener(callbacks.onConversationResult);
-      this.scene.onSpeechMarkerEvents[1].removeListener(callbacks.onSpeechMarker);
+      this.scene.onConversationResultEvents[personaId].removeListener(
+        callbacks.onConversationResult,
+      );
+      this.scene.onSpeechMarkerEvents[personaId].removeListener(callbacks.onSpeechMarker);
     }
   }
 

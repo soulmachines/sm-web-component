@@ -46,19 +46,19 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // outputs, exposed as publicly consumable events
   @Output('connect')
-  public connectEvent = new EventEmitter();
+  public connected = new EventEmitter();
 
   @Output('disconnect')
-  public disconnectEvent = new EventEmitter();
+  public disconnected = new EventEmitter();
 
   @Output('userSpoke')
-  public userSpokeEvent = new EventEmitter<string>();
+  public userSpoke = new EventEmitter<string>();
 
   @Output('dpSpoke')
-  public dpSpokeEvent = new EventEmitter<string>();
+  public dpSpoke = new EventEmitter<string>();
 
   @Output('speechmarker')
-  public speechmarkerEvent = new EventEmitter<string>();
+  public speechmarker = new EventEmitter<string>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;
@@ -112,6 +112,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log('disconnect');
     this.webSDKService?.disconnect();
     this.onDisconnected('User End.');
+    this.webSDKService.unregisterEventCallbacks(this.sceneCallbacks);
   }
 
   public sendTextMessage(text: string) {
@@ -158,8 +159,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public ngOnDestroy() {
     this.resizeObserver.unobserve(this.nativeElement);
-    this.webSDKService.disconnect();
-    this.webSDKService.unregisterEventsCallbacks(this.sceneCallbacks);
+    this.disconnect();
   }
 
   private bindPublicMethods() {
@@ -200,8 +200,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private onConnectionSuccess() {
     this.log(`session connected.`);
     this.resizeVideoStream();
-    this.webSDKService.registerEventsCallbacks(this.sceneCallbacks);
-    this.connectEvent.emit();
+    this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
+    this.connected.emit();
   }
 
   private onConnectionError(error: any) {
@@ -210,7 +210,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private onDisconnected = (reason: string) => {
     console.log('EVENTS - onDisconnected: ', reason);
-    this.disconnectEvent.emit();
+    this.disconnected.emit();
   };
 
   private onConversationResult = (_: Persona, data: any) => {
@@ -220,8 +220,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     console.log(`input: ${input}`);
     console.log(`output: ${output}`);
 
-    this.userSpokeEvent.emit(input);
-    this.dpSpokeEvent.emit(output);
+    this.userSpoke.emit(input);
+    this.dpSpoke.emit(output);
   };
 
   private onSpeechMarker = (_: Persona, data: any) => {

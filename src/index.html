@@ -128,12 +128,13 @@
       });
 
       video.addEventListener('dpSpoke', (e) => {
-        const text = e.detail;
+        const text = e.detail.toLowerCase();
         console.log(text);
-        if (text.toLowerCase().includes('new zealand')) {
+        if (text.includes('new zealand')) {
           nzmap.classList.remove('hidden');
           nzmap.classList.add('visible');
         }
+        if (text.toLowerCase)
       });
 
       const showImage = () => {
