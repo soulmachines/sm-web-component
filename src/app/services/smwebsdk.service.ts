@@ -12,6 +12,11 @@ export interface SceneCallbacks {
   onSpeechMarker: Function;
 }
 
+export interface SpeechMarkerEventArgs {
+  name: string;
+  arguments: string[];
+}
+
 const personaId = 1;
 
 @Injectable()

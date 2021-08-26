@@ -12,7 +12,12 @@ import {
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { SMWebSDKService, SceneCallbacks, Persona } from '../services/smwebsdk.service';
+import {
+  SMWebSDKService,
+  Persona,
+  SceneCallbacks,
+  SpeechMarkerEventArgs,
+} from '../services/smwebsdk.service';
 import { of } from 'rxjs';
 
 @Component({
@@ -58,7 +63,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public dpSpoke = new EventEmitter<string>();
 
   @Output()
-  public speechMarker = new EventEmitter<any>();
+  public speechMarker = new EventEmitter<SpeechMarkerEventArgs>();
 
   public get personaVideoStream() {
     return this.videoRef?.nativeElement.srcObject;

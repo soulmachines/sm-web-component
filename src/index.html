@@ -37,7 +37,7 @@
           id="nzmap"
           class="hidden"
           data-sm-content="nzmap"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/New_Zealand_locator_map_blank.svg/1200px-New_Zealand_locator_map_blank.svg.png"
+          src="https://lh3.googleusercontent.com/proxy/WGZfAf_WQtLL5vvoOu1RempHaed5K-a_73zD98PHx16zM_TTzp4Ot8aRvHbzCoJ2XMbS9QirC_nvGz5mztlC6lof1keya5jU4A"
           alt="nz"
         />
       </div>
@@ -115,6 +115,13 @@
         content.appendChild(img);
       };
 
+      const addMessage = (text, color) => {
+        let ele = document.createElement('p');
+        ele.innerText = text;
+        ele.style.color = color;
+        msg.appendChild(ele);
+      };
+
       let buttons = [
         { id: 'connect', action: () => video.connect() },
         { id: 'disconnect', action: () => video.disconnect() },
@@ -143,13 +150,18 @@
         buttonElement.addEventListener('click', button.action);
       });
 
+      video.addEventListener('connected', (e) => {
+        addMessage('session connected', 'white');
+      });
+
+      video.addEventListener('disconnected', (e) => {
+        addMessage('session disconnected', 'white');
+      });
+
       video.addEventListener('userSpoke', (e) => {
         const text = e.detail.toLowerCase();
         console.log(text);
-        let ele = document.createElement('p');
-        ele.innerText = 'USER: ' + text;
-        ele.style.color = '#00FFFF';
-        msg.appendChild(ele);
+        addMessage('USER: ' + text, '#00FFFF');
         if (text.includes('hide map')) {
           nzmap.classList.remove('visible');
           nzmap.classList.add('hidden');
@@ -159,10 +171,7 @@
       video.addEventListener('dpSpoke', (e) => {
         const text = e.detail.toLowerCase();
         console.log(text);
-        let ele = document.createElement('p');
-        ele.innerText = 'DP: ' + text;
-        ele.style.color = '#00FF00';
-        msg.appendChild(ele);
+        addMessage('DP: ' + text, '#00FF00');
         if (text.includes('new zealand')) {
           nzmap.classList.remove('hidden');
           nzmap.classList.add('visible');
@@ -172,16 +181,8 @@
       video.addEventListener('speechMarker', (e) => {
         const { name, arguments } = e.detail;
         console.log(name, arguments);
-        let ele = document.createElement('p');
-        ele.innerText = 'SPEECH MARKER: ' + name + ': [';
-        arguments.forEach((e) => {
-          ele.innerText += e;
-          ele.innerText += ',';
-        });
-        ele.innerText += ']';
-        ele.style.color = '#ED8138';
-        msg.appendChild(ele);
-
+        const text = 'SPEECH MARKER: ' + name + ': [' + arguments.join(', ') + ']';
+        addMessage(text, '#ED8138');
         if (arguments.includes('nzkiwi')) {
           showImage();
         }
