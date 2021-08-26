@@ -111,7 +111,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public disconnect() {
     this.log('disconnect');
     this.webSDKService?.disconnect();
-    this.onDisconnected('User End.');
+    this.onDisconnected();
     this.webSDKService.unregisterEventCallbacks(this.sceneCallbacks);
   }
 
@@ -208,8 +208,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log(`session connection failed, error: ${error}`);
   }
 
-  private onDisconnected = (reason: string) => {
-    console.log('EVENTS - onDisconnected: ', reason);
+  private onDisconnected = () => {
+    console.log('EVENTS - onDisconnected');
     this.disconnected.emit();
   };
 

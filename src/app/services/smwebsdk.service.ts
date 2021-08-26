@@ -25,7 +25,7 @@ export class SMWebSDKService {
 
   public initialise(videoElement: HTMLVideoElement) {
     this.scene = new Scene(videoElement);
-    this.persona = new Persona(this.scene, 1);
+    this.persona = new Persona(this.scene, personaId);
   }
 
   public connect(tokenServer: string): Observable<string> {
