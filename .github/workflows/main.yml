@@ -34,7 +34,7 @@ jobs:
         run: npm run lint
 
       - name: Run Tests
-        run: npm run test
+        run: npm run test-ci
 
       - name: Run Prettier
         run: npm run prettier
