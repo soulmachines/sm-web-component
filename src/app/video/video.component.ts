@@ -22,7 +22,7 @@ import { of } from 'rxjs';
   providers: [SMWebSDKService],
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
-  @ViewChild('video', { static: false }) videoRef: ElementRef;
+  @ViewChild('video', { static: true }) videoRef: ElementRef;
 
   // required inputs
   @Input() public tokenserver: string;
@@ -61,7 +61,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public speechMarker = new EventEmitter<string>();
 
   public get personaVideoStream() {
-    return this.videoRef?.nativeElement.srcObject;
+    return this.videoRef.nativeElement.srcObject;
   }
 
   private get isDebug() {
