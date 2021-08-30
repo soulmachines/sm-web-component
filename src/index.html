@@ -28,7 +28,7 @@
           <h2 class="mdl-card__title-text">Event Messages</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          <div id="msg" class="msg"></div>
+          <div id="message"></div>
         </div>
       </div>
 
@@ -84,19 +84,13 @@
       >
         Test SDK Scene
       </button>
-      <!-- <button
-        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
-        onclick="showImage()"
-      >
-        Show Kiwi
-      </button> -->
     </div>
 
     <script>
       const video = document.getElementById('video');
       let content = document.getElementById('content');
       let nzmap = document.getElementById('nzmap');
-      let msg = document.getElementById('msg');
+      let message = document.getElementById('message');
       let micButton = document.getElementById('mic');
       let micEnabled = true;
 
@@ -119,7 +113,7 @@
         let ele = document.createElement('p');
         ele.innerText = text;
         ele.style.color = color;
-        msg.appendChild(ele);
+        message.appendChild(ele);
       };
 
       let buttons = [
