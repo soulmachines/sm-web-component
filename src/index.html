@@ -28,7 +28,7 @@
           <h2 class="mdl-card__title-text">Event Messages</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          <div id="message"></div>
+          <div id="messages"></div>
         </div>
       </div>
 
@@ -90,7 +90,7 @@
       const video = document.getElementById('video');
       let content = document.getElementById('content');
       let nzmap = document.getElementById('nzmap');
-      let message = document.getElementById('message');
+      let messages = document.getElementById('messages');
       let micButton = document.getElementById('mic');
       let micEnabled = true;
 
@@ -113,7 +113,7 @@
         let ele = document.createElement('p');
         ele.innerText = text;
         ele.style.color = color;
-        message.appendChild(ele);
+        messages.appendChild(ele);
       };
 
       let buttons = [
