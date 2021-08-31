@@ -54,8 +54,11 @@ jobs:
         run: npm run package
 
       # upload to aws s3
-      - name: Upload to S3 Bucket
+      - name: Upload current version to S3 Bucket
         run: aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-${{ env.RELEASE_VERSION}}.js
+
+      - name: Upload latest version to S3 Bucket
+        run: aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-latest.js
 
       # refresh the cache in edge servers
       - name: Invalidate Cloudfront CDN
