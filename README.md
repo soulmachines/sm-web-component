@@ -1,5 +1,27 @@
 # Soul Machines Web Component
 
+## Continuity POC
+
+This POC demonstrates that the Shared Worker instance is not persisted when navigating to another page on the same site.
+
+Run the following commands:
+
+```
+npm run token
+npm run package
+npm run serve
+```
+
+This will start the token server and serve the /demo/index.html page.
+
+1. Open the page at <http://127.0.0.1:8080/>
+2. The `sm-video` component on the page starts a Shared Worker which continually increments a counter and sends the value back to the page where it is displayed under 'Worker Status'
+3. Open another instance of the page in a new tab - you will notice that the 'Worker Status' updates with the same values as the other tab. This behaviour is expected due to the Shared Worker.
+4. Close the second tab
+5. On the original tab, click the 'Go to Other page' link which navigates you to a similar second page which also contains an `sm-video` component. However, note that the 'Worker Status was reset to the initial 'None set yet' state then starts incrementing from zero. This is because the original Shared Worked instance was terminated when the page was navigated away from, and a new instance created for the destination page.
+
+## Original Content
+
 This project generates a single JavaScript file called `soulmachines.js` as output. Including this file into an existing website allows that site to add a digital person to the page using HTML like this:
 
 ```

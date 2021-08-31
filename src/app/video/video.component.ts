@@ -9,6 +9,8 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
@@ -21,7 +23,7 @@ import { of } from 'rxjs';
   styleUrls: ['./video.component.scss'],
   providers: [SMWebSDKService],
 })
-export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class VideoComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
 
   // required inputs
@@ -84,9 +86,30 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     ['stopSpeaking', this.stopSpeaking],
   ];
 
-  constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
+  private sharedWorker: SharedWorker;
+  public workerStatus = 'none yet';
+
+  constructor(
+    private hostRef: ElementRef,
+    public webSDKService: SMWebSDKService,
+    private changeDetector: ChangeDetectorRef,
+  ) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
     this.bindPublicMethods();
+  }
+
+  public ngOnInit() {
+    this.setupSharedWorker();
+  }
+
+  private setupSharedWorker() {
+    const worker = new SharedWorker('/assets/shared-worker.worker.js', 'Shared Worker - Counter');
+    worker.port.onmessage = ({ data }) => {
+      this.workerStatus = data;
+      this.changeDetector.detectChanges();
+    };
+    this.sharedWorker = worker;
+    this.sharedWorker.port.start();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -160,6 +183,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public ngOnDestroy() {
     this.resizeObserver.unobserve(this.nativeElement);
     this.disconnect();
+    // TODO: destroy sharedWorker?
   }
 
   private bindPublicMethods() {
