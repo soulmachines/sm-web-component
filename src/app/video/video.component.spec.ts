@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VideoComponent } from './video.component';
 import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of } from 'rxjs';
@@ -11,13 +10,12 @@ describe('VideoComponent', () => {
 
   beforeEach(async () => {
     mockSMWebSdkService = jasmine.createSpyObj<SMWebSDKService>('SMWebSDKService', {
-      initialise: null,
+      initialise: undefined,
       connect: of(''),
     });
 
     await TestBed.configureTestingModule({
       declarations: [VideoComponent],
-      imports: [HttpClientTestingModule],
     }).compileComponents();
 
     // override provider here as it doesn't work in configureTestingModule due
