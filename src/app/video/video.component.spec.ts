@@ -14,13 +14,14 @@ describe('VideoComponent', () => {
       initialise: null,
       connect: of(''),
     });
-    mockSMWebSdkService.connect.and.returnValue(of(''));
 
     await TestBed.configureTestingModule({
       declarations: [VideoComponent],
       imports: [HttpClientTestingModule],
     }).compileComponents();
 
+    // override provider here as it doesn't work in configureTestingModule due
+    // to not being provided in root
     TestBed.overrideComponent(VideoComponent, {
       set: {
         providers: [{ provide: SMWebSDKService, useValue: mockSMWebSdkService }],
