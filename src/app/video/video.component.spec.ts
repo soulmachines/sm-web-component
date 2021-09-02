@@ -51,7 +51,7 @@ describe('VideoComponent', () => {
 
     describe('when connection is successful', () => {
       beforeEach(() => {
-        component.connect();
+        component['connect']();
       });
 
       it('should call onConnectionSuccess', () => {
@@ -66,7 +66,7 @@ describe('VideoComponent', () => {
     describe('when connection is unsuccessful', () => {
       beforeEach(() => {
         spyOn(mockSMWebSdkService, 'connect').and.returnValue(throwError(null));
-        component.connect();
+        component['connect']();
       });
 
       it('should call onConnectionError', () => {
@@ -87,7 +87,7 @@ describe('VideoComponent', () => {
         component.tokenserver = 'test-token-server';
         fixture.detectChanges();
 
-        component.connect();
+        component['connect']();
         expect(connectSpy).toHaveBeenCalledOnceWith('test-token-server');
       });
     });
