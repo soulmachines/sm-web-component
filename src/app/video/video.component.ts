@@ -98,7 +98,20 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.log('changes: ', { changes });
   }
 
-  public connect() {
+  public ngAfterViewInit() {
+    this.webSDKService.initialise(this.videoRef.nativeElement);
+    if (this.autoconnect) {
+      this.connect();
+    }
+    this.initHostResizeWatcher();
+  }
+
+  public ngOnDestroy() {
+    this.resizeObserver.unobserve(this.nativeElement);
+    this.disconnect();
+  }
+
+  private connect() {
     this.log('connect');
 
     this.webSDKService
@@ -113,14 +126,14 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       .subscribe();
   }
 
-  public disconnect() {
+  private disconnect() {
     this.log('disconnect');
     this.webSDKService?.disconnect();
     this.onDisconnected();
     this.webSDKService.unregisterEventCallbacks(this.sceneCallbacks);
   }
 
-  public sendTextMessage(text: string) {
+  private sendTextMessage(text: string) {
     return this.executeCommand(
       () => this.webSDKService.persona.conversationSend(text, {}, {}),
       'sendTextMessage: ',
@@ -128,7 +141,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     );
   }
 
-  public setMicrophoneEnabled(enabled: boolean) {
+  private setMicrophoneEnabled(enabled: boolean) {
     return this.executeCommand(
       () => {
         if (enabled) {
@@ -142,29 +155,16 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     );
   }
 
-  public stopSpeaking() {
+  private stopSpeaking() {
     return this.executeCommand(() => this.webSDKService.persona.stopSpeaking(), 'stopSpeaking');
   }
 
-  public getPersona() {
+  private getPersona() {
     return this.executeCommand(() => this.webSDKService.persona, 'getPersona');
   }
 
-  public getScene() {
+  private getScene() {
     return this.executeCommand(() => this.webSDKService.scene, 'getScene');
-  }
-
-  public ngAfterViewInit() {
-    this.webSDKService.initialise(this.videoRef.nativeElement);
-    if (this.autoconnect) {
-      this.connect();
-    }
-    this.initHostResizeWatcher();
-  }
-
-  public ngOnDestroy() {
-    this.resizeObserver.unobserve(this.nativeElement);
-    this.disconnect();
   }
 
   private bindPublicMethods() {
