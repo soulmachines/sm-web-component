@@ -137,4 +137,24 @@ describe('VideoComponent', () => {
       });
     });
   });
+
+  describe('resize', () => {
+    let resizeVideoStreamSpy, initHostResizeWatcherSpy;
+    beforeEach(() => {
+      resizeVideoStreamSpy = spyOn<any>(component, 'resizeVideoStream');
+      initHostResizeWatcherSpy = spyOn<any>(component, 'initHostResizeWatcher');
+      fixture.detectChanges();
+      component['connect']();
+    });
+
+    describe('when connection is successful', () => {
+      it('should call resizeVideoStream', () => {
+        expect(resizeVideoStreamSpy).toHaveBeenCalled();
+      });
+
+      it('should call initHostResizeWatcher', () => {
+        expect(initHostResizeWatcherSpy).toHaveBeenCalled();
+      });
+    });
+  });
 });
