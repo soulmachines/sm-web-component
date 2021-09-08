@@ -139,21 +139,27 @@ describe('VideoComponent', () => {
   });
 
   describe('resize', () => {
-    let resizeVideoStreamSpy, initHostResizeWatcherSpy;
+    let sendVideoBoundsSpy;
     beforeEach(() => {
-      resizeVideoStreamSpy = spyOn<any>(component, 'resizeVideoStream');
-      initHostResizeWatcherSpy = spyOn<any>(component, 'initHostResizeWatcher');
+      sendVideoBoundsSpy = spyOn(mockSMWebSdkService, 'sendVideoBounds');
+      mockSMWebSdkService.connected = true;
       fixture.detectChanges();
-      component['connect']();
     });
 
     describe('when connection is successful', () => {
       it('should call resizeVideoStream', () => {
-        expect(resizeVideoStreamSpy).toHaveBeenCalled();
+        component['connect']();
+        expect(sendVideoBoundsSpy).toHaveBeenCalled();
       });
+    });
 
-      it('should call initHostResizeWatcher', () => {
-        expect(initHostResizeWatcherSpy).toHaveBeenCalled();
+    fdescribe('when resize event is fired', () => {
+      it('should call resizeVideoStream', () => {
+        //window.addEventListener('resize', jasmine.createSpy());
+        //console.log(fixture.nativeElement.clientWidth);
+        Object.assign(window, { clientHeight: 123 });
+        window.dispatchEvent(new Event('resize'));
+        expect(sendVideoBoundsSpy).toHaveBeenCalledTimes(2);
       });
     });
   });
