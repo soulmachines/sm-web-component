@@ -255,4 +255,44 @@ describe('VideoComponent', () => {
       expect(stopSpeakingSpy).toHaveBeenCalled();
     });
   });
+
+  describe('outputs', () => {
+    beforeEach(() => {
+      createComponent();
+      fixture.detectChanges();
+    });
+
+    it('should raise connected event when onConnectionSuccess is called', () => {
+      const connectedEmitSpy = spyOn(component.child.connected, 'emit');
+      component.child['onConnectionSuccess']();
+      expect(connectedEmitSpy).toHaveBeenCalled();
+    });
+
+    it('should raise disconnected event when disconnect is called', () => {
+      const disconnectedEmitSpy = spyOn(component.child.disconnected, 'emit');
+      component.child['disconnect']();
+      expect(disconnectedEmitSpy).toHaveBeenCalled();
+    });
+
+    it('should raise userSpoke event when onConversationResult is called', () => {
+      const userSpokeEmitSpy = spyOn(component.child.userSpoke, 'emit');
+      const data = { input: { text: 'input text' }, output: { text: 'output text' } };
+      component.child['onConversationResult'](null, data);
+      expect(userSpokeEmitSpy).toHaveBeenCalledWith('input text');
+    });
+
+    it('should raise dpSpoke event when onConversationResult is called', () => {
+      const dpSpokeEmitSpy = spyOn(component.child.dpSpoke, 'emit');
+      const data = { input: { text: 'input text' }, output: { text: 'output text' } };
+      component.child['onConversationResult'](null, data);
+      expect(dpSpokeEmitSpy).toHaveBeenCalledWith('output text');
+    });
+
+    it('should raise speechMarker event when onSpeechMarker is called', () => {
+      const speechMarkerEmitSpy = spyOn(component.child.speechMarker, 'emit');
+      const data = { name: 'data name', arguments: ['arg1', 'arg2'] };
+      component.child['onSpeechMarker'](null, data);
+      expect(speechMarkerEmitSpy).toHaveBeenCalledWith(data);
+    });
+  });
 });
