@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser';
   template: ` <app-video></app-video> `,
 })
 class TestComponent {
-  @ViewChild(VideoComponent, { static: false }) child: VideoComponent;
+  @ViewChild(VideoComponent, { static: true }) child: VideoComponent;
 }
 
 describe('VideoComponent', () => {
@@ -98,8 +98,7 @@ describe('VideoComponent', () => {
     });
   });
 
-  // TODO disabled - will be fixed in next PR
-  xdescribe('inputs', () => {
+  describe('inputs', () => {
     beforeEach(() => {
       createComponent();
     });
@@ -167,21 +166,29 @@ describe('VideoComponent', () => {
       fixture.debugElement.query(By.css('app-video')).nativeElement;
 
     it('persona should return the persona from the WebSDK', () => {
-      const sdkService = { ...mockSMWebSdkService, persona: 'mock persona', connected: true };
+      const sdkService = {
+        ...mockSMWebSdkService,
+        persona: { ...mockSMWebSdkService.persona, testId: 'mock persona' },
+        connected: true,
+      };
       createComponent(sdkService);
       fixture.detectChanges();
 
       const persona = getVideoNativeElement().persona();
-      expect(persona).toBe('mock persona');
+      expect(persona.testId).toBe('mock persona');
     });
 
     it('scene should return the scene from the WebSDK', () => {
-      const sdkService = { ...mockSMWebSdkService, scene: 'mock scene', connected: true };
+      const sdkService = {
+        ...mockSMWebSdkService,
+        scene: { ...mockSMWebSdkService.scene, testId: 'mock scene' },
+        connected: true,
+      };
       createComponent(sdkService);
       fixture.detectChanges();
 
-      const persona = getVideoNativeElement().scene();
-      expect(persona).toBe('mock scene');
+      const scene = getVideoNativeElement().scene();
+      expect(scene.testId).toBe('mock scene');
     });
 
     // TODO - could break this down so it only checks if component.connect() was called
