@@ -10,7 +10,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, takeUntil, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
 import {
   SMWebSDKService,
@@ -18,7 +18,7 @@ import {
   SceneCallbacks,
   SpeechMarkerEventArgs,
 } from '../services/smwebsdk.service';
-import { of } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-video',
@@ -89,9 +89,13 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     ['stopSpeaking', this.stopSpeaking],
   ];
 
+  public connectingSubject = new BehaviorSubject<boolean>(false);
+  private destroyedSubject = new Subject();
+
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
     this.bindPublicMethods();
+    this.setupApplyConnectingAttribute();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -109,10 +113,13 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public ngOnDestroy() {
     this.resizeObserver.unobserve(this.nativeElement);
     this.disconnect();
+    this.destroyedSubject.next();
   }
 
   private connect() {
     this.log('connect');
+
+    this.connectingSubject.next(true);
 
     this.webSDKService
       .connect(this.tokenserver)
@@ -173,6 +180,18 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     );
   }
 
+  // TODO naming, may not be needed if we use a slot approach
+  private setupApplyConnectingAttribute() {
+    const applyConnectingClass = (connecting: boolean) =>
+      connecting
+        ? this.nativeElement.setAttribute('connecting', '')
+        : this.nativeElement.removeAttribute('connecting');
+
+    this.connectingSubject
+      .pipe(tap((connecting) => applyConnectingClass(connecting), takeUntil(this.destroyedSubject)))
+      .subscribe();
+  }
+
   private executeCommand(command: () => any, ...logMessage: any[]) {
     if (this.webSDKService.connected) {
       this.log(...logMessage);
@@ -190,7 +209,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private resizeVideoStream() {
     if (this.webSDKService?.connected) {
-      const element = this.hostRef.nativeElement;
+      const element = this.nativeElement;
       const [width, height] = [element.clientWidth, element.clientHeight];
       this.webSDKService.sendVideoBounds(width, height);
     }
@@ -207,10 +226,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
     this.setMicrophoneEnabled(this._microphoneEnabled);
+    this.connectingSubject.next(false);
     this.connected.emit();
   }
 
   private onConnectionError(error: any) {
+    this.connectingSubject.next(false);
     this.log(`session connection failed, error: ${error}`);
   }
 
