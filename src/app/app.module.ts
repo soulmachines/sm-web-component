@@ -5,6 +5,7 @@ import { createCustomElement } from '@angular/elements';
 import { VideoModule } from './video/video.module';
 import { VideoComponent } from './video/video.component';
 import { LoadingIndicatorModule } from './loading-indicator/loading-indicator.module';
+import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, VideoModule, LoadingIndicatorModule],
@@ -12,9 +13,16 @@ import { LoadingIndicatorModule } from './loading-indicator/loading-indicator.mo
   bootstrap: [],
 })
 export class AppModule {
+  elements = [
+    { component: VideoComponent, name: 'sm-video' },
+    { component: LoadingIndicatorComponent, name: 'sm-loading-indicator' },
+  ];
+
   constructor(injector: Injector) {
-    const el = createCustomElement(VideoComponent, { injector: injector });
-    customElements.define('sm-video', el);
+    this.elements.map((element) => {
+      const el = createCustomElement(element.component, { injector: injector });
+      customElements.define(element.name, el);
+    });
   }
 
   public ngDoBootstrap() {}
