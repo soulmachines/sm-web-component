@@ -9,6 +9,7 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  ViewEncapsulation,
 } from '@angular/core';
 import { catchError, takeUntil, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
@@ -25,6 +26,7 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
   providers: [SMWebSDKService],
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
