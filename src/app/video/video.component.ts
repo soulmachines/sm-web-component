@@ -97,7 +97,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
     this.bindPublicMethods();
-    this.setupApplyConnectingAttribute();
+    //this.setupApplyConnectingAttribute();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -183,16 +183,16 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   // TODO naming, may not be needed if we use a slot approach
-  private setupApplyConnectingAttribute() {
-    const applyConnectingClass = (connecting: boolean) =>
-      connecting
-        ? this.nativeElement.setAttribute('connecting', '')
-        : this.nativeElement.removeAttribute('connecting');
+  // private setupApplyConnectingAttribute() {
+  //   const applyConnectingClass = (connecting: boolean) =>
+  //     connecting
+  //       ? this.nativeElement.setAttribute('connecting', '')
+  //       : this.nativeElement.removeAttribute('connecting');
 
-    this.connectingSubject
-      .pipe(tap((connecting) => applyConnectingClass(connecting), takeUntil(this.destroyedSubject)))
-      .subscribe();
-  }
+  //   this.connectingSubject
+  //     .pipe(tap((connecting) => applyConnectingClass(connecting), takeUntil(this.destroyedSubject)))
+  //     .subscribe();
+  // }
 
   private executeCommand(command: () => any, ...logMessage: any[]) {
     if (this.webSDKService.connected) {
