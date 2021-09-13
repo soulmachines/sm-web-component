@@ -89,3 +89,14 @@ Serve the demo - this server can remain running. Refresh in browser to view chan
 ```
 npm run serve
 ```
+
+### Release
+
+1. branch from `master`, name the branch following this based on the release type:
+
+   - formal release - `release`
+   - alpha release - `alpha`
+   - beta release - `beta`
+
+2. Push the release branch to remote, it will trigger `semantic-release` and `release` job in CI
+3. Once release is done, create a PR to merge the branch back to `master` to get latest version and changelog updated
