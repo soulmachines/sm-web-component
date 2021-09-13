@@ -1,4 +1,4 @@
 <div id="container">
   <video data-sm-video #video autoplay playsinline [srcObject]="personaVideoStream"></video
-  ><slot name="loader" *ngIf="connectingSubject | async"></slot>
+  ><slot name="loading-indicator" *ngIf="connectingSubject | async"></slot>
 </div>
