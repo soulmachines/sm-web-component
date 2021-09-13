@@ -52,8 +52,13 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     name: Run Semantic Release
+
+    if: github.ref != 'refs/heads/master'
     steps:
-      - if: github.ref != 'refs/heads/master'
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Run Semantic release
         run: npx semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
