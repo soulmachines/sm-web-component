@@ -49,6 +49,7 @@ jobs:
         run: npm run package
 
   semantic-release:
+    needs: [build]
     runs-on: ubuntu-latest
     name: Run Semantic Release
     steps:
@@ -58,7 +59,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   release:
-    needs: [semantic-release]
+    needs: [build, semantic-release]
     runs-on: ubuntu-latest
     name: Release to CDN
     steps:
