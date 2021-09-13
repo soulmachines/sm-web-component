@@ -92,7 +92,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   ];
 
   public connectingSubject = new BehaviorSubject<boolean>(false);
-  private destroyedSubject = new Subject();
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
@@ -114,7 +113,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   public ngOnDestroy() {
     this.resizeObserver.unobserve(this.nativeElement);
     this.disconnect();
-    this.destroyedSubject.next();
   }
 
   private connect() {
