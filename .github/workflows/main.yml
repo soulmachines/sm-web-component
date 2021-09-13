@@ -48,23 +48,23 @@ jobs:
       - name: Build Asset
         run: npm run package
 
-  semantic-release:
-    needs: [build]
-    runs-on: ubuntu-latest
-    name: Run Semantic Release
-
-    if: github.ref != 'refs/heads/master'
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v2
-
-      - name: Run Semantic release
+      - if: contains(
+          refs/heads/release
+          refs/heads/alpha
+          refs/heads/beta,
+          github.ref)
+        name: Run Semantic Release
         run: npx semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   release:
-    needs: [build, semantic-release]
+    if: contains(
+      refs/heads/release
+      refs/heads/alpha
+      refs/heads/beta,
+      github.ref)
+    needs: [build]
     runs-on: ubuntu-latest
     name: Release to CDN
     steps:
