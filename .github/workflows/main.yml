@@ -24,10 +24,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test the version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        shell: bash
+        run: echo "##[set-output name=VERSION;]$(echo ${GITHUB_REF/refs\/tags\//})"
 
       - name: test the version2
-        run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
+        run: echo "##[set-output name=VERSION;]$(echo ${GITHUB_REF##*/})"
+
+      - name: test the version3
+        run: echo "##[set-output name=VERSION;]$(echo ${GITHUB_REF#refs/*/})"
 
   #     - name: Checkout Source Code
   #       uses: actions/checkout@v2
