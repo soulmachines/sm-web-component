@@ -41,3 +41,7 @@ jobs:
 
       - name: Build Asset
         run: npm run package
+
+      - if: github.ref != 'refs/heads/master'
+        name: Run Semantic Release
+        run: npx semantic-release
