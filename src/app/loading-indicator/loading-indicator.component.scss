@@ -1,4 +1,4 @@
-@keyframes smloadingspinner {
+@keyframes spinner {
   0% {
     opacity: 1;
     backface-visibility: hidden;
@@ -22,7 +22,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background: grey;
-  animation: smloadingspinner 0.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: spinner 0.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
 }
 
 .sm-spinner div:nth-child(1) > div {
