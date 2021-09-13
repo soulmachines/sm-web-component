@@ -52,3 +52,5 @@ jobs:
       - if: github.ref != 'refs/heads/master'
         name: Run Semantic Release
         run: npx semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
