@@ -70,7 +70,7 @@
   "release": {
     "branches": [
       "master",
-      "*.*.*"
+      "1.0.0"
     ],
     "tagFormat": "${version}",
     "plugins": [
