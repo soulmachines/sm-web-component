@@ -1,5 +1,12 @@
 # Change Log
 
+# [1.0.0-alpha.2](https://github.com/soulmachines/sm-web-component/compare/1.0.0-alpha.1...1.0.0-alpha.2) (2021-09-13)
+
+
+### Features
+
+* setup release pipeline env variables ([6fc1db9](https://github.com/soulmachines/sm-web-component/commit/6fc1db9be02fa198b797b96fef216848a55efff9))
+
 # 1.0.0-alpha.1 (2021-09-13)
 
 
