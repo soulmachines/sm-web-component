@@ -23,6 +23,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: test the GITHUB_REF
+        run: echo $GITHUB_REF
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
       - name: test the version
         shell: bash
         run: echo "##[set-output name=VERSION;]$(echo ${GITHUB_REF/refs\/tags\//})"
