@@ -1,6 +1,6 @@
 {
   "name": "soulmachines-video-web-component",
-  "version": "1.0.0-rc.0",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@angular/animations": "^12.2.1",
@@ -69,11 +69,14 @@
   },
   "release": {
     "branches": [
-      "+([0-9])?(.{+([0-9]),x}).x",
+      "master",
       {
-        "name": "pre/rc",
-        "channel": "pre/rc",
-        "prerelease": "rc"
+        "name": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "alpha",
+        "prerelease": true
       }
     ],
     "tagFormat": "${version}",
