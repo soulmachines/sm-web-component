@@ -48,22 +48,14 @@ jobs:
       - name: Build Asset
         run: npm run package
 
-      - if: contains(
-          refs/heads/release
-          refs/heads/alpha
-          refs/heads/beta,
-          github.ref)
+      - if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
         name: Run Semantic Release
         run: npx semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   release:
-    if: contains(
-      refs/heads/release
-      refs/heads/alpha
-      refs/heads/beta,
-      github.ref)
+    if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
     needs: [build]
     runs-on: ubuntu-latest
     name: Release to CDN
