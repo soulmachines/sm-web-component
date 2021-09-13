@@ -54,3 +54,10 @@ jobs:
         run: npx semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - if: github.ref != 'refs/heads/master'
+        name: Release to CDN
+        run:
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-${{ env.RELEASE_VERSION}}.js
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-latest.js
+          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
