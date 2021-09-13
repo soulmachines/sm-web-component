@@ -10,7 +10,7 @@ on:
       - '*.*.*' # maintenance releases branches
 
 env:
-  RELEASE_VERSION: ${GITHUB_REF/refs\/tags\//}
+  RELEASE_VERSION: ${GITHUB_REF##*/}
   ASSET_LOCATION: demo/soulmachines.js
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
@@ -23,55 +23,61 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v2
+      - name: test the version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12.x'
+      - name: test the version2
+        run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
 
-      - name: Caching Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+  #     - name: Checkout Source Code
+  #       uses: actions/checkout@v2
 
-      # Install with auth token so we can access @soulmachines/* private packages
-      - name: Set registry path and credentials for internal builds
-        run: echo "@soulmachines:registry=https://npm.pkg.github.com/soulmachines" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{ secrets.SMGITHUBBOT_READ_PACKAGES }}" >> .npmrc
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '12.x'
 
-      - name: Install Dependencies
-        run: npm ci
+  #     - name: Caching Dependencies
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
 
-      - name: Run Lint
-        run: npm run lint
+  #     # Install with auth token so we can access @soulmachines/* private packages
+  #     - name: Set registry path and credentials for internal builds
+  #       run: echo "@soulmachines:registry=https://npm.pkg.github.com/soulmachines" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{ secrets.SMGITHUBBOT_READ_PACKAGES }}" >> .npmrc
 
-      - name: Run Tests
-        run: npm run test-ci
+  #     - name: Install Dependencies
+  #       run: npm ci
 
-      - name: Run Prettier
-        run: npm run prettier
+  #     - name: Run Lint
+  #       run: npm run lint
 
-      - name: Build Asset
-        run: npm run package
+  #     - name: Run Tests
+  #       run: npm run test-ci
 
-      - if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
-        name: Run Semantic Release
-        run: npx semantic-release
-        env:
-          GH_TOKEN: ${{ env.GH_TOKEN }}
+  #     - name: Run Prettier
+  #       run: npm run prettier
 
-  release:
-    if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
-    needs: [build]
-    runs-on: ubuntu-latest
-    name: Release to CDN
-    steps:
-      - if: github.ref != 'refs/heads/master'
-        run:
-          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-${{ env.RELEASE_VERSION}}.js
-          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-latest.js
-          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+  #     - name: Build Asset
+  #       run: npm run package
+
+  #     - if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
+  #       name: Run Semantic Release
+  #       run: npx semantic-release
+  #       env:
+  #         GH_TOKEN: ${{ env.GH_TOKEN }}
+
+  # release:
+  #   if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   name: Release to CDN
+  #   steps:
+  #     - if: github.ref != 'refs/heads/master'
+  #       run:
+  #         aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-${{ env.RELEASE_VERSION}}.js
+  #         aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-latest.js
+  #         aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
