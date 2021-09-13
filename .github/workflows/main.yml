@@ -8,7 +8,7 @@ on:
       - pre/rc
       - next
       - beta
-      - '*.x' # maintenance releases branches
+      - '*.*.*' # maintenance releases branches
 
 jobs:
   build:
