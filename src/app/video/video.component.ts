@@ -11,7 +11,7 @@ import {
   EventEmitter,
   ViewEncapsulation,
 } from '@angular/core';
-import { catchError, takeUntil, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
 import {
   SMWebSDKService,
@@ -97,7 +97,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenserver}`);
     this.bindPublicMethods();
-    //this.setupApplyConnectingAttribute();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -181,18 +180,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       ([name, implementation]) => (this.nativeElement[name] = implementation.bind(this)),
     );
   }
-
-  // TODO naming, may not be needed if we use a slot approach
-  // private setupApplyConnectingAttribute() {
-  //   const applyConnectingClass = (connecting: boolean) =>
-  //     connecting
-  //       ? this.nativeElement.setAttribute('connecting', '')
-  //       : this.nativeElement.removeAttribute('connecting');
-
-  //   this.connectingSubject
-  //     .pipe(tap((connecting) => applyConnectingClass(connecting), takeUntil(this.destroyedSubject)))
-  //     .subscribe();
-  // }
 
   private executeCommand(command: () => any, ...logMessage: any[]) {
     if (this.webSDKService.connected) {
