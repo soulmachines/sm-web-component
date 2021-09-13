@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-loading-indicator',
   template: `<div class="sm-spinner-container">
-    <div class="smloadingspinner">
+    <div class="sm-spinner">
       <div><div></div></div>
       <div><div></div></div>
       <div><div></div></div>

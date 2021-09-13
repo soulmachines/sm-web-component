@@ -16,7 +16,7 @@
   }
 }
 
-.smloadingspinner div > div {
+.sm-spinner div > div {
   position: absolute;
   width: 10%;
   aspect-ratio: 1;
@@ -25,31 +25,31 @@
   animation: smloadingspinner 0.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
 }
 
-.smloadingspinner div:nth-child(1) > div {
+.sm-spinner div:nth-child(1) > div {
   left: 45%;
   top: 66%;
   animation-delay: 0s;
 }
 
-.smloadingspinner div:nth-child(2) > div {
+.sm-spinner div:nth-child(2) > div {
   left: 65%;
   top: 52%;
   animation-delay: -0.1s;
 }
 
-.smloadingspinner div:nth-child(3) > div {
+.sm-spinner div:nth-child(3) > div {
   left: 57%;
   top: 28%;
   animation-delay: -0.3s;
 }
 
-.smloadingspinner div:nth-child(4) > div {
+.sm-spinner div:nth-child(4) > div {
   left: 31%;
   top: 28%;
   animation-delay: -0.5s;
 }
 
-.smloadingspinner div:nth-child(5) > div {
+.sm-spinner div:nth-child(5) > div {
   left: 25%;
   top: 52%;
   animation-delay: -0.7s;
@@ -71,7 +71,7 @@
 //   //overflow: hidden;
 // }
 
-.smloadingspinner {
+.sm-spinner {
   width: 100%;
   height: 100%;
   position: relative;
@@ -80,6 +80,6 @@
   transform-origin: 0 0;
 }
 
-.smloadingspinner div {
+.sm-spinner div {
   box-sizing: content-box;
 }
