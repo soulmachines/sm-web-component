@@ -69,12 +69,8 @@
   },
   "release": {
     "branches": [
-      "*.*.*",
-      {
-        "name": "pre/rc",
-        "channel": "pre/rc",
-        "prerelease": "rc"
-      }
+      "master",
+      "*.*.*"
     ],
     "tagFormat": "${version}",
     "plugins": [
