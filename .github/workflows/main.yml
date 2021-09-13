@@ -2,6 +2,13 @@ name: Check
 
 on:
   pull_request:
+  push:
+    branches:
+      - master
+      - pre/rc
+      - next
+      - beta
+      - '*.x' # maintenance releases branches
 
 jobs:
   build:
