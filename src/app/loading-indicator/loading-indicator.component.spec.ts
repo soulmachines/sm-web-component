@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoadingIndicatorComponent } from './loading-indicator.component';
 
 describe('LoadingIndicatorComponent', () => {
@@ -8,9 +7,8 @@ describe('LoadingIndicatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingIndicatorComponent ]
-    })
-    .compileComponents();
+      declarations: [LoadingIndicatorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
