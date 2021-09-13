@@ -2,15 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-loading-indicator',
-  template: `<div class="sm-spinner-container">
-    <div class="sm-spinner">
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-      <div><div></div></div>
-    </div>
-  </div>`,
+  template: ` <img src="assets/spinner.svg" /> `,
   styleUrls: ['./loading-indicator.component.scss'],
 })
 export class LoadingIndicatorComponent {}
