@@ -4,18 +4,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { createCustomElement } from '@angular/elements';
 import { VideoModule } from './video/video.module';
 import { VideoComponent } from './video/video.component';
-import { LoadingIndicatorModule } from './loading-indicator/loading-indicator.module';
-import { LoadingIndicatorComponent } from './loading-indicator/loading-indicator.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerModule } from './spinner/spinner.module';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, VideoModule, LoadingIndicatorModule],
+  imports: [BrowserModule, HttpClientModule, VideoModule, SpinnerModule],
+
   declarations: [],
   bootstrap: [],
 })
 export class AppModule {
   elements = [
     { component: VideoComponent, name: 'sm-video' },
-    { component: LoadingIndicatorComponent, name: 'sm-loading-indicator' },
+    { component: SpinnerComponent, name: 'sm-spinner' },
   ];
 
   constructor(injector: Injector) {
