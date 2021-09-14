@@ -69,6 +69,7 @@
   },
   "release": {
     "branches": [
+      "release",
       "master",
       {
         "name": "beta",
@@ -115,6 +116,12 @@
               "label": "JS distribution"
             }
           ]
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
         }
       ],
       [

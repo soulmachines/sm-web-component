@@ -1,4 +1,4 @@
-name: Check
+name: CI
 
 on:
   pull_request:
@@ -10,11 +10,13 @@ on:
 
 env:
   ASSET_LOCATION: demo/soulmachines.js
+  ASSET_NAME: 'soulmachines'
+  AWS_PATH: 's3://static-prod.soulmachines.com'
+  AWS_DEFAULT_OUTPUT: 'json'
+  AWS_DEFAULT_REGION: 'us-east-1'
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
   CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-  AWS_DEFAULT_OUTPUT: 'json'
-  AWS_DEFAULT_REGION: 'us-east-1'
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
@@ -78,7 +80,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Release to CDN
     steps:
-      - run:
-          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-${{ needs.build.outputs.RELEASE_VERSION }}.js
-          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} s3://static-prod.soulmachines.com/soulmachines-latest.js
+      - run: |
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
+          if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
+          then
+              echo "pre-release, not updating to latest"
+          else
+              echo "updating latest"
+              aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js
+          fi
           aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'

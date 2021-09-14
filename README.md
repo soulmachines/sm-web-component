@@ -100,3 +100,11 @@ npm run serve
 
 2. Push the release branch to remote, it will trigger `semantic-release` and `release` job in CI
 3. Once release is done, create a PR to merge the branch back to `master` to get latest version and changelog updated
+
+The table below shows which commit message gets you which release type when `semantic-release` runs:
+
+| Commit message                                                                                                                                                                                   | Release type               |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------- |
+| `fix(pencil): stop graphite breaking when too much pressure applied`                                                                                                                             | Patch Release              |
+| `feat(pencil): add 'graphiteWidth' option`                                                                                                                                                       | ~~Minor~~ Feature Release  |
+| `perf(pencil): remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.` | ~~Major~~ Breaking Release |
