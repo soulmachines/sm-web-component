@@ -1,9 +1,20 @@
 <html>
   <head>
     <script src="./soulmachines.js"></script>
+    <style>
+      sm-video {
+        width: 500px;
+        height: 400px;
+        position: absolute;
+      }
+    </style>
   </head>
   <body>
     <h1>Drop-in Web Component Demo</h1>
-    <sm-video autoconnect="true" tokenserver="http://localhost:4210/auth/authorize"></sm-video>
+    <div>
+      <sm-video autoconnect="true" tokenserver="http://localhost:4210/auth/authorize"
+        ><sm-spinner slot="connecting-indicator"></sm-spinner
+      ></sm-video>
+    </div>
   </body>
 </html>

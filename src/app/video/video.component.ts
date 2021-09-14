@@ -9,6 +9,7 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  ViewEncapsulation,
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
@@ -18,13 +19,14 @@ import {
   SceneCallbacks,
   SpeechMarkerEventArgs,
 } from '../services/smwebsdk.service';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
   providers: [SMWebSDKService],
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
@@ -77,6 +79,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.hostRef.nativeElement;
   }
 
+  public connectingSubject = new BehaviorSubject<boolean>(false);
   private resizeObserver: ResizeObserver;
 
   private publicMethods: [string, Function][] = [
@@ -113,6 +116,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private connect() {
     this.log('connect');
+
+    this.connectingSubject.next(true);
 
     this.webSDKService
       .connect(this.tokenserver)
@@ -190,7 +195,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private resizeVideoStream() {
     if (this.webSDKService?.connected) {
-      const element = this.hostRef.nativeElement;
+      const element = this.nativeElement;
       const [width, height] = [element.clientWidth, element.clientHeight];
       this.webSDKService.sendVideoBounds(width, height);
     }
@@ -207,10 +212,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
     this.setMicrophoneEnabled(this._microphoneEnabled);
+    this.connectingSubject.next(false);
     this.connected.emit();
   }
 
   private onConnectionError(error: any) {
+    this.connectingSubject.next(false);
     this.log(`session connection failed, error: ${error}`);
   }
 
