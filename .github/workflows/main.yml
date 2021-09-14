@@ -4,10 +4,9 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - release
       - alpha
       - beta
-      - '*.*.*' # maintenance releases branches
 
 env:
   ASSET_LOCATION: demo/soulmachines.js
