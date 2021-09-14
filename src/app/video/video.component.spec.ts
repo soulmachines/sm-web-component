@@ -4,6 +4,7 @@ import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of, throwError } from 'rxjs';
 import { Component, DebugElement, getDebugNode, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   template: ` <app-video></app-video> `,
@@ -302,23 +303,39 @@ describe('VideoComponent', () => {
     beforeEach(() => {
       createComponent();
       fixture.detectChanges();
-
-      connectingSubjectSpy = spyOn(component.child.connectingSubject, 'next');
     });
 
-    it('should emit true when the connection is initialised', () => {
-      component.child['connect']();
-      expect(connectingSubjectSpy).toHaveBeenCalledWith(true);
+    it('should default to false', (done) => {
+      component.child.connectingSubject
+        .pipe(
+          take(1),
+          tap((value) => {
+            expect(value).toBeFalse();
+            done();
+          }),
+        )
+        .subscribe();
     });
 
-    it('should emit false when the connection is successful', () => {
-      component.child['onConnectionSuccess']();
-      expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
-    });
+    describe('emitter', () => {
+      beforeEach(() => {
+        connectingSubjectSpy = spyOn(component.child.connectingSubject, 'next');
+      });
 
-    it('should emit false when the connection errors', () => {
-      component.child['onConnectionError']('error');
-      expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
+      it('should emit true when the connection is initialised', () => {
+        component.child['connect']();
+        expect(connectingSubjectSpy).toHaveBeenCalledWith(true);
+      });
+
+      it('should emit false when the connection is successful', () => {
+        component.child['onConnectionSuccess']();
+        expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
+      });
+
+      it('should emit false when the connection errors', () => {
+        component.child['onConnectionError']('error');
+        expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
+      });
     });
   });
 
