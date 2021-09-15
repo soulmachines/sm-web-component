@@ -89,3 +89,22 @@ Serve the demo - this server can remain running. Refresh in browser to view chan
 ```
 npm run serve
 ```
+
+### Release
+
+1. branch from `master`, name the branch following this based on the release type:
+
+   - formal release - `release`
+   - alpha release - `alpha`
+   - beta release - `beta`
+
+2. Push the release branch to remote, it will trigger the `semantic-release` step and the `release` job in CI
+3. Once the release is done, create a PR to merge the branch back to `master` to get the latest version and changelog updated
+
+The table below shows which commit message gets you which release type when `semantic-release` runs:
+
+| Commit message                                                                                                                                                                                   | Release type     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
+| `fix(pencil): stop graphite breaking when too much pressure applied`                                                                                                                             | Patch Release    |
+| `feat(pencil): add 'graphiteWidth' option`                                                                                                                                                       | Feature Release  |
+| `perf(pencil): remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.` | Breaking Release |

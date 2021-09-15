@@ -1,14 +1,35 @@
-name: Check
+name: CI
 
 on:
   pull_request:
+  push:
+    branches:
+      - release
+      - alpha
+      - beta
+
+env:
+  ASSET_LOCATION: demo/soulmachines.js
+  ASSET_NAME: 'soulmachines'
+  AWS_PATH: 's3://static-prod.soulmachines.com'
+  AWS_DEFAULT_OUTPUT: 'json'
+  AWS_DEFAULT_REGION: 'us-east-1'
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
+  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -41,3 +62,31 @@ jobs:
 
       - name: Build Asset
         run: npm run package
+
+      - if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
+        name: Run Semantic Release
+        id: RELEASE_VERSION
+        run: |
+          npx semantic-release
+          echo $(git describe --abbrev=0 --tags)
+          version=$(git describe --abbrev=0 --tags)
+          echo "::set-output name=tag::${version}"
+        env:
+          GH_TOKEN: ${{ env.GH_TOKEN }}
+
+  release:
+    if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
+    needs: [build]
+    runs-on: ubuntu-latest
+    name: Release to CDN
+    steps:
+      - run: |
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
+          if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
+          then
+              echo "pre-release, not updating latest"
+          else
+              echo "updating latest"
+              aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js
+          fi
+          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
