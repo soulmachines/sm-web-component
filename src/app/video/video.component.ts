@@ -148,13 +148,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private setMicrophoneEnabled(enabled: boolean) {
     return this.executeCommand(
-      () => {
-        if (enabled) {
-          this.webSDKService.scene?.startRecognize();
-        } else {
-          this.webSDKService.scene?.stopRecognize();
-        }
-      },
+      () =>
+        enabled
+          ? this.webSDKService.scene?.startRecognize()
+          : this.webSDKService.scene?.stopRecognize(),
       'setMicrophoneEnabled ',
       enabled,
     );
@@ -178,7 +175,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     );
   }
 
-  private executeCommand(command: () => any, ...logMessage: any[]) {
+  private executeCommand<R>(command: () => R, ...logMessage: any[]) {
     if (this.webSDKService.connected) {
       this.log(...logMessage);
       return command();
