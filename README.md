@@ -98,7 +98,7 @@ npm run serve
    - alpha release - `alpha`
    - beta release - `beta`
 
-2. Push the release branch to remote, it will trigger `semantic-release` and `release` job in CI
+2. Push the release branch to remote, it will trigger the `semantic-release` step and the `release` job in CI
 3. Once the release is done, create a PR to merge the branch back to `master` to get the latest version and changelog updated
 
 The table below shows which commit message gets you which release type when `semantic-release` runs:
