@@ -1,2 +1,4 @@
 <video data-sm-video #video autoplay playsinline [srcObject]="personaVideoStream"></video
-><slot name="connecting-indicator" *ngIf="connectingSubject | async"></slot>
+><slot name="connecting-indicator" *ngIf="connectingSubject | async"
+  ><app-spinner></app-spinner
+></slot>
