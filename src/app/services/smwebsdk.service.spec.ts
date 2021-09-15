@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { SMWebSDKService } from './smwebsdk.service';
 
 describe('SMWebSDKService', () => {
-  let smwebsdkService: SMWebSDKService;
+  let smWebSDKService: SMWebSDKService;
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
 
   beforeEach(() => {
@@ -13,11 +13,11 @@ describe('SMWebSDKService', () => {
       providers: [SMWebSDKService, { provide: HttpClient, useValue: httpClientSpy }],
     });
 
-    smwebsdkService = TestBed.inject(SMWebSDKService);
+    smWebSDKService = TestBed.inject(SMWebSDKService);
     httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
   });
 
   it('should be created', () => {
-    expect(smwebsdkService).toBeTruthy();
+    expect(smWebSDKService).toBeTruthy();
   });
 });
