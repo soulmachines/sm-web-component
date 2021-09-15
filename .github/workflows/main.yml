@@ -84,7 +84,7 @@ jobs:
           aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
           if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
           then
-              echo "pre-release, not updating to latest"
+              echo "pre-release, not updating latest"
           else
               echo "updating latest"
               aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js
