@@ -1,31 +1,8 @@
-# Soul Machines Web Component
+# Soul Machines Video Web Component
 
-This project generates a single JavaScript file called `soulmachines.js` as output. Including this file into an existing website allows that site to add a digital person to the page using HTML like this:
+The Video web component allows integration of a Digital Person into any website.
 
-```
-<sm-video autoconnect="true" tokenserver="https://my-token-server.com/jwt"></sm-video>
-```
-
-The element MUST be passed a `tokenserver` url where it can request a session configuration from. The `tokenserver` may be a localhost URL if developing locally. The session configuration must be returned in JSON in the following format:
-
-```
-// GET /jwt
-
-{
-  url: SESSION_SERVER_URL,
-  jwt: SIGNED_JWT_TOKEN
-}
-
-```
-
-#### `url`
-
-The secure websocket url to the session server that hosts the digital person.
-eg. wss://dh.soulmachines.cloud
-
-#### `jwt`
-
-A valid JWT token string, signed with the credentials provided by Soul Machines.
+Please refer to the [Usage Guide](./docs/USAGE.md) and [API Documentation](./docs/API-DOCS.md) for implementation guidance.
 
 ## Usage Examples
 
@@ -70,7 +47,7 @@ npm run token
 npm run start
 ```
 
-### Building the soulmachines.js library
+### Building the output soulmachines.js library
 
 ```
 npm run package

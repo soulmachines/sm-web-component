@@ -2,6 +2,29 @@
 
 ## Usage Guide
 
+### Token Server
+
+> An cloud token server template is available internally within Soul Machines
+
+A token server is required which serves an appopriate session configuration in JSON using the following format:
+
+```
+{
+  url: SESSION_SERVER_URL,
+  jwt: SIGNED_JWT_TOKEN
+}
+
+```
+
+#### `url`
+
+The secure websocket url to the session server that hosts the digital person.
+eg. `wss://dh.soulmachines.cloud`
+
+#### `jwt`
+
+A valid JWT token string, signed with the credentials provided by Soul Machines.
+
 ### Import the JavaScript module
 
 - Both specific versions (`soulmachines-X.Y.Z.js`) and the latest version (`soulmachines-latest.js`) are available
@@ -19,7 +42,7 @@
 ```
 <sm-video
   autoconnect="true"
-  tokenserver="https://##TOKEN_SERVER_URL##"
+  tokenserver="https://my-token-server.com/jwt"
 ></sm-video>
 ```
 
