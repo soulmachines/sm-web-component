@@ -1,6 +1,8 @@
-# Soul Machines Web Component - API Documentation
+# Soul Machines Video Web Component
 
-## Properties
+## API Documentation
+
+### Properties
 
 > Properties follow web component convention where when used as attributes, they are lower case hyphenated ie: `microphoneEnabled` => `microphone-enabled`
 
@@ -31,7 +33,7 @@ when set to:
 - true, debug messages will be output to the console
 - false, no debug messages will be logged
 
-## Methods
+### Methods
 
 > Where functions return a `Promise`, the promise will resolve when the operation is complete
 
@@ -63,7 +65,7 @@ get the Persona object from the WebSDK for access to advanced commands
 
 get the Scene object from the WebSDK for access to advanced commands
 
-## Events
+### Events
 
 > Events emit a `CustomEvent<T>` object where `event.detail` is the payload having type `T` (if any)
 
@@ -86,3 +88,9 @@ Fired when the Digital Person speaks with payload of the spoken text
 #### `speechMarker: CustomEvent<{ name, arguments }>`
 
 Fired when a speech marker is encountered in the Digital Person's speech, with payload of the marker's name and arguments
+
+### Slots
+
+#### `connecting-indicator`
+
+Content that will be displayed when the session is being connected. If omitted, the default indicator will be used.
