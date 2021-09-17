@@ -119,19 +119,19 @@ describe('VideoComponent', () => {
     describe('autoconnect', () => {
       it('should default to false', () => {
         fixture.detectChanges();
-        expect(component.child.autoconnect).toBeFalse();
+        expect(component.child.autoconnect).toBe('false');
       });
 
       it('when true should call connect in the WebSDK when the component is initialised', () => {
         const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
-        component.child.autoconnect = true;
+        component.child.autoconnect = 'true';
         fixture.detectChanges();
         expect(connectSpy).toHaveBeenCalled();
       });
 
       it('when false should not call connect in the WebSDK when the component is initialised', () => {
         const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
-        component.child.autoconnect = false;
+        component.child.autoconnect = 'false';
         fixture.detectChanges();
         expect(connectSpy).not.toHaveBeenCalled();
       });
@@ -142,7 +142,7 @@ describe('VideoComponent', () => {
         const startRecognizeSpy = spyOn(mockSMWebSdkService.scene, 'startRecognize');
         mockSMWebSdkService.connected = true;
 
-        component.child.microphoneEnabled = 'true'; // TODO this takes a string and autoconnect takes a boolean
+        component.child.microphoneEnabled = 'true';
         fixture.detectChanges();
 
         component.child['onConnectionSuccess']();
@@ -153,7 +153,7 @@ describe('VideoComponent', () => {
         const stopRecognizeSpy = spyOn(mockSMWebSdkService.scene, 'stopRecognize');
         mockSMWebSdkService.connected = true;
 
-        component.child.microphoneEnabled = 'false'; // TODO this takes a string and autoconnect takes a boolean
+        component.child.microphoneEnabled = 'false';
         fixture.detectChanges();
 
         component.child['onConnectionSuccess']();

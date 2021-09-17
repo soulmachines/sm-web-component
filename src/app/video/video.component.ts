@@ -20,7 +20,7 @@ import {
   SpeechMarkerEventArgs,
 } from '../services/smwebsdk.service';
 import { BehaviorSubject, of } from 'rxjs';
-import { convertToBool, stringbool } from '../types/stringbool.type';
+import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
 
 @Component({
   selector: 'app-video',
@@ -35,13 +35,16 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() public tokenserver: string;
 
   private _autoconnect = false;
-  @Input() public set autoconnect(enabled: stringbool) {
+  @Input() public set autoconnect(enabled: boolstring) {
     this._autoconnect = convertToBool(enabled);
+  }
+  public get autoconnect() {
+    return convertToBoolString(this._autoconnect);
   }
 
   private _microphoneEnabled = true;
   @Input('microphone-enabled')
-  public set microphoneEnabled(enabled: stringbool) {
+  public set microphoneEnabled(enabled: boolstring) {
     // store value for use in onConnectionSuccess - as it will
     // fail when the component is initialised and the SDK has not being connected
     this._microphoneEnabled = convertToBool(enabled);
@@ -50,10 +53,16 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.setMicrophoneEnabled(this._microphoneEnabled);
     }
   }
+  public get microphoneEnabled() {
+    return convertToBoolString(this._microphoneEnabled);
+  }
 
   private _debug = true;
-  @Input() public set debug(enabled: stringbool) {
+  @Input() public set debug(enabled: boolstring) {
     this._debug = convertToBool(enabled);
+  }
+  public get debug() {
+    return convertToBoolString(this._debug);
   }
 
   // outputs, exposed as publicly consumable events
