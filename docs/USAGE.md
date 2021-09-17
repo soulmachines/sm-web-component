@@ -29,10 +29,10 @@ A valid JWT token string, signed with the credentials provided by Soul Machines.
 
 - Both specific versions (`soulmachines-X.Y.Z.js`) and the latest version (`soulmachines-latest.js`) are available
 - Place the `<script>` tag in either the `<head>` or `<body>` section of your HTML page
-- It is preferable to use `async` so that loading the script does not block parsing of the page
+- It is preferable to use `defer` so that loading the script does not block parsing of the page
 
 ```
-<script src="https://static.soulmachines.com/soulmachines-latest.js" async></script>
+<script src="https://static.soulmachines.com/soulmachines-latest.js" defer></script>
 ```
 
 ### Embed the `<sm-video>` element
