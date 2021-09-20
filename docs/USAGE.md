@@ -41,8 +41,8 @@ A valid JWT token string, signed with the credentials provided by Soul Machines.
 
 ```
 <sm-video
-  autoconnect="true"
-  tokenserver="https://my-token-server.com/jwt"
+  auto-connect="true"
+  token-server="https://my-token-server.com/jwt"
 ></sm-video>
 ```
 

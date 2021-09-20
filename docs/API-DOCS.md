@@ -6,7 +6,7 @@
 
 > Properties follow web component convention where when used as attributes, they are lower case hyphenated ie: `microphoneEnabled` => `microphone-enabled`
 
-#### `tokenserver: string`
+#### `tokenServer: string`
 
 URL of the token server which serves the JWT token with credentials for your Digital Person
 
@@ -14,8 +14,8 @@ URL of the token server which serves the JWT token with credentials for your Dig
 
 when set to:
 
-- true, a session connection will be made when the component is initialized
-- false, no session connection will be made when the component is initialized
+- "true", a session connection will be made when the component is initialized
+- "false", no session connection will be made when the component is initialized
 
 > Subsequent connection/disconnection can be made via the `connect`/`disconnect` methods.
 
@@ -23,15 +23,15 @@ when set to:
 
 when set to:
 
-- true, the microphone will be enabled
-- false, the microphone will be disabled
+- "true", the microphone will be enabled
+- "false", the microphone will be disabled
 
 #### `debug: string = "true" | "false"`
 
 when set to:
 
-- true, debug messages will be output to the console
-- false, no debug messages will be logged
+- "true", debug messages will be output to the console
+- "false", no debug messages will be logged
 
 ### Methods
 
