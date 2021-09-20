@@ -32,14 +32,15 @@ import { convertToBool, convertToBoolString, boolstring } from '../types/boolstr
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
 
-  @Input() public tokenserver: string;
+  @Input('token-server') public tokenServer: string;
 
-  private _autoconnect = false;
-  @Input() public set autoconnect(enabled: boolstring) {
-    this._autoconnect = convertToBool(enabled);
+  private _autoConnect = false;
+  @Input('auto-connect')
+  public set autoConnect(enabled: boolstring) {
+    this._autoConnect = convertToBool(enabled);
   }
-  public get autoconnect() {
-    return convertToBoolString(this._autoconnect);
+  public get autoConnect() {
+    return convertToBoolString(this._autoConnect);
   }
 
   private _microphoneEnabled = true;
@@ -103,7 +104,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   ];
 
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
-    this.log(`video constructor: token server - ${this.tokenserver}`);
+    this.log(`video constructor: token server - ${this.tokenServer}`);
     this.bindPublicMethods();
   }
 
@@ -113,7 +114,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public ngAfterViewInit() {
     this.webSDKService.initialise(this.videoRef.nativeElement);
-    if (this._autoconnect) {
+    if (this._autoConnect) {
       this.connect();
     }
     this.initHostResizeWatcher();
@@ -130,7 +131,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.connectingSubject.next(true);
 
     this.webSDKService
-      .connect(this.tokenserver)
+      .connect(this.tokenServer)
       .pipe(
         tap(() => this.onConnectionSuccess()),
         catchError((e) => {

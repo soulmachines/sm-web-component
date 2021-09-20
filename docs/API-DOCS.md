@@ -2,36 +2,14 @@
 
 ## API Documentation
 
-### Properties
+### Attributes & Properties
 
-> Properties follow web component convention where when used as attributes, they are lower case hyphenated ie: `microphoneEnabled` => `microphone-enabled`
-
-#### `tokenserver: string`
-
-URL of the token server which serves the JWT token with credentials for your Digital Person
-
-#### `autoconnect: string = "true" | "false"`
-
-when set to:
-
-- true, a session connection will be made when the component is initialized
-- false, no session connection will be made when the component is initialized
-
-> Subsequent connection/disconnection can be made via the `connect`/`disconnect` methods.
-
-#### `microphoneEnabled: string = "true" | "false"`
-
-when set to:
-
-- true, the microphone will be enabled
-- false, the microphone will be disabled
-
-#### `debug: string = "true" | "false"`
-
-when set to:
-
-- true, debug messages will be output to the console
-- false, no debug messages will be logged
+| Property                     | Attribute                     | Type                         | Default            | Mandatory      | Description                                                                                                                                                                                                                                                                                    |
+| ---------------------------- | ----------------------------- | ---------------------------- | ------------------ | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <sub>tokenServer</sub>       | <sub>token-server</sub>       | <sub>string</sub>            |                    | <sub>Yes</sub> | <sub>URL of the token server which serves the JWT token with credentials for your Digital Person</sub>                                                                                                                                                                                         |
+| <sub>autoConnect</sub>       | <sub>auto-connect</sub>       | <sub>"true" \| "false"</sub> | <sub>"false"</sub> | <sub>No</sub>  | <sub>when set to: <br> - "true", a session connection will be made when the component is initialized <br>- "false", no session connection will be made when the component is initialized <br><br>Subsequent connection/disconnection can be made via the `connect`/`disconnect` methods.</sub> |
+| <sub>microphoneEnabled</sub> | <sub>microphone-enabled</sub> | <sub>"true" \| "false"</sub> | <sub>"true"</sub>  | <sub>No</sub>  | <sub>when set to:<br>- "true", the microphone will be enabled<br>- "false", the microphone will be disabled</sub>                                                                                                                                                                              |
+| <sub>debug</sub>             | <sub>debug</sub>              | <sub>"true" \| "false"</sub> | <sub>"true"</sub>  | <sub>No</sub>  | <sub>when set to:<br>- "true", debug messages will be output to the console<br>- "false", no debug messages will be logged</sub> </sub>                                                                                                                                                        |
 
 ### Methods
 

@@ -104,11 +104,11 @@ describe('VideoComponent', () => {
       createComponent();
     });
 
-    describe('tokenserver', () => {
+    describe('tokenServer', () => {
       it('should be passed as a parameter to connect(..) in the WebSDK when a connection is started', () => {
         const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
 
-        component.child.tokenserver = 'test-token-server';
+        component.child.tokenServer = 'test-token-server';
         fixture.detectChanges();
 
         component.child['connect']();
@@ -116,22 +116,22 @@ describe('VideoComponent', () => {
       });
     });
 
-    describe('autoconnect', () => {
+    describe('autoConnect', () => {
       it('should default to false', () => {
         fixture.detectChanges();
-        expect(component.child.autoconnect).toBe('false');
+        expect(component.child.autoConnect).toBe('false');
       });
 
       it('when true should call connect in the WebSDK when the component is initialised', () => {
         const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
-        component.child.autoconnect = 'true';
+        component.child.autoConnect = 'true';
         fixture.detectChanges();
         expect(connectSpy).toHaveBeenCalled();
       });
 
       it('when false should not call connect in the WebSDK when the component is initialised', () => {
         const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
-        component.child.autoconnect = 'false';
+        component.child.autoConnect = 'false';
         fixture.detectChanges();
         expect(connectSpy).not.toHaveBeenCalled();
       });
