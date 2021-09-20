@@ -20,6 +20,7 @@ import {
   SpeechMarkerEventArgs,
 } from '../services/smwebsdk.service';
 import { BehaviorSubject, of } from 'rxjs';
+import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
 
 @Component({
   selector: 'app-video',
@@ -31,25 +32,38 @@ import { BehaviorSubject, of } from 'rxjs';
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
 
-  // required inputs
   @Input() public tokenserver: string;
 
-  // optional inputs
-  @Input() public autoconnect = false;
+  private _autoconnect = false;
+  @Input() public set autoconnect(enabled: boolstring) {
+    this._autoconnect = convertToBool(enabled);
+  }
+  public get autoconnect() {
+    return convertToBoolString(this._autoconnect);
+  }
 
   private _microphoneEnabled = true;
   @Input('microphone-enabled')
-  public set microphoneEnabled(enabled: string) {
+  public set microphoneEnabled(enabled: boolstring) {
     // store value for use in onConnectionSuccess - as it will
     // fail when the component is initialised and the SDK has not being connected
-    this._microphoneEnabled = enabled === 'true';
+    this._microphoneEnabled = convertToBool(enabled);
     // otherwise for subsequent value changes, call through to SDK
     if (this.webSDKService.connected) {
       this.setMicrophoneEnabled(this._microphoneEnabled);
     }
   }
+  public get microphoneEnabled() {
+    return convertToBoolString(this._microphoneEnabled);
+  }
 
-  @Input() public debug: string = 'true';
+  private _debug = true;
+  @Input() public set debug(enabled: boolstring) {
+    this._debug = convertToBool(enabled);
+  }
+  public get debug() {
+    return convertToBoolString(this._debug);
+  }
 
   // outputs, exposed as publicly consumable events
   @Output()
@@ -69,10 +83,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public get personaVideoStream() {
     return this.videoRef.nativeElement.srcObject;
-  }
-
-  private get isDebug() {
-    return this.debug === 'true';
   }
 
   private get nativeElement() {
@@ -103,7 +113,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public ngAfterViewInit() {
     this.webSDKService.initialise(this.videoRef.nativeElement);
-    if (this.autoconnect) {
+    if (this._autoconnect) {
       this.connect();
     }
     this.initHostResizeWatcher();
@@ -199,7 +209,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private log(...args: any[]) {
-    if (this.isDebug && args) {
+    if (this._debug && args) {
       console.log(...args);
     }
   }

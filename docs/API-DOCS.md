@@ -10,7 +10,7 @@
 
 URL of the token server which serves the JWT token with credentials for your Digital Person
 
-#### `autoconnect: boolean`
+#### `autoconnect: string = "true" | "false"`
 
 when set to:
 
