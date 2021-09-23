@@ -139,6 +139,11 @@ describe('VideoComponent', () => {
     });
 
     describe('microphoneEnabled', () => {
+      it('should default to true', () => {
+        fixture.detectChanges();
+        expect(component.child.microphoneEnabled).toBe('true');
+      });
+
       it('when true should result in a call to startRecognize() in the WebSDK when a connection is successful', () => {
         const startRecognizeSpy = spyOn(mockSMWebSdkService.scene, 'startRecognize');
         mockSMWebSdkService.connected = true;
