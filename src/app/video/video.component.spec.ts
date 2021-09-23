@@ -108,6 +108,7 @@ describe('VideoComponent', () => {
       it('should be passed as a parameter to connect(..) in the WebSDK when a connection is started', () => {
         const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
 
+        component.child.autoConnect = 'false';
         component.child.tokenServer = 'test-token-server';
         fixture.detectChanges();
 
