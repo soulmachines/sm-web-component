@@ -58,7 +58,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return convertToBoolString(this._microphoneEnabled);
   }
 
-  private _debug = true;
+  private _debug = false;
   @Input() public set debug(enabled: boolstring) {
     this._debug = convertToBool(enabled);
   }

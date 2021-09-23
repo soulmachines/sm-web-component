@@ -160,6 +160,13 @@ describe('VideoComponent', () => {
         expect(stopRecognizeSpy).toHaveBeenCalled();
       });
     });
+
+    describe('debug', () => {
+      it('should default to false', () => {
+        fixture.detectChanges();
+        expect(component.child.debug).toBe('false');
+      });
+    });
   });
 
   describe('public methods', () => {
