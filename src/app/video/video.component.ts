@@ -210,7 +210,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private log(...args: any[]) {
-    if (this._debug && args) {
+    if (this._debug) {
       console.log(...args);
     }
   }
