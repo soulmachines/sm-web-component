@@ -5,6 +5,7 @@ import { of, throwError } from 'rxjs';
 import { Component, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { take, tap } from 'rxjs/operators';
+import { SpinnerModule } from '../spinner/spinner.module';
 
 @Component({
   template: ` <app-video></app-video> `,
@@ -37,6 +38,7 @@ describe('VideoComponent', () => {
   function createComponent(webSdkServiceProvider: any = mockSMWebSdkService) {
     TestBed.configureTestingModule({
       declarations: [TestComponent, VideoComponent],
+      imports: [SpinnerModule],
     }).compileComponents();
 
     // override provider here as it doesn't work in configureTestingModule due
@@ -65,8 +67,12 @@ describe('VideoComponent', () => {
       createComponent();
       fixture.detectChanges();
 
-      onConnectionSuccessSpy = spyOn<any>(component.child, 'onConnectionSuccess');
-      onConnectionErrorSpy = spyOn<any>(component.child, 'onConnectionError');
+      onConnectionSuccessSpy = jest
+        .spyOn(component.child as any, 'onConnectionSuccess')
+        .mockImplementation(() => {});
+      onConnectionErrorSpy = jest
+        .spyOn(component.child as any, 'onConnectionError')
+        .mockImplementation(() => {});
     });
 
     describe('when connection is successful', () => {
@@ -85,7 +91,9 @@ describe('VideoComponent', () => {
 
     describe('when connection is unsuccessful', () => {
       beforeEach(() => {
-        spyOn(mockSMWebSdkService, 'connect').and.returnValue(throwError(null));
+        jest
+          .spyOn(component.child.webSDKService, 'connect')
+          .mockImplementation(() => throwError(null));
         component.child['connect']();
       });
 
@@ -106,31 +114,31 @@ describe('VideoComponent', () => {
 
     describe('tokenServer', () => {
       it('should be passed as a parameter to connect(..) in the WebSDK when a connection is started', () => {
-        const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
+        const connectSpy = jest.spyOn(component.child.webSDKService, 'connect');
 
         component.child.tokenServer = 'test-token-server';
         fixture.detectChanges();
 
         component.child['connect']();
-        expect(connectSpy).toHaveBeenCalledOnceWith('test-token-server');
+        expect(connectSpy).toHaveBeenNthCalledWith(1, 'test-token-server');
       });
     });
 
     describe('autoConnect', () => {
-      it('should default to false', () => {
+      it('should default to true', () => {
         fixture.detectChanges();
-        expect(component.child.autoConnect).toBe('false');
+        expect(component.child.autoConnect).toBe('true');
       });
 
       it('when true should call connect in the WebSDK when the component is initialised', () => {
-        const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
+        const connectSpy = jest.spyOn(component.child.webSDKService, 'connect');
         component.child.autoConnect = 'true';
         fixture.detectChanges();
         expect(connectSpy).toHaveBeenCalled();
       });
 
       it('when false should not call connect in the WebSDK when the component is initialised', () => {
-        const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
+        const connectSpy = jest.spyOn(component.child.webSDKService, 'connect');
         component.child.autoConnect = 'false';
         fixture.detectChanges();
         expect(connectSpy).not.toHaveBeenCalled();
@@ -139,8 +147,10 @@ describe('VideoComponent', () => {
 
     describe('microphoneEnabled', () => {
       it('when true should result in a call to startRecognize() in the WebSDK when a connection is successful', () => {
-        const startRecognizeSpy = spyOn(mockSMWebSdkService.scene, 'startRecognize');
-        mockSMWebSdkService.connected = true;
+        const startRecognizeSpy = jest
+          .spyOn(component.child.webSDKService.scene, 'startRecognize')
+          .mockImplementation(() => Promise.resolve());
+        component.child.webSDKService.connected = true;
 
         component.child.microphoneEnabled = 'true';
         fixture.detectChanges();
@@ -150,8 +160,10 @@ describe('VideoComponent', () => {
       });
 
       it('when false should result in a call to stopRecognize() in the WebSDK when a connection is successful', () => {
-        const stopRecognizeSpy = spyOn(mockSMWebSdkService.scene, 'stopRecognize');
-        mockSMWebSdkService.connected = true;
+        const stopRecognizeSpy = jest
+          .spyOn(component.child.webSDKService.scene, 'stopRecognize')
+          .mockImplementation(() => Promise.resolve());
+        component.child.webSDKService.connected = true;
 
         component.child.microphoneEnabled = 'false';
         fixture.detectChanges();
@@ -198,7 +210,7 @@ describe('VideoComponent', () => {
       createComponent();
       fixture.detectChanges();
 
-      const connectSpy = spyOn(mockSMWebSdkService, 'connect').and.callThrough();
+      const connectSpy = jest.spyOn(component.child.webSDKService, 'connect');
       getVideoNativeElement().connect();
       expect(connectSpy).toHaveBeenCalled();
     });
@@ -210,7 +222,7 @@ describe('VideoComponent', () => {
       createComponent(sdkService);
       fixture.detectChanges();
 
-      const disconnectSpy = spyOn(sdkService, 'disconnect').and.callThrough();
+      const disconnectSpy = jest.spyOn(component.child.webSDKService, 'disconnect');
       getVideoNativeElement().disconnect();
       expect(disconnectSpy).toHaveBeenCalled();
     });
@@ -220,7 +232,9 @@ describe('VideoComponent', () => {
       createComponent(sdkService);
       fixture.detectChanges();
 
-      const conversationSendSpy = spyOn(sdkService.persona, 'conversationSend');
+      const conversationSendSpy = jest
+        .spyOn(component.child.webSDKService.persona, 'conversationSend')
+        .mockImplementation(() => Promise.resolve());
       getVideoNativeElement().sendTextMessage('test');
       expect(conversationSendSpy).toHaveBeenCalledWith('test', {}, {});
     });
@@ -234,13 +248,17 @@ describe('VideoComponent', () => {
       });
 
       it('when true should result in a call to scene.startRecognize in the WebSDK', () => {
-        const startRecognizeSpy = spyOn(sdkService.scene, 'startRecognize');
+        const startRecognizeSpy = jest
+          .spyOn(component.child.webSDKService.scene, 'startRecognize')
+          .mockImplementation(() => Promise.resolve());
         getVideoNativeElement().setMicrophoneEnabled(true);
         expect(startRecognizeSpy).toHaveBeenCalled();
       });
 
       it('when false should result in a call to scene.stopRecognize in the WebSDK', () => {
-        const stopRecognizeSpy = spyOn(sdkService.scene, 'stopRecognize');
+        const stopRecognizeSpy = jest
+          .spyOn(component.child.webSDKService.scene, 'stopRecognize')
+          .mockImplementation(() => Promise.resolve());
         getVideoNativeElement().setMicrophoneEnabled(false);
         expect(stopRecognizeSpy).toHaveBeenCalled();
       });
@@ -251,7 +269,9 @@ describe('VideoComponent', () => {
       createComponent(sdkService);
       fixture.detectChanges();
 
-      const stopSpeakingSpy = spyOn(sdkService.persona, 'stopSpeaking');
+      const stopSpeakingSpy = jest
+        .spyOn(component.child.webSDKService.persona, 'stopSpeaking')
+        .mockImplementation(() => Promise.resolve());
       getVideoNativeElement().stopSpeaking();
       expect(stopSpeakingSpy).toHaveBeenCalled();
     });
@@ -264,33 +284,43 @@ describe('VideoComponent', () => {
     });
 
     it('should raise connected event when onConnectionSuccess is called', () => {
-      const connectedEmitSpy = spyOn(component.child.connected, 'emit');
+      const connectedEmitSpy = jest
+        .spyOn(component.child.connected, 'emit')
+        .mockImplementation(() => {});
       component.child['onConnectionSuccess']();
       expect(connectedEmitSpy).toHaveBeenCalled();
     });
 
     it('should raise disconnected event when disconnect is called', () => {
-      const disconnectedEmitSpy = spyOn(component.child.disconnected, 'emit');
+      const disconnectedEmitSpy = jest
+        .spyOn(component.child.disconnected, 'emit')
+        .mockImplementation(() => {});
       component.child['disconnect']();
       expect(disconnectedEmitSpy).toHaveBeenCalled();
     });
 
     it('should raise userSpoke event when onConversationResult is called', () => {
-      const userSpokeEmitSpy = spyOn(component.child.userSpoke, 'emit');
+      const userSpokeEmitSpy = jest
+        .spyOn(component.child.userSpoke, 'emit')
+        .mockImplementation(() => {});
       const data = { input: { text: 'input text' }, output: { text: 'output text' } };
       component.child['onConversationResult'](null, data);
       expect(userSpokeEmitSpy).toHaveBeenCalledWith('input text');
     });
 
     it('should raise dpSpoke event when onConversationResult is called', () => {
-      const dpSpokeEmitSpy = spyOn(component.child.dpSpoke, 'emit');
+      const dpSpokeEmitSpy = jest
+        .spyOn(component.child.dpSpoke, 'emit')
+        .mockImplementation(() => {});
       const data = { input: { text: 'input text' }, output: { text: 'output text' } };
       component.child['onConversationResult'](null, data);
       expect(dpSpokeEmitSpy).toHaveBeenCalledWith('output text');
     });
 
     it('should raise speechMarker event when onSpeechMarker is called', () => {
-      const speechMarkerEmitSpy = spyOn(component.child.speechMarker, 'emit');
+      const speechMarkerEmitSpy = jest
+        .spyOn(component.child.speechMarker, 'emit')
+        .mockImplementation(() => {});
       const data = { name: 'data name', arguments: ['arg1', 'arg2'] };
       component.child['onSpeechMarker'](null, data);
       expect(speechMarkerEmitSpy).toHaveBeenCalledWith(data);
@@ -310,7 +340,7 @@ describe('VideoComponent', () => {
         .pipe(
           take(1),
           tap((value) => {
-            expect(value).toBeFalse();
+            expect(value).toBe(false);
             done();
           }),
         )
@@ -319,7 +349,9 @@ describe('VideoComponent', () => {
 
     describe('emitter', () => {
       beforeEach(() => {
-        connectingSubjectSpy = spyOn(component.child.connectingSubject, 'next');
+        connectingSubjectSpy = jest
+          .spyOn(component.child.connectingSubject, 'next')
+          .mockImplementation(() => {});
       });
 
       it('should emit true when the connection is initialised', () => {
