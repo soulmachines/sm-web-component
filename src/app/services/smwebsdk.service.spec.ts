@@ -1,25 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { SMWebSDKService } from './smwebsdk.service';
 
-it('temporary until tests are converted to Jest', () => expect(true).toBeTruthy());
+describe('SMWebSDKService', () => {
+  const mockHttpClient = {
+    get: () => of(null),
+  };
 
-//describe('SMWebSDKService', () => {
-// let smWebSDKService: SMWebSDKService;
-// let httpClientSpy: jasmine.SpyObj<HttpClient>;
+  let smWebSDKService: SMWebSDKService;
 
-// beforeEach(() => {
-//   httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [SMWebSDKService, { provide: HttpClient, useValue: mockHttpClient }],
+    });
 
-//   TestBed.configureTestingModule({
-//     providers: [SMWebSDKService, { provide: HttpClient, useValue: httpClientSpy }],
-//   });
+    smWebSDKService = TestBed.inject(SMWebSDKService);
+  });
 
-//   smWebSDKService = TestBed.inject(SMWebSDKService);
-//   httpClientSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
-// });
-
-// it('should be created', () => {
-//   expect(smWebSDKService).toBeTruthy();
-// });
-//});
+  it('should be created', () => {
+    expect(smWebSDKService).toBeTruthy();
+  });
+});
