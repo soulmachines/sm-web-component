@@ -3,9 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { SMWebSDKService } from './smwebsdk.service';
 
 describe('SMWebSDKService', () => {
-  const mockHttpClient = {
-    get: jest.fn(),
-  };
+  const mockHttpClient = {};
 
   let smWebSDKService: SMWebSDKService;
 
