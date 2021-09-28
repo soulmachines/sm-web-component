@@ -21,12 +21,12 @@ describe('VideoComponent', () => {
 
   const mockSMWebSdkService = {
     connected: false,
-    initialise: jest.fn(() => undefined),
+    initialise: jest.fn(),
     connect: jest.fn((_: string) => of('')),
-    disconnect: jest.fn(() => undefined),
-    registerEventCallbacks: jest.fn(() => undefined),
-    unregisterEventCallbacks: jest.fn(() => undefined),
-    sendVideoBounds: jest.fn(() => undefined),
+    disconnect: jest.fn(),
+    registerEventCallbacks: jest.fn(),
+    unregisterEventCallbacks: jest.fn(),
+    sendVideoBounds: jest.fn(),
     persona: {
       conversationSend: jest.fn((_1: string, _2: any, _3: any) => Promise.resolve()),
       stopSpeaking: jest.fn(() => Promise.resolve()),
