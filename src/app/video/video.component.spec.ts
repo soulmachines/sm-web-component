@@ -15,6 +15,10 @@ class TestComponent {
 }
 
 describe('VideoComponent', () => {
+  // suppress console.logs as they generate a lot of noise
+  // could use debug="true" when we do all logging via our own log method
+  console.log = jest.fn();
+
   const mockSMWebSdkService = {
     connected: false,
     initialise: () => undefined,
