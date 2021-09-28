@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { SMWebSDKService } from './smwebsdk.service';
 
 describe('SMWebSDKService', () => {
   const mockHttpClient = {
-    get: () => of(null),
+    get: jest.fn(),
   };
 
   let smWebSDKService: SMWebSDKService;
