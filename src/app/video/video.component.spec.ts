@@ -22,18 +22,18 @@ describe('VideoComponent', () => {
   const mockSMWebSdkService = {
     connected: false,
     initialise: jest.fn(),
-    connect: jest.fn((_: string) => of('')),
+    connect: jest.fn().mockReturnValue(of('')),
     disconnect: jest.fn(),
     registerEventCallbacks: jest.fn(),
     unregisterEventCallbacks: jest.fn(),
     sendVideoBounds: jest.fn(),
     persona: {
-      conversationSend: jest.fn((_1: string, _2: any, _3: any) => Promise.resolve()),
-      stopSpeaking: jest.fn(() => Promise.resolve()),
+      conversationSend: jest.fn(),
+      stopSpeaking: jest.fn(),
     },
     scene: {
-      startRecognize: jest.fn(() => Promise.resolve()),
-      stopRecognize: jest.fn(() => Promise.resolve()),
+      startRecognize: jest.fn(),
+      stopRecognize: jest.fn(),
     },
   };
   let component: TestComponent;
