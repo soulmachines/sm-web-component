@@ -76,7 +76,7 @@ npm run serve
    - beta release - `beta`
 
 2. Create a PR to merge from the release branch to `master` , it will trigger the `semantic-release` step and the `release` job in CI
-3. Merge to `master` to get the latest version and changelog 
+3. Merge to `master` to get the latest version and changelog
 
 The table below shows which commit message gets you which release type when `semantic-release` runs:
 
