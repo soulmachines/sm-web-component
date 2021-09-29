@@ -2,11 +2,6 @@ name: CI
 
 on:
   pull_request:
-  push:
-    branches:
-      - release
-      - alpha
-      - beta
 
 env:
   ASSET_LOCATION: demo/soulmachines.js
