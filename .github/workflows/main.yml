@@ -79,6 +79,7 @@ jobs:
         with:
           name: ${{ env.ASSET_NAME }}
           path: ${{ env.ASSET_LOCATION }}
+          retention-days: 1
 
   release:
     if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
