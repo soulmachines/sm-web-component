@@ -91,7 +91,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ env.ASSET_NAME }}
-          path: ${{ env.ASSET_LOCATION }}
+          path: demo
 
       - name: Release to CDN
         run: |
