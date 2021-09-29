@@ -74,13 +74,27 @@ jobs:
         env:
           GH_TOKEN: ${{ env.GH_TOKEN }}
 
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ASSET_NAME }}
+          path: ${{ env.ASSET_LOCATION }}
+          retention-days: 1
+
   release:
     if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
     needs: [build]
     runs-on: ubuntu-latest
-    name: Release to CDN
+
     steps:
-      - run: |
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.ASSET_NAME }}
+          path: ${{ env.ASSET_LOCATION }}
+
+      - name: Release to CDN
+        run: |
           aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
           if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
           then
