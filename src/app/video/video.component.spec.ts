@@ -39,7 +39,7 @@ describe('VideoComponent', () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
 
-  function createComponent(webSdkServiceProvider: any = { ...mockSMWebSdkService }) {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TestComponent, VideoComponent],
       imports: [SpinnerModule],
@@ -49,16 +49,27 @@ describe('VideoComponent', () => {
     // to not being provided in root
     TestBed.overrideComponent(VideoComponent, {
       set: {
-        providers: [{ provide: SMWebSDKService, useValue: webSdkServiceProvider }],
+        providers: [
+          {
+            provide: SMWebSDKService,
+            useFactory: () => mockSMWebSdkService,
+          },
+        ],
       },
     });
 
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
-  }
+  });
+
+  // we can't mock `connected` as it is not a property so we assign it directly in tests
+  // reset it here so that the mockSMWebSdkService is consistent between tests
+  // other mocks are reset through jest's `clearMocks` setting in jest.conf.js
+  afterEach(() => {
+    mockSMWebSdkService.connected = false;
+  });
 
   it('should create', () => {
-    createComponent();
     fixture.detectChanges();
 
     expect(component.child).toBeTruthy();
@@ -68,7 +79,6 @@ describe('VideoComponent', () => {
     let onConnectionSuccessSpy, onConnectionErrorSpy;
 
     beforeEach(() => {
-      createComponent();
       fixture.detectChanges();
 
       onConnectionSuccessSpy = jest.spyOn(component.child as any, 'onConnectionSuccess');
@@ -108,7 +118,6 @@ describe('VideoComponent', () => {
   describe('inputs', () => {
     describe('tokenServer', () => {
       it('should be passed as a parameter to connect(..) in the WebSDK when a connection is started', () => {
-        createComponent();
         component.child.tokenServer = 'test-token-server';
         fixture.detectChanges();
 
@@ -118,10 +127,6 @@ describe('VideoComponent', () => {
     });
 
     describe('autoConnect', () => {
-      beforeEach(() => {
-        createComponent();
-      });
-
       it('should default to true', () => {
         fixture.detectChanges();
         expect(component.child.autoConnect).toBe('true');
@@ -142,8 +147,7 @@ describe('VideoComponent', () => {
 
     describe('microphoneEnabled', () => {
       beforeEach(() => {
-        const sdkService = { ...mockSMWebSdkService, connected: true };
-        createComponent(sdkService);
+        mockSMWebSdkService.connected = true;
       });
 
       it('when true should result in a call to startRecognize() in the WebSDK when a connection is successful', () => {
@@ -169,35 +173,28 @@ describe('VideoComponent', () => {
       fixture.debugElement.query(By.css('app-video')).nativeElement;
 
     it('persona should return the persona from the WebSDK', () => {
-      const sdkService = {
-        ...mockSMWebSdkService,
-        persona: { ...mockSMWebSdkService.persona, testId: 'mock persona' },
-        connected: true,
-      };
-      createComponent(sdkService);
+      mockSMWebSdkService.connected = true;
+      mockSMWebSdkService.persona.conversationSend.mockReturnValue('mock persona');
+
       fixture.detectChanges();
 
       const persona = getVideoNativeElement().persona();
-      expect(persona.testId).toBe('mock persona');
+      expect(persona.conversationSend()).toBe('mock persona');
     });
 
     it('scene should return the scene from the WebSDK', () => {
-      const sdkService = {
-        ...mockSMWebSdkService,
-        scene: { ...mockSMWebSdkService.scene, testId: 'mock scene' },
-        connected: true,
-      };
-      createComponent(sdkService);
+      mockSMWebSdkService.connected = true;
+      mockSMWebSdkService.scene.startRecognize.mockReturnValue('mock scene');
+
       fixture.detectChanges();
 
       const scene = getVideoNativeElement().scene();
-      expect(scene.testId).toBe('mock scene');
+      expect(scene.startRecognize()).toBe('mock scene');
     });
 
     // TODO - could break this down so it only checks if component.connect() was called
     // then test disconnect separately (as it does other things)
     it('connect should result in a call to connect in the WebSDK', () => {
-      createComponent();
       fixture.detectChanges();
 
       getVideoNativeElement().connect();
@@ -207,8 +204,7 @@ describe('VideoComponent', () => {
     // TODO - could break this down so it only checks if component.disconnect() was called
     // then test disconnect separately (as it does other things)
     it('disconnect should result in a call to disconnect in the WebSDK', () => {
-      const sdkService = { ...mockSMWebSdkService, connected: true };
-      createComponent(sdkService);
+      mockSMWebSdkService.connected = true;
       fixture.detectChanges();
 
       getVideoNativeElement().disconnect();
@@ -216,8 +212,7 @@ describe('VideoComponent', () => {
     });
 
     it('sendTextMessage should result in a call to persona.conversationSend in the WebSDK', () => {
-      const sdkService = { ...mockSMWebSdkService, connected: true };
-      createComponent(sdkService);
+      mockSMWebSdkService.connected = true;
       fixture.detectChanges();
 
       getVideoNativeElement().sendTextMessage('test');
@@ -226,8 +221,7 @@ describe('VideoComponent', () => {
 
     describe('setMicrophoneEnabled', () => {
       beforeEach(() => {
-        const sdkService = { ...mockSMWebSdkService, connected: true };
-        createComponent(sdkService);
+        mockSMWebSdkService.connected = true;
         fixture.detectChanges();
       });
 
@@ -243,8 +237,7 @@ describe('VideoComponent', () => {
     });
 
     it('stopSpeaking should result in a call to persona.stopSpeaking in the WebSDK', () => {
-      const sdkService = { ...mockSMWebSdkService, connected: true };
-      createComponent(sdkService);
+      mockSMWebSdkService.connected = true;
       fixture.detectChanges();
 
       getVideoNativeElement().stopSpeaking();
@@ -254,7 +247,6 @@ describe('VideoComponent', () => {
 
   describe('outputs', () => {
     beforeEach(() => {
-      createComponent();
       fixture.detectChanges();
     });
 
@@ -296,7 +288,6 @@ describe('VideoComponent', () => {
     let connectingSubjectSpy;
 
     beforeEach(() => {
-      createComponent();
       fixture.detectChanges();
     });
 
@@ -338,7 +329,6 @@ describe('VideoComponent', () => {
 
   describe('connecting indicator slot', () => {
     beforeEach(() => {
-      createComponent();
       fixture.detectChanges();
     });
 
