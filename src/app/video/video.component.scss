@@ -1,4 +1,10 @@
-:host {
+:host,
+:host([theme='none']) {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: none;
+
   video,
   slot {
     width: 100%;
@@ -9,4 +15,17 @@
   slot {
     z-index: 10;
   }
+}
+
+:host([theme='default']) {
+  position: fixed;
+  z-index: 9999;
+  bottom: 30px;
+  right: 20px;
+  margin: 10px;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  background-color: white;
 }

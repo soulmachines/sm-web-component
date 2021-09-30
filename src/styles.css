@@ -32,14 +32,12 @@ html {
   margin: 20px;
 }
 
-#video {
-  position: absolute;
+/* temporarily remove these so we can easily see the difference when 
+switching between built in themes  */
+/* #video {
   left: 60px;
-  width: 300px;
-  height: 300px;
   margin: 20px;
-  border: none;
-}
+} */
 
 .user-actions {
   display: grid;
