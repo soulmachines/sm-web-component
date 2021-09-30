@@ -10,6 +10,7 @@ import {
   Output,
   EventEmitter,
   ViewEncapsulation,
+  OnInit,
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
@@ -29,7 +30,7 @@ import { convertToBool, convertToBoolString, boolstring } from '../types/boolstr
   providers: [SMWebSDKService],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class VideoComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
 
   @Input('token-server') public tokenServer: string;
@@ -108,6 +109,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   constructor(private hostRef: ElementRef, public webSDKService: SMWebSDKService) {
     this.log(`video constructor: token server - ${this.tokenServer}`);
     this.bindPublicMethods();
+  }
+
+  public ngOnInit() {
+    // ensure theme attribute used for styling is added to host element if
+    // not explicitly specified on <sm-video>
+    this.nativeElement.setAttribute('theme', this.theme);
   }
 
   public ngOnChanges(changes: SimpleChanges) {

@@ -1,10 +1,4 @@
-:host,
-:host([theme='none']) {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border: none;
-
+:host {
   video,
   slot {
     width: 100%;
@@ -15,6 +9,13 @@
   slot {
     z-index: 10;
   }
+}
+
+:host([theme='none']) {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: none;
 }
 
 :host([theme='default']) {
