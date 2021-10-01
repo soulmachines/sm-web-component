@@ -34,6 +34,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   @Input('token-server') public tokenServer: string;
 
+  @Input() public theme: 'default' | 'none' = 'default';
+
   private _autoConnect = true;
   @Input('auto-connect')
   public set autoConnect(enabled: boolstring) {
