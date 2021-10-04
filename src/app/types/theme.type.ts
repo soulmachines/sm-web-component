@@ -1,1 +1,1 @@
-type Theme = 'default' | 'none';
+export type Theme = 'default' | 'none';

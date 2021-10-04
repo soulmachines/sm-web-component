@@ -21,6 +21,7 @@ import {
 } from '../services/smwebsdk.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
+import { Theme } from '../types/theme.type';
 
 @Component({
   selector: 'app-video',
