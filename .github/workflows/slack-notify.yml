@@ -1,0 +1,11 @@
+# uses https://github.com/marketplace/actions/slack-send to trigger a
+# slack Workflow which posts the message to a specified slack channel
+name: Slack Notify on PR Opened
+on:
+  pull_request:
+    types: [opened]
+uses: slackapi/slack-github-action@v1.14.0
+with:
+  payload: '{"message":"test"}'
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
