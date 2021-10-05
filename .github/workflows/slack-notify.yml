@@ -6,6 +6,6 @@ on:
     types: [opened]
 uses: slackapi/slack-github-action@v1.14.0
 with:
-  payload: '{"message":"test"}'
+  payload: '{"Message":"test"}'
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
