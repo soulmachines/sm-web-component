@@ -12,7 +12,7 @@ jobs:
       - name: Call Slack Workflow
         uses: slackapi/slack-github-action@v1.15.0
         with:
-          payload: '{"PR_Title":${PR_TITLE}, "PR_URL": ${PR_URL}, "PR_User": ${PR_USER}}'
+          payload: '{"PR_Title":"$PR_TITLE", "PR_URL": "$PR_URL", "PR_User": "$PR_USER"}'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           PR_TITLE: ${{ github.event.pull_request.title }}
