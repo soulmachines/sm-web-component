@@ -21,6 +21,7 @@ import {
 } from '../services/smwebsdk.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
+import { Theme } from '../types/theme.type';
 
 @Component({
   selector: 'app-video',
@@ -33,6 +34,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
 
   @Input('token-server') public tokenServer: string;
+
+  @Input() public theme: Theme = 'default';
 
   private _autoConnect = true;
   @Input('auto-connect')
