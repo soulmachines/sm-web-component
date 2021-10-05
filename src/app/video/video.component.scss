@@ -10,3 +10,10 @@
     z-index: 10;
   }
 }
+
+:host([theme='none']) {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: none;
+}
