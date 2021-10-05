@@ -4,8 +4,14 @@ name: Slack Notify on PR Opened
 on:
   pull_request:
     types: [opened]
-uses: slackapi/slack-github-action@v1.14.0
-with:
-  payload: '{"Message":"test"}'
-env:
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+jobs:
+  trigger-workflow:
+    runs-on: ubuntu-latest
+    name: Trigger Workflow
+    steps:
+      - name: Call Slack Workflow
+        uses: slackapi/slack-github-action@v1.15.0
+        with:
+          payload: '{"Message":"test"}'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
