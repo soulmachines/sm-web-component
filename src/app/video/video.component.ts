@@ -10,6 +10,7 @@ import {
   Output,
   EventEmitter,
   ViewEncapsulation,
+  HostBinding,
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
@@ -35,7 +36,9 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   @Input('token-server') public tokenServer: string;
 
-  @Input() public theme: Theme = 'default';
+  @HostBinding('attr.theme')
+  @Input()
+  public theme: Theme = 'default';
 
   private _autoConnect = true;
   @Input('auto-connect')
