@@ -86,6 +86,12 @@
       >
         Test SDK Scene
       </button>
+      <button
+        id="theme"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+      >
+        Change Theme
+      </button>
     </div>
 
     <script>
@@ -95,12 +101,18 @@
       let messages = document.getElementById('messages');
       let micButton = document.getElementById('mic');
       let micEnabled = true;
+      let theme = 'default';
 
       const toggleMic = () => {
         micEnabled = !micEnabled;
         video.setMicrophoneEnabled(micEnabled);
         micButton.classList.remove(micEnabled ? 'off' : 'on');
         micButton.classList.add(micEnabled ? 'on' : 'off');
+      };
+
+      const toggleTheme = () => {
+        theme = theme === 'default' ? 'none' : 'default';
+        video.setAttribute('theme', theme);
       };
 
       const showImage = () => {
@@ -138,6 +150,10 @@
         {
           id: 'mic',
           action: () => toggleMic(),
+        },
+        {
+          id: 'theme',
+          action: () => toggleTheme(),
         },
       ];
 
