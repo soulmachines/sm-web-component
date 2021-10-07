@@ -78,6 +78,10 @@ html {
   content: 'mic_off';
 }
 
+#theme {
+  background-color: orchid;
+}
+
 .hidden {
   display: none;
 }
