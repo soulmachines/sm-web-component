@@ -16,30 +16,32 @@
     <h3 class="text">
       This demo shows how you can embed a Digital Person inside a plain HTML website.
     </h3>
-    <sm-video
-      id="video"
-      auto-connect="true"
-      microphone-enabled="true"
-      token-server="http://localhost:4210/auth/authorize"
-    ></sm-video>
-    <div class="container">
-      <div class="mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title">
-          <h2 class="mdl-card__title-text">Event Messages</h2>
+    <div class="outer-container">
+      <sm-video
+        id="video"
+        auto-connect="true"
+        microphone-enabled="true"
+        token-server="http://localhost:4210/auth/authorize"
+      ></sm-video>
+      <div class="container">
+        <div class="mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Event Messages</h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            <div id="messages"></div>
+          </div>
         </div>
-        <div class="mdl-card__supporting-text">
-          <div id="messages"></div>
-        </div>
-      </div>
 
-      <div id="content">
-        <img
-          id="nzmap"
-          class="hidden"
-          data-sm-content="nzmap"
-          src="https://lh3.googleusercontent.com/proxy/WGZfAf_WQtLL5vvoOu1RempHaed5K-a_73zD98PHx16zM_TTzp4Ot8aRvHbzCoJ2XMbS9QirC_nvGz5mztlC6lof1keya5jU4A"
-          alt="nz"
-        />
+        <div id="content">
+          <img
+            id="nzmap"
+            class="hidden"
+            data-sm-content="nzmap"
+            src="https://lh3.googleusercontent.com/proxy/WGZfAf_WQtLL5vvoOu1RempHaed5K-a_73zD98PHx16zM_TTzp4Ot8aRvHbzCoJ2XMbS9QirC_nvGz5mztlC6lof1keya5jU4A"
+            alt="nz"
+          />
+        </div>
       </div>
     </div>
 
