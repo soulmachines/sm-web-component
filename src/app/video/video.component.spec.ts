@@ -6,6 +6,7 @@ import { Component, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { take, tap } from 'rxjs/operators';
 import { SpinnerModule } from '../spinner/spinner.module';
+import { themes } from '../types/theme.type';
 
 @Component({
   template: ` <app-video></app-video> `,
@@ -18,6 +19,8 @@ describe('VideoComponent', () => {
   // suppress console.logs as they generate a lot of noise
   // could use debug="true" when we do all logging via our own log method
   console.log = jest.fn();
+
+  const getVideoNativeElement = () => fixture.debugElement.query(By.css('app-video')).nativeElement;
 
   const mockSMWebSdkService = {
     connected: false,
@@ -166,12 +169,29 @@ describe('VideoComponent', () => {
         expect(mockSMWebSdkService.scene.stopRecognize).toHaveBeenCalled();
       });
     });
+
+    describe('theme', () => {
+      const getThemeAttributeValue = () => getVideoNativeElement().getAttribute('theme');
+
+      themes.forEach((theme) => {
+        it(`should set ${theme} theme attribute on host`, () => {
+          component.child.theme = theme;
+          fixture.detectChanges();
+
+          expect(getThemeAttributeValue()).toBe(theme);
+        });
+      });
+
+      it('should set theme attribute to default when an invalid theme is specified', () => {
+        (component.child.theme as any) = 'xyz123';
+        fixture.detectChanges();
+
+        expect(getThemeAttributeValue()).toBe('default');
+      });
+    });
   });
 
   describe('public methods', () => {
-    const getVideoNativeElement = () =>
-      fixture.debugElement.query(By.css('app-video')).nativeElement;
-
     it('persona should return the persona from the WebSDK', () => {
       mockSMWebSdkService.connected = true;
       mockSMWebSdkService.persona.conversationSend.mockReturnValue('mock persona');
