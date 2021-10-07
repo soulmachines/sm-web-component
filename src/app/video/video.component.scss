@@ -17,3 +17,15 @@
   width: 300px;
   height: 150px;
 }
+
+:host([theme='default']) {
+  position: fixed;
+  z-index: 9999;
+  bottom: 40px;
+  right: 40px;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  background-color: white;
+}
