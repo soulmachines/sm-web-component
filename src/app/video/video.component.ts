@@ -22,7 +22,7 @@ import {
 } from '../services/smwebsdk.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
-import { Theme } from '../types/theme.type';
+import { Theme, themes } from '../types/theme.type';
 
 @Component({
   selector: 'app-video',
@@ -37,8 +37,15 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input('token-server') public tokenServer: string;
 
   @HostBinding('attr.theme')
+  private _theme: Theme = 'default';
+
   @Input()
-  public theme: Theme = 'default';
+  public set theme(name: Theme) {
+    this._theme = themes.includes(name) ? name : 'default';
+  }
+  public get theme() {
+    return this._theme;
+  }
 
   private _autoConnect = true;
   @Input('auto-connect')
