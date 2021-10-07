@@ -41,28 +41,6 @@ A valid JWT token string, signed with the credentials provided by Soul Machines.
 
 ```
 <sm-video
-  auto-connect="true"
   token-server="https://my-token-server.com/jwt"
 ></sm-video>
-```
-
-### Style the `<sm-video>` element
-
-> This example will position the web component within a circle floating in the bottom right of the screen
-
-```
-<style>
-  sm-video {
-    position: fixed;
-    z-index: 9999;
-    bottom: 70px;
-    right: 20px;
-    margin: 10px;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    background-color: white;
-  }
-</style>
 ```
