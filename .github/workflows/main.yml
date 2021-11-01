@@ -14,8 +14,7 @@ env:
   AWS_PATH: 's3://static-prod.soulmachines.com'
   AWS_DEFAULT_OUTPUT: 'json'
   AWS_DEFAULT_REGION: 'us-east-1'
-  AWS_ACCESS_KEY_ID: 'AKIA5OOP4KZDW7WHCYVV'
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/Github_Federated_Access_Role
   CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
   GH_TOKEN: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
 
@@ -85,6 +84,9 @@ jobs:
     if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Download Artifact
@@ -93,14 +95,20 @@ jobs:
           name: ${{ env.ASSET_NAME }}
           path: demo
 
-      - name: Release to CDN
+      - name: Configure AWS credential
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+      - name: Release to CDN --dryrun
         run: |
-          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js --dryrun
           if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
           then
               echo "pre-release, not updating latest"
           else
               echo "updating latest"
-              aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js
+              aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js --dryrun
           fi
           aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
