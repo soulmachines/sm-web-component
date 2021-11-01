@@ -101,7 +101,7 @@ jobs:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-      - name: Release to CDN 
+      - name: Release to CDN
         run: |
           aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
           if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
