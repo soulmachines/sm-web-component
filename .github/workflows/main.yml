@@ -101,14 +101,14 @@ jobs:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
-      - name: Release to CDN --dryrun
+      - name: Release to CDN 
         run: |
-          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js --dryrun
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
           if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
           then
               echo "pre-release, not updating latest"
           else
               echo "updating latest"
-              aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js --dryrun
+              aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js
           fi
           aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
