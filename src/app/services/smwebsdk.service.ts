@@ -31,9 +31,9 @@ export class SMWebSDKService {
   public activeContentCardIds: string[] = [];
   public contentCards$ = new BehaviorSubject([
     {
-      component: 'options',
+      component: 'none',
       data: {
-        options: [{ label: 'Option One' }, { label: 'Option Two' }, { label: 'Option Three' }],
+        options: [],
       },
     },
   ]);
