@@ -1,4 +1,14 @@
 :host {
-  background: white;
-  padding: 20px;
+  > * {
+    margin: 10px;
+  }
+
+  app-options-block {
+    width: 300px;
+  }
+
+  app-video-block {
+    width: 400px;
+    aspect-ratio: 16 / 9;
+  }
 }

@@ -1,6 +1,7 @@
 :host {
-  border: 2px solid red;
-  display: block;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
 
   sm-video {
     width: 200px;
@@ -8,6 +9,8 @@
   }
 
   app-content-cards {
-    border: 2px solid blue;
+    background: #f96302;
+    border-radius: 5px;
+    margin-bottom: 20px;
   }
 }

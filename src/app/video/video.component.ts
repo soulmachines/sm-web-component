@@ -28,7 +28,6 @@ import { Theme, themes } from '../types/theme.type';
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
-  providers: [SMWebSDKService],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {

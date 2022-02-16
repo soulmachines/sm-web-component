@@ -1,8 +1,11 @@
 <app-video
   #video
+  [attr.sm-video]="true"
   id="video"
   autoconnect="false"
   [token-server]="tokenServer"
 ></app-video>
 
-<app-content-cards></app-content-cards>
+<app-content-cards
+  [contentCards]="websdkService.contentCards$ | async"
+></app-content-cards>

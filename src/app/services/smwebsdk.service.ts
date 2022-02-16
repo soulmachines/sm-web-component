@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { Session } from '@soulmachines/smwebsdk/lib-esm/Session';
-import { ConversationResultResponseBody } from '@soulmachines/smwebsdk/lib-esm/websocket-message/scene';
-import { Observable, from } from 'rxjs';
+import { Observable, from, BehaviorSubject } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
 import { merge as _merge } from 'lodash-es';
@@ -21,7 +20,7 @@ export interface SpeechMarkerEventArgs {
 
 const personaId = 1;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SMWebSDKService {
   public scene: Scene;
   public persona: Persona;
@@ -30,14 +29,14 @@ export class SMWebSDKService {
 
   public conversationContext: any = {};
   public activeContentCardIds: string[] = [];
-  public contentCards: any[] = []; /* = [
+  public contentCards$ = new BehaviorSubject([
     {
-      type: 'options',
+      component: 'options',
       data: {
         options: [{ label: 'Option One' }, { label: 'Option Two' }, { label: 'Option Three' }],
       },
     },
-  ];*/
+  ]);
 
   constructor(private http: HttpClient) {}
 
@@ -78,9 +77,6 @@ export class SMWebSDKService {
     this.persona.onConversationResultEvent.addListener((persona, message) =>
       this.onConversationResult(persona, message),
     );
-    /*this.scene.onConversationResultEvents[personaId].addListener((e) =>
-      this.onConversationResult(e),
-    );*/
   }
 
   private onSpeechMarker(persona, message) {
@@ -99,7 +95,7 @@ export class SMWebSDKService {
       }
     } else if (markerType === 'showcards') {
       console.log('show these cards:', cardIds);
-      this.activeContentCardIds = [...this.activeContentCardIds, ...cardIds];
+      this.activeContentCardIds = cardIds;
     }
 
     this.updateActiveCardsList();
@@ -112,6 +108,7 @@ export class SMWebSDKService {
     const newContext = message.output.context;
 
     this.conversationContext = _merge(this.conversationContext, newContext);
+    this.activeContentCardIds = [];
 
     this.updateActiveCardsList();
   }
@@ -121,9 +118,12 @@ export class SMWebSDKService {
     console.log('>> active cards', this.activeContentCardIds);
     console.log('>> current context', this.conversationContext);
 
-    this.contentCards = this.activeContentCardIds.map((id) => {
-      return this.conversationContext[id] || this.conversationContext[`public-${id}`] || null;
+    const cards = this.activeContentCardIds.map((id) => {
+      return this.conversationContext[`public-${id}`];
     });
+
+    console.log('>> cards:', cards);
+    this.contentCards$.next(cards);
   }
 
   public disconnect() {

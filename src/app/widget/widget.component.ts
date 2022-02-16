@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SMWebSDKService } from '../services/smwebsdk.service';
 
 @Component({
   selector: 'app-widget',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class WidgetComponent implements OnInit {
   @Input('token-server') public tokenServer: string;
 
-  constructor() {}
+  constructor(public websdkService: SMWebSDKService) {}
 
   ngOnInit(): void {}
 }

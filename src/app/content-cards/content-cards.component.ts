@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { SMWebSDKService } from '../services/smwebsdk.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-content-cards',
   templateUrl: './content-cards.component.html',
   styleUrls: ['./content-cards.component.scss'],
-  providers: [SMWebSDKService],
 })
 export class ContentCardsComponent implements OnInit {
-  constructor(public websdkService: SMWebSDKService) {}
+  @Input()
+  public contentCards: any[];
+
+  constructor() {}
 
   public ngOnInit(): void {}
 }
