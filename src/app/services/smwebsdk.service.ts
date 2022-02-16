@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { Session } from '@soulmachines/smwebsdk/lib-esm/Session';
+import { ConversationResultResponseBody } from '@soulmachines/smwebsdk/lib-esm/websocket-message/scene';
 import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
+import { merge as _merge } from 'lodash-es';
 
 export { Persona } from '@soulmachines/smwebsdk';
 export interface SceneCallbacks {
@@ -25,6 +27,17 @@ export class SMWebSDKService {
   public persona: Persona;
 
   public connected = false;
+
+  public conversationContext: any = {};
+  public activeContentCardIds: string[] = [];
+  public contentCards: any[] = []; /* = [
+    {
+      type: 'options',
+      data: {
+        options: [{ label: 'Option One' }, { label: 'Option Two' }, { label: 'Option Three' }],
+      },
+    },
+  ];*/
 
   constructor(private http: HttpClient) {}
 
@@ -49,10 +62,68 @@ export class SMWebSDKService {
           tap(() => {
             (this.scene.session() as Session).setLogging(false);
             this.connected = true;
+
+            this.watchContentCards();
           }),
         ),
       ),
     );
+  }
+
+  private watchContentCards() {
+    this.persona.onSpeechMarkerEvent.addListener((persona, message) =>
+      this.onSpeechMarker(persona, message),
+    );
+
+    this.persona.onConversationResultEvent.addListener((persona, message) =>
+      this.onConversationResult(persona, message),
+    );
+    /*this.scene.onConversationResultEvents[personaId].addListener((e) =>
+      this.onConversationResult(e),
+    );*/
+  }
+
+  private onSpeechMarker(persona, message) {
+    console.log('>> onSpeechMarker:', persona, message);
+
+    const markerType = message.name;
+    const cardIds = message.arguments;
+
+    if (markerType === 'hidecards') {
+      if (cardIds.length === 0) {
+        console.log('hide all cards');
+        this.activeContentCardIds = [];
+      } else {
+        console.log('TODO hide these cards:', cardIds);
+        // TODO
+      }
+    } else if (markerType === 'showcards') {
+      console.log('show these cards:', cardIds);
+      this.activeContentCardIds = [...this.activeContentCardIds, ...cardIds];
+    }
+
+    this.updateActiveCardsList();
+  }
+
+  private onConversationResult(persona: any, message: any) {
+    console.log('>> onConversationResult:', persona, message);
+    debugger;
+
+    const newContext = message.output.context;
+
+    this.conversationContext = _merge(this.conversationContext, newContext);
+
+    this.updateActiveCardsList();
+  }
+
+  private updateActiveCardsList() {
+    console.log('>> updateActiveCardsList');
+    console.log('>> active cards', this.activeContentCardIds);
+    console.log('>> current context', this.conversationContext);
+
+    this.contentCards = this.activeContentCardIds.map((id) => {
+      return this.conversationContext[id] || this.conversationContext[`public-${id}`] || null;
+    });
   }
 
   public disconnect() {

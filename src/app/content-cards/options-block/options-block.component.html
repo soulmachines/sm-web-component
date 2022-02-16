@@ -1,0 +1,14 @@
+<ul
+  class="options__container"
+  [class.disabled]="!actionable"
+  [attr.data-sm-content]="active ? id : ''"
+>
+  <li
+    class="option"
+    *ngFor="let option of data?.options"
+    (click)="sendTextMessage(option)"
+    [attr.data-sm-content]="active ? option.id : ''"
+  >
+    <p>{{ option.label }}</p>
+  </li>
+</ul>

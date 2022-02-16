@@ -6,15 +6,18 @@ import { VideoModule } from './video/video.module';
 import { VideoComponent } from './video/video.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerModule } from './spinner/spinner.module';
+import { WidgetComponent } from './widget/widget.component';
+import { WidgetModule } from './widget/widget.module';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, VideoModule, SpinnerModule],
+  imports: [BrowserModule, HttpClientModule, WidgetModule, VideoModule, SpinnerModule],
 
   declarations: [],
   bootstrap: [],
 })
 export class AppModule {
   elements = [
+    { component: WidgetComponent, name: 'sm-widget' },
     { component: VideoComponent, name: 'sm-video' },
     { component: SpinnerComponent, name: 'sm-spinner' },
   ];

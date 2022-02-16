@@ -143,6 +143,11 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.connectingSubject.next(true);
 
+    if (!this.tokenServer) {
+      console.log('token server not set');
+      debugger;
+    }
+
     this.webSDKService
       .connect(this.tokenServer)
       .pipe(

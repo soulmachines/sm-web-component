@@ -1,0 +1,13 @@
+:host {
+  border: 2px solid red;
+  display: block;
+
+  sm-video {
+    width: 200px;
+    height: 200px;
+  }
+
+  app-content-cards {
+    border: 2px solid blue;
+  }
+}

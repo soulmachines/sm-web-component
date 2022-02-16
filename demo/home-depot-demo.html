@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script src="./soulmachines.js"></script>
+  </head>
+  <body>
+    <sm-widget id="video" token-server="http://localhost:4210/auth/authorize"></sm-widget>
+
+    <style>
+      body, html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background-image: url(home-depot-background.png);
+        background-size: contain;
+      }
+
+      sm-widget {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+    </style>
+  </body>
+</html>
