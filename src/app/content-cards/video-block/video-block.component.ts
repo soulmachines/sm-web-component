@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ViewChild } from '@angular/core';
 import { VideoBlockModalService } from './video-block-modal.service';
+import { SMWebSDKService } from '../../services/smwebsdk.service';
 
 @Component({
   selector: 'app-video-block',
@@ -57,6 +58,7 @@ export class VideoBlockComponent implements OnInit, OnDestroy {
   constructor(
     private viewContainerRef: ViewContainerRef,
     private modalService: VideoBlockModalService,
+    public webSDKService: SMWebSDKService
   ) {}
 
   public ngOnInit() {
@@ -66,7 +68,7 @@ export class VideoBlockComponent implements OnInit, OnDestroy {
     if (this.data.autoplay && this.active) {
       setTimeout(() => {
         this.openVideo();
-      }, 300);
+      }, 500);
     }
   }
 
@@ -96,11 +98,13 @@ export class VideoBlockComponent implements OnInit, OnDestroy {
       // bring focus back to the main window to allow for keypresses to be captured
       // we wanted this triggered only when playing starts, otherwise it's too disruptive
       window.focus();
+      this.webSDKService.scene?.stopRecognize();
       return;
     }
 
     // we want to close the player if the video is ended & autoclose is true
-    if (currentState === YT.PlayerState.ENDED && autoClose) {
+    if (currentState === YT.PlayerState.ENDED && autoClose || YT.PlayerState.PAUSED) {
+      this.webSDKService.scene?.startRecognize();
       this.exitVideo();
     }
   }
