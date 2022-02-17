@@ -71,7 +71,7 @@ $text-color: #334251;
       }
 
       &:hover {
-        border: solid 4px $user-color;
+        border: solid 4px transparent;
 
         mat-icon {
           ::ng-deep {
