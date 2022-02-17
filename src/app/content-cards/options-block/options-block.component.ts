@@ -8,6 +8,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SMWebSDKService } from '../../services/smwebsdk.service';
 import { OptionsBlockData } from './models/options-block-data.model';
 import { OptionsBlockOptionData } from './models/options-block-option.model';
 
@@ -23,7 +24,7 @@ export class OptionsBlockComponent implements OnInit, AfterViewInit {
   @Input() public active = true;
   @HostBinding('class.visible') public contentReady = false;
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(private domSanitizer: DomSanitizer, public webSDKService: SMWebSDKService) {}
 
   public ngOnInit() {}
 
@@ -31,14 +32,14 @@ export class OptionsBlockComponent implements OnInit, AfterViewInit {
     this.contentReady = true;
   }
 
-  public sendTextMessage(option: OptionsBlockOptionData) {
-    // if (this.actionable) {
-    //   const { label, value } = option;
-    //   const sendTextMessage = value || label;
-
-    //   // this.action.emit({ sendTextMessage });
-    //   debugger;
-    // }
-    console.log(option)
+  public videoClickHandler(option: OptionsBlockOptionData) {
+    const videoMap = {
+      1: '1st',
+      2: '2nd',
+      3: '3rd'
+    }
+    
+    const quoteQuery = `play the ${videoMap[option.label[0]]} video`;
+    this.webSDKService.persona.conversationSend(quoteQuery, {}, {})
   }
 }
