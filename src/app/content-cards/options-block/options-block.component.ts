@@ -32,12 +32,13 @@ export class OptionsBlockComponent implements OnInit, AfterViewInit {
   }
 
   public sendTextMessage(option: OptionsBlockOptionData) {
-    if (this.actionable) {
-      const { label, value } = option;
-      const sendTextMessage = value || label;
+    // if (this.actionable) {
+    //   const { label, value } = option;
+    //   const sendTextMessage = value || label;
 
-      // this.action.emit({ sendTextMessage });
-      debugger;
-    }
+    //   // this.action.emit({ sendTextMessage });
+    //   debugger;
+    // }
+    console.log(option)
   }
 }
