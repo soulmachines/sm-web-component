@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { Session } from '@soulmachines/smwebsdk/lib-esm/Session';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SoulMachinesConfig } from '../video/soulmachines-config';
 
@@ -28,12 +28,21 @@ export class SMWebSDKService {
 
   constructor(private http: HttpClient) {}
 
-  public initialise(videoElement: HTMLVideoElement) {
-    this.scene = new Scene(videoElement);
+  public connectWithAPIKey(videoElement: HTMLVideoElement, apiKey: string): Observable<string> {
+    this.scene = new Scene({
+      videoElement,
+      apiKey,
+    });
+
     this.persona = new Persona(this.scene, personaId);
+
+    return from(this.scene.connect());
   }
 
-  public connect(tokenServer: string): Observable<string> {
+  public connectWithTokenServer(
+    videoElement: HTMLVideoElement,
+    tokenServer: string,
+  ): Observable<string> {
     if (!tokenServer) {
       throw new Error('Unable to establish a connection, tokenServer missing');
     }
@@ -42,6 +51,12 @@ export class SMWebSDKService {
       maxRetries: 20,
       delayMs: 500,
     };
+
+    this.scene = new Scene({
+      videoElement,
+    });
+
+    this.persona = new Persona(this.scene, personaId);
 
     return this.http.get<SoulMachinesConfig>(tokenServer).pipe(
       switchMap((config: SoulMachinesConfig) =>

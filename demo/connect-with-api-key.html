@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <script src="./soulmachines.js"></script>
+  </head>
+  <body>
+    <sm-video id="video" api-key="eyJzb3VsSWQiOiJkZG5hLXNvdWxfbWFjaGluZXMtbmF0aXZlX3dhdHNvbl9jYXJkcyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL3BsYXlncm91bmQuc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfNzdiMjdlOTAtNWIxMS00NGFmLTg2ZWUtNTFmYjY2ZDgzNmU0In0="></sm-video>
+    <button id="connect">Connect</button>
+
+    <script>
+      var connectButton = document.getElementById('connect');
+      connectButton.addEventListener('click', function () {
+        var video = document.getElementById('video');
+        video.connect();
+      });
+    </script>
+  </body>
+</html>

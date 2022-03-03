@@ -35,6 +35,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
 
   @Input('token-server') public tokenServer: string;
+  @Input('api-key') public apiKey: string;
 
   @HostBinding('attr.theme')
   private _theme: Theme = 'default';
@@ -126,7 +127,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit() {
-    this.webSDKService.initialise(this.videoRef.nativeElement);
     if (this._autoConnect) {
       this.connect();
     }
@@ -143,16 +143,22 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.connectingSubject.next(true);
 
-    this.webSDKService
-      .connect(this.tokenServer)
-      .pipe(
-        tap(() => this.onConnectionSuccess()),
-        catchError((e) => {
-          this.onConnectionError(e);
-          return of(false);
-        }),
-      )
-      .subscribe();
+    if (this.apiKey) {
+      // connect using api key
+      this.webSDKService.connectWithAPIKey(this.videoRef.nativeElement, this.apiKey);
+    } else {
+      // connect using token server
+      this.webSDKService
+        .connectWithTokenServer(this.videoRef.nativeElement, this.tokenServer)
+        .pipe(
+          tap(() => this.onConnectionSuccess()),
+          catchError((e) => {
+            this.onConnectionError(e);
+            return of(false);
+          }),
+        )
+        .subscribe();
+    }
   }
 
   private disconnect() {
