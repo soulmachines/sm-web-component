@@ -25,8 +25,7 @@ describe('VideoComponent', () => {
   const mockSMWebSdkService = {
     connected: false,
     initialise: jest.fn(),
-    connectWithAPIKey: jest.fn().mockReturnValue(of('')),
-    connectWithTokenServer: jest.fn().mockReturnValue(of('')),
+    connect: jest.fn().mockReturnValue(of('')),
     disconnect: jest.fn(),
     registerEventCallbacks: jest.fn(),
     unregisterEventCallbacks: jest.fn(),
