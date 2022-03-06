@@ -23,6 +23,7 @@ import {
 import { BehaviorSubject, of } from 'rxjs';
 import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
 import { Theme, themes } from '../types/theme.type';
+import { ConnectOptions, SceneOptions } from '@soulmachines/smwebsdk';
 
 @Component({
   selector: 'app-video',
@@ -127,6 +128,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit() {
+    const sceneOptions: SceneOptions = {
+      videoElement: this.videoRef.nativeElement,
+      apiKey: this.apiKey,
+    };
+
+    this.webSDKService.initialise(sceneOptions);
     if (this._autoConnect) {
       this.connect();
     }
@@ -143,22 +150,18 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.connectingSubject.next(true);
 
-    if (this.apiKey) {
-      // connect using api key
-      this.webSDKService.connectWithAPIKey(this.videoRef.nativeElement, this.apiKey);
-    } else {
-      // connect using token server
-      this.webSDKService
-        .connectWithTokenServer(this.videoRef.nativeElement, this.tokenServer)
-        .pipe(
-          tap(() => this.onConnectionSuccess()),
-          catchError((e) => {
-            this.onConnectionError(e);
-            return of(false);
-          }),
-        )
-        .subscribe();
-    }
+    const connectOptions: ConnectOptions = {};
+
+    this.webSDKService
+      .connect(connectOptions, this.tokenServer)
+      .pipe(
+        tap(() => this.onConnectionSuccess()),
+        catchError((e) => {
+          this.onConnectionError(e);
+          return of(false);
+        }),
+      )
+      .subscribe();
   }
 
   private disconnect() {
