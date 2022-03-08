@@ -122,10 +122,11 @@ describe('VideoComponent', () => {
     describe('tokenServer', () => {
       it('should be passed as a parameter to connect(..) in the WebSDK when a connection is started', () => {
         component.child.tokenServer = 'test-token-server';
+        component.child.autoConnect = 'false';
         fixture.detectChanges();
 
         component.child['connect']();
-        expect(mockSMWebSdkService.connect).toHaveBeenNthCalledWith(1, 'test-token-server');
+        expect(mockSMWebSdkService.connect).toHaveBeenNthCalledWith(1, {}, 'test-token-server');
       });
     });
 

@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Persona, Scene } from '@soulmachines/smwebsdk';
+import { ConnectOptions, Persona, Scene, SceneOptions } from '@soulmachines/smwebsdk';
 import { Session } from '@soulmachines/smwebsdk/lib-esm/Session';
 import { Observable, from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { SoulMachinesConfig } from '../video/soulmachines-config';
 
 export { Persona } from '@soulmachines/smwebsdk';
 export interface SceneCallbacks {
@@ -15,6 +14,11 @@ export interface SceneCallbacks {
 export interface SpeechMarkerEventArgs {
   name: string;
   arguments: string[];
+}
+
+export interface TokenServerResult {
+  jwt: string;
+  url: string;
 }
 
 const personaId = 1;
@@ -28,31 +32,53 @@ export class SMWebSDKService {
 
   constructor(private http: HttpClient) {}
 
-  public initialise(videoElement: HTMLVideoElement) {
-    this.scene = new Scene(videoElement);
+  public initialise(sceneOptions: SceneOptions) {
+    this.scene = new Scene(sceneOptions);
     this.persona = new Persona(this.scene, personaId);
   }
 
-  public connect(tokenServer: string): Observable<string> {
-    if (!tokenServer) {
-      throw new Error('Unable to establish a connection, tokenServer missing');
-    }
+  public connect(connectOptions: ConnectOptions, tokenServer?: string): Observable<string> {
+    /**
+     * WebSDK does not support the fetching of JWT tokens based on a tokenServer URL,
+     * so we need to do that step here. If a tokenServer is provided, this function
+     * will fetch the configuration and merge the result into the connectOptions.
+     */
+    const getConnectOptions = async (): Promise<ConnectOptions> => {
+      // if there's no token server provided then we can just
+      // return the connectOptions as they are, with no changes.
+      if (!tokenServer) {
+        return connectOptions;
+      }
 
-    const retryOptions = {
-      maxRetries: 20,
-      delayMs: 500,
+      // if a token server was provided then we need to GET the configuration
+      // from that endpoint, and merge it into the connectOptions object
+      return this.http
+        .get(tokenServer)
+        .toPromise()
+        .then((result: TokenServerResult) => ({
+          ...connectOptions,
+          tokenServer: {
+            uri: result.url,
+            token: result.jwt,
+          },
+        }));
     };
 
-    return this.http.get<SoulMachinesConfig>(tokenServer).pipe(
-      switchMap((config: SoulMachinesConfig) =>
-        from(this.scene.connect(config.url, '', config.jwt, retryOptions)).pipe(
-          tap(() => {
-            (this.scene.session() as Session).setLogging(false);
-            this.connected = true;
-          }),
-        ),
-      ),
+    // transform the getConnectOptions promise to an observable
+    // and map that to the scene connect function
+    return from(getConnectOptions()).pipe(
+      switchMap((options) => this.scene.connect(options)),
+      tap((sessionId) => this.onConnected(sessionId)),
     );
+  }
+
+  /**
+   * Internal state-setting or side effects to run once the
+   * connection has been established successfully.
+   */
+  private onConnected(sessionId: string) {
+    (this.scene.session() as Session).setLogging(false);
+    this.connected = true;
   }
 
   public disconnect() {

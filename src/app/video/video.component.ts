@@ -23,6 +23,7 @@ import {
 import { BehaviorSubject, of } from 'rxjs';
 import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
 import { Theme, themes } from '../types/theme.type';
+import { ConnectOptions, SceneOptions } from '@soulmachines/smwebsdk';
 
 @Component({
   selector: 'app-video',
@@ -35,6 +36,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
 
   @Input('token-server') public tokenServer: string;
+  @Input('api-key') public apiKey: string;
 
   @HostBinding('attr.theme')
   private _theme: Theme = 'default';
@@ -126,7 +128,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit() {
-    this.webSDKService.initialise(this.videoRef.nativeElement);
+    const sceneOptions: SceneOptions = {
+      videoElement: this.videoRef.nativeElement,
+      apiKey: this.apiKey,
+    };
+
+    this.webSDKService.initialise(sceneOptions);
     if (this._autoConnect) {
       this.connect();
     }
@@ -143,8 +150,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.connectingSubject.next(true);
 
+    const connectOptions: ConnectOptions = {};
+
     this.webSDKService
-      .connect(this.tokenServer)
+      .connect(connectOptions, this.tokenServer)
       .pipe(
         tap(() => this.onConnectionSuccess()),
         catchError((e) => {
