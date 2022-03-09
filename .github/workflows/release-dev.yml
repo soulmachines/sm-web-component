@@ -6,8 +6,8 @@ on:
       - master
 
 permissions:
-      id-token: write # Required for configure AWS credentials
-      contents: read # Required for checkout the source code
+  id-token: write # Required for configure AWS credentials
+  contents: read # Required for checkout the source code
 
 env:
   ASSET_LOCATION: demo/soulmachines.js
