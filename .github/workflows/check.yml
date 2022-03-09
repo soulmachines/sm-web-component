@@ -1,4 +1,4 @@
-name: CI
+name: PR check
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.17' # Required for semantic-release
 
       - name: Caching Dependencies
         uses: actions/cache@v2
