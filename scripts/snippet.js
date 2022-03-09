@@ -11,6 +11,8 @@ var s = d.createElement('script');
 s.type = 'text/javascript';
 s.async = false;
 s.defer = true;
+
+// update to public CDN path before minifying
 s.src = '../soulmachines.js';
 
 s.onload = () => {
