@@ -1,7 +1,6 @@
 name: Stable Release To CDN
 
 on:
-  pull_request:
   push:
     branches:
       - release
