@@ -2,6 +2,20 @@
   "name": "soulmachines-video-web-component",
   "version": "1.0.0-alpha.1",
   "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --port 4220",
+    "token": "ng serve --proxy-config proxy.conf.js --port 4210",
+    "test": "jest --watch",
+    "test-ci": "jest",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "build": "ng build --configuration production --output-hashing=none",
+    "package": "npm run build && npx concat -o ./demo/soulmachines.js dist/demo/runtime-es2015.js dist/demo/polyfills-es2015.js dist/demo/main-es2015.js",
+    "serve": "live-server ./demo",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
+  },
   "dependencies": {
     "@angular/animations": "^12.2.7",
     "@angular/common": "^12.2.7",
@@ -20,21 +34,6 @@
     "rxjs": "^6.6.7",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
-  },
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve --port 4220",
-    "token": "ng serve --proxy-config proxy.conf.js --port 4210",
-    "test": "jest --watch",
-    "test-ci": "jest",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build": "ng build --configuration production --output-hashing=none",
-    "package": "npm run build && npx concat -o ./demo/soulmachines.js dist/demo/runtime-es2015.js dist/demo/polyfills-es2015.js dist/demo/main-es2015.js",
-    "serve": "live-server ./demo",
-    "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write .",
-    "semantic-release": "semantic-release --debug"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.7",
