@@ -14,7 +14,7 @@ env:
   AWS_PATH: 's3://static-prod.soulmachines.com'
   AWS_DEFAULT_OUTPUT: 'json'
   AWS_DEFAULT_REGION: 'us-east-1'
-  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/Github_Federated_Access_Role
+  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/static_sm_com_GHA_Role
   CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
   GH_TOKEN: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
 
