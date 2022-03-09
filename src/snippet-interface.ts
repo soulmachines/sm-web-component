@@ -1,11 +1,17 @@
 (function () {
-  // add the function for creating the element
+  /**
+   * On every page where the web component is imported,
+   * a property `sm` will be attached to the global `window`
+   * objects, so that the web page can call `window.sm()`
+   * to configure the web component widget.
+   */
   window['sm'] = {
     configure: (options) => {
       const el = document.createElement('sm-video');
 
       /**
-       * add support here for all JS-based config options
+       * add support here for all JS-based config options,
+       * assigning them to the web component's HTML attributes
        */
       if (options.tokenServer) {
         el.setAttribute('token-server', options.tokenServer);
