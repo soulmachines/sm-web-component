@@ -2,6 +2,20 @@
   "name": "soulmachines-video-web-component",
   "version": "1.0.0-alpha.1",
   "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --port 4220",
+    "token": "ng serve --proxy-config proxy.conf.js --port 4210",
+    "test": "jest --watch",
+    "test-ci": "jest",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "build": "ng build --configuration production --output-hashing=none",
+    "package": "npm run build && npx concat -o ./demo/soulmachines.js dist/demo/runtime-es2015.js dist/demo/polyfills-es2015.js dist/demo/main-es2015.js",
+    "serve": "live-server ./demo",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
+  },
   "dependencies": {
     "@angular/animations": "^12.2.7",
     "@angular/common": "^12.2.7",
@@ -21,21 +35,6 @@
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
   },
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve --port 4220",
-    "token": "ng serve --proxy-config proxy.conf.js --port 4210",
-    "test": "jest --watch",
-    "test-ci": "jest",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build": "ng build --configuration production --output-hashing=none",
-    "package": "npm run build && npx concat -o ./demo/soulmachines.js dist/demo/runtime-es2015.js dist/demo/polyfills-es2015.js dist/demo/main-es2015.js",
-    "serve": "live-server ./demo",
-    "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write .",
-    "semantic-release": "semantic-release --debug"
-  },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.7",
     "@angular/cli": "^12.2.7",
@@ -43,7 +42,6 @@
     "@angular/language-service": "^12.2.7",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.1",
-    "@semantic-release/github": "^7.2.3",
     "@semantic-release/release-notes-generator": "^9.0.3",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.9.6",
@@ -56,7 +54,6 @@
     "live-server": "^1.2.1",
     "prettier": "2.3.2",
     "protractor": "~7.0.0",
-    "semantic-release": "^17.4.7",
     "ts-jest": "^27.0.5",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",
@@ -65,14 +62,13 @@
   "release": {
     "branches": [
       "release",
-      "master",
       {
-        "name": "beta",
-        "prerelease": true
+        "name": "main",
+        "prerelease": "beta"
       },
       {
-        "name": "alpha",
-        "prerelease": true
+        "name": "no-op",
+        "prerelease": false
       }
     ],
     "tagFormat": "${version}",
@@ -100,17 +96,6 @@
         {
           "changelogFile": "CHANGELOG.md",
           "changelogTitle": "# Change Log"
-        }
-      ],
-      [
-        "@semantic-release/github",
-        {
-          "assets": [
-            {
-              "path": "demo/soulmachines.js",
-              "label": "JS distribution"
-            }
-          ]
         }
       ],
       [

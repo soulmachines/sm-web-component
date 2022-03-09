@@ -1,12 +1,13 @@
-name: CI
+name: Release Beta
 
 on:
   pull_request:
   push:
     branches:
-      - release
-      - alpha
-      - beta
+      - master
+
+permissions:
+  contents: write
 
 env:
   ASSET_LOCATION: demo/soulmachines.js
@@ -14,7 +15,7 @@ env:
   AWS_PATH: 's3://static-prod.soulmachines.com'
   AWS_DEFAULT_OUTPUT: 'json'
   AWS_DEFAULT_REGION: 'us-east-1'
-  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/static_sm_com_GHA_Role
+  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/Github_Federated_Access_Role
   CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
   GH_TOKEN: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
 
@@ -27,13 +28,11 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
+          node-version: '14.17' # Required for semantic-release
 
       - name: Caching Dependencies
         uses: actions/cache@v2
@@ -46,20 +45,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run Lint
-        run: npm run lint
-
-      - name: Run Tests
-        run: npm run test-ci
-
-      - name: Run Prettier
-        run: npm run prettier
-
       - name: Build Asset
         run: npm run package
 
-      - if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
-        name: Run Semantic Release
+      - name: Run Semantic Release
         id: RELEASE_VERSION
         run: |
           npx semantic-release
@@ -77,7 +66,6 @@ jobs:
           retention-days: 1
 
   release:
-    if: github.ref == 'refs/heads/release' || github.ref == 'refs/heads/alpha' || github.ref == 'refs/heads/beta'
     needs: [build]
     runs-on: ubuntu-latest
     permissions:
@@ -100,11 +88,4 @@ jobs:
       - name: Release to CDN
         run: |
           aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
-          if [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"alpha"*  ]] || [[ ${{ needs.build.outputs.RELEASE_VERSION }} == *"beta"* ]]
-          then
-              echo "pre-release, not updating latest"
-          else
-              echo "updating latest"
-              aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js
-          fi
           aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
