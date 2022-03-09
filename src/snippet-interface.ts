@@ -2,7 +2,7 @@
   /**
    * On every page where the web component is imported,
    * a property `sm` will be attached to the global `window`
-   * objects, so that the web page can call `window.sm()`
+   * object, so that the web page inline JS can call `window.sm()`
    * to configure the web component widget.
    */
   window['sm'] = {
