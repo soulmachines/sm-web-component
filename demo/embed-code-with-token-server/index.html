@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Drop-in Web Component Demo</h1>
+
+    <!-- prettier-ignore -->
+    <script>
+      var SM_CONFIG = {
+        tokenServer: 'http://localhost:4210/auth/authorize',
+        autoconnect: true,
+      };
+
+      var e=window,t=document,r=t.createElement("script");r.type="text/javascript",r.async=!1,r.defer=!0,r.src="../soulmachines.js",r.onload=()=>{e.sm.configure(SM_CONFIG)};var a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);
+    </script>
+  </body>
+</html>
