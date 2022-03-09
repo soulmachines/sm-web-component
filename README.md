@@ -69,13 +69,13 @@ npm run serve
 
 ### Release
 
-#### Beta Release
+#### Dev Release
 
-Any PR merged to `master` branch will trigger workflow [Release Beta](https://github.com/soulmachines/sm-web-component/actions/workflows/release-beta.yml). `demo/soulmachines.js` file will be uploaded to `https://static.soulmachines.com/soulmachines-1.0.0-beta.1.js`
+Any PR merged to `master` branch will trigger workflow [Release Dev](https://github.com/soulmachines/sm-web-component/actions/workflows/release-dev.yml). `demo/soulmachines.js` file will be uploaded to `https://static.soulmachines.com/webcomponent-dev.js`
 
 #### Stable Release
 
-To release a stable version to CDN, Creating a new tag (example: `1.0.0`) in [GitHub Release](https://github.com/soulmachines/sm-web-component/releases). This will trigger workflow [Release Stable](https://github.com/soulmachines/sm-web-component/actions/workflows/release-stable.yml). This workflow publishes stable release and update the latest script `https://static.soulmachines.com/soulmachines-latest.js`
+To release a stable version to CDN, manually trigger workflow [Release Stable](https://github.com/soulmachines/sm-web-component/actions/workflows/release-stable.yml). This workflow runs semantic release, publishes stable release version to CDN and update the latest script `https://static.soulmachines.com/soulmachines-latest.js`
 
 The table below shows which commit message gets you which release type when `semantic-release` runs:
 

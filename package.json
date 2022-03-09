@@ -61,15 +61,7 @@
   },
   "release": {
     "branches": [
-      "release",
-      {
-        "name": "main",
-        "prerelease": "beta"
-      },
-      {
-        "name": "no-op",
-        "prerelease": false
-      }
+      "master"
     ],
     "tagFormat": "${version}",
     "plugins": [
