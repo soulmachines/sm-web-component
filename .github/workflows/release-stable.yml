@@ -1,0 +1,93 @@
+name: Release Stable
+
+on:
+  create:
+    tags:
+      # examples tag: 1.0.0
+      - ^(\d+\.)?(\d+\.)?(\*|\d+)$
+  # manual trigger from actions
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  ASSET_LOCATION: demo/soulmachines.js
+  ASSET_NAME: 'soulmachines'
+  AWS_PATH: 's3://static-prod.soulmachines.com'
+  AWS_DEFAULT_OUTPUT: 'json'
+  AWS_DEFAULT_REGION: 'us-east-1'
+  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/static_sm_com_GHA_Role
+  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17' # Required for semantic-release
+
+      - name: Caching Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Asset
+        run: npm run package
+
+      - name: Get Release Version
+        id: RELEASE_VERSION
+        run: |
+          echo $(git describe --abbrev=0 --tags)
+          version=$(git describe --abbrev=0 --tags)
+          echo "::set-output name=tag::${version}"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ASSET_NAME }}
+          path: ${{ env.ASSET_LOCATION }}
+          retention-days: 1
+
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for configure AWS credentials
+      contents: read # Required for checkout the source code
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.ASSET_NAME }}
+          path: demo
+
+      - name: Configure AWS credential
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+      - name: Release to CDN
+        run: |
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-${{ needs.build.outputs.RELEASE_VERSION }}.js
+          echo "updating latest"
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}-latest.js
+          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
