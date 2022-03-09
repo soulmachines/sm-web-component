@@ -7,7 +7,7 @@ var SM_CONFIG = {};
 var w = window;
 var d = document;
 
-var s = document.createElement('script');
+var s = d.createElement('script');
 s.type = 'text/javascript';
 s.async = false;
 s.defer = true;
