@@ -68,8 +68,8 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: read
+      id-token: write # Required for configure AWS credentials
+      contents: read # Required for checkout the source code
 
     steps:
       - name: Download Artifact
