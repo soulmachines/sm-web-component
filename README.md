@@ -41,31 +41,47 @@ Reference: https://docs.github.com/en/free-pro-team@latest/github/authenticating
 
 ### Start local development
 
+Remember to install all npm dependencies before starting the app:
+
 ```
 npm i
-npm run token
-npm run start
 ```
 
+You can then start the Angular app:
+
+```
+npm start
+```
+
+An Angular-based preview of the app will be available at `http://localhost:4210`.
+
+A JWT token server is also hosted by the Angular app, and will be available at `http://localhost:4210/auth/authorize`. This token server can be used to issue JWTs for the Angular app, or for demos in the `demo` folder, served separately.
+
+### Serving the examples in demo folder
+
+Ensure the Angular app with token server is running:
+
+```
+npm start
+```
+
+In a **separate terminal window**, run the npm command to serve the demo folder as a static site. This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
+
+```
+npm run serve
+```
+
+This command will serve the `demo` folder at `http://127.0.0.1:8080`. Use the browser's URL bar to navifate directly to the desired demo page.
+
 ### Building the output soulmachines.js library
+
+To create a bundled output file, use the `package` command:
 
 ```
 npm run package
 ```
 
-### Serving the examples in demo folder
-
-Start the local token server:
-
-```
-npm run token
-```
-
-Serve the demo - this server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
-
-```
-npm run serve
-```
+This will build the Angular app, produce standard Angular output files, then concat those into a single file for distribution.
 
 ### Release
 
