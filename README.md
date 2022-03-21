@@ -59,7 +59,7 @@ A JWT token server is also hosted by the Angular app, and will be available at `
 
 ### Serving the examples in `examples` folder
 
-Ensure the Angular app is being served using the `watch` command, as this is configured to write the output files to the file system (as opposed to in-memory) so that Parcel has access to them:
+Ensure the Angular app is being served using the `watch:app` command (not `start`), as this is configured to write the output files to the file system (as opposed to in-memory) so that Parcel has access to them:
 
 ```
 npm run watch:app
