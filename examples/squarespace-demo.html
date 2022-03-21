@@ -1,4 +1,4 @@
-<script src="http://localhost:8080/bundles/smwebsdk.js"></script>
+<script src="/soulmachines.js"></script>
 <script>
   console.log('hello world');
 
@@ -7,7 +7,7 @@
   var persona = new Persona(scene, 1);
 
   console.log('fetch');
-  fetch('http://localhost:4210/auth/authorize')
+  fetch('/api/jwt')
     .then(function (res) {
       return res.json();
     })

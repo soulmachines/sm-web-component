@@ -8,11 +8,11 @@
     <!-- prettier-ignore -->
     <script>
       var SM_CONFIG = {
-        tokenServer: 'http://localhost:4210/auth/authorize',
+        tokenServer: '/api/jwt',
         autoconnect: true,
       };
 
-      var e=window,t=document,r=t.createElement("script");r.type="text/javascript",r.async=!1,r.defer=!0,r.src="../soulmachines.js",r.onload=()=>{e.sm.configure(SM_CONFIG)};var a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);
+      var e=window,t=document,r=t.createElement("script");r.type="text/javascript",r.async=!1,r.defer=!0,r.src="/soulmachines.js",r.onload=()=>{e.sm.configure(SM_CONFIG)};var a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);
     </script>
   </body>
 </html>

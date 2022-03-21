@@ -13,7 +13,7 @@ See the `examples` folder for more usage examples.
 The project consists of 2 parts:
 
 - An Angular project, which builds a web component
-- A simple http server, which serves the compiled library and examples as a static site
+- A Parcel configuration, which serves the compiled library and examples as a static site
 
 ### Setup
 
@@ -59,19 +59,19 @@ A JWT token server is also hosted by the Angular app, and will be available at `
 
 ### Serving the examples in `examples` folder
 
-Ensure the Angular app with token server is running:
+Ensure the Angular app is being served using the `watch:app` command (not `start`), as this is configured to write the output files to the file system (as opposed to in-memory) so that Parcel has access to them:
 
 ```
-npm start
+npm run watch:app
 ```
 
-In a **separate terminal window**, run the npm command to serve the examples folder as a static site. This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
+In a **separate terminal window**, run the npm command to bundle the `soulmachines.js` output file and serve the examples folder as a static site. This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
 
 ```
 npm run serve
 ```
 
-This command will serve the `examples` folder at `http://127.0.0.1:8080`. Use the browser's URL bar to navifate directly to the desired example page.
+This command will serve the `examples` folder at `http://127.0.0.1:5000`. Use the browser's URL bar to navigate directly to the desired example page.
 
 ### Building the output soulmachines.js library
 

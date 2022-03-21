@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="./soulmachines.js" defer></script>
+    <script src="/soulmachines.js"></script>
     <style>
       sm-video {
         width: 500px;
@@ -11,7 +11,7 @@
   <body>
     <h1>Drop-in Web Component Demo</h1>
     <div>
-      <sm-video token-server="http://localhost:4210/auth/authorize" theme="none"></sm-video>
+      <sm-video token-server="/api/jwt" theme="none"></sm-video>
     </div>
   </body>
 </html>
