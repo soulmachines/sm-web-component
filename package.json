@@ -10,8 +10,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build": "ng build --configuration production --output-hashing=none",
-    "package": "npm run build && npx concat -o ./demo/soulmachines.js dist/app/runtime-es2015.js dist/app/polyfills-es2015.js dist/app/main-es2015.js",
-    "serve": "live-server ./demo",
+    "package": "npm run build && npx concat -o ./examples/soulmachines.js dist/app/runtime-es2015.js dist/app/polyfills-es2015.js dist/app/main-es2015.js",
+    "serve": "live-server ./examples",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write ."
   },

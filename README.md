@@ -6,7 +6,7 @@ Please refer to the [Usage Guide](./docs/USAGE.md) and [API Documentation](./doc
 
 ## Usage Examples
 
-See the `demo` folder for more usage examples.
+See the `examples` folder for more usage examples.
 
 ## Local Development
 
@@ -55,9 +55,9 @@ npm start
 
 An Angular-based preview of the app will be available at `http://localhost:4210`.
 
-A JWT token server is also hosted by the Angular app, and will be available at `http://localhost:4210/auth/authorize`. This token server can be used to issue JWTs for the Angular app, or for demos in the `demo` folder, served separately.
+A JWT token server is also hosted by the Angular app, and will be available at `http://localhost:4210/auth/authorize`. This token server can be used to issue JWTs for the Angular app, or for examples in the `examples` folder, served separately.
 
-### Serving the examples in demo folder
+### Serving the examples in `examples` folder
 
 Ensure the Angular app with token server is running:
 
@@ -65,13 +65,13 @@ Ensure the Angular app with token server is running:
 npm start
 ```
 
-In a **separate terminal window**, run the npm command to serve the demo folder as a static site. This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
+In a **separate terminal window**, run the npm command to serve the examples folder as a static site. This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
 
 ```
 npm run serve
 ```
 
-This command will serve the `demo` folder at `http://127.0.0.1:8080`. Use the browser's URL bar to navifate directly to the desired demo page.
+This command will serve the `examples` folder at `http://127.0.0.1:8080`. Use the browser's URL bar to navifate directly to the desired example page.
 
 ### Building the output soulmachines.js library
 
@@ -87,7 +87,7 @@ This will build the Angular app, produce standard Angular output files, then con
 
 #### Dev Release
 
-Any PR merged to `master` branch will trigger workflow [Release Dev](https://github.com/soulmachines/sm-web-component/actions/workflows/release-dev.yml). `demo/soulmachines.js` file will be uploaded to `https://static.soulmachines.com/webcomponent-dev.js`
+Any PR merged to `master` branch will trigger workflow [Release Dev](https://github.com/soulmachines/sm-web-component/actions/workflows/release-dev.yml). `examples/soulmachines.js` file will be uploaded to `https://static.soulmachines.com/webcomponent-dev.js`
 
 #### Stable Release
 
