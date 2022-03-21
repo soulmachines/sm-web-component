@@ -23,9 +23,9 @@ module.exports = function (app) {
             return true;
         }
       },
-    })
+    }),
   );
 
   // Use static middleware
   app.use(serveStatic('examples'));
-}
+};
