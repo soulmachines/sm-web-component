@@ -10,7 +10,7 @@ permissions:
   contents: read # Required for checkout the source code
 
 env:
-  ASSET_LOCATION: demo/soulmachines.js
+  ASSET_LOCATION: examples/soulmachines.js
   ASSET_NAME: 'webcomponent-dev.js'
   AWS_PATH: 's3://static-prod.soulmachines.com'
   AWS_DEFAULT_OUTPUT: 'json'

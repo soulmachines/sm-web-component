@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 env:
-  ASSET_LOCATION: demo/soulmachines.js
+  ASSET_LOCATION: examples/soulmachines.js
   ASSET_NAME: 'soulmachines'
   AWS_PATH: 's3://static-prod.soulmachines.com'
   AWS_DEFAULT_OUTPUT: 'json'
@@ -77,7 +77,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ${{ env.ASSET_NAME }}
-          path: demo
+          path: examples
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master

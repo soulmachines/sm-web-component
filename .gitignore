@@ -1,5 +1,5 @@
 node_modules
 .env
 dist
-demo/soulmachines.js
+examples/soulmachines.js
 .DS_Store
