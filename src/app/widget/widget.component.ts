@@ -7,7 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class WidgetComponent implements OnInit {
   @Input('token-server') public tokenServer: string;
-  @Input('auto-connect') public autoConnect: string = 'true';
+  @Input('api-key') public apiKey: string;
+  @Input('auto-connect') public autoConnect: string;
   @Input('greeting') public greetingText: string = "Got any questions? I'm happy to help!";
 
   constructor() {}

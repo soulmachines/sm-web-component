@@ -7,7 +7,7 @@
    */
   window['sm'] = {
     configure: (options) => {
-      const el = document.createElement('sm-video');
+      const el = document.createElement('sm-widget');
 
       /**
        * add support here for all JS-based config options,

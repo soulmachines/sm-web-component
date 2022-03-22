@@ -49,7 +49,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._theme;
   }
 
-  private _autoConnect = true;
+  private _autoConnect = false;
   @Input('auto-connect')
   public set autoConnect(enabled: boolstring) {
     this._autoConnect = convertToBool(enabled);
