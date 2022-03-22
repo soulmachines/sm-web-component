@@ -1,7 +1,7 @@
 $background-color: #ffffff;
 $font-color: #3d4955;
 
-.greeting-container {
+.text-container {
   position: fixed;
   z-index: 9999;
   bottom: 40px;
@@ -38,3 +38,17 @@ p {
   flex-grow: 1;
   margin: 0px 0px;
 }
+
+button {
+  position: fixed;
+  z-index: 9999;
+  bottom: 110px;
+  right: 160px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: $background-color;
+  border-color: $background-color;
+}
+

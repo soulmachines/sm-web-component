@@ -7,8 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GreetingComponent implements OnInit {
   @Input() public greeting: string;
-
+  public isOn: boolean = true;
   constructor() {}
 
   ngOnInit(): void {}
+
+  closeGreeting() {
+    this.isOn = false;
+  }
 }
