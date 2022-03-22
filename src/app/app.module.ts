@@ -4,11 +4,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { createCustomElement } from '@angular/elements';
 import { VideoModule } from './video/video.module';
 import { VideoComponent } from './video/video.component';
-import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerModule } from './spinner/spinner.module';
+import { GreetingModule } from './greeting/greeting.module';
+import { WidgetComponent } from './widget/widget.component';
+import { WidgetModule } from './widget/widget.module';
 
 @NgModule({
-  imports: [BrowserModule, HttpClientModule, VideoModule, SpinnerModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    WidgetModule,
+    VideoModule,
+    SpinnerModule,
+    GreetingModule,
+  ],
 
   declarations: [],
   bootstrap: [],
@@ -16,7 +25,7 @@ import { SpinnerModule } from './spinner/spinner.module';
 export class AppModule {
   elements = [
     { component: VideoComponent, name: 'sm-video' },
-    { component: SpinnerComponent, name: 'sm-spinner' },
+    { component: WidgetComponent, name: 'sm-widget' },
   ];
 
   constructor(injector: Injector) {

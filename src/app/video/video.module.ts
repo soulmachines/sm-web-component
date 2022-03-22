@@ -5,6 +5,7 @@ import { SpinnerModule } from '../spinner/spinner.module';
 
 @NgModule({
   imports: [CommonModule, SpinnerModule],
+  exports: [VideoComponent],
   declarations: [VideoComponent],
   entryComponents: [VideoComponent],
 })
