@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import iconPaths from './icon-paths';
-import { IconDirection, IconName } from './types';
 
+type IconName = keyof typeof iconPaths;
 @Component({
   selector: 'studio-icon',
   templateUrl: './icon.component.html',
