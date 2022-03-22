@@ -9,7 +9,7 @@ export class WidgetComponent implements OnInit {
   @Input('token-server') public tokenServer: string;
   @Input('api-key') public apiKey: string;
   @Input('auto-connect') public autoConnect: string;
-  @Input('greeting') public greetingText: string = "Got any questions? I'm happy to help!";
+  @Input('greeting') public greetingText: string = "Got any questions? I'm happy to help.";
 
   constructor() {}
 

@@ -1,9 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
 $background-color: #ffffff;
 $font-color: #3d4955;
 
+.greeting-container {
+  position: relative;
+}
+
 .text-container {
   position: fixed;
-  z-index: 9999;
+  z-index: 9998;
   bottom: 40px;
   right: 180px;
 
@@ -17,7 +22,6 @@ $font-color: #3d4955;
 }
 
 p {
-  position: static;
   width: 272px;
   height: 56px;
   left: 24px;
@@ -30,24 +34,18 @@ p {
   line-height: 28px;
   letter-spacing: 0em;
   text-align: left;
-
   color: $font-color;
 
-  flex: none;
   order: 0;
   flex-grow: 1;
-  margin: 0px 0px;
+  margin: 0;
 }
 
 button {
   position: fixed;
   z-index: 9999;
-  bottom: 110px;
+  bottom: 100px;
   right: 160px;
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: $background-color;
-  border-color: $background-color;
+  background: none;
+  border: none;
 }

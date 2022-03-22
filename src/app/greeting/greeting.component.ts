@@ -5,12 +5,11 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './greeting.component.html',
   styleUrls: ['./greeting.component.scss'],
 })
-export class GreetingComponent implements OnInit {
-  @Input() public greeting: string;
-  public isOn: boolean = true;
-  constructor() {}
+export class GreetingComponent {
+  @Input() greeting: string;
+  isOn: boolean = true;
 
-  ngOnInit(): void {}
+  constructor() {}
 
   closeGreeting() {
     this.isOn = false;

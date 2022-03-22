@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { IconModule } from '../icon/icon.module';
 import { GreetingComponent } from './greeting.component';
 
 describe('GreetingComponent', () => {
@@ -9,6 +9,7 @@ describe('GreetingComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GreetingComponent],
+      imports: [IconModule],
     }).compileComponents();
   });
 

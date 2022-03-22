@@ -1,6 +1,6 @@
-<div *ngIf="isOn">
+<div class="greeting-container" *ngIf="isOn">
   <div class="text-container">
     <p>{{ greeting }}</p>
   </div>
-  <button (click)="closeGreeting()">x</button>
+  <button (click)="closeGreeting()"><studio-icon name="close"></studio-icon></button>
 </div>

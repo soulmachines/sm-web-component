@@ -1,3 +1,5 @@
+$background-color: #dfedee;
+
 :host {
   video,
   slot {
@@ -26,6 +28,6 @@
   width: 140px;
   height: 140px;
   overflow: hidden;
-  background-color: #dfedee;
+  background-color: $background-color;
   border-radius: 24px;
 }
