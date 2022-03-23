@@ -4,48 +4,37 @@ $font-color: #3d4955;
 
 .greeting-container {
   position: relative;
+  z-index: 9999;
+  position: fixed;
+  bottom: 40px;
+  right: 180px;
 }
 
 .text-container {
-  position: fixed;
-  z-index: 9998;
-  bottom: 40px;
-  right: 180px;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  width: 272px;
   padding: 16px 24px;
-
   background: $background-color;
   border-radius: 12px;
 }
 
 p {
-  width: 272px;
-  height: 56px;
-  left: 24px;
-  top: 24px;
-
   font-family: Rubik;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 28px;
-  letter-spacing: 0em;
-  text-align: left;
   color: $font-color;
-
-  order: 0;
-  flex-grow: 1;
   margin: 0;
 }
 
 button {
-  position: fixed;
-  z-index: 9999;
-  bottom: 100px;
-  right: 160px;
+  position: absolute;
+  top: -20px;
+  right: -20px;
   background: none;
   border: none;
+}
+
+.shadow {
+  filter: drop-shadow(-3px 3px 20px rgba(0, 0, 0, 0.26));
 }

@@ -1,6 +1,6 @@
-<div class="greeting-container" *ngIf="isOn">
+<div class="greeting-container" *ngIf="isVisible">
   <div class="text-container">
     <p>{{ greeting }}</p>
   </div>
-  <button (click)="closeGreeting()"><studio-icon name="close"></studio-icon></button>
+  <button (click)="closeGreeting()"><studio-icon class="shadow" name="close"></studio-icon></button>
 </div>

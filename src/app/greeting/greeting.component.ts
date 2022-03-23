@@ -7,11 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GreetingComponent {
   @Input() greeting: string;
-  isOn: boolean = true;
-
-  constructor() {}
+  isVisible: boolean = true;
 
   closeGreeting() {
-    this.isOn = false;
+    this.isVisible = false;
   }
 }
