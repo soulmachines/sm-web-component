@@ -3,7 +3,7 @@ import iconPaths from './icon-paths';
 
 type IconName = keyof typeof iconPaths;
 @Component({
-  selector: 'studio-icon',
+  selector: 'app-icon',
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
 })
