@@ -1,0 +1,6 @@
+<div class="greeting-container" *ngIf="isVisible">
+  <div class="text-container">
+    <p>{{ greeting }}</p>
+  </div>
+  <button (click)="closeGreeting()"><app-icon name="close"></app-icon></button>
+</div>

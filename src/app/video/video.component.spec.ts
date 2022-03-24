@@ -131,9 +131,9 @@ describe('VideoComponent', () => {
     });
 
     describe('autoConnect', () => {
-      it('should default to true', () => {
+      it('should default to false', () => {
         fixture.detectChanges();
-        expect(component.child.autoConnect).toBe('true');
+        expect(component.child.autoConnect).toBe('false');
       });
 
       it('when true should call connect in the WebSDK when the component is initialised', () => {
