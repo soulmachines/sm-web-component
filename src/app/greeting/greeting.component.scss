@@ -3,7 +3,6 @@ $background-color: #ffffff;
 $font-color: #3d4955;
 
 .greeting-container {
-  position: relative;
   z-index: 9999;
   position: fixed;
   bottom: 40px;
@@ -27,11 +26,12 @@ p {
   margin: 0;
 }
 
-button,
-app-icon {
+button {
   position: absolute;
   top: -10px;
   right: -10px;
+  border:none;
+  padding: 10px;
   border-radius: 50%;
   background-color: $background-color;
   box-shadow: -3px 3px 20px rgba(0, 0, 0, 0.26);
