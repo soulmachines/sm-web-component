@@ -1,4 +1,4 @@
-<div class="dp-container" [class.connected]="!isWaiting">
+<div class="dp-container" [class.connected]="isConnected">
   <div class="video-container">
     <app-video
       #video
@@ -6,17 +6,18 @@
       [token-server]="tokenServer"
       [api-key]="apiKey"
       [auto-connect]="autoConnect"
+      (connected)="onConnected()"
+      (disconnected)="onDisconnected()"
     ></app-video>
     <div
       class="profile-picture"
-      *ngIf="isWaiting"
-      [class.hidden]="!isWaiting"
+      [class.hidden]="isConnecting"
       [style.backgroundImage]="'url(' + profilePicture + ')'"
       (click)="connect()"
     ></div>
   </div>
 
-  <div class="user-controls" [class.hidden]="isWaiting">
+  <div class="user-controls" [class.hidden]="!isConnected">
     <button class="close-button" (click)="disconnect()">
       <app-icon name="close"></app-icon>
     </button>

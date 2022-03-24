@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-widget',
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.scss'],
 })
-export class WidgetComponent implements OnInit {
+export class WidgetComponent {
   @Input('token-server') public tokenServer: string;
   @Input('api-key') public apiKey: string;
   @Input('auto-connect') public autoConnect: string;
@@ -13,19 +13,26 @@ export class WidgetComponent implements OnInit {
   @Input('profile-picture') public profilePicture: string;
   @ViewChild('video') videoElement;
 
-  public isWaiting: boolean = true;
+  public isConnected: boolean = false;
+  public isConnecting: boolean = false;
 
   constructor() {}
 
-  ngOnInit(): void {}
-
   connect() {
     this.videoElement.connect();
-    this.isWaiting = false;
+    this.isConnecting = true;
   }
 
   disconnect() {
     this.videoElement.disconnect();
-    this.isWaiting = true;
+    this.isConnecting = false;
+  }
+
+  onConnected() {
+    this.isConnected = true;
+  }
+
+  onDisconnected() {
+    this.isConnected = false;
   }
 }
