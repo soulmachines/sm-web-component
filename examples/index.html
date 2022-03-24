@@ -1,17 +1,17 @@
 <html>
-  <head>
-    <script src="/soulmachines.js"></script>
-    <style>
-      body,
-      html {
-        background: rgb(126, 112, 112);
-      }
-    </style>
-  </head>
+  <head> </head>
   <body>
     <h1>Drop-in Web Component Demo</h1>
-    <div>
-      <sm-widget token-server="/api/jwt" auto-connect="true"></sm-widget>
-    </div>
+
+    <!-- prettier-ignore -->
+    <script>
+      var SM_CONFIG = {
+        apiKey: 'eyJzb3VsSWQiOiJkZG5hLXNvdWxfbWFjaGluZXMteHh4eHh4IiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vcGxheWdyb3VuZC5zb3VsbWFjaGluZXMuY2xvdWQvYXBpL2p3dCIsImF1dGhUb2tlbiI6ImFwaWtleV92MV8xNjU4MzExNi04NzhjLTQ1ODUtYjE2Zi02YTI1ZTViYjIwMjQifQ==',
+        profilePicture: "https://assets.cdn.soulmachines.cloud/AvatarCoverImages/image-png_yumi_jp-l.jpg"
+        
+      };
+
+      var e=window,t=document,r=t.createElement("script");r.type="text/javascript",r.async=!1,r.defer=!0,r.src="/soulmachines.js",r.onload=()=>{e.sm.configure(SM_CONFIG)};var a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);
+    </script>
   </body>
 </html>

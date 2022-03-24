@@ -1,4 +1,27 @@
-<app-video [token-server]="tokenServer" [api-key]="apiKey" [auto-connect]="autoConnect"></app-video>
+<div class="dp-container" [class.connected]="!isWaiting">
+  <div class="video-container">
+    <app-video
+      #video
+      theme="none"
+      [token-server]="tokenServer"
+      [api-key]="apiKey"
+      [auto-connect]="autoConnect"
+    ></app-video>
+    <div
+      class="profile-picture"
+      *ngIf="isWaiting"
+      [class.hidden]="!isWaiting"
+      [style.backgroundImage]="'url(' + profilePicture + ')'"
+      (click)="connect()"
+    ></div>
+  </div>
+
+  <div class="user-controls" [class.hidden]="isWaiting">
+    <button class="close-button" (click)="disconnect()">
+      <app-icon name="close"></app-icon>
+    </button>
+  </div>
+</div>
 
 <slot>
   <app-greeting [greeting]="greetingText"></app-greeting>
