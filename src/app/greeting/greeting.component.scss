@@ -14,6 +14,7 @@ $font-color: #3d4955;
   padding: 16px 24px;
   background: $background-color;
   border-radius: 12px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1);
 }
 
 p {
@@ -33,6 +34,20 @@ button {
   border: none;
   padding: 10px;
   border-radius: 50%;
-  background-color: $background-color;
-  box-shadow: -3px 3px 20px rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+  background: $background-color;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04),
+    0px 4px 16px rgba(0, 0, 0, 0.06);
+
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    background: #eaeaea;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.06), 0px 12px 28px rgba(0, 0, 0, 0.12);
+  }
+
+  &:focus {
+    background: #ffffff;
+    box-shadow: 0px 0px 0px 3px rgba(0, 128, 255, 0.25);
+  }
 }
