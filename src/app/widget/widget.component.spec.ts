@@ -19,6 +19,7 @@ class MockVideoComponent {
 })
 class MockGreetingComponent {
   @Input() greeting: string;
+  @Input() isVisible: boolean;
 }
 
 describe('WidgetComponent', () => {
