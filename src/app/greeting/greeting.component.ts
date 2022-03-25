@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class GreetingComponent {
   @Input() greeting: string;
-  isVisible: boolean = true;
+  @Input() isVisible: boolean = true;
 
   closeGreeting() {
     this.isVisible = false;

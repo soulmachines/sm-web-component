@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WidgetComponent } from './widget.component';
 import { Component, Input } from '@angular/core';
+import { IconModule } from '../icon/icon.module';
 
 @Component({
   selector: 'app-video',
@@ -18,6 +19,7 @@ class MockVideoComponent {
 })
 class MockGreetingComponent {
   @Input() greeting: string;
+  @Input() isVisible: boolean;
 }
 
 describe('WidgetComponent', () => {
@@ -27,7 +29,7 @@ describe('WidgetComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [WidgetComponent, MockVideoComponent, MockGreetingComponent],
-      imports: [],
+      imports: [IconModule],
     }).compileComponents();
   });
 

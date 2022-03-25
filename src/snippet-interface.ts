@@ -25,6 +25,10 @@
         el.setAttribute('autoconnect', options.autoconnect);
       }
 
+      if (options.profilePicture) {
+        el.setAttribute('profile-picture', options.profilePicture);
+      }
+
       document.body.appendChild(el);
     },
   };

@@ -1,5 +1,29 @@
-<app-video [token-server]="tokenServer" [api-key]="apiKey" [auto-connect]="autoConnect"></app-video>
+<div class="dp-container" [class.connected]="isConnected">
+  <div class="video-container">
+    <app-video
+      #video
+      theme="none"
+      [token-server]="tokenServer"
+      [api-key]="apiKey"
+      [auto-connect]="autoConnect"
+      (connected)="onConnected()"
+      (disconnected)="onDisconnected()"
+    ></app-video>
+    <div
+      class="profile-picture"
+      [class.hidden]="isConnecting"
+      [style.backgroundImage]="'url(' + profilePicture + ')'"
+      (click)="connect()"
+    ></div>
+  </div>
+
+  <div class="user-controls" [class.hidden]="!isConnected">
+    <button class="close-button" (click)="disconnect()">
+      <app-icon name="close"></app-icon>
+    </button>
+  </div>
+</div>
 
 <slot>
-  <app-greeting [greeting]="greetingText"></app-greeting>
+  <app-greeting [greeting]="greetingText" [isVisible]="!isConnecting"></app-greeting>
 </slot>
