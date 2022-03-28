@@ -9,12 +9,19 @@
       (connected)="onConnected()"
       (disconnected)="onDisconnected()"
     ></app-video>
+
     <div
+      *ngIf="profilePicture; else defaultProfilePicture"
       class="profile-picture"
       [class.hidden]="isConnecting"
       [style.backgroundImage]="'url(' + profilePicture + ')'"
       (click)="connect()"
     ></div>
+    <ng-template #defaultProfilePicture>
+      <div [class.hidden]="isConnecting" (click)="connect()">
+        <default-profile-picture class="profile-picture"></default-profile-picture>
+      </div>
+    </ng-template>
   </div>
 
   <div class="user-controls" [class.hidden]="!isConnected">
