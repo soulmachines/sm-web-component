@@ -5,4 +5,3 @@
 import '../dist/app/main-es2015';
 import '../dist/app/polyfills-es2015';
 import '../dist/app/runtime-es2015';
-import '../dist/app/vendor-es2015';

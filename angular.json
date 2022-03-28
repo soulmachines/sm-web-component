@@ -22,7 +22,7 @@
             "styles": ["src/styles.css"],
             "scripts": [],
             "aot": false,
-            "vendorChunk": true,
+            "vendorChunk": false,
             "extractLicenses": false,
             "buildOptimizer": false,
             "sourceMap": true,
