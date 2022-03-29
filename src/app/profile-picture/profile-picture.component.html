@@ -1,0 +1,10 @@
+<div *ngIf="isVisible">
+  <div
+    *ngIf="profilePicture; else defaultProfilePicture"
+    class="profile-picture"
+    [style.backgroundImage]="'url(' + profilePicture + ')'"
+  ></div>
+  <ng-template #defaultProfilePicture>
+    <app-icon name="profile" size="70"></app-icon>
+  </ng-template>
+</div>

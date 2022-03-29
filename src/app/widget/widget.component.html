@@ -8,13 +8,13 @@
       [auto-connect]="autoConnect"
       (connected)="onConnected()"
       (disconnected)="onDisconnected()"
+      [class.hidden]="!isConnecting"
     ></app-video>
-    <div
-      class="profile-picture"
-      [class.hidden]="isConnecting"
-      [style.backgroundImage]="'url(' + profilePicture + ')'"
+    <app-profile-picture
+      [isVisible]="!isConnecting"
+      [profilePicture]="profilePicture"
       (click)="connect()"
-    ></div>
+    ></app-profile-picture>
   </div>
 
   <div class="user-controls" [class.hidden]="!isConnected">
