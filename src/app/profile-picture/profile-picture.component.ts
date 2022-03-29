@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'profile-picture',
+  selector: 'app-profile-picture',
   templateUrl: './profile-picture.component.html',
+  styleUrls: ['./profile-picture.component.scss'],
 })
-export class ProfilePictureComponent {}
+export class ProfilePictureComponent {
+  @Input() isVisible: boolean = true;
+  @Input() profilePicture: string;
+}

@@ -8,20 +8,13 @@
       [auto-connect]="autoConnect"
       (connected)="onConnected()"
       (disconnected)="onDisconnected()"
+      [class.hidden]="!isConnecting"
     ></app-video>
-
-    <div
-      *ngIf="profilePicture; else defaultProfilePicture"
-      class="profile-picture"
-      [class.hidden]="isConnecting"
-      [style.backgroundImage]="'url(' + profilePicture + ')'"
+    <app-profile-picture
+      [isVisible]="!isConnecting"
+      [profilePicture]="profilePicture"
       (click)="connect()"
-    ></div>
-    <ng-template #defaultProfilePicture>
-      <div [class.hidden]="isConnecting" (click)="connect()">
-        <profile-picture class="profile-picture"></profile-picture>
-      </div>
-    </ng-template>
+    ></app-profile-picture>
   </div>
 
   <div class="user-controls" [class.hidden]="!isConnected">
