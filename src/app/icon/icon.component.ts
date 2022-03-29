@@ -9,6 +9,7 @@ type IconName = keyof typeof iconPaths;
 })
 export class IconComponent implements OnChanges {
   @Input() public name: IconName;
+  @Input() public size = 22;
 
   public paths: string[] = [];
 
