@@ -1,23 +1,21 @@
-<div class="dp-container" [class.connected]="isConnected">
-  <div class="video-container">
-    <app-video
-      #video
-      theme="none"
-      [token-server]="tokenServer"
-      [api-key]="apiKey"
-      [auto-connect]="autoConnect"
-      (connected)="onConnected()"
-      (disconnected)="onDisconnected()"
-      [class.hidden]="!isConnecting"
-    ></app-video>
-    <app-profile-picture
-      [isVisible]="!isConnecting"
-      [profilePicture]="profilePicture"
-      (click)="connect()"
-    ></app-profile-picture>
-  </div>
+<div class="dp-container" [ngClass]="connectionState">
+  <app-profile-picture
+    class="profile-picture"
+    [profilePicture]="profilePicture"
+    (click)="connect()"
+  ></app-profile-picture>
+  <app-video
+    #video
+    class="dp-video"
+    theme="none"
+    [token-server]="tokenServer"
+    [api-key]="apiKey"
+    [auto-connect]="autoConnect"
+    (connected)="onConnected()"
+    (disconnected)="onDisconnected()"
+  ></app-video>
 
-  <div class="user-controls" [class.hidden]="!isConnected">
+  <div class="user-controls">
     <button class="close-button" (click)="disconnect()">
       <app-icon name="close"></app-icon>
     </button>
@@ -25,5 +23,9 @@
 </div>
 
 <slot>
-  <app-greeting [greeting]="greetingText" [isVisible]="!isConnecting"></app-greeting>
+  <app-greeting
+    *ngIf="connectionState === ConnectionState.Disconnected"
+    class="greeting-card"
+    [greeting]="greetingText"
+  ></app-greeting>
 </slot>

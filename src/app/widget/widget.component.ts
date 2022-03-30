@@ -1,5 +1,12 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { VideoComponent } from '../video/video.component';
 
+enum ConnectionState {
+  Disconnecting = 'disconnecting',
+  Disconnected = 'disconnected',
+  Connecting = 'connecting',
+  Connected = 'connected',
+}
 @Component({
   selector: 'app-widget',
   templateUrl: './widget.component.html',
@@ -11,28 +18,28 @@ export class WidgetComponent {
   @Input('auto-connect') public autoConnect: string;
   @Input('greeting') public greetingText: string = "Got any questions? I'm happy to help.";
   @Input('profile-picture') public profilePicture: string;
-  @ViewChild('video') videoElement;
+  @ViewChild('video') videoElement: VideoComponent;
 
-  public isConnected: boolean = false;
-  public isConnecting: boolean = false;
+  public ConnectionState = ConnectionState;
+  public connectionState = ConnectionState.Disconnected;
 
   constructor() {}
 
   connect() {
+    this.connectionState = ConnectionState.Connecting;
     this.videoElement.connect();
-    this.isConnecting = true;
   }
 
   disconnect() {
+    this.connectionState = ConnectionState.Disconnecting;
     this.videoElement.disconnect();
-    this.isConnecting = false;
   }
 
   onConnected() {
-    this.isConnected = true;
+    this.connectionState = ConnectionState.Connected;
   }
 
   onDisconnected() {
-    this.isConnected = false;
+    this.connectionState = ConnectionState.Disconnected;
   }
 }
