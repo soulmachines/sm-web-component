@@ -29,6 +29,9 @@
         el.setAttribute('profile-picture', options.profilePicture);
       }
 
+      if (options.greeting) {
+        el.setAttribute('greeting', options.greeting);
+      }
       document.body.appendChild(el);
     },
   };
