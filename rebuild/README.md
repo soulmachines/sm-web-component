@@ -17,6 +17,7 @@ The web components allow for integration of a Digital Person into any website.
 
 ### Linting
 
+- `npm run lint` to run eslint over the files
 - `npm run prettier` to verify files are formatted
 - `npm run prettier:fix` to auto format files
 
