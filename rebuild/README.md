@@ -6,6 +6,8 @@ The web components allow for integration of a Digital Person into any website.
 
 - [Preact](https://preactjs.com/) for composing the UI
 - [Vite](https://vitejs.dev/) for bundling the code
+- [Eslint](https://eslint.org/) for finding and fixing code issues
+- [Prettier](https://prettier.io/) for code formatting
 
 ## Commands
 
