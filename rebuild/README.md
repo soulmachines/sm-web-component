@@ -9,9 +9,16 @@ The web components allow for integration of a Digital Person into any website.
 
 ## Commands
 
+### Local development
+
 - `npm run start` to run the dev server with live reload
 - `npm run build` to compile the scripts
 - `npm run preview` to start a server and serve the dist files
+
+### Linting
+
+- `npm run prettier` to verify files are formatted
+- `npm run prettier:fix` to auto format files
 
 ## Registering web components
 
