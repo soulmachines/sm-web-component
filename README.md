@@ -73,7 +73,7 @@ npm run serve
 
 This command will serve the `examples` folder at `http://127.0.0.1:8080`. Use the browser's URL bar to navigate directly to the desired example page.
 
-### View examples on a mobile device
+### Mobile device development and testing
 
 You will need an account under the SoulMachines org on ngrok.com to easily debug on mobile.
 
@@ -81,7 +81,7 @@ Install ngrok by following the instructions in the Ngrok dashboard under Getting
 
 After installing, configure a personal domain for your own use under Cloud Edge > Domains. You will use this personal domain for all future projects where you want to use ngrok to share your localhost - it's not specific just this repo.
 
-To view the examples from a mobile device:
+#### To view the examples from a mobile device
 
 1. Install and configure ngrok on your computer
 2. Create a personalized ngrok domain
@@ -90,12 +90,24 @@ To view the examples from a mobile device:
    `ngrok http http://localhost:5000 --region=ap --hostname=YOUR_DOMAIN.ap.ngrok.io --host-header=rewrite`
 5. From your mobile device, navigate to your domain `http://YOUR_DOMAIN.ap.ngrok.io`
 
-To debug your mobile web browser from your desktop:
+#### Android Remote Debugging
 
-1. Enable developer mode for Chrome on your device
-2. Connect your device to your desktop via a USB cable
+Android devices must do any remote debugging use Chrome on both the mobile device and desktop.
+
+1. Connect your device to your desktop via a USB cable
+2. Enable developer mode for Chrome on your device
 3. On your desktop, use Chrome to navigate to `chrome://inspect/#devices`
 4. Select your mobile device from the list
+5. Debug using the dev tools as usual
+
+#### iOS Remote Debugging
+
+iOS devices must do remote debugging using Safari on both the mobile device and desktop.
+
+1. Connect your device to your desktop via a USB cable
+2. Enable Web Inspector on the device under Settings > Safari > Advanced > Web Inspector
+3. On your desktop, enable the Develop menu for Safari under Safari > Open Preferences > Advanced > Show Develop menu in menu bar
+4. Select your mobile device from the list under Develop > Your Device Name
 5. Debug using the dev tools as usual
 
 ### Known Issues
