@@ -19,5 +19,7 @@ s.onload = () => {
   w.sm.configure(SM_CONFIG);
 };
 
-var ps = d.getElementsByTagName('script')[0];
-ps.parentNode.insertBefore(s, ps);
+w.addEventListener('DOMContentLoaded', () => {
+  var ps = d.getElementsByTagName('script')[0];
+  ps.parentNode.insertBefore(s, ps);
+});
