@@ -21,6 +21,7 @@
     "@mdx-js/preact": "^2.1.1",
     "@preact/preset-vite": "^2.1.5",
     "@storybook/addon-actions": "^6.4.20",
+    "@storybook/addon-controls": "^6.4.20",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-links": "^6.4.20",
     "@storybook/builder-vite": "^0.1.23",
