@@ -18,10 +18,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
+    "@mdx-js/preact": "^2.1.1",
     "@preact/preset-vite": "^2.1.5",
     "@storybook/addon-actions": "^6.4.20",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-links": "^6.4.20",
+    "@storybook/builder-vite": "^0.1.23",
     "@storybook/preact": "^6.4.20",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
