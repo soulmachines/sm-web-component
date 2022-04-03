@@ -1,5 +1,5 @@
 {
-  "name": "sm-web-component",
+  "name": "@soulmachines/web-components",
   "private": true,
   "version": "0.0.0",
   "scripts": {
