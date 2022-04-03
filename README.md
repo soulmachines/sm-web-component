@@ -114,7 +114,7 @@ iOS devices must do remote debugging using Safari on both the mobile device and 
 
 **API Keys must be configured with your ngrok domain.** Because the requests to the server appear to be coming from your ngrok domain, not from localhost, any API keys used in the examples will need to have your ngrok domain whitelisted for the session server connection to work from your mobile device.
 
-**VPN must be used for any connections to dev / playground.** Your mobile device will connect directly to the session server specified by either the API Key or JWT Token being used. If the DP being connected to was created via DDNA Studio Dev, or is hosted on the "playground" session server, then the Soul MAchines VPN must be installed and connected on the mobile device for the DP session to connect successfully.
+**VPN must be used for any connections to dev / playground.** Your mobile device will connect directly to the session server specified by either the API Key or JWT Token being used. If the DP being connected to was created via DDNA Studio Dev, or is hosted on the "playground" session server, then the Soul Machines VPN must be installed and connected on the mobile device for the DP session to connect successfully.
 
 ### Building the output soulmachines.js library
 
