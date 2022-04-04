@@ -97,10 +97,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Output()
   public speechMarker = new EventEmitter<SpeechMarkerEventArgs>();
 
-  public get personaVideoStream() {
-    return this.videoRef.nativeElement.srcObject;
-  }
-
   private get nativeElement() {
     return this.hostRef.nativeElement;
   }
@@ -131,6 +127,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     const sceneOptions: SceneOptions = {
       videoElement: this.videoRef.nativeElement,
       apiKey: this.apiKey,
+      requestedMediaDevices: { microphone: true, camera: true },
+      requiredMediaDevices: {},
     };
 
     this.webSDKService.initialise(sceneOptions);
@@ -239,6 +237,12 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private onConnectionSuccess() {
     this.log(`session connected.`);
+
+    this.webSDKService.scene
+      .startVideo()
+      .then((videoState) => console.log('>> started video with state:', videoState))
+      .catch((error) => console.log('>> could not start video:', error));
+
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
     this.setMicrophoneEnabled(this._microphoneEnabled);
