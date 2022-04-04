@@ -240,8 +240,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.webSDKService.scene
       .startVideo()
-      .then((videoState) => console.log('>> started video with state:', videoState))
-      .catch((error) => console.log('>> could not start video:', error));
+      .then((videoState) => this.log('startVideo succeeded', videoState))
+      .catch((error) => this.log('startVideo failed:', error));
 
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
