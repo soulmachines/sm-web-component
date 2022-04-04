@@ -8,6 +8,7 @@ The web components allow for integration of a Digital Person into any website.
 - [Vite](https://vitejs.dev/) for bundling the code
 - [Eslint](https://eslint.org/) for finding and fixing code issues
 - [Prettier](https://prettier.io/) for code formatting
+- [Storybook](https://storybook.js.org/) for building and previewing components
 
 ## Commands
 
@@ -16,6 +17,7 @@ The web components allow for integration of a Digital Person into any website.
 - `npm run start` to run the dev server with live reload
 - `npm run build` to compile the scripts
 - `npm run preview` to start a server and serve the dist files
+- `npm run storybook` to start storybook
 
 ### Linting
 
