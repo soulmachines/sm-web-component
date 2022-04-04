@@ -37,6 +37,7 @@ describe('VideoComponent', () => {
     scene: {
       startRecognize: jest.fn(),
       stopRecognize: jest.fn(),
+      startVideo: jest.fn().mockReturnValue(Promise.resolve()),
     },
   };
   let component: TestComponent;
