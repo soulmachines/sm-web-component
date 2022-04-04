@@ -29,8 +29,8 @@ The web components allow for integration of a Digital Person into any website.
 
 ### Unit testing
 
-- `npm run test` to run the test suite
-- `npm run test:watch` to run the tests in watch mode
+- `npm run test` to run the test suite in watch mode
+- `npm run test:ci` to run the tests just once
 
 ## Registering web components
 
