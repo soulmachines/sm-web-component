@@ -9,6 +9,8 @@ The web components allow for integration of a Digital Person into any website.
 - [Eslint](https://eslint.org/) for finding and fixing code issues
 - [Prettier](https://prettier.io/) for code formatting
 - [Storybook](https://storybook.js.org/) for building and previewing components
+- [Jest](https://jestjs.io/) for the test runner
+- [Testing Tools](https://testing-library.com/) for testing utils
 
 ## Commands
 
@@ -24,6 +26,11 @@ The web components allow for integration of a Digital Person into any website.
 - `npm run lint` to run eslint over the files
 - `npm run prettier` to verify files are formatted
 - `npm run prettier:fix` to auto format files
+
+### Unit testing
+
+- `npm run test` to run the test suite in watch mode
+- `npm run test:ci` to run the tests just once
 
 ## Registering web components
 
