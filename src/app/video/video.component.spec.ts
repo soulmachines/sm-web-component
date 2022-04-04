@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VideoComponent } from './video.component';
 import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of, throwError } from 'rxjs';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { take, tap } from 'rxjs/operators';
 import { SpinnerModule } from '../spinner/spinner.module';
@@ -302,49 +302,6 @@ describe('VideoComponent', () => {
       const data = { name: 'data name', arguments: ['arg1', 'arg2'] };
       component.child['onSpeechMarker'](null, data);
       expect(speechMarkerEmitSpy).toHaveBeenCalledWith(data);
-    });
-  });
-
-  describe('connectingSubject', () => {
-    let connectingSubjectSpy;
-
-    beforeEach(() => {
-      fixture.detectChanges();
-    });
-
-    it('should default to false', (done) => {
-      component.child.connectingSubject
-        .pipe(
-          take(1),
-          tap((value) => {
-            expect(value).toBe(false);
-            done();
-          }),
-        )
-        .subscribe();
-    });
-
-    describe('emitter', () => {
-      beforeEach(() => {
-        connectingSubjectSpy = jest
-          .spyOn(component.child.connectingSubject, 'next')
-          .mockImplementation(() => {});
-      });
-
-      it('should emit true when the connection is initialised', () => {
-        component.child['connect']();
-        expect(connectingSubjectSpy).toHaveBeenCalledWith(true);
-      });
-
-      it('should emit false when the connection is successful', () => {
-        component.child['onConnectionSuccess']();
-        expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
-      });
-
-      it('should emit false when the connection errors', () => {
-        component.child['onConnectionError']('error');
-        expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
-      });
     });
   });
 
