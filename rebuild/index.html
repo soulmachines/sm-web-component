@@ -7,6 +7,9 @@
   </head>
   <body>
     <sm-video api-key="<%= VITE__PROJECT_API_KEY %>"></sm-video>
+
+    <sm-video token-server="https://localhost:1000/auth/authorize"></sm-video>
+
     <script type="module" src="/src/web-components/sm-video.tsx"></script>
   </body>
 </html>

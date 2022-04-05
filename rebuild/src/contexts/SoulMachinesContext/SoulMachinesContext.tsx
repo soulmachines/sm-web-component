@@ -1,6 +1,7 @@
 import { createContext, ComponentChildren } from 'preact';
 import { Scene, smwebsdk } from '@soulmachines/smwebsdk';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'preact/hooks';
+import { useContext, useEffect, useMemo } from 'preact/hooks';
+import { useConnection } from '../../hooks/useConnection';
 
 type Context = {
   scene: Scene | null;
@@ -19,13 +20,11 @@ export const SoulMachinesContext = createContext<Context>({
 
 type SoulMachinesProviderProps = {
   apiKey: string;
+  tokenServer: string;
   children: ComponentChildren;
 };
 
-function SoulMachinesProvider({ children, apiKey }: SoulMachinesProviderProps) {
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [connectionError, setConnectionError] = useState<Error | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
+function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
   const scene = useMemo(
     () =>
       new smwebsdk.Scene({
@@ -34,22 +33,7 @@ function SoulMachinesProvider({ children, apiKey }: SoulMachinesProviderProps) {
       }),
     [apiKey],
   );
-
-  const connect = useCallback(async () => {
-    try {
-      setConnectionError(null);
-      setIsConnecting(true);
-      await scene.connect();
-      setIsConnected(true);
-    } catch (error: unknown) {
-      setIsConnected(false);
-      if (error instanceof Error) {
-        setConnectionError(error);
-      }
-    } finally {
-      setIsConnecting(false);
-    }
-  }, [scene]);
+  const { connect, isConnected, isConnecting, connectionError } = useConnection(scene, tokenServer);
 
   useEffect(() => {
     connect();

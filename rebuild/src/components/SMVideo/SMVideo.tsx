@@ -3,11 +3,12 @@ import { Video } from '../Video';
 
 export type SMVideoProps = {
   apiKey: string;
+  tokenServer: string;
 };
 
-export function SMVideo({ apiKey }: SMVideoProps) {
+export function SMVideo({ apiKey, tokenServer }: SMVideoProps) {
   return (
-    <SoulMachinesProvider apiKey={apiKey}>
+    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
       <Video />
     </SoulMachinesProvider>
   );
