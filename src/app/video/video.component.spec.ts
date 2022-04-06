@@ -2,9 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VideoComponent } from './video.component';
 import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of, throwError } from 'rxjs';
-import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { take, tap } from 'rxjs/operators';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { themes } from '../types/theme.type';
 
