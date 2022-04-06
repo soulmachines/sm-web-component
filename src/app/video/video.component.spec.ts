@@ -304,26 +304,4 @@ describe('VideoComponent', () => {
       expect(speechMarkerEmitSpy).toHaveBeenCalledWith(data);
     });
   });
-
-  describe('connecting indicator slot', () => {
-    beforeEach(() => {
-      fixture.detectChanges();
-    });
-
-    [
-      { subjectValue: true, slotVisibility: true, slotVisibilityText: 'shown' },
-      { subjectValue: false, slotVisibility: false, slotVisibilityText: 'hidden' },
-    ].forEach(({ subjectValue, slotVisibility, slotVisibilityText }) =>
-      it(`should be ${slotVisibilityText} when connectingSubject is ${subjectValue}`, () => {
-        component.child.connectingSubject.next(subjectValue);
-        fixture.detectChanges();
-
-        const videoElement = fixture.debugElement.query(By.css('app-video'));
-        const shadowRoot: DocumentFragment = videoElement.nativeElement.shadowRoot;
-        const slotElement = shadowRoot.querySelector('slot');
-
-        expect(Boolean(slotElement)).toBe(slotVisibility);
-      }),
-    );
-  });
 });
