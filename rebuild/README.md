@@ -38,7 +38,7 @@ When working locally you'll need an api key to connect to a digital person.
   - Most likely your subnet make is 32
 
 - Enter the domains that the api keys are allowed to be used.
-  - To cover our local html files and storybook, enter `http://localhost:6006` and
+  - To cover our local html files and storybook, enter `http://localhost:6006` and `http://localhost:3000`
 - Select an expiry
 - Publish
 - Copy your api key and open your `.env` file. Paste your api key as the value of `VITE__PROJECT_API_KEY=`
