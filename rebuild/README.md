@@ -16,9 +16,11 @@ The web components allow for integration of a Digital Person into any website.
 
 Copy the `.env.template` file and rename it to `.env`.
 
-### Creating an API Key
+### Connecting via an API Key
 
 When working locally you'll need an api key to connect to a digital person.
+
+#### Creating an API Key
 
 **Prerequisites**
 
@@ -42,6 +44,10 @@ When working locally you'll need an api key to connect to a digital person.
 - Select an expiry
 - Publish
 - Copy your api key and open your `.env` file. Paste your api key as the value of `VITE__PROJECT_API_KEY=`
+
+### Connecting via a Token Server
+
+To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=` in your `.dotenv` file.
 
 ## Commands
 
