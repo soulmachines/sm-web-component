@@ -16,7 +16,7 @@ The web components allow for integration of a Digital Person into any website.
 
 Copy the `.env.template` file and rename it to `.env`.
 
-### Creating an api key
+### Creating an API Key
 
 When working locally you'll need an api key to connect to a digital person.
 
@@ -35,7 +35,7 @@ When working locally you'll need an api key to connect to a digital person.
 - Enter your IP address and subnet mask. Make sure you are on the VPN when doing this.
 
   - Find your IP address by running this command in your terminal `curl ifconfig.me && echo`
-  - Most likely your subnet make is 32
+  - Most likely your subnet mask is 32
 
 - Enter the domains that the api keys are allowed to be used.
   - To cover our local html files and storybook, enter `http://localhost:6006` and `http://localhost:3000`
