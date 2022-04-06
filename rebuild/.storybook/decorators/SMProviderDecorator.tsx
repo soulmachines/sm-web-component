@@ -6,7 +6,7 @@ export const SMProviderDecorator = (
   options: Record<string, unknown>,
 ) => {
   return (
-    <SoulMachinesProvider apiKey={import.meta.env.VITE_DP_API_KEY as string}>
+    <SoulMachinesProvider apiKey={import.meta.env.VITE__PROJECT_API_KEY as string}>
       <Story {...options} />
     </SoulMachinesProvider>
   );

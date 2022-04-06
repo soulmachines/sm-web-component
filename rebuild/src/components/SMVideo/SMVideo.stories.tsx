@@ -7,5 +7,5 @@ export default {
 
 export const Basic = ({ apiKey }: SMVideoProps) => <SMVideo apiKey={apiKey} />;
 Basic.args = {
-  apiKey: import.meta.env.VITE_DP_API_KEY,
+  apiKey: import.meta.env.VITE__PROJECT_API_KEY,
 };
