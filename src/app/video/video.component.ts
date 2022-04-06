@@ -9,8 +9,8 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
-  HostBinding,
   ViewEncapsulation,
+  HostBinding,
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
