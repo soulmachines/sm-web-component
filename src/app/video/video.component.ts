@@ -10,6 +10,7 @@ import {
   Output,
   EventEmitter,
   HostBinding,
+  ViewEncapsulation,
 } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
@@ -29,6 +30,7 @@ import { ConnectOptions, SceneOptions } from '@soulmachines/smwebsdk';
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
   providers: [SMWebSDKService],
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('video', { static: true }) videoRef: ElementRef;
@@ -250,6 +252,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private onDisconnected = () => {
     console.log('EVENTS - onDisconnected');
+    this.isConnected = false;
     this.disconnected.emit();
   };
 
