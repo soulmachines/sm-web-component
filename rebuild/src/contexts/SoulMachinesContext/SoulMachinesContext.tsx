@@ -1,6 +1,6 @@
 import { createContext, ComponentChildren } from 'preact';
 import { Scene, smwebsdk } from '@soulmachines/smwebsdk';
-import { useCallback, useContext, useEffect, useState } from 'preact/hooks';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'preact/hooks';
 
 type Context = {
   scene: Scene | null;
@@ -21,14 +21,15 @@ type SoulMachinesProviderProps = {
 };
 
 function SoulMachinesProvider({ children, apiKey }: SoulMachinesProviderProps) {
-  const proxyVideo = document.createElement('video');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [scene, setScene] = useState<Scene>(
-    new smwebsdk.Scene({
-      videoElement: proxyVideo,
-      apiKey,
-    }),
+  const scene = useMemo(
+    () =>
+      new smwebsdk.Scene({
+        videoElement: document.createElement('video'),
+        apiKey: apiKey ? apiKey : undefined,
+      }),
+    [apiKey],
   );
 
   const connect = useCallback(async () => {
@@ -36,7 +37,6 @@ function SoulMachinesProvider({ children, apiKey }: SoulMachinesProviderProps) {
       setError(null);
       setIsLoading(true);
       await scene.connect();
-      setScene(scene);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error);
