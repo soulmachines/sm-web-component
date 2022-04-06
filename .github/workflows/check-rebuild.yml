@@ -2,8 +2,12 @@ name: PR check
 
 on:
   pull_request:
-    paths-ignore:
+    paths:
       - 'rebuild/**'
+
+defaults:
+  run:
+    working-directory: rebuild
 
 jobs:
   build:
@@ -33,10 +37,10 @@ jobs:
         run: npm run lint
 
       - name: Run Tests
-        run: npm run test-ci
+        run: npm run test:ci
 
       - name: Run Prettier
         run: npm run prettier
 
-      - name: Build Asset
-        run: npm run package
+      - name: Build Package
+        run: npm run build
