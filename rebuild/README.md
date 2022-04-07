@@ -11,6 +11,7 @@ The web components allow for integration of a Digital Person into any website.
 - [Storybook](https://storybook.js.org/) for building and previewing components
 - [Jest](https://jestjs.io/) for the test runner
 - [Testing Tools](https://testing-library.com/) for testing utils
+- [Plop](https://plopjs.com/) for generating files and folders
 
 ## Getting started
 
@@ -67,6 +68,10 @@ When working locally you'll need an api key to connect to a digital person.
 
 - (Common mistakes)[https://kentcdodds.com/blog/common-mistakes-with-react-testing-library]
 - (Learning)[https://testing-library.com/docs/learning]
+
+## Generating Components
+
+Run `npm run generate` in your terminal and it will ask you what you'd like the component to be called. Enter the name and it will scaffold the files in the component directory.
 
 ## Registering web components
 
