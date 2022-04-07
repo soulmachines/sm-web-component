@@ -19,7 +19,7 @@ export const SoulMachinesContext = createContext<Context>({
 });
 
 type SoulMachinesProviderProps = {
-  apiKey: string;
+  apiKey?: string;
   tokenServer?: string;
   children: ComponentChildren;
 };
@@ -29,7 +29,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     () =>
       new smwebsdk.Scene({
         videoElement: document.createElement('video'),
-        apiKey: apiKey ? apiKey : undefined,
+        apiKey,
       }),
     [apiKey],
   );
