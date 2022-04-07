@@ -12,6 +12,37 @@ The web components allow for integration of a Digital Person into any website.
 - [Jest](https://jestjs.io/) for the test runner
 - [Testing Tools](https://testing-library.com/) for testing utils
 
+## Getting started
+
+Copy the `.env.template` file and rename it to `.env`.
+
+### Creating an API Key
+
+When working locally you'll need an api key to connect to a digital person.
+
+**Prerequisites**
+
+- You have created a project in DDNA Studio dev.
+- You are connected to the full vpn
+
+**Steps**
+
+- Visit the (create api key page)[https://studio-dev.soulmachines.cloud/api-keys/create] in studio
+- Give your key a memorable name, eg: Web Component Local Development
+- Pick "web" for the scope
+- Select your project
+- Tick "I'm developing locally"
+- Enter your IP address and subnet mask. Make sure you are on the VPN when doing this.
+
+  - Find your IP address by running this command in your terminal `curl ifconfig.me && echo`
+  - Most likely your subnet mask is 32
+
+- Enter the domains that the api keys are allowed to be used.
+  - To cover our local html files and storybook, enter `http://localhost:6006` and `http://localhost:3000`
+- Select an expiry
+- Publish
+- Copy your api key and open your `.env` file. Paste your api key as the value of `VITE__PROJECT_API_KEY=`
+
 ## Commands
 
 ### Local development
@@ -31,6 +62,11 @@ The web components allow for integration of a Digital Person into any website.
 
 - `npm run test` to run the test suite in watch mode
 - `npm run test:ci` to run the tests just once
+
+**Helpful links**
+
+- (Common mistakes)[https://kentcdodds.com/blog/common-mistakes-with-react-testing-library]
+- (Learning)[https://testing-library.com/docs/learning]
 
 ## Registering web components
 
