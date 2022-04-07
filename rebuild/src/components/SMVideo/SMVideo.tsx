@@ -3,7 +3,7 @@ import { Video } from '../Video';
 
 export type SMVideoProps = {
   apiKey: string;
-  tokenServer: string;
+  tokenServer?: string;
 };
 
 export function SMVideo({ apiKey, tokenServer }: SMVideoProps) {

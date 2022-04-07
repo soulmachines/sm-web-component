@@ -1,7 +1,7 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useState } from 'preact/hooks';
 
-function useConnection(scene: Scene, tokenServer: string) {
+function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const [isConnected, setIsConnected] = useState(false);

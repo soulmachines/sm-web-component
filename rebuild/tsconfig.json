@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
+    "jsxFactory": "h",
     "jsxImportSource": "preact",
     "types": ["jest", "@testing-library/jest-dom"]
   },

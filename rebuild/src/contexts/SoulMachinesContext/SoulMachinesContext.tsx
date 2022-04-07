@@ -20,7 +20,7 @@ export const SoulMachinesContext = createContext<Context>({
 
 type SoulMachinesProviderProps = {
   apiKey: string;
-  tokenServer: string;
+  tokenServer?: string;
   children: ComponentChildren;
 };
 
