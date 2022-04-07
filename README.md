@@ -73,6 +73,49 @@ npm run serve
 
 This command will serve the `examples` folder at `http://127.0.0.1:5000`. Use the browser's URL bar to navigate directly to the desired example page.
 
+### Mobile device development and testing
+
+You will need an account under the SoulMachines org on ngrok.com to easily debug on mobile.
+
+Install ngrok by following the instructions in the Ngrok dashboard under Getting Started > Setup & Installation.
+
+After installing, configure a personal domain for your own use under Cloud Edge > Domains. You will use this personal domain for all future projects where you want to use ngrok to share your localhost - it's not specific just this repo.
+
+#### To view the examples from a mobile device
+
+1. Install and configure ngrok on your computer
+2. Create a personalized ngrok domain
+3. Ensure the examples are running locally and are available at `http://localhost:5000`
+4. From the CLI, start ngrok, replacing YOUR_DOMAIN with your custom ngrok domain:
+   `ngrok http http://localhost:5000 --region=ap --hostname=YOUR_DOMAIN.ap.ngrok.io --host-header=rewrite`
+5. From your mobile device, navigate to your domain `http://YOUR_DOMAIN.ap.ngrok.io`
+
+#### Android Remote Debugging
+
+Android devices must do any remote debugging use Chrome on both the mobile device and desktop.
+
+1. Connect your device to your desktop via a USB cable
+2. Enable developer mode for Chrome on your device
+3. On your desktop, use Chrome to navigate to `chrome://inspect/#devices`
+4. Select your mobile device from the list
+5. Debug using the dev tools as usual
+
+#### iOS Remote Debugging
+
+iOS devices must do remote debugging using Safari on both the mobile device and desktop.
+
+1. Connect your device to your desktop via a USB cable
+2. Enable Web Inspector on the device under Settings > Safari > Advanced > Web Inspector
+3. On your desktop, enable the Develop menu for Safari under Safari > Open Preferences > Advanced > Show Develop menu in menu bar
+4. Select your mobile device from the list under Develop > Your Device Name
+5. Debug using the dev tools as usual
+
+### Known Issues
+
+**API Keys must be configured with your ngrok domain.** Because the requests to the server appear to be coming from your ngrok domain, not from localhost, any API keys used in the examples will need to have your ngrok domain whitelisted for the session server connection to work from your mobile device.
+
+**VPN must be used for any connections to dev / playground.** Your mobile device will connect directly to the session server specified by either the API Key or JWT Token being used. If the DP being connected to was created via DDNA Studio Dev, or is hosted on the "playground" session server, then the Soul Machines VPN must be installed and connected on the mobile device for the DP session to connect successfully.
+
 ### Building the output soulmachines.js library
 
 To create a bundled output file, use the `package` command:
