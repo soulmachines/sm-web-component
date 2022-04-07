@@ -20,7 +20,7 @@ import {
   SceneCallbacks,
   SpeechMarkerEventArgs,
 } from '../services/smwebsdk.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { of } from 'rxjs';
 import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
 import { Theme, themes } from '../types/theme.type';
 import { ConnectOptions, SceneOptions } from '@soulmachines/smwebsdk';
@@ -101,7 +101,9 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.hostRef.nativeElement;
   }
 
-  public connectingSubject = new BehaviorSubject<boolean>(false);
+  @HostBinding('class.connected')
+  public isConnected = false;
+
   private resizeObserver: ResizeObserver;
 
   private publicMethods: [string, Function][] = [
@@ -143,10 +145,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.disconnect();
   }
 
-  private connect() {
+  public connect() {
     this.log('connect');
-
-    this.connectingSubject.next(true);
 
     const connectOptions: ConnectOptions = {};
 
@@ -162,13 +162,13 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       .subscribe();
   }
 
-  private disconnect() {
+  public disconnect() {
     this.log('disconnect');
+    this.isConnected = false;
     this.webSDKService?.disconnect();
     this.onDisconnected();
     this.webSDKService.unregisterEventCallbacks(this.sceneCallbacks);
   }
-
   private sendTextMessage(text: string) {
     return this.executeCommand(
       () => this.webSDKService.persona.conversationSend(text, {}, {}),
@@ -246,17 +246,17 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
     this.setMicrophoneEnabled(this._microphoneEnabled);
-    this.connectingSubject.next(false);
+    this.isConnected = true;
     this.connected.emit();
   }
 
   private onConnectionError(error: any) {
-    this.connectingSubject.next(false);
     this.log(`session connection failed, error: ${error}`);
   }
 
   private onDisconnected = () => {
     console.log('EVENTS - onDisconnected');
+    this.isConnected = false;
     this.disconnected.emit();
   };
 

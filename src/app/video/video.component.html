@@ -1,5 +1,5 @@
 <video data-sm-video #video playsinline></video>
 
-<slot name="connecting-indicator" *ngIf="connectingSubject | async"
-  ><app-spinner></app-spinner>
+<slot name="connecting-indicator" class="connecting-indicator">
+  <app-spinner></app-spinner>
 </slot>

@@ -4,7 +4,6 @@ import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of, throwError } from 'rxjs';
 import { Component, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { take, tap } from 'rxjs/operators';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { themes } from '../types/theme.type';
 
@@ -304,70 +303,5 @@ describe('VideoComponent', () => {
       component.child['onSpeechMarker'](null, data);
       expect(speechMarkerEmitSpy).toHaveBeenCalledWith(data);
     });
-  });
-
-  describe('connectingSubject', () => {
-    let connectingSubjectSpy;
-
-    beforeEach(() => {
-      fixture.detectChanges();
-    });
-
-    it('should default to false', (done) => {
-      component.child.connectingSubject
-        .pipe(
-          take(1),
-          tap((value) => {
-            expect(value).toBe(false);
-            done();
-          }),
-        )
-        .subscribe();
-    });
-
-    describe('emitter', () => {
-      beforeEach(() => {
-        connectingSubjectSpy = jest
-          .spyOn(component.child.connectingSubject, 'next')
-          .mockImplementation(() => {});
-      });
-
-      it('should emit true when the connection is initialised', () => {
-        component.child['connect']();
-        expect(connectingSubjectSpy).toHaveBeenCalledWith(true);
-      });
-
-      it('should emit false when the connection is successful', () => {
-        component.child['onConnectionSuccess']();
-        expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
-      });
-
-      it('should emit false when the connection errors', () => {
-        component.child['onConnectionError']('error');
-        expect(connectingSubjectSpy).toHaveBeenCalledWith(false);
-      });
-    });
-  });
-
-  describe('connecting indicator slot', () => {
-    beforeEach(() => {
-      fixture.detectChanges();
-    });
-
-    [
-      { subjectValue: true, slotVisibility: true, slotVisibilityText: 'shown' },
-      { subjectValue: false, slotVisibility: false, slotVisibilityText: 'hidden' },
-    ].forEach(({ subjectValue, slotVisibility, slotVisibilityText }) =>
-      it(`should be ${slotVisibilityText} when connectingSubject is ${subjectValue}`, () => {
-        component.child.connectingSubject.next(subjectValue);
-        fixture.detectChanges();
-
-        const videoElement = fixture.debugElement.query(By.css('app-video'));
-        const shadowRoot: DocumentFragment = videoElement.nativeElement.shadowRoot;
-        const slotElement = shadowRoot.querySelector('slot');
-
-        expect(Boolean(slotElement)).toBe(slotVisibility);
-      }),
-    );
   });
 });
