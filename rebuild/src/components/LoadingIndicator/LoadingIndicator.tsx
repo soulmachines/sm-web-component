@@ -1,5 +1,5 @@
 export type LoadingIndicatorProps = {
-  size: number | string;
+  size?: number | string;
 };
 
 export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%' }) {
@@ -13,6 +13,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
     >
+      <title>Loading...</title>
       <g transform="rotate(0 50 50)">
         <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="15" height="15" fill="#6a6a6a">
           <animate
