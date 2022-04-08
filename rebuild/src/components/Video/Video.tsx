@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
+import { LoadingIndicator } from '../LoadingIndicator';
 
 export function Video() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { scene } = useSoulMachines();
+  const { scene, isConnecting } = useSoulMachines();
   const videoStream = scene?.videoElement?.srcObject;
 
   useEffect(() => {
@@ -12,5 +13,11 @@ export function Video() {
     }
   }, [videoRef, videoStream]);
 
-  return <video muted autoPlay ref={videoRef} />;
+  if (isConnecting) {
+    return <LoadingIndicator />;
+  }
+
+  if (!isConnecting) {
+    return <video muted autoPlay ref={videoRef} />;
+  }
 }
