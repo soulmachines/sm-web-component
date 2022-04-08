@@ -17,7 +17,5 @@ export function Video() {
     return <LoadingIndicator />;
   }
 
-  if (!isConnecting) {
-    return <video muted autoPlay ref={videoRef} />;
-  }
+  return <video muted autoPlay ref={videoRef} />;
 }
