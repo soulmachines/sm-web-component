@@ -4,13 +4,15 @@ import { Video } from '../Video';
 export type SMVideoProps = {
   apiKey?: string;
   tokenServer?: string;
-  connectingIndicator?: JSX.Element;
+  // Slot attributes come through as the case entered
+  // Have asked about auto formatting them to camelcase like the attributes https://github.com/jahilldev/component-elements/issues/16
+  'connecting-indicator'?: JSX.Element;
 };
 
-export function SMVideo({ apiKey, tokenServer, connectingIndicator }: SMVideoProps) {
+export function SMVideo(props: SMVideoProps) {
   return (
-    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
-      <Video loadingIndicator={connectingIndicator} />
+    <SoulMachinesProvider apiKey={props.apiKey} tokenServer={props.tokenServer}>
+      <Video loadingIndicator={props['connecting-indicator']} />
     </SoulMachinesProvider>
   );
 }
