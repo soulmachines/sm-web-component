@@ -1,3 +1,4 @@
+import { JSX } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';

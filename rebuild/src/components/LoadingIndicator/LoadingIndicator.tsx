@@ -23,7 +23,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
             dur="1s"
             begin="-0.8s"
             repeatCount="indefinite"
-          ></animate>
+          />
         </rect>
       </g>
       <g transform="rotate(72 50 50)">
@@ -35,7 +35,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
             dur="1s"
             begin="-0.6s"
             repeatCount="indefinite"
-          ></animate>
+          />
         </rect>
       </g>
       <g transform="rotate(144 50 50)">
@@ -47,7 +47,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
             dur="1s"
             begin="-0.4s"
             repeatCount="indefinite"
-          ></animate>
+          />
         </rect>
       </g>
       <g transform="rotate(216 50 50)">
@@ -59,7 +59,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
             dur="1s"
             begin="-0.2s"
             repeatCount="indefinite"
-          ></animate>
+          />
         </rect>
       </g>
       <g transform="rotate(288 50 50)">
@@ -71,7 +71,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
             dur="1s"
             begin="0s"
             repeatCount="indefinite"
-          ></animate>
+          />
         </rect>
       </g>
     </svg>

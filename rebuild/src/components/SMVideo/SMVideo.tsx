@@ -1,3 +1,4 @@
+import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
 
