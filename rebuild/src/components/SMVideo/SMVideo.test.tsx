@@ -2,8 +2,8 @@ import { render } from '@testing-library/preact';
 import { SMVideo } from '.';
 
 describe('<SMVideo />', () => {
-  it('renders a video element', () => {
-    const { container } = render(<SMVideo apiKey="123" />);
-    expect(container.querySelector('video')).toBeInTheDocument();
+  it('renders a loading indicator', () => {
+    const { getByText } = render(<SMVideo apiKey="123" connectingIndicator={<p>Loading...</p>} />);
+    expect(getByText('Loading...')).toBeInTheDocument();
   });
 });
