@@ -5,7 +5,10 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [preact(), createHtmlPlugin()],
+  plugins: [preact(), createHtmlPlugin({ template: './examples/**/*.html' })],
+  server: {
+    open: '/examples/index.html',
+  },
   build: {
     rollupOptions: {
       input: {
