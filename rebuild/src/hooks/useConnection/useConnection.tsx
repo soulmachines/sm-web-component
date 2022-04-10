@@ -14,7 +14,9 @@ function useConnection(sm: SoulMachines, smConfig: SoulMachinesOptions) {
       setConnectionError(null);
       setIsConnecting(true);
 
+      // connect the session
       await sm.connect(smConfig);
+
       setIsConnected(true);
       setPersonaVideoStream(sm.webrtc.remoteStream || null);
     } catch (error: unknown) {

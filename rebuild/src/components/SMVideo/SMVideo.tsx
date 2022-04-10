@@ -19,7 +19,15 @@ export function SMVideo({ apiKey, tokenServer }: SMVideoProps) {
     auth = { authServer: '/api/jwt' };
   }
 
-  const smOptions: SoulMachinesOptions = { auth };
+  const smOptions: SoulMachinesOptions = {
+    auth,
+    webrtc: {
+      devices: {
+        camera: true,
+        microphone: true,
+      }
+    }
+  };
 
   return (
     <SoulMachinesProvider smConfig={smOptions}>

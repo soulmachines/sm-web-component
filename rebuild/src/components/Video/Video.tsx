@@ -12,5 +12,5 @@ export function Video() {
     }
   }, [videoRef, personaVideoStream, sm]);
 
-  return <video sm-video muted autoPlay ref={videoRef} width="400" height={250} />;
+  return <video sm-video ref={videoRef} width="400" height={250} />;
 }

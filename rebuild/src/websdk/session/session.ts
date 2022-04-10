@@ -100,9 +100,9 @@ export class Session extends EventTarget {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public log(...data: any[]) {
-    // if (this.options.debug === true) {
-    console.log(...data);
-    //}
+    if (this.options.debug === true) {
+      console.log(...data);
+    }
   }
 
   /**
