@@ -40,6 +40,7 @@ export class SoulMachines extends EventTarget {
     // return the session id for back-compat support
     return 'session id here';
     // TODO: ^ return session id or something better
+    // TODO: ^ tests for all the `connect` failure states
   }
 
   public disconnect() {

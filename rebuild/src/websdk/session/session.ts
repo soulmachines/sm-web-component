@@ -11,21 +11,29 @@ export const createSession = async (options: SoulMachinesOptions): Promise<Sessi
 };
 
 export class Session extends EventTarget {
-  private smOptions: SoulMachinesOptions;
+  public readonly options: SoulMachinesOptions;
+  public sessionId: string | null = null;
+
   private ws?: WebSocket;
   private pendingRequests: { [transactionId: string]: { resolve: any; reject: any } } = {};
 
   constructor(options: SoulMachinesOptions) {
     super();
-    this.smOptions = options;
+    this.options = options;
   }
 
   public async connect(): Promise<void> {
-    const sessionConfig = await resolveSessionConfig(this.smOptions.auth);
+    // get the session server and session token, which may
+    // come from different locations depending on the auth options
+    // that were provided in the sm options.
+    const { sessionServer, sessionToken } = await resolveSessionConfig(this.options.auth);
 
-    const { sessionServer, sessionToken } = sessionConfig;
+    // construct the websocket url from the session server and token
     const url = `${sessionServer}?access_token=${sessionToken}`;
 
+    // create an internal websocket to handle all passing
+    // of messages between the app and the server.
+    // this websocket shared by all services in the sdk.
     this.ws = new WebSocket(url);
     this.ws.addEventListener('message', (e) => this.onWebsocketMessage(e));
     this.ws.addEventListener('error', (e) => this.onWebsocketError(e));
@@ -33,7 +41,7 @@ export class Session extends EventTarget {
     this.ws.addEventListener('close', () => this.onWebsocketClose(), { once: true });
   }
 
-  public async disconnect() {
+  public async disconnect(): Promise<void> {
     if (this.ws) {
       // websocket status codes specification.
       // code 1000 means 'normal close', close was intentional
@@ -46,11 +54,19 @@ export class Session extends EventTarget {
   }
 
   public sendMessage(message: WebsocketMessage) {
+    if (!this.ws) {
+      throw 'can not send, no websocket';
+    }
+
     const messageString = JSON.stringify(message);
-    this.ws?.send(messageString);
+    this.ws.send(messageString);
   }
 
   public sendRequest(message: WebsocketMessage): Promise<WebsocketMessage> {
+    if (!this.ws) {
+      throw 'can not send, no websocket';
+    }
+
     // only 'request' type will actually receive a response
     // from the server, so any other type will never resolve.
     if (message.category !== 'request') {
@@ -63,21 +79,30 @@ export class Session extends EventTarget {
     const transactionId = '123';
     message.transaction = transactionId;
 
-    // store a reference to the request promise so that
-    // we can resolve it when we receive a response
-    let requestRef;
+    // create a new promise that will eventually resolve
+    // to the server response message.
     const request = new Promise<WebsocketMessage>((resolve, reject) => {
-      requestRef = { resolve, reject };
+      // store a reference to the request promise so that
+      // we can resolve it when we receive a response
+      const requestRef = { resolve, reject };
       this.pendingRequests[transactionId] = requestRef;
+      // TODO: ^ is `this` accessing the correct thing?
     });
 
     // send on the websocket
     const messageString = JSON.stringify(message);
-    this.ws?.send(messageString);
+    this.ws.send(messageString);
 
     // return the promise, which will be resolved
     // when a response message is received
     return request;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public log(...data: any[]) {
+    // if (this.options.debug === true) {
+    console.log(...data);
+    //}
   }
 
   /**

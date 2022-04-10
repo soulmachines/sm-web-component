@@ -7,6 +7,7 @@ import { RtcConnectedEvent } from './events/rtc-connected-event';
 import { RtcIceCandidateEvent } from './events/rtc-ice-candidate-event';
 import { Session } from '../session/session';
 import { RtcEventName } from './events/rtc-event-name.enum';
+import { mediaConstraintsFromOptions } from './helpers/media-constraints-from-options';
 
 export class WebRTCConnection extends EventTarget {
   public localStream?: MediaStream;
@@ -45,7 +46,7 @@ export class WebRTCConnection extends EventTarget {
       this.remoteVideoEl.srcObject = this.remoteStream;
     }
 
-    // TODO: resize watcher
+    // TODO: resize watcher :: >
     if (this.remoteStream) {
       const bounds = this.remoteVideoEl.getBoundingClientRect();
       this.setStreamDimensions(bounds.width, bounds.height);
@@ -65,6 +66,12 @@ export class WebRTCConnection extends EventTarget {
       },
     });
   }
+
+  /**
+   * ===============
+   * PRIVATE API
+   * ===============
+   */
 
   private onWebsocketMessage(message: MessageEvent) {
     const payload = message.data;
@@ -92,9 +99,17 @@ export class WebRTCConnection extends EventTarget {
     }
   }
 
+  /**
+   * The session's websocket has opened, and the server has
+   * sent an 'established' message.
+   *
+   * The server config info in the message can be used to
+   * begin negotiation of a webrtc connection.
+   */
   private onEstablished(event: RtcEstablishedEvent) {
-    console.log('onEstablished', { event });
+    this.session?.log(`webrtc: onEstablished`, { event });
 
+    // TODO: explain
     const iceServers: any[] = event.iceServers || [];
     const hasTurnServer = iceServers.includes((server: any) =>
       server.urls.includes((url: any) => url.indexOf('turn:') === 0),
@@ -107,11 +122,77 @@ export class WebRTCConnection extends EventTarget {
       iceTransportPolicy,
     };
 
-    this.connect(rtcConfig);
+    this.connectRTC(rtcConfig);
   }
 
+  /**
+   * Use the webrtc configuration received from the server
+   * to create a peer connection and add the media stream
+   * from the user's side.
+   *
+   * TODO: link to learn more about SDP
+   */
+  // TODO: RTCConfiguration not defined
+  // eslint-disable-next-line no-undef
+  private async connectRTC(rtcConfig: RTCConfiguration) {
+    // create an RTC connection for sharing media both ways
+    this.rtcPeerConnection = new RTCPeerConnection(rtcConfig);
+    this.rtcPeerConnection.addEventListener('icecandidate', (event) =>
+      this.onLocalIceCandidate(event),
+    );
+    this.rtcPeerConnection.addEventListener('track', (event) => this.onRemoteTrackAdded(event));
+
+    // create a local stream from the user's camera and microphone
+    const webrtcOptions = this.session?.options.webrtc;
+    const mediaConstraints = mediaConstraintsFromOptions(webrtcOptions);
+
+    if (mediaConstraints.audio || mediaConstraints.video) {
+      const stream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+      this.localStream = stream;
+
+      // publish the user's media stream on the RTC connection
+      this.localStream.getTracks().forEach((track) => {
+        if (this.localStream) {
+          this.rtcPeerConnection?.addTrack(track, this.localStream);
+        }
+      });
+    }
+
+    this.sendSdpOffer();
+  }
+
+  /**
+   * Once the rtc connection is configured, we can send the
+   * server an sdp offer describing our streaming requirements.
+   *
+   * We send our own sdp offers on the session websocket,
+   * and we also receive offers back from the server.
+   */
+  private sendSdpOffer() {
+    const offerOptions: any = {
+      voiceActivityDetection: false,
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true,
+    };
+    this.rtcPeerConnection
+      ?.createOffer(offerOptions)
+      .then((offer) => this.rtcPeerConnection?.setLocalDescription(offer))
+      .then(() =>
+        this.sendWebsocketMessage({
+          category: 'webrtc',
+          kind: 'event',
+          name: RtcEventName.Offer,
+          body: this.rtcPeerConnection?.localDescription?.toJSON(),
+        }),
+      );
+  }
+
+  /**
+   * If we receive an sdp offer we must send back an answer
+   */
   private onSdpOffer(event: RtcOfferEvent) {
-    console.log('onSdpOffer', { event });
+    this.session?.log(`webrtc: onSdpOffer received`, { event });
+
     const description = new RTCSessionDescription(event);
 
     if (!this.rtcPeerConnection) {
@@ -132,7 +213,10 @@ export class WebRTCConnection extends EventTarget {
   }
 
   private onAccepted(event: RtcAcceptedEvent) {
-    console.log('accepted, session_id = ' + event.sessionId);
+    this.session?.log('webrtc: accepted', { event });
+    if (this.session) {
+      this.session.sessionId = event.sessionId;
+    }
 
     if (!this.remoteVideoEl) {
       // set a default width and height for the video
@@ -141,17 +225,17 @@ export class WebRTCConnection extends EventTarget {
   }
 
   private onSdpAnswer(event: RtcAnswerEvent) {
-    console.log('onSdpAnswer', { event });
+    this.session?.log('webrtc: onSdpAnswer', { event });
     const description = new RTCSessionDescription(event);
     this.rtcPeerConnection?.setRemoteDescription(description);
   }
 
   private onConnected(event: RtcConnectedEvent) {
-    console.log('onConnected', { event });
+    this.session?.log('webrtc: onConnected', { event });
   }
 
   private onRemoteIceCandidate(event: RtcIceCandidateEvent) {
-    console.log('onRemoteIceCandidate', { event });
+    this.session?.log('webrtc: onRemoteIceCandidate', { event });
 
     // event.candidate will be null when ice gathering is complete.
     // this signal does not need to be delivered to the remote peer.
@@ -162,28 +246,8 @@ export class WebRTCConnection extends EventTarget {
     }
   }
 
-  private connect(rtcConfig: any) {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
-      this.localStream = stream;
-
-      this.rtcPeerConnection = new RTCPeerConnection(rtcConfig);
-      this.rtcPeerConnection.addEventListener('icecandidate', (event) =>
-        this.onLocalIceCandidate(event),
-      );
-      this.rtcPeerConnection.addEventListener('track', (event) => this.onRemoteTrackAdded(event));
-
-      this.localStream.getTracks().forEach((track) => {
-        if (this.localStream) {
-          this.rtcPeerConnection?.addTrack(track, this.localStream);
-        }
-      });
-
-      this.sendSdpOffer();
-    });
-  }
-
   private onLocalIceCandidate(event: RTCPeerConnectionIceEvent) {
-    console.log('onIceCandidate', { event });
+    this.session?.log('webrtc: onIceCandidate', { event });
 
     // event.candidate will be null when ice gathering is complete.
     // this signal does not need to be delivered to the remote peer.
@@ -199,35 +263,27 @@ export class WebRTCConnection extends EventTarget {
     }
   }
 
+  /**
+   * A media track from the server has been added to the
+   * webrtc connection.
+   */
   private onRemoteTrackAdded(event: RTCTrackEvent) {
-    console.log('>> onRemoteTrackAdded', { event });
-    this.remoteStream = event.streams[0];
+    this.session?.log(`webrtc: remoteTrackAdded`, { event });
 
-    const audioTracks = this.remoteStream.getAudioTracks();
-    const videoTracks = this.remoteStream.getVideoTracks();
+    // get access to the stream that's being modified
+    const remoteStream = event.streams[0];
 
+    // check how many tracks we have so far
+    const audioTracks = remoteStream.getAudioTracks();
+    const videoTracks = remoteStream.getVideoTracks();
+
+    // the audio and video tracks are added separately.
+    // we need to wait until both are added to say that
+    // the webrtc connection is actually complete.
     if (audioTracks && videoTracks) {
+      this.remoteStream = event.streams[0];
       this.dispatchEvent(new Event('connected'));
     }
-  }
-
-  private sendSdpOffer() {
-    const offerOptions: any = {
-      voiceActivityDetection: false,
-      offerToReceiveAudio: true,
-      offerToReceiveVideo: true,
-    };
-    this.rtcPeerConnection
-      ?.createOffer(offerOptions)
-      .then((offer) => this.rtcPeerConnection?.setLocalDescription(offer))
-      .then(() =>
-        this.sendWebsocketMessage({
-          category: 'webrtc',
-          kind: 'event',
-          name: RtcEventName.Offer,
-          body: this.rtcPeerConnection?.localDescription?.toJSON(),
-        }),
-      );
   }
 
   private sendWebsocketMessage(message: WebsocketMessage) {
