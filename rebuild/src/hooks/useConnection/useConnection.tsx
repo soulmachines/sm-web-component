@@ -1,9 +1,9 @@
 // import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useState } from 'preact/hooks';
 import { SoulMachines } from '../../websdk/soulmachines';
-import { SoulMachinesConfig } from '../../websdk/soulmachines-config';
+import { SoulMachinesOptions } from '../../websdk/soulmachines-config';
 
-function useConnection(sm: SoulMachines, smConfig: SoulMachinesConfig) {
+function useConnection(sm: SoulMachines, smConfig: SoulMachinesOptions) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const [isConnected, setIsConnected] = useState(false);

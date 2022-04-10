@@ -1,20 +1,29 @@
-import { SessionConfig } from './models/session-config';
 import { SessionEventType } from './events/session-event-type';
 import { SessionError } from './errors/session-error';
 import { WebsocketMessage } from './models/websocket-message';
+import { SoulMachinesOptions } from '../soulmachines-config';
+import { resolveSessionConfig } from './util/fetch-session-config';
 
-export const createSession = async (config: SessionConfig): Promise<Session> => {
-  const session = new Session();
-  await session.connect(config);
+export const createSession = async (options: SoulMachinesOptions): Promise<Session> => {
+  const session = new Session(options);
+  await session.connect();
   return session;
 };
 
 export class Session extends EventTarget {
+  private smOptions: SoulMachinesOptions;
   private ws?: WebSocket;
   private pendingRequests: { [transactionId: string]: { resolve: any; reject: any } } = {};
 
-  public async connect(config: SessionConfig): Promise<void> {
-    const { sessionServer, sessionToken } = config;
+  constructor(options: SoulMachinesOptions) {
+    super();
+    this.smOptions = options;
+  }
+
+  public async connect(): Promise<void> {
+    const sessionConfig = await resolveSessionConfig(this.smOptions.auth);
+
+    const { sessionServer, sessionToken } = sessionConfig;
     const url = `${sessionServer}?access_token=${sessionToken}`;
 
     this.ws = new WebSocket(url);

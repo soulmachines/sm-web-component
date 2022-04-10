@@ -1,4 +1,4 @@
 export interface SessionConfig {
-  sessionServer: string;
-  sessionToken: string;
+  sessionServer?: string;
+  sessionToken?: string;
 }

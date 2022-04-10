@@ -3,7 +3,7 @@ import { createContext, ComponentChildren } from 'preact';
 import { useContext, useEffect, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { SoulMachines } from '../../websdk/soulmachines';
-import { SoulMachinesConfig } from '../../websdk/soulmachines-config';
+import { SoulMachinesOptions } from '../../websdk/soulmachines-config';
 
 type Context = {
   sm: SoulMachines | null,
@@ -23,7 +23,7 @@ export const SoulMachinesContext = createContext<Context>({
 });
 
 type SoulMachinesProviderProps = {
-  smConfig: SoulMachinesConfig;
+  smConfig: SoulMachinesOptions;
   children: ComponentChildren;
 };
 

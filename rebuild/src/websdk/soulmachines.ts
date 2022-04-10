@@ -1,9 +1,8 @@
-import { SoulMachinesConfig } from './soulmachines-config';
+import { SoulMachinesOptions } from './soulmachines-config';
 import { WebRTCConnection } from './webrtc/webrtc';
 import { createSession, Session } from './session/session';
 import { Persona } from './persona/persona';
 import { Scene } from './scene/scene';
-import { sessionConfigFromSoulMachinesConfig } from './session/util/fetch-session-config';
 
 export class SoulMachines extends EventTarget {
   public session?: Session;
@@ -11,13 +10,13 @@ export class SoulMachines extends EventTarget {
   public scene = new Scene();
   public persona = new Persona();
 
-  constructor(config?: SoulMachinesConfig) {
+  constructor(options?: SoulMachinesOptions) {
     super();
 
     // config may be passed directly to the constructor
     // as shorthand for constructing and then connecting.
-    if (config) {
-      this.connect(config);
+    if (options) {
+      this.connect(options);
     }
   }
 
@@ -26,11 +25,10 @@ export class SoulMachines extends EventTarget {
    * @param config Configuration options for the current session
    * @returns
    */
-  public async connect(config: SoulMachinesConfig): Promise<string> {
+  public async connect(options: SoulMachinesOptions): Promise<string> {
     // create a new session, which will establish
     // a websocket connection with the session server
-    const sessionConfig = await sessionConfigFromSoulMachinesConfig(config);
-    this.session = await createSession(sessionConfig);
+    this.session = await createSession(options);
 
     // initialise all websocket-dependent classes
     await Promise.all([
