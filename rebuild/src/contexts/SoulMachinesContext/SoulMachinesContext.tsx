@@ -1,10 +1,13 @@
 import { createContext, ComponentChildren } from 'preact';
-import { Scene, smwebsdk } from '@soulmachines/smwebsdk';
+// import { Scene, smwebsdk } from '@soulmachines/smwebsdk';
 import { useContext, useEffect, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
+import { SoulMachines } from '../../websdk/soulmachines';
+import { SoulMachinesConfig } from '../../websdk/soulmachines-config';
 
 type Context = {
-  scene: Scene | null;
+  sm: SoulMachines | null,
+  personaVideoStream: MediaStream | null;
   isConnecting: boolean;
   isConnected: boolean;
   connectionError: Error | null;
@@ -12,28 +15,25 @@ type Context = {
 
 // Create context with default values
 export const SoulMachinesContext = createContext<Context>({
-  scene: null,
+  sm: null,
+  personaVideoStream: null,
   isConnecting: true,
   isConnected: false,
   connectionError: null,
 });
 
 type SoulMachinesProviderProps = {
-  apiKey?: string;
-  tokenServer?: string;
+  smConfig: SoulMachinesConfig;
   children: ComponentChildren;
 };
 
-function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
-  const scene = useMemo(
+function SoulMachinesProvider({ children, smConfig }: SoulMachinesProviderProps) {
+  const sm = useMemo(
     () =>
-      new smwebsdk.Scene({
-        videoElement: document.createElement('video'),
-        apiKey,
-      }),
-    [apiKey],
+      new SoulMachines(),
+    [],
   );
-  const { connect, isConnected, isConnecting, connectionError } = useConnection(scene, tokenServer);
+  const { connect, isConnected, isConnecting, connectionError, personaVideoStream } = useConnection(sm, smConfig);
 
   useEffect(() => {
     connect();
@@ -42,10 +42,11 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   return (
     <SoulMachinesContext.Provider
       value={{
-        scene,
+        personaVideoStream,
         isConnecting,
         isConnected,
         connectionError,
+        sm
       }}
     >
       {children}

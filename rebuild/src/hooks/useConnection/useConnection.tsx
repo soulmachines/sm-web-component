@@ -1,28 +1,22 @@
-import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
+// import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useState } from 'preact/hooks';
+import { SoulMachines } from '../../websdk/soulmachines';
+import { SoulMachinesConfig } from '../../websdk/soulmachines-config';
 
-function useConnection(scene: Scene, tokenServer: string | undefined) {
+function useConnection(sm: SoulMachines, smConfig: SoulMachinesConfig) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [personaVideoStream, setPersonaVideoStream] = useState<MediaStream | null>(null);
 
   const connect = useCallback(async () => {
     try {
-      const connectOptions: ConnectOptions = {};
       setConnectionError(null);
       setIsConnecting(true);
 
-      if (tokenServer) {
-        const res = await fetch(tokenServer);
-        const { url, jwt } = await res.json();
-        connectOptions.tokenServer = {
-          uri: url,
-          token: jwt,
-        };
-      }
-
-      await scene.connect(connectOptions);
+      await sm.connect(smConfig);
       setIsConnected(true);
+      setPersonaVideoStream(sm.webrtc.remoteStream || null);
     } catch (error: unknown) {
       setIsConnected(false);
       if (error instanceof Error) {
@@ -31,9 +25,9 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     } finally {
       setIsConnecting(false);
     }
-  }, [scene, tokenServer]);
+  }, [sm, smConfig]);
 
-  return { isConnected, connectionError, isConnecting, connect };
+  return { personaVideoStream, isConnected, connectionError, isConnecting, connect };
 }
 
 export { useConnection };

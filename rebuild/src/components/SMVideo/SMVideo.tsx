@@ -1,5 +1,6 @@
 import { SoulMachinesProvider } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
+import { SoulMachinesConfig } from '../../websdk/soulmachines-config';
 
 export type SMVideoProps = {
   apiKey?: string;
@@ -7,8 +8,12 @@ export type SMVideoProps = {
 };
 
 export function SMVideo({ apiKey, tokenServer }: SMVideoProps) {
+  const smConfig: SoulMachinesConfig = {
+    apiKey,
+    authServer: tokenServer,
+  };
   return (
-    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+    <SoulMachinesProvider smConfig={smConfig}>
       <Video />
     </SoulMachinesProvider>
   );

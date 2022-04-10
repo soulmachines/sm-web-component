@@ -3,14 +3,14 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 
 export function Video() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { scene } = useSoulMachines();
-  const videoStream = scene?.videoElement?.srcObject;
+  const { personaVideoStream, sm } = useSoulMachines();
 
   useEffect(() => {
-    if (videoRef.current && videoStream) {
-      videoRef.current.srcObject = videoStream;
+    if (videoRef.current && personaVideoStream) {
+      // videoRef.current.srcObject = personaVideoStream;
+      sm?.webrtc.useVideoElement(videoRef.current);
     }
-  }, [videoRef, videoStream]);
+  }, [videoRef, personaVideoStream, sm]);
 
-  return <video muted autoPlay ref={videoRef} />;
+  return <video sm-video muted autoPlay ref={videoRef} width="400" height={250} />;
 }
