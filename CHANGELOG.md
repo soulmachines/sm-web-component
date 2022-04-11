@@ -1,5 +1,32 @@
 # Change Log
 
+# [1.1.0](https://github.com/soulmachines/sm-web-component/compare/1.0.0...1.1.0) (2022-04-11)
+
+
+### Bug Fixes
+
+* fix profile picture position ([#140](https://github.com/soulmachines/sm-web-component/issues/140)) ([e1c8900](https://github.com/soulmachines/sm-web-component/commit/e1c8900be42e602bcfbf6a7e40c86f7e9887dc5e))
+* Greeting is not currently exposed to be configurable ([#144](https://github.com/soulmachines/sm-web-component/issues/144)) ([eea12d9](https://github.com/soulmachines/sm-web-component/commit/eea12d96d50103f5c33e2158e57acabe9fe58340))
+* Reset widget visual state after session disconnect QUIC-1579 ([#141](https://github.com/soulmachines/sm-web-component/issues/141)) ([df13322](https://github.com/soulmachines/sm-web-component/commit/df13322d1c8bb316a8e03eba32cd8027a6fdd4f9))
+* Snippet sometimes fails to load widget QUIC-1612 ([#143](https://github.com/soulmachines/sm-web-component/issues/143)) ([37ad997](https://github.com/soulmachines/sm-web-component/commit/37ad997ed2cb805e5dcc55e4ff21dfcc3d344456))
+* Widget should always be above all other page content QUIC-1578 ([#136](https://github.com/soulmachines/sm-web-component/issues/136)) ([39a5008](https://github.com/soulmachines/sm-web-component/commit/39a50083bb206dac59629282c8693daf9120c3f9))
+
+
+### Features
+
+* add ci workflow QUIC-1626 ([#152](https://github.com/soulmachines/sm-web-component/issues/152)) ([a56dcff](https://github.com/soulmachines/sm-web-component/commit/a56dcfff3b4af7439b29e2f5285e1d552761824d))
+* Add configurable greeting text QUIC-1567 ([#134](https://github.com/soulmachines/sm-web-component/issues/134)) ([06d262d](https://github.com/soulmachines/sm-web-component/commit/06d262d402058f0f752b8050fa805ab2a50e4204))
+* Add configurable profile picture, connect and disconnect interactions QUIC-1571 ([#135](https://github.com/soulmachines/sm-web-component/issues/135)) ([d883c62](https://github.com/soulmachines/sm-web-component/commit/d883c62083874fb2cf547887877b7c0a4c56b04d))
+* Add Jest test runner and example test QUIC-1625 ([#147](https://github.com/soulmachines/sm-web-component/issues/147)) ([1000faa](https://github.com/soulmachines/sm-web-component/commit/1000faa34594ca88b5974a00a0d5c2f1a6d633d7))
+* Add loading indicator QUIC-1623 ([#154](https://github.com/soulmachines/sm-web-component/issues/154)) ([57db5d5](https://github.com/soulmachines/sm-web-component/commit/57db5d582bd7bfda8efdeb6ef3313290b257f0d4))
+* Allow connection without cam/mic permissions QUIC-1584 ([#148](https://github.com/soulmachines/sm-web-component/issues/148)) ([d745f10](https://github.com/soulmachines/sm-web-component/commit/d745f10e22658eee002a4b0ab4638965402b1166))
+* connect via token server quic-1622  ([#151](https://github.com/soulmachines/sm-web-component/issues/151)) ([30284e3](https://github.com/soulmachines/sm-web-component/commit/30284e3ccb86b990cdd4dfd050f3492ae03ef06f))
+* Setup preact project structure and register a video web component QUIC-1620 ([#145](https://github.com/soulmachines/sm-web-component/issues/145)) ([543490b](https://github.com/soulmachines/sm-web-component/commit/543490b8bd7263c4bd8631be032e71d5956b9ca2))
+* Setup storybook to render Preact components QUIC-1627 ([#146](https://github.com/soulmachines/sm-web-component/issues/146)) ([25c142c](https://github.com/soulmachines/sm-web-component/commit/25c142c4ed8227c64a809f7aa992a6c8d8de128b))
+* Show default profile picture if a custom one is not provided QUIC-1577 ([#137](https://github.com/soulmachines/sm-web-component/issues/137)) ([d1dd1a2](https://github.com/soulmachines/sm-web-component/commit/d1dd1a29e04334ac0310048c7e2086bcac6c3bba))
+* Support connecting via API Key QUIC-1621 ([#149](https://github.com/soulmachines/sm-web-component/issues/149)) ([feae885](https://github.com/soulmachines/sm-web-component/commit/feae885fa1c06a9608f5a238d24e24a71e309fc6))
+* update script to use anonymous function ([#150](https://github.com/soulmachines/sm-web-component/issues/150)) ([b55b516](https://github.com/soulmachines/sm-web-component/commit/b55b5169df3be8afecf657f1f82ebd57122e7ed3))
+
 # 1.0.0 (2022-03-10)
 
 
