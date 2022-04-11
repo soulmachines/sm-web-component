@@ -1,5 +1,5 @@
 import { createContext, ComponentChildren } from 'preact';
-import { Scene, smwebsdk } from '@soulmachines/smwebsdk';
+import { Scene } from '@soulmachines/smwebsdk';
 import { useContext, useEffect, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 
@@ -11,7 +11,7 @@ type Context = {
 };
 
 // Create context with default values
-export const SoulMachinesContext = createContext<Context>({
+const SoulMachinesContext = createContext<Context>({
   scene: null,
   isConnecting: true,
   isConnected: false,
@@ -27,7 +27,7 @@ type SoulMachinesProviderProps = {
 function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
   const scene = useMemo(
     () =>
-      new smwebsdk.Scene({
+      new Scene({
         videoElement: document.createElement('video'),
         apiKey,
       }),
