@@ -28,25 +28,25 @@ module.exports = {
       {
         type: 'add',
         path: '../src/components/{{properCase name}}/index.ts',
-        templateFile: './component/index.template.js',
+        templateFile: './component/index.ts.template',
         abortOnFail: true,
       },
       {
         type: 'add',
         path: '../src/components/{{properCase name}}/{{properCase name}}.tsx',
-        templateFile: './component/component.template.js',
+        templateFile: './component/component.tsx.template',
         abortOnFail: true,
       },
       {
         type: 'add',
         path: '../src/components/{{properCase name}}/{{properCase name}}.test.tsx',
-        templateFile: './component/test.template.js',
+        templateFile: './component/test.tsx.template',
         abortOnFail: true,
       },
       {
         type: 'add',
         path: '../src/components/{{properCase name}}/{{properCase name}}.stories.tsx',
-        templateFile: './component/stories.template.js',
+        templateFile: './component/stories.tsx.template',
         abortOnFail: true,
       },
     ];
