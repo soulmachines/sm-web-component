@@ -16,6 +16,7 @@
     "generate": "plop --plopfile generators/index.js"
   },
   "dependencies": {
+    "@bedrock-layout/use-resize-observer": "^1.2.2",
     "@soulmachines/smwebsdk": "^14.2.0",
     "preact": "^10.5.15",
     "preactement": "^1.7.0"
