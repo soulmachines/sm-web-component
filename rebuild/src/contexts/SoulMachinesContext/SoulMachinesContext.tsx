@@ -1,6 +1,6 @@
 import { createContext, ComponentChildren } from 'preact';
 import { Scene } from '@soulmachines/smwebsdk';
-import { useContext, useEffect, useMemo } from 'preact/hooks';
+import { useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 
 type Context = {
@@ -8,6 +8,7 @@ type Context = {
   isConnecting: boolean;
   isConnected: boolean;
   connectionError: Error | null;
+  connect: Function;
 };
 
 // Create context with default values
@@ -16,6 +17,7 @@ const SoulMachinesContext = createContext<Context>({
   isConnecting: true,
   isConnected: false,
   connectionError: null,
+  connect: () => {},
 });
 
 type SoulMachinesProviderProps = {
@@ -35,10 +37,6 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   );
   const { connect, isConnected, isConnecting, connectionError } = useConnection(scene, tokenServer);
 
-  useEffect(() => {
-    connect();
-  }, [connect]);
-
   return (
     <SoulMachinesContext.Provider
       value={{
@@ -46,6 +44,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         isConnecting,
         isConnected,
         connectionError,
+        connect,
       }}
     >
       {children}
