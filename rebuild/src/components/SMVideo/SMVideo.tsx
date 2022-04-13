@@ -13,7 +13,7 @@ export type SMVideoProps = {
 export function SMVideo(props: SMVideoProps) {
   return (
     <SoulMachinesProvider apiKey={props.apiKey} tokenServer={props.tokenServer}>
-      <Video loadingIndicator={props['connecting-indicator']} />
+      <Video autoConnect={true} loadingIndicator={props['connecting-indicator']} />
     </SoulMachinesProvider>
   );
 }
