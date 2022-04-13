@@ -9,8 +9,12 @@ type Props = {
 
 export function Video({ loadingIndicator }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { scene, isConnecting } = useSoulMachines();
+  const { scene, isConnecting, connect } = useSoulMachines();
   const videoStream = scene?.videoElement?.srcObject;
+
+  useEffect(() => {
+    connect();
+  }, [connect]);
 
   useEffect(() => {
     if (videoRef.current && videoStream) {

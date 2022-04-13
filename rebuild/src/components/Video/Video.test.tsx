@@ -2,10 +2,12 @@ import { render } from '@testing-library/preact';
 import { Video } from '.';
 
 let mockIsConnecting: boolean;
+let mockConnect = jest.fn();
 
 jest.mock('../../contexts/SoulMachinesContext', () => ({
   useSoulMachines: () => ({
     isConnecting: mockIsConnecting,
+    connect: mockConnect,
     scene: {
       videoElement: {
         srcObject: 'mock video src',
@@ -15,6 +17,11 @@ jest.mock('../../contexts/SoulMachinesContext', () => ({
 }));
 
 describe('<Video />', () => {
+  it('calls connect once', () => {
+    render(<Video />);
+    expect(mockConnect).toHaveBeenCalledTimes(1);
+  });
+
   describe('when it is not connecting', () => {
     beforeEach(() => {
       mockIsConnecting = false;
