@@ -9,6 +9,7 @@ export { Persona } from '@soulmachines/smwebsdk';
 export interface SceneCallbacks {
   onConversationResult: Function;
   onSpeechMarker: Function;
+  onDisconnectResult: Function;
 }
 
 export interface SpeechMarkerEventArgs {
@@ -34,6 +35,8 @@ export class SMWebSDKService {
 
   public initialise(sceneOptions: SceneOptions) {
     this.scene = new Scene(sceneOptions);
+    this.scene.onDisconnected = (scene, sessionId, reason) => this.onDisconnected(reason);
+
     this.persona = new Persona(this.scene, personaId);
   }
 
@@ -81,6 +84,10 @@ export class SMWebSDKService {
     this.connected = true;
   }
 
+  public onDisconnected(reason: string){
+    this.connected = false;
+  }
+
   public disconnect() {
     if (this.scene) {
       this.scene.disconnect();
@@ -92,6 +99,7 @@ export class SMWebSDKService {
     if (this.scene) {
       this.scene.onConversationResultEvents[personaId].addListener(callbacks.onConversationResult);
       this.scene.onSpeechMarkerEvents[personaId].addListener(callbacks.onSpeechMarker);
+      this.scene.onDisconnectedEvent.addListener(callbacks.onDisconnectResult)
     }
   }
 
