@@ -16,6 +16,7 @@ $video-border-color: #8cd0f2;
   overflow: hidden;
   box-sizing: border-box;
   background: $video-background-color;
+  transition: all 200ms ease-out;
 
   > * {
     visibility: hidden;
@@ -41,6 +42,8 @@ $video-border-color: #8cd0f2;
   &.connected {
     border: 2px solid $video-border-color;
     border-radius: 26px;
+    width: 350px;
+    height: 216px;
     .user-controls {
       visibility: visible;
     }
