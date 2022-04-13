@@ -8,7 +8,7 @@ type Context = {
   isConnecting: boolean;
   isConnected: boolean;
   connectionError: Error | null;
-  connect: Function;
+  connect: () => void;
 };
 
 // Create context with default values
@@ -17,7 +17,7 @@ const SoulMachinesContext = createContext<Context>({
   isConnecting: true,
   isConnected: false,
   connectionError: null,
-  connect: () => {},
+  connect: () => null,
 });
 
 type SoulMachinesProviderProps = {

@@ -2,7 +2,7 @@ import { render } from '@testing-library/preact';
 import { Video } from '.';
 
 let mockIsConnecting: boolean;
-let mockConnect = jest.fn();
+const mockConnect = jest.fn();
 
 jest.mock('../../contexts/SoulMachinesContext', () => ({
   useSoulMachines: () => ({
