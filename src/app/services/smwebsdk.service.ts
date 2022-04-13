@@ -84,7 +84,7 @@ export class SMWebSDKService {
     this.connected = true;
   }
 
-  public onDisconnected(reason: string){
+  public onDisconnected(reason: string) {
     this.connected = false;
   }
 
@@ -99,7 +99,7 @@ export class SMWebSDKService {
     if (this.scene) {
       this.scene.onConversationResultEvents[personaId].addListener(callbacks.onConversationResult);
       this.scene.onSpeechMarkerEvents[personaId].addListener(callbacks.onSpeechMarker);
-      this.scene.onDisconnectedEvent.addListener(callbacks.onDisconnectResult)
+      this.scene.onDisconnectedEvent.addListener(callbacks.onDisconnectResult);
     }
   }
 
