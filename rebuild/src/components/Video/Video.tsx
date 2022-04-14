@@ -5,12 +5,19 @@ import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator
 
 type Props = {
   loadingIndicator?: JSX.Element;
+  autoConnect: boolean;
 };
 
-export function Video({ loadingIndicator }: Props) {
+export function Video({ loadingIndicator, autoConnect }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { scene, isConnecting } = useSoulMachines();
+  const { scene, isConnecting, isConnected, connect } = useSoulMachines();
   const videoStream = scene?.videoElement?.srcObject;
+
+  useEffect(() => {
+    if (autoConnect) {
+      connect();
+    }
+  }, [connect, autoConnect]);
 
   useEffect(() => {
     if (videoRef.current && videoStream) {
@@ -22,5 +29,9 @@ export function Video({ loadingIndicator }: Props) {
     return loadingIndicator || <DefaultLoadingIndicator />;
   }
 
-  return <video muted autoPlay ref={videoRef} />;
+  if (isConnected) {
+    return <video muted autoPlay ref={videoRef} />;
+  }
+
+  return null;
 }

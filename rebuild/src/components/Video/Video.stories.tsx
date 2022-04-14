@@ -7,4 +7,4 @@ export default {
   decorators: [SMProviderDecorator],
 };
 
-export const Basic = () => <Video />;
+export const Basic = () => <Video autoConnect={true} />;

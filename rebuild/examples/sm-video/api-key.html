@@ -6,9 +6,11 @@
     <title>API Key</title>
   </head>
   <body>
-    <sm-video api-key="<%= VITE__PROJECT_API_KEY %>">
+    <sm-video api-key="<%= VITE__PROJECT_API_KEY %>" auto-connect="true">
       <p slot="connecting-indicator">Loading...</p>
     </sm-video>
+
+    <sm-video api-key="<%= VITE__PROJECT_API_KEY %>" auto-connect="false"></sm-video>
 
     <sm-video api-key="<%= VITE__PROJECT_API_KEY %>"></sm-video>
 
