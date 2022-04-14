@@ -55,7 +55,7 @@ describe('<Video />', () => {
     });
 
     it('calls useResizeObserver with a function', () => {
-      render(<Video />);
+      customRender();
       expect(useResizeObserver).toHaveBeenCalledWith(expect.any(Function));
     });
   });
