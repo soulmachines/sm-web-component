@@ -35,7 +35,9 @@ export class SMWebSDKService {
 
   public initialise(sceneOptions: SceneOptions) {
     this.scene = new Scene(sceneOptions);
-    this.scene.onDisconnected = (scene, sessionId, reason) => { this.disconnect() };
+    this.scene.onDisconnected = (scene, sessionId, reason) => {
+      this.disconnect();
+    };
 
     this.persona = new Persona(this.scene, personaId);
   }
