@@ -1,5 +1,8 @@
 import { render } from '@testing-library/preact';
+import useResizeObserver from '@bedrock-layout/use-resize-observer';
 import { Video } from '.';
+import { updateVideoBounds } from './Video';
+import { Scene } from '@soulmachines/smwebsdk';
 
 let mockIsConnecting: boolean;
 let mockIsConnected: boolean;
@@ -16,6 +19,13 @@ jest.mock('../../contexts/SoulMachinesContext', () => ({
       },
     },
   }),
+}));
+
+jest.mock('@bedrock-layout/use-resize-observer', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    current: {},
+  })),
 }));
 
 describe('<Video />', () => {
@@ -42,6 +52,11 @@ describe('<Video />', () => {
     it('renders nothing', () => {
       const { container } = customRender();
       expect(container).toBeEmptyDOMElement();
+    });
+
+    it('calls useResizeObserver with a function', () => {
+      customRender();
+      expect(useResizeObserver).toHaveBeenCalledWith(expect.any(Function));
     });
   });
 
@@ -89,5 +104,19 @@ describe('<Video />', () => {
       const { container } = customRender();
       expect(container.querySelector('svg')).not.toBeInTheDocument();
     });
+  });
+});
+
+describe('updateVideoBounds()', () => {
+  const width = 111;
+  const height = 222;
+  const mockScene = { sendVideoBounds: jest.fn() } as unknown as Scene;
+  const mockMeasurements = {
+    contentRect: { width, height },
+  } as unknown as ResizeObserverEntry;
+
+  it('calls scene.sendVideoBounds with the width and height measurements', () => {
+    updateVideoBounds(mockScene, mockMeasurements);
+    expect(mockScene.sendVideoBounds).toHaveBeenCalledWith(width, height);
   });
 });
