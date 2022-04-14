@@ -35,7 +35,7 @@ export class SMWebSDKService {
 
   public initialise(sceneOptions: SceneOptions) {
     this.scene = new Scene(sceneOptions);
-    this.scene.onDisconnected = (scene, sessionId, reason) => this.onDisconnected(reason);
+    this.scene.onDisconnected = (scene, sessionId, reason) => { this.disconnect() };
 
     this.persona = new Persona(this.scene, personaId);
   }
@@ -82,10 +82,6 @@ export class SMWebSDKService {
   private onConnected(sessionId: string) {
     (this.scene.session() as Session).setLogging(false);
     this.connected = true;
-  }
-
-  public onDisconnected(reason: string) {
-    this.connected = false;
   }
 
   public disconnect() {

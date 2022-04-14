@@ -281,7 +281,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   };
 
   private onTimeout = () => {
-    console.log('EVENTS - session timed out');
     this.disconnect();
   };
 
