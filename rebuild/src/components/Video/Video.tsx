@@ -10,7 +10,7 @@ type Props = {
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { scene, isConnecting, connect } = useSoulMachines();
+  const { scene, isConnecting, isConnected, connect } = useSoulMachines();
   const videoStream = scene?.videoElement?.srcObject;
 
   useEffect(() => {
@@ -29,5 +29,9 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     return loadingIndicator || <DefaultLoadingIndicator />;
   }
 
-  return <video muted autoPlay ref={videoRef} />;
+  if (isConnected) {
+    return <video muted autoPlay ref={videoRef} />;
+  }
+
+  return null;
 }

@@ -2,11 +2,13 @@ import { render } from '@testing-library/preact';
 import { Video } from '.';
 
 let mockIsConnecting: boolean;
+let mockIsConnected: boolean;
 const mockConnect = jest.fn();
 
 jest.mock('../../contexts/SoulMachinesContext', () => ({
   useSoulMachines: () => ({
     isConnecting: mockIsConnecting,
+    isConnected: mockIsConnected,
     connect: mockConnect,
     scene: {
       videoElement: {
@@ -31,25 +33,15 @@ describe('<Video />', () => {
     expect(mockConnect).not.toHaveBeenCalled();
   });
 
-  describe('when it is not connecting', () => {
+  describe('when it is not connecting or connected', () => {
     beforeEach(() => {
       mockIsConnecting = false;
+      mockIsConnected = false;
     });
 
-    it('sets the video srcObject to be the srcObject from scene.video', () => {
+    it('renders nothing', () => {
       const { container } = customRender();
-      const video = container.querySelector('video');
-      expect(video?.srcObject).toEqual('mock video src');
-    });
-
-    it('renders a video', () => {
-      const { container } = customRender();
-      expect(container.querySelector('video')).toBeInTheDocument();
-    });
-
-    it('does not render the default svg loading indicator', () => {
-      const { container } = customRender();
-      expect(container.querySelector('svg')).not.toBeInTheDocument();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 
@@ -73,6 +65,29 @@ describe('<Video />', () => {
     it('does not render a video', () => {
       const { container } = customRender();
       expect(container.querySelector('video')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when it is connected', () => {
+    beforeEach(() => {
+      mockIsConnecting = false;
+      mockIsConnected = true;
+    });
+
+    it('sets the video srcObject to be the srcObject from scene.video', () => {
+      const { container } = customRender();
+      const video = container.querySelector('video');
+      expect(video?.srcObject).toEqual('mock video src');
+    });
+
+    it('renders a video', () => {
+      const { container } = customRender();
+      expect(container.querySelector('video')).toBeInTheDocument();
+    });
+
+    it('does not render the default svg loading indicator', () => {
+      const { container } = customRender();
+      expect(container.querySelector('svg')).not.toBeInTheDocument();
     });
   });
 });
