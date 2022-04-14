@@ -9,7 +9,7 @@ jest.mock('../../contexts/SoulMachinesContext', () => {
   return {
     SoulMachinesProvider,
     useSoulMachines: () => ({
-      connect: () => {},
+      connect: () => null,
       isConnecting: mockIsConnecting,
       isConnected: mockIsConnected,
     }),
