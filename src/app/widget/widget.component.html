@@ -16,8 +16,16 @@
   ></app-video>
 
   <div class="user-controls">
-    <button class="close-button" (click)="disconnect()">
+    <button class="close-button on" (click)="disconnect()">
       <app-icon name="close"></app-icon>
+    </button>
+
+    <button *ngIf="micEnabled" class="mic-button on" (click)="toggleMic()">
+      <app-icon name="mic"></app-icon>
+    </button>
+
+    <button *ngIf="!micEnabled" class="mic-button off" (click)="toggleMic()">
+      <app-icon name="micOff"></app-icon>
     </button>
   </div>
 </div>
