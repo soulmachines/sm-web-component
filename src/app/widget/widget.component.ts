@@ -22,6 +22,7 @@ export class WidgetComponent {
 
   public ConnectionState = ConnectionState;
   public connectionState = ConnectionState.Disconnected;
+  public micEnabled = true;
 
   constructor() {}
 
@@ -41,5 +42,10 @@ export class WidgetComponent {
 
   onDisconnected() {
     this.connectionState = ConnectionState.Disconnected;
+  }
+
+  toggleMic() {
+    this.micEnabled = !this.micEnabled;
+    this.videoElement.setMicrophoneEnabled(this.micEnabled);
   }
 }

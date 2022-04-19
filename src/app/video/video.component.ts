@@ -177,7 +177,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     );
   }
 
-  private setMicrophoneEnabled(enabled: boolean) {
+  public setMicrophoneEnabled(enabled: boolean) {
     return this.executeCommand(
       () =>
         enabled

@@ -19,6 +19,10 @@
     <button class="close-button" (click)="disconnect()">
       <app-icon name="close"></app-icon>
     </button>
+
+    <button class="mic-button" [class.off]="!micEnabled" (click)="toggleMic()">
+      <app-icon [name]="micEnabled ? 'mic' : 'micOff'"></app-icon>
+    </button>
   </div>
 </div>
 
