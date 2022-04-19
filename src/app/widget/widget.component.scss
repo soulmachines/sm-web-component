@@ -68,13 +68,11 @@ $off-hover-button-color: #f39d8f;
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.2s ease-out;
-      &.on {
-        background: $default-button-color;
-        &:hover,
-        &:focus {
-          background: $hover-button-color;
-          outline: none;
-        }
+      background: $default-button-color;
+      &:hover,
+      &:focus {
+        background: $hover-button-color;
+        outline: none;
       }
 
       &.off {
