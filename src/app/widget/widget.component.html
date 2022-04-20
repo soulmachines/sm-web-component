@@ -22,6 +22,9 @@
     <button class="camera-button" [class.off]="!cameraEnabled" (click)="toggleCamera()">
       <app-icon [name]="cameraEnabled ? 'camera' : 'cameraOff'"></app-icon>
     </button>
+    <button class="mic-button" [class.off]="!micEnabled" (click)="toggleMic()">
+      <app-icon [name]="micEnabled ? 'mic' : 'micOff'"></app-icon>
+    </button>
   </div>
 </div>
 

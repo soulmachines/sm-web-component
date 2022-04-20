@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Key</title>
   </head>
+  <style>
+    /* TODO: remove once the sm-video has it's own styling */
+    sm-video,
+    video {
+      display: block;
+      width: 100%;
+    }
+  </style>
   <body>
-    <sm-video api-key="<%= VITE__PROJECT_API_KEY %>">
+    <sm-video api-key="<%= VITE__PROJECT_API_KEY %>" auto-connect="true">
       <p slot="connecting-indicator">Loading...</p>
     </sm-video>
+
+    <sm-video api-key="<%= VITE__PROJECT_API_KEY %>" auto-connect="false"></sm-video>
 
     <sm-video api-key="<%= VITE__PROJECT_API_KEY %>"></sm-video>
 

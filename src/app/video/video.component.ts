@@ -178,7 +178,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     );
   }
 
-  private setMicrophoneEnabled(enabled: boolean) {
+  public setMicrophoneEnabled(enabled: boolean) {
     return this.executeCommand(
       () =>
         enabled
@@ -290,8 +290,13 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.speechMarker.emit(speechMarkerData);
   };
 
+  private onTimeout = () => {
+    this.disconnect();
+  };
+
   private sceneCallbacks: SceneCallbacks = {
     onConversationResult: this.onConversationResult,
     onSpeechMarker: this.onSpeechMarker,
+    onDisconnectResult: this.onTimeout,
   };
 }
