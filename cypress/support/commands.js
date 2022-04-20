@@ -1,29 +1,4 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
+//This command launches a scene 
 Cypress.Commands.add('launch_scene', () => {
     cy.get('app-profile-picture')
     .should('be.visible')
@@ -31,6 +6,7 @@ Cypress.Commands.add('launch_scene', () => {
     cy.wait(15000)
 });
 
+//This command Disconnects from a scene
 Cypress.Commands.add('disconnect_scene', () => {
     cy.get('app-icon[name=close]')
     .should('be.visible')
@@ -38,18 +14,21 @@ Cypress.Commands.add('disconnect_scene', () => {
     cy.wait(500)
 })
 
+//This command mutes the scene by click on the mute button
 Cypress.Commands.add('mute_scene', () =>{
     cy.get('button[class=mic-button]')
     .should('be.visible')
     .click()
 })
 
+//This command unmutes the scene by clicking the mute button
 Cypress.Commands.add('unmute_scene', () =>{
     cy.get('sm-widget > div > div > button.mic-button.off')
     .should('be.visible')
     .click()
 })
 
+//This command closes the greeting message container
 Cypress.Commands.add('close_greeting', () =>{
     cy.get('div[class=greeting-container]')
     .should('be.visible')
@@ -58,7 +37,6 @@ Cypress.Commands.add('close_greeting', () =>{
     .click()
     cy.get('div[class=greeting-container]')
     .should('not.exist')
-
 })
 
 
