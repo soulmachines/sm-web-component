@@ -105,3 +105,13 @@ $off-hover-button-color: #f39d8f;
     }
   }
 }
+
+/* Mobile */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  .dp-container {
+    &.connected {
+      width: 250px;
+      height: 160px;
+    }
+  }
+}
