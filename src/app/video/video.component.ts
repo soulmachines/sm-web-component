@@ -113,6 +113,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     ['disconnect', this.disconnect],
     ['sendTextMessage', this.sendTextMessage],
     ['setMicrophoneEnabled', this.setMicrophoneEnabled],
+    ['setCameraEnabled', this.setCameraEnabled],
     ['stopSpeaking', this.stopSpeaking],
   ];
 
@@ -186,6 +187,15 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       'setMicrophoneEnabled ',
       enabled,
     );
+  }
+
+  public setCameraEnabled(enabled: boolean) {
+    return this.executeCommand(() => 
+    enabled
+    ? this.webSDKService.scene?.setMediaDeviceActive({ camera: true, })
+    : this.webSDKService.scene?.setMediaDeviceActive({ camera: false, }),
+    'setCameraEnabled', 
+    enabled);
   }
 
   private stopSpeaking() {

@@ -19,6 +19,9 @@
     <button class="close-button" (click)="disconnect()">
       <app-icon name="close"></app-icon>
     </button>
+    <button class="camera-button" [class.off]="!cameraEnabled" (click)="toggleCamera()">
+      <app-icon [name]="cameraEnabled ? 'camera' : 'cameraOff'"></app-icon>
+    </button>
   </div>
 </div>
 
