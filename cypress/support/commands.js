@@ -12,6 +12,8 @@ Cypress.Commands.add('disconnect_scene', () => {
     .should('be.visible')
     .click()
     cy.wait(500)
+    cy.get('app-profile-picture')
+    .should('be.visible')
 })
 
 //This command mutes the scene by click on the mute button
