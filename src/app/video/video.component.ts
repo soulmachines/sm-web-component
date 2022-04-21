@@ -190,12 +190,14 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public setCameraEnabled(enabled: boolean) {
-    return this.executeCommand(() => 
-    enabled
-    ? this.webSDKService.scene?.setMediaDeviceActive({ camera: true, })
-    : this.webSDKService.scene?.setMediaDeviceActive({ camera: false, }),
-    'setCameraEnabled', 
-    enabled);
+    return this.executeCommand(
+      () =>
+        enabled
+          ? this.webSDKService.scene?.setMediaDeviceActive({ camera: true })
+          : this.webSDKService.scene?.setMediaDeviceActive({ camera: false }),
+      'setCameraEnabled',
+      enabled,
+    );
   }
 
   private stopSpeaking() {
