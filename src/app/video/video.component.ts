@@ -130,7 +130,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     const sceneOptions: SceneOptions = {
       videoElement: this.videoRef.nativeElement,
       apiKey: this.apiKey,
-      requestedMediaDevices: { microphone: true, camera: true },
+      requestedMediaDevices: { microphone: false, camera: false },
       requiredMediaDevices: {},
     };
 
@@ -180,10 +180,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public setMicrophoneEnabled(enabled: boolean) {
     return this.executeCommand(
-      () =>
-        enabled
-          ? this.webSDKService.scene?.startRecognize()
-          : this.webSDKService.scene?.stopRecognize(),
+      () => this.webSDKService.scene.setMediaDeviceActive({ microphone: enabled }),
       'setMicrophoneEnabled ',
       enabled,
     );
@@ -191,10 +188,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   public setCameraEnabled(enabled: boolean) {
     return this.executeCommand(
-      () =>
-        enabled
-          ? this.webSDKService.scene?.setMediaDeviceActive({ camera: true })
-          : this.webSDKService.scene?.setMediaDeviceActive({ camera: false }),
+      () => this.webSDKService.scene.setMediaDeviceActive({ camera: enabled }),
       'setCameraEnabled',
       enabled,
     );
@@ -204,11 +198,11 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.executeCommand(() => this.webSDKService.persona.stopSpeaking(), 'stopSpeaking');
   }
 
-  private getPersona() {
+  public getPersona() {
     return this.executeCommand(() => this.webSDKService.persona, 'getPersona');
   }
 
-  private getScene() {
+  public getScene() {
     return this.executeCommand(() => this.webSDKService.scene, 'getScene');
   }
 
@@ -257,7 +251,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
-    this.setMicrophoneEnabled(this._microphoneEnabled);
+    this.webSDKService.scene.startRecognize();
     this.isConnected = true;
     this.connected.emit();
   }

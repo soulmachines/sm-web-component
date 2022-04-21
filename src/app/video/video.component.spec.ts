@@ -37,6 +37,7 @@ describe('VideoComponent', () => {
       startRecognize: jest.fn(),
       stopRecognize: jest.fn(),
       startVideo: jest.fn().mockReturnValue(Promise.resolve()),
+      setMediaDeviceActive: jest.fn(),
     },
   };
   let component: TestComponent;
@@ -154,20 +155,20 @@ describe('VideoComponent', () => {
         mockSMWebSdkService.connected = true;
       });
 
-      it('when true should result in a call to startRecognize() in the WebSDK when a connection is successful', () => {
+      it('when true should result in a call to setMediaDeviceActive() in the WebSDK when a connection is successful', () => {
         component.child.microphoneEnabled = 'true';
         fixture.detectChanges();
 
         component.child['onConnectionSuccess']();
-        expect(mockSMWebSdkService.scene.startRecognize).toHaveBeenCalled();
+        expect(mockSMWebSdkService.scene.setMediaDeviceActive).toHaveBeenCalled();
       });
 
-      it('when false should result in a call to stopRecognize() in the WebSDK when a connection is successful', () => {
+      it('when false should result in a call to setMediaDeviceActive() in the WebSDK when a connection is successful', () => {
         component.child.microphoneEnabled = 'false';
         fixture.detectChanges();
 
         component.child['onConnectionSuccess']();
-        expect(mockSMWebSdkService.scene.stopRecognize).toHaveBeenCalled();
+        expect(mockSMWebSdkService.scene.setMediaDeviceActive).toHaveBeenCalled();
       });
     });
 
@@ -246,14 +247,39 @@ describe('VideoComponent', () => {
         fixture.detectChanges();
       });
 
-      it('when true should result in a call to scene.startRecognize in the WebSDK', () => {
+      it('when true should result in a call to scene.setMediaDeviceActive in the WebSDK', () => {
         getVideoNativeElement().setMicrophoneEnabled(true);
-        expect(mockSMWebSdkService.scene.startRecognize).toHaveBeenCalled();
+        expect(mockSMWebSdkService.scene.setMediaDeviceActive).toHaveBeenCalledWith({
+          microphone: true,
+        });
       });
 
-      it('when false should result in a call to scene.stopRecognize in the WebSDK', () => {
+      it('when false should result in a call to scene.setMediaDeviceActive in the WebSDK', () => {
         getVideoNativeElement().setMicrophoneEnabled(false);
-        expect(mockSMWebSdkService.scene.stopRecognize).toHaveBeenCalled();
+        expect(mockSMWebSdkService.scene.setMediaDeviceActive).toHaveBeenCalledWith({
+          microphone: false,
+        });
+      });
+    });
+
+    describe('setCameraEnabled', () => {
+      beforeEach(() => {
+        mockSMWebSdkService.connected = true;
+        fixture.detectChanges();
+      });
+
+      it('when true should result in a call to scene.setMediaDeviceActive in the WebSDK', () => {
+        getVideoNativeElement().setCameraEnabled(true);
+        expect(mockSMWebSdkService.scene.setMediaDeviceActive).toHaveBeenCalledWith({
+          camera: true,
+        });
+      });
+
+      it('when false should result in a call to scene.setMediaDeviceActive in the WebSDK', () => {
+        getVideoNativeElement().setCameraEnabled(false);
+        expect(mockSMWebSdkService.scene.setMediaDeviceActive).toHaveBeenCalledWith({
+          camera: false,
+        });
       });
     });
 
