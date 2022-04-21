@@ -77,6 +77,7 @@ $off-hover-button-color: #f39d8f;
 
       &.off {
         background: $off-default-button-color;
+        color: white;
         &:hover,
         &:focus {
           background: $off-hover-button-color;
@@ -89,6 +90,12 @@ $off-hover-button-color: #f39d8f;
       position: absolute;
       top: 0;
       right: 0;
+    }
+
+    .camera-button {
+      position: absolute;
+      bottom: 0;
+      left: 8+44;
     }
 
     .mic-button {
