@@ -251,6 +251,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
+    this.webSDKService.scene.startRecognize();
     this.isConnected = true;
     this.connected.emit();
   }
