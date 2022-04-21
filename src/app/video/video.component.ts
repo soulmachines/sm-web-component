@@ -131,7 +131,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       videoElement: this.videoRef.nativeElement,
       apiKey: this.apiKey,
       requestedMediaDevices: { microphone: false, camera: false },
-      requiredMediaDevices: {},
+      requiredMediaDevices: { microphone: false, camera: false },
     };
 
     this.webSDKService.initialise(sceneOptions);
