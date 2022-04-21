@@ -22,6 +22,7 @@ export class WidgetComponent {
 
   public ConnectionState = ConnectionState;
   public connectionState = ConnectionState.Disconnected;
+  public cameraEnabled = true;
   public micEnabled = true;
 
   constructor() {}
@@ -42,6 +43,11 @@ export class WidgetComponent {
 
   onDisconnected() {
     this.connectionState = ConnectionState.Disconnected;
+  }
+
+  toggleCamera() {
+    this.cameraEnabled = !this.cameraEnabled;
+    this.videoElement.setCameraEnabled(this.cameraEnabled);
   }
 
   toggleMic() {
