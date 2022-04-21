@@ -1,10 +1,11 @@
 $video-background-color: #dfedee;
 $video-border-color: #8cd0f2;
 
-$default-button-color: rgba(255, 255, 255, 0.6);
-$hover-button-color: #ffffff;
-$off-default-button-color: #ed5645;
-$off-hover-button-color: #f39d8f;
+$button-base-color: rgba(255, 255, 255, 0.7);
+$button-hover-color: #ffffff;
+
+$inactive-base-color: #ed5645;
+$inactive-hover-color: #c43828;
 
 :host {
   position: fixed;
@@ -68,19 +69,18 @@ $off-hover-button-color: #f39d8f;
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.2s ease-out;
-      background: $default-button-color;
-      &:hover,
-      &:focus {
-        background: $hover-button-color;
-        outline: none;
+      background: $button-base-color;
+      outline: none;
+
+      &:hover {
+        background: $button-hover-color;
       }
 
-      &.off {
-        background: $off-default-button-color;
+      &.inactive {
+        background: $inactive-base-color;
         color: white;
-        &:hover,
-        &:focus {
-          background: $off-hover-button-color;
+        &:hover {
+          background: $inactive-hover-color;
           outline: none;
         }
       }
