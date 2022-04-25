@@ -1,5 +1,19 @@
 # Change Log
 
+# [1.2.0](https://github.com/soulmachines/sm-web-component/compare/1.1.0...1.2.0) (2022-04-25)
+
+
+### Features
+
+* Add camera toggle button QUIC-1646 ([#163](https://github.com/soulmachines/sm-web-component/issues/163)) ([56deb38](https://github.com/soulmachines/sm-web-component/commit/56deb38d2d2d3f81f39d4a4c901e87572c0ab5db))
+* Add microphone toggle button QUIC-1645 ([#161](https://github.com/soulmachines/sm-web-component/issues/161)) ([def8a07](https://github.com/soulmachines/sm-web-component/commit/def8a0775c27f6027b477b2dc0e35b20db611669))
+* Add scaffold script for creating components QUIC-1641 ([#153](https://github.com/soulmachines/sm-web-component/issues/153)) ([a0c272d](https://github.com/soulmachines/sm-web-component/commit/a0c272df15bcd75efcf0c469d73de7b51e11ae14))
+* Increase video size when connection succeeds QUIC-1613 ([#158](https://github.com/soulmachines/sm-web-component/issues/158)) ([371f9d0](https://github.com/soulmachines/sm-web-component/commit/371f9d09139b0ff6d6f433c3f26e92984e1b2eb4))
+* Return to disconnected state when session times out ([#160](https://github.com/soulmachines/sm-web-component/issues/160)) ([f28cfaa](https://github.com/soulmachines/sm-web-component/commit/f28cfaa4fd06f32534e04da8479be38bad29f3cd))
+* support auto connect on video component quic-1658  ([#159](https://github.com/soulmachines/sm-web-component/issues/159)) ([0331c19](https://github.com/soulmachines/sm-web-component/commit/0331c19868bae14d86492066156648445009afa1))
+* update video bounds on resize QUIC-1655 ([#157](https://github.com/soulmachines/sm-web-component/issues/157)) ([a8ae36e](https://github.com/soulmachines/sm-web-component/commit/a8ae36ea062aa88dea1939afdcf4d30035924f97))
+* User can connect without giving access to cam and mic and turn on afterwards ([#164](https://github.com/soulmachines/sm-web-component/issues/164)) ([a243940](https://github.com/soulmachines/sm-web-component/commit/a24394070d859180fcff35eee7d60205b55b95a0))
+
 # [1.1.0](https://github.com/soulmachines/sm-web-component/compare/1.0.0...1.1.0) (2022-04-11)
 
 
