@@ -23,7 +23,7 @@ Cypress.Commands.add('unmute_scene', () => {
 
 //This command closes the greeting message container
 Cypress.Commands.add('close_greeting', () => {
-  cy.get('div[class=greeting-container]').should('be.visible');
+  cy.get('div[class=greeting-container]', { timeout: 10000 }).should('be.visible');
   cy.get('app-greeting > div > button').should('be.visible').click();
   cy.get('div[class=greeting-container]').should('not.exist');
 });
