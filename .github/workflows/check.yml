@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Cypress Docker image with Chrome v78
+    container: cypress/browsers:node12.13.0-chrome78-ff70
 
     steps:
       - name: Checkout Source Code
@@ -34,6 +36,20 @@ jobs:
 
       - name: Run Tests
         run: npm run test-ci
+
+      - name: Run Cypress Tests
+        uses: actions/checkout@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_decrypt_key: ${{ secrets.CYPRESS_DECRYPT_KEY }}
+        with:
+          browser: chrome
+          headless: true
+          start: npm run serve
+          wait-on: 'http://localhost:5000'
+          wait-on-timeout: 360 # 5 minutes
+          config-file: cypress.json
+          spec: cypress/integration/*.ts
 
       - name: Run Prettier
         run: npm run prettier
