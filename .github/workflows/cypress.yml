@@ -1,0 +1,44 @@
+name: Cypress UI Tests
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'rebuild/**'
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    # Cypress Docker image with Chrome v78
+    container: cypress/browsers:node12.13.0-chrome78-ff70
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Caching Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_decrypt_key: ${{ secrets.CYPRESS_DECRYPT_KEY }}
+        with:
+          browser: chrome
+          headless: true
+          start: npm run serve
+          wait-on: 'http://localhost:5000'
+          wait-on-timeout: 360 # 5 minutes
+          config-file: cypress.json
+          spec: cypress/integration/*.ts
