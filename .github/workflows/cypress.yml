@@ -41,4 +41,4 @@ jobs:
           wait-on: 'http://localhost:5000'
           wait-on-timeout: 360 # 5 minutes
           config-file: cypress.json
-          spec: cypress/integration/*.ts
+          spec: cypress/integration/*.js
