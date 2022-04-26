@@ -37,6 +37,9 @@ jobs:
       - name: Run Tests
         run: npm run test-ci
 
+      - name: Run Prettier
+        run: npm run prettier
+
       - name: Run Cypress Tests
         uses: actions/checkout@v2
         env:
@@ -50,9 +53,6 @@ jobs:
           wait-on-timeout: 360 # 5 minutes
           config-file: cypress.json
           spec: cypress/integration/*.ts
-
-      - name: Run Prettier
-        run: npm run prettier
 
       - name: Build Asset
         run: npm run package
