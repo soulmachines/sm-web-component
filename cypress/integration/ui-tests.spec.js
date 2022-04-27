@@ -5,7 +5,7 @@ describe('Verify UI elements within the widget', () => {
   });
 
   it('launches a scene and disconnects validating UI elements', () => {
-    cy.close_greeting();
+    //cy.close_greeting();
     cy.launch_scene();
     cy.mute_scene();
     cy.unmute_scene();
