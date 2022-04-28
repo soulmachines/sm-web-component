@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:5000/",
   "retries": 2,
-  "video": false
+  "video": false,
+  "projectId": "uabajg"
 }
