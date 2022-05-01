@@ -12,6 +12,7 @@
     "test-ci": "jest",
     "test:cypress:chrome": "cypress run --headless --browser chrome",
     "cypress:ci": "start-server-and-test serve http://localhost:5000 test:cypress:chrome",
+    "cypress:open": "cypress open",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build": "ng build --configuration production --output-hashing=none",
