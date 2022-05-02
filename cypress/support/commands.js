@@ -1,7 +1,7 @@
 //This command launches a scene
-Cypress.Commands.add('launchScene', () => {
+Cypress.Commands.add('launchScene', (timeout = 25000) => {
   cy.get('app-profile-picture').should('be.visible').click();
-  cy.wait(25000);
+  cy.get('app-icon[name=close]', { timeout }).should('be.visible');
 });
 
 //This command Disconnects from a scene

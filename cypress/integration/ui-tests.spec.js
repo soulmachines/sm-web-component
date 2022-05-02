@@ -12,7 +12,7 @@ describe('Verify UI elements within the widget', () => {
   it('validates elements when scene is connected', () => {
     cy.launchScene();
     cy.muteScene();
-    //cy.unmuteScene();
+    //cy.unmuteScene();  Commented because the framework was build before the camera icon was added. after the fist merge a locator for the cam icon needs to be added and this one updated
   });
 
   it('validates elements when scene is disconnected', () => {
