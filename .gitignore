@@ -4,3 +4,5 @@ dist
 examples/soulmachines.js
 .DS_Store
 .parcel-cache
+cypress/videos
+cypress/screenshots
