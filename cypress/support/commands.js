@@ -13,12 +13,12 @@ Cypress.Commands.add('disconnect_scene', () => {
 
 //This command mutes the scene by click on the mute button
 Cypress.Commands.add('mute_scene', () => {
-  cy.get('button[class=mic-button]').should('be.visible').click();
+  cy.get('.mic-button').should('be.visible').click();
 });
 
 //This command unmutes the scene by clicking the mute button
 Cypress.Commands.add('unmute_scene', () => {
-  cy.get('sm-widget > div > div > button.mic-button.off').should('be.visible').click();
+  cy.get('sm-widget .mic-button.off').should('be.visible').click();
 });
 
 //This command closes the greeting message container
