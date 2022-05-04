@@ -6,8 +6,8 @@ video {
 }
 
 :host {
-  display: none;
   position: relative;
+  display: block;
 }
 
 video {
