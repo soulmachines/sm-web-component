@@ -1,4 +1,4 @@
-<div *ngIf="isVisible">
+<ng-container *ngIf="isVisible">
   <div
     *ngIf="profilePicture; else defaultProfilePicture"
     class="profile-picture"
@@ -7,4 +7,4 @@
   <ng-template #defaultProfilePicture>
     <app-icon name="profile" size="70"></app-icon>
   </ng-template>
-</div>
+</ng-container>
