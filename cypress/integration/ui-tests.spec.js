@@ -1,4 +1,4 @@
-describe('Verify UI elements within the widget', () => {
+describe('When a scene is connected', () => {
   before(() => {
     cy.visit('/');
     cy.wait(200);
@@ -30,5 +30,13 @@ describe('When scene is not connected', () => {
   it('checks that greeting and profile picture are rendered', () => {
     cy.closeGreeting();
     cy.get('app-profile-picture').should('be.visible');
+  });
+
+  it('does not render a camera button', () => {
+    cy.get('sm-widget .camera-button.inactive').should('not.be.visible');
+  });
+
+  it('does not render a mute button', () => {
+    cy.get('sm-widget .mic-button.inactive').should('not.be.visible');
   });
 });

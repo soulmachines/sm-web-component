@@ -14,24 +14,24 @@ Cypress.Commands.add('disconnectScene', () => {
 //This command mutes the scene by click on the mute button
 Cypress.Commands.add('muteScene', () => {
   cy.get('sm-widget .mic-button').should('be.visible').click();
-  cy.get('sm-widget .mic-button.inactive').should('be.visible');
+  cy.contains('micOn').should('not.exist');
 });
 
 //This command unmutes the scene by clicking the mute button
 Cypress.Commands.add('unmuteScene', () => {
   cy.get('sm-widget .mic-button.inactive').should('be.visible').click();
-  cy.get('sm-widget .mic-button').should('be.visible');
+  cy.contains('micOff').should('not.exist');
 });
 
 //This command turns on the camera
 Cypress.Commands.add('cameraOn', () => {
-  cy.get('sm-widget .camera-button.inactive').should('be.visible').click();
-  cy.get('sm-widget .camera-button').should('be.visible');
+  cy.get('.camera-button').should('be.visible').click();
+  cy.contains('cameraOff').should('not.exist');
 });
 
 Cypress.Commands.add('cameraOff', () => {
   cy.get('sm-widget .camera-button').should('be.visible').click();
-  cy.get('sm-widget .camera-button.inactive').should('be.visible');
+  cy.contains('cameraOn').should('not.exist');
 });
 
 //This command closes the greeting message container
