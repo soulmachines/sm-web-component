@@ -1,43 +1,51 @@
-<div class="dp-container" [ngClass]="connectionState">
-  <slot>
-    <app-greeting
-      *ngIf="connectionState === ConnectionState.Disconnected"
-      class="greeting-card"
-      [greeting]="greetingText"
-    ></app-greeting>
-  </slot>
+<div class="widget-container" [ngClass]="connectionState">
+  <div class="cards">
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+  </div>
 
-  <div class="video-player-container">
-    <button class="connect-button" (click)="connect()">
-      <app-profile-picture
-        class="profile-picture"
-        [profilePicture]="profilePicture"
-      ></app-profile-picture>
-    </button>
+  <div class="video-notification-container">
+    <slot>
+      <app-greeting
+        *ngIf="connectionState === ConnectionState.Disconnected"
+        class="greeting-card"
+        [greeting]="greetingText"
+      ></app-greeting>
+    </slot>
 
-    <app-video
-      #video
-      class="dp-video"
-      theme="none"
-      [token-server]="tokenServer"
-      [api-key]="apiKey"
-      [auto-connect]="autoConnect"
-      (connected)="onConnected()"
-      (disconnected)="onDisconnected()"
-    ></app-video>
-
-    <div class="user-controls">
-      <button class="close-button" (click)="disconnect()">
-        <app-icon name="close"></app-icon>
+    <div class="video-player-container">
+      <button class="connect-button" (click)="connect()">
+        <app-profile-picture
+          class="profile-picture"
+          [profilePicture]="profilePicture"
+        ></app-profile-picture>
       </button>
 
-      <div class="controls-bottom">
-        <button class="camera-button" [class.inactive]="!cameraEnabled" (click)="toggleCamera()">
-          <app-icon [name]="cameraEnabled ? 'camera' : 'cameraOff'"></app-icon>
+      <app-video
+        #video
+        class="dp-video"
+        theme="none"
+        [token-server]="tokenServer"
+        [api-key]="apiKey"
+        [auto-connect]="autoConnect"
+        (connected)="onConnected()"
+        (disconnected)="onDisconnected()"
+      ></app-video>
+
+      <div class="user-controls">
+        <button class="close-button" (click)="disconnect()">
+          <app-icon name="close"></app-icon>
         </button>
-        <button class="mic-button" [class.inactive]="!micEnabled" (click)="toggleMic()">
-          <app-icon [name]="micEnabled ? 'mic' : 'micOff'"></app-icon>
-        </button>
+
+        <div class="controls-bottom">
+          <button class="camera-button" [class.inactive]="!cameraEnabled" (click)="toggleCamera()">
+            <app-icon [name]="cameraEnabled ? 'camera' : 'cameraOff'"></app-icon>
+          </button>
+          <button class="mic-button" [class.inactive]="!micEnabled" (click)="toggleMic()">
+            <app-icon [name]="micEnabled ? 'mic' : 'micOff'"></app-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>
