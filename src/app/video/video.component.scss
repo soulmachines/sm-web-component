@@ -8,6 +8,8 @@ video {
 :host {
   position: relative;
   display: block;
+  // Fixes a bug in Safari where the video extends the bounds
+  transform: translate3d(0, 0, 0);
 }
 
 video {
