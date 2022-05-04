@@ -105,6 +105,7 @@ app-video {
 .connected {
   .video-player-container {
     transition: all 200ms ease-out;
+    will-change: width, height;
   }
 
   .connect-button {
