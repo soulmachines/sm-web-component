@@ -1,37 +1,44 @@
 <div class="dp-container" [ngClass]="connectionState">
-  <app-profile-picture
-    class="profile-picture"
-    [profilePicture]="profilePicture"
-    (click)="connect()"
-  ></app-profile-picture>
-  <app-video
-    #video
-    class="dp-video"
-    theme="none"
-    [token-server]="tokenServer"
-    [api-key]="apiKey"
-    [auto-connect]="autoConnect"
-    (connected)="onConnected()"
-    (disconnected)="onDisconnected()"
-  ></app-video>
+  <slot>
+    <app-greeting
+      *ngIf="connectionState === ConnectionState.Disconnected"
+      class="greeting-card"
+      [greeting]="greetingText"
+    ></app-greeting>
+  </slot>
 
-  <div class="user-controls">
-    <button class="close-button" (click)="disconnect()">
-      <app-icon name="close"></app-icon>
+  <div class="video-player-container">
+    <button class="connect-button" (click)="connect()">
+      <app-profile-picture
+        class="profile-picture"
+        [profilePicture]="profilePicture"
+      ></app-profile-picture>
     </button>
-    <button class="camera-button" [class.inactive]="!cameraEnabled" (click)="toggleCamera()">
-      <app-icon [name]="cameraEnabled ? 'camera' : 'cameraOff'"></app-icon>
-    </button>
-    <button class="mic-button" [class.inactive]="!micEnabled" (click)="toggleMic()">
-      <app-icon [name]="micEnabled ? 'mic' : 'micOff'"></app-icon>
-    </button>
+
+    <app-video
+      #video
+      class="dp-video"
+      theme="none"
+      [token-server]="tokenServer"
+      [api-key]="apiKey"
+      [auto-connect]="autoConnect"
+      (connected)="onConnected()"
+      (disconnected)="onDisconnected()"
+    ></app-video>
+
+    <div class="user-controls">
+      <button class="close-button" (click)="disconnect()">
+        <app-icon name="close"></app-icon>
+      </button>
+
+      <div class="controls-bottom">
+        <button class="camera-button" [class.inactive]="!cameraEnabled" (click)="toggleCamera()">
+          <app-icon [name]="cameraEnabled ? 'camera' : 'cameraOff'"></app-icon>
+        </button>
+        <button class="mic-button" [class.inactive]="!micEnabled" (click)="toggleMic()">
+          <app-icon [name]="micEnabled ? 'mic' : 'micOff'"></app-icon>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-
-<slot>
-  <app-greeting
-    *ngIf="connectionState === ConnectionState.Disconnected"
-    class="greeting-card"
-    [greeting]="greetingText"
-  ></app-greeting>
-</slot>
