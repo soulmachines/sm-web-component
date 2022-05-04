@@ -118,7 +118,7 @@ app-video {
 
 .connected {
   .video-player-container {
-    outline: 2px solid $video-border-color;
+    border: 2px solid $video-border-color;
     width: 60vw;
     min-width: 250px;
     max-width: 350px;
