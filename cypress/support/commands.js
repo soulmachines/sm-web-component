@@ -23,16 +23,16 @@ Cypress.Commands.add('unmuteScene', () => {
   cy.get('sm-widget .mic-button').should('be.visible');
 });
 
-//This command turns on the camera 
+//This command turns on the camera
 Cypress.Commands.add('cameraOn', () => {
   cy.get('sm-widget .camera-button.inactive').should('be.visible').click();
   cy.get('sm-widget .camera-button').should('be.visible');
-})
+});
 
-Cypress.Commands.add('cameraOff', () =>{
+Cypress.Commands.add('cameraOff', () => {
   cy.get('sm-widget .camera-button').should('be.visible').click();
-  cy.get('sm-widget .camera-button.inactive').should('be.visible')
-})
+  cy.get('sm-widget .camera-button.inactive').should('be.visible');
+});
 
 //This command closes the greeting message container
 Cypress.Commands.add('closeGreeting', () => {

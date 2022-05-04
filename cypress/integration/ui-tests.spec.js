@@ -12,7 +12,7 @@ describe('Verify UI elements within the widget', () => {
   it('validates elements when scene is connected', () => {
     cy.launchScene();
     cy.unmuteScene();
-    cy.muteScene(); 
+    cy.muteScene();
     cy.cameraOn();
     cy.cameraOff();
   });
