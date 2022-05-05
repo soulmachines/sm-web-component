@@ -44,7 +44,7 @@ describe('When scene is not connected', () => {
     cy.get('sm-widget .mic-button.inactive').should('not.be.visible');
   });
 
-  it('checks if thr profile picture is rendered', () => {
+  it('checks that the profile picture is rendered', () => {
     cy.get('app-profile-picture').should('be.visible');
   });
 });
