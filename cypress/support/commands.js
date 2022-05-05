@@ -1,5 +1,5 @@
 //This command launches a scene
-Cypress.Commands.add('launchScene', (timeout = 25000) => {
+Cypress.Commands.add('launchScene', (timeout = 35000) => {
   cy.get('app-profile-picture').should('be.visible').click();
   cy.get('.close-button', { timeout }).should('be.visible');
 });
