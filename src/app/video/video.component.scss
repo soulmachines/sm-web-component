@@ -24,12 +24,14 @@ video {
   left: 0;
   right: 0;
   display: block;
+}
 
-  app-spinner {
-    display: block;
-    max-width: 160px;
-    margin: 0 auto;
-  }
+.default-spinner {
+  display: block;
+  width: 96px;
+  margin: 0 auto;
+  shape-rendering: auto;
+  color: #215489;
 }
 
 :host(.connected) {
