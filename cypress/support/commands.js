@@ -41,5 +41,5 @@ Cypress.Commands.add('cameraOff', () => {
 //This command closes the greeting message container
 Cypress.Commands.add('closeGreeting', () => {
   cy.get('app-greeting button').should('be.visible').click();
-  cy.get('.greeting-container').should('not.exist');
+  cy.get('.greeting-container').should('not.be.visible');
 });
