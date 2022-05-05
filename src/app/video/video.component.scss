@@ -1,47 +1,50 @@
-$background-color: #dfedee;
+:host,
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 :host {
-  video,
-  slot {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    opacity: 0;
-  }
+  position: relative;
+  display: block;
+  // Fixes a bug in Safari where the video extends the bounds
+  transform: translate3d(0, 0, 0);
+}
 
-  slot.connecting-indicator {
-    opacity: 1;
-  }
+video {
+  opacity: 0;
+  visibility: hidden;
+}
 
-  video {
-    object-fit: cover;
-  }
+.connecting-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+}
+
+.default-spinner {
+  display: block;
+  width: 96px;
+  margin: 0 auto;
+  shape-rendering: auto;
+  color: #215489;
 }
 
 :host(.connected) {
-  video {
-    opacity: 1;
-  }
-
-  slot.connecting-indicator {
-    opacity: 0;
-  }
-}
-
-:host([theme='none']) {
-  position: relative;
   display: block;
-  width: 300px;
-  height: 150px;
-}
 
-:host([theme='default']) {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 140px;
-  height: 140px;
-  overflow: hidden;
-  background-color: $background-color;
-  border-radius: 24px;
+  video {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 3s ease-out 0.5s;
+  }
+
+  .connecting-indicator {
+    opacity: 0;
+    transition: opacity 0.25s ease-out 0.25s;
+  }
 }
