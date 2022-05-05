@@ -1,7 +1,6 @@
 describe('scene', () => {
   before(() => {
     cy.visit('/');
-    cy.wait(200);
   });
 
   describe('when it is connected', () => {
