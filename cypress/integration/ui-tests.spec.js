@@ -5,6 +5,10 @@ describe('When a scene is connected', () => {
     cy.launchScene();
   });
 
+  it('checks that the profile picture is not rendered', () =>{
+    cy.get('app-profile-picture').should('not.be.visible');
+  })
+
   it('checks that the mute button is rendered', () => {
     cy.unmuteScene();
     cy.muteScene();
@@ -30,7 +34,6 @@ describe('When scene is not connected', () => {
   it('checks if greeting is rendered and closes it', () => {
     cy.get('.greeting-container').should('be.visible');
     cy.closeGreeting();
-    cy.get('app-profile-picture').should('be.visible');
   });
 
   it('does not render a camera button', () => {
@@ -40,4 +43,8 @@ describe('When scene is not connected', () => {
   it('does not render a mute button', () => {
     cy.get('sm-widget .mic-button.inactive').should('not.be.visible');
   });
+
+  it('checks if thr profile picture is rendered', () =>{
+    cy.get('app-profile-picture').should('be.visible')
+  })
 });
