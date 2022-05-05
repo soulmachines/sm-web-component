@@ -27,7 +27,8 @@ describe('When scene is not connected', () => {
     cy.wait(200);
   });
 
-  it('checks that greeting and profile picture are rendered', () => {
+  it('checks if greeting is rendered and closes it', () => {
+    cy.get('.greeting-container').should('be.visible');
     cy.closeGreeting();
     cy.get('app-profile-picture').should('be.visible');
   });
