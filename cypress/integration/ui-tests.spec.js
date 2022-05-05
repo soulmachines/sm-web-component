@@ -19,7 +19,7 @@ describe('When a scene is connected', () => {
     cy.cameraOff();
   });
 
-  it('checks that the scene cane be disconnected', () => {
+  it('checks that the scene can be disconnected', () => {
     cy.disconnectScene();
     cy.get('app-profile-picture').should('be.visible');
   });
