@@ -161,6 +161,11 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
         }),
       )
       .subscribe();
+
+    this.webSDKService.scene
+      .startVideo()
+      .then(() => (this.videoRef.nativeElement.muted = false))
+      .catch((error) => this.log('startVideo failed:', error));
   }
 
   public disconnect() {
@@ -243,11 +248,6 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private onConnectionSuccess() {
     this.log(`session connected.`);
-
-    this.webSDKService.scene
-      .startVideo()
-      .then((videoState) => this.log('startVideo succeeded', videoState))
-      .catch((error) => this.log('startVideo failed:', error));
 
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
