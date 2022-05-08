@@ -162,6 +162,9 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
       )
       .subscribe();
 
+    // Having this here, rather than in onConnectionSuccess fixes a bug in some Safari devices
+    // Play needs to be called in the same browser thread as the users click.
+    // Otherwise you'll get a black video with a user interaction required error
     this.webSDKService.scene
       .startVideo()
       .then(() => (this.videoRef.nativeElement.muted = false))
