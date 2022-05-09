@@ -17,6 +17,7 @@ export default defineConfig({
       input: {
         // Files listed here will be bundled individually
         'sm-video': path.resolve(__dirname, 'src', 'web-components', 'sm-video.tsx'),
+        'sm-widget': path.resolve(__dirname, 'src', 'web-components', 'sm-widget.tsx'),
       },
     },
   },
