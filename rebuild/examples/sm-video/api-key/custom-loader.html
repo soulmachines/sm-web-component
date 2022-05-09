@@ -3,12 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Token Server</title>
+    <title>API Key - Custom Loader</title>
+    <link rel="stylesheet" href="/examples/shared/main.css" />
   </head>
   <body>
-    <sm-video token-server="<%= VITE__TOKEN_SERVER %>"></sm-video>
-
-    <sm-video token-server="<%= VITE__TOKEN_SERVER %>">
+    <sm-video api-key="<%= VITE__PROJECT_API_KEY %>" auto-connect="true">
       <p slot="connecting-indicator">Loading...</p>
     </sm-video>
 

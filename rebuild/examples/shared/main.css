@@ -1,0 +1,6 @@
+/* TODO: remove once the sm-video has it's own styling */
+sm-video,
+video {
+  display: block;
+  width: 100%;
+}
