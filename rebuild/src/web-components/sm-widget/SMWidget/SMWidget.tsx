@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
-import { SoulMachinesProvider } from '../../contexts/SoulMachinesContext';
-import { Video } from '../Video';
-import { Widget } from '../Widget';
+import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
+import { Video } from '../../../components/Video';
+import { Widget } from '../../../components/Widget';
 
 export type SMWidgetProps = {
   apiKey?: string;
