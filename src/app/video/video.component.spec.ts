@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VideoComponent } from './video.component';
 import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of, throwError } from 'rxjs';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { themes } from '../types/theme.type';
-import { before } from 'cypress/types/lodash';
 
 @Component({
   template: ` <app-video></app-video> `,
