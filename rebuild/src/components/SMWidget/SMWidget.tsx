@@ -1,24 +1,28 @@
 import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
+import { Widget } from '../Widget';
 
 export type SMWidgetProps = {
   apiKey?: string;
   tokenServer?: string;
-  autoConnect: string;
   connectingIndicator?: JSX.Element;
+  greeting?: string;
+  profilePicture?: string;
 };
 
-export function SMWidget({ autoConnect, tokenServer, apiKey, connectingIndicator }: SMWidgetProps) {
-  // Cast from string into a boolean
-  const isAutoConnect = autoConnect === 'true';
-
+export function SMWidget({
+  tokenServer,
+  apiKey,
+  connectingIndicator,
+  greeting,
+  profilePicture,
+}: SMWidgetProps) {
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
-      <Video autoConnect={isAutoConnect} loadingIndicator={connectingIndicator} />
+      <Widget greeting={greeting} profilePicture={profilePicture}>
+        <Video autoConnect={false} loadingIndicator={connectingIndicator} />
+      </Widget>
     </SoulMachinesProvider>
   );
 }
-SMWidget.defaultProps = {
-  autoConnect: 'true',
-};
