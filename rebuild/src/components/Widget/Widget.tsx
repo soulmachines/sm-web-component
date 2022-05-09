@@ -1,20 +1,16 @@
 import { ComponentChildren } from 'preact';
 
-type Props = {
+export type WidgetProps = {
   greeting?: string;
   profilePicture?: string;
   children?: ComponentChildren;
 };
 
-export function Widget({
-  children,
-  profilePicture,
-  greeting = "Got any questions? I'm happy to help.",
-}: Props) {
+export function Widget({ children, profilePicture, greeting }: WidgetProps) {
   return (
     <div>
       {profilePicture && <p>{profilePicture}</p>}
-      <p>{greeting}</p>
+      <p>{greeting || "Got any questions? I'm happy to help."}</p>
       {children}
     </div>
   );
