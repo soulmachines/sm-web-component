@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Server</title>
+  </head>
+  <body>
+    <sm-widget token-server="<%= VITE__TOKEN_SERVER %>"></sm-widget>
+
+    <sm-widget token-server="<%= VITE__TOKEN_SERVER %>">
+      <p slot="connecting-indicator">Loading...</p>
+    </sm-widget>
+
+    <script type="module" src="/src/web-components/sm-widget.tsx"></script>
+  </body>
+</html>
