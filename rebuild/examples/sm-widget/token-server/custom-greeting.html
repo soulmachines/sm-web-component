@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Server - Custom Greeting</title>
+    <link rel="stylesheet" href="/examples/shared/main.css" />
+  </head>
+  <body>
+    <sm-widget
+      token-server="<%= VITE__TOKEN_SERVER %>"
+      greeting="Hello 👋, click me to start a convo"
+    ></sm-widget>
+
+    <script type="module" src="/src/web-components/sm-widget.tsx"></script>
+  </body>
+</html>
