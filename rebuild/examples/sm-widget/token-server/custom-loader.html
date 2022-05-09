@@ -3,11 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Token Server</title>
+    <title>Token Server - Custom Loader</title>
+    <link rel="stylesheet" href="/examples/shared/main.css" />
   </head>
   <body>
-    <sm-widget token-server="<%= VITE__TOKEN_SERVER %>"></sm-widget>
-
     <sm-widget token-server="<%= VITE__TOKEN_SERVER %>">
       <p slot="connecting-indicator">Loading...</p>
     </sm-widget>

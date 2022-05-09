@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Key - Custom Loader</title>
+    <link rel="stylesheet" href="/examples/shared/main.css" />
+  </head>
+  <body>
+    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>">
+      <p slot="connecting-indicator">Loading...</p>
+    </sm-widget>
+
+    <script type="module" src="/src/web-components/sm-widget.tsx"></script>
+  </body>
+</html>
