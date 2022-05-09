@@ -9,7 +9,7 @@ export type WidgetProps = {
 export function Widget({ children, profilePicture, greeting }: WidgetProps) {
   return (
     <div>
-      {profilePicture && <p>{profilePicture}</p>}
+      {profilePicture && <button>{profilePicture}</button>}
       <p>{greeting || "Got any questions? I'm happy to help."}</p>
       {children}
     </div>
