@@ -20,7 +20,7 @@ describe('<SMWidget />', () => {
   it('renders a loading indicator when connecting', () => {
     mockIsConnecting = true;
     const { getByText } = render(
-      <SMWidget autoConnect="true" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
+      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
     expect(getByText('Loading...')).toBeInTheDocument();
   });
@@ -29,18 +29,18 @@ describe('<SMWidget />', () => {
     mockIsConnecting = false;
     mockIsConnected = true;
     const { container } = render(
-      <SMWidget autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
+      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
 
     expect(container.querySelector('video')).toBeInTheDocument();
   });
 
-  it('renders nothing when it is not connecting or connected', () => {
+  it('renders a greeting when it is not connecting or connected', () => {
     mockIsConnecting = false;
     mockIsConnected = false;
-    const { container } = render(
-      <SMWidget autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
+    const { getByText } = render(
+      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
-    expect(container).toBeEmptyDOMElement();
+    expect(getByText("Got any questions? I'm happy to help.")).toBeInTheDocument();
   });
 });
