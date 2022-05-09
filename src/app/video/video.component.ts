@@ -238,7 +238,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   private resizeVideoStream() {
     if (this.webSDKService?.connected) {
       const element = this.nativeElement;
-      const [width, height] = [element.clientWidth, element.clientHeight];
+
+      const width = Math.round(element.clientWidth * devicePixelRatio);
+      const height = Math.round(element.clientHeight * devicePixelRatio);
+
       this.webSDKService.sendVideoBounds(width, height);
     }
   }

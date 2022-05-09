@@ -2,10 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VideoComponent } from './video.component';
 import { SMWebSDKService } from '../services/smwebsdk.service';
 import { of, throwError } from 'rxjs';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { themes } from '../types/theme.type';
+import { before } from 'cypress/types/lodash';
 
 @Component({
   template: ` <app-video></app-video> `,
@@ -15,6 +16,18 @@ class TestComponent {
 }
 
 describe('VideoComponent', () => {
+  const clientWidth = 10.21;
+  const clientHeight = 20;
+  Object.defineProperty(HTMLElement.prototype, 'clientWidth', {
+    configurable: true,
+    value: clientWidth,
+  });
+
+  Object.defineProperty(HTMLElement.prototype, 'clientHeight', {
+    configurable: true,
+    value: clientHeight,
+  });
+
   // suppress console.logs as they generate a lot of noise
   // could use debug="true" when we do all logging via our own log method
   console.log = jest.fn();
@@ -62,6 +75,7 @@ describe('VideoComponent', () => {
       },
     });
 
+    global.devicePixelRatio = 2;
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
   });
@@ -115,6 +129,31 @@ describe('VideoComponent', () => {
 
       it('should not call onConnectionSuccess', () => {
         expect(onConnectionSuccessSpy).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('resizeVideoStream', () => {
+    describe('when the sdk is not connected', () => {
+      beforeEach(() => {
+        mockSMWebSdkService.connected = false;
+        component.child['resizeVideoStream']();
+      });
+
+      it('does not send the video bounds', () => {
+        expect(mockSMWebSdkService.sendVideoBounds).toHaveBeenCalledTimes(0);
+      });
+    });
+
+    describe('when the sdk is connected', () => {
+      beforeEach(() => {
+        mockSMWebSdkService.connected = true;
+        component.child['resizeVideoStream']();
+      });
+
+      it('sends the sendVideoBounds width/height, multiplying the values by the devicePixelRatio and rounding the number', () => {
+        mockSMWebSdkService.connected = true;
+        expect(mockSMWebSdkService.sendVideoBounds).toHaveBeenCalledWith(20, 40);
       });
     });
   });
