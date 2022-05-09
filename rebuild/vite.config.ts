@@ -10,7 +10,7 @@ export default defineConfig({
     createHtmlPlugin({ template: path.resolve(__dirname, 'examples', 'index.html') }),
   ],
   server: {
-    open: '/examples/index.html',
+    open: '/index.html',
   },
   build: {
     rollupOptions: {
