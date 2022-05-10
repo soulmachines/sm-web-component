@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks';
+import { Icon } from '../Icon';
 
 export type GreetingProps = {
   message?: string;
@@ -14,8 +15,9 @@ export function Greeting({ message }: GreetingProps) {
   return (
     <div>
       <p>{message || "Got any questions? I'm happy to help."}</p>
-      {/* TODO: add icon once pr merged */}
-      <button onClick={() => setIsHidden(true)}>Close</button>
+      <button onClick={() => setIsHidden(true)}>
+        <Icon name="close" title="Hide greeting" />
+      </button>
     </div>
   );
 }

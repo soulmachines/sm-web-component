@@ -25,8 +25,8 @@ describe('<Greeting />', () => {
 
   describe('when the close button is clicked', () => {
     it('renders nothing', async () => {
-      const { getByRole, container } = render(<Greeting />);
-      const button = getByRole('button');
+      const { getByTitle, container } = render(<Greeting />);
+      const button = getByTitle('Hide greeting');
 
       await fireEvent.click(button);
 
