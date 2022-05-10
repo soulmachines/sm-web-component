@@ -2,13 +2,13 @@ export type LoadingIndicatorProps = {
   size?: number | string;
 };
 
-export function LoadingIndicator({ size }: LoadingIndicatorProps) {
+export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%' }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width={size || '100%'}
-      height={size || '100%'}
+      width={size}
+      height={size}
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
       fill="currentcolor"
