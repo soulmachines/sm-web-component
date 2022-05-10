@@ -1,24 +1,29 @@
-import { ComponentChildren } from 'preact';
+import { Fragment } from 'preact';
 import { ProfileImage } from '../ProfileImage';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Greeting } from '../Greeting';
+import { Video } from '../Video';
 
 export type WidgetProps = {
   greeting?: string;
   profilePicture?: string;
-  children?: ComponentChildren;
+  loadingIndicator?: JSX.Element;
 };
 
-export function Widget({ children, profilePicture, greeting }: WidgetProps) {
-  const { connect } = useSoulMachines();
+export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetProps) {
+  const { isConnecting, isConnected, connect } = useSoulMachines();
+  const renderDefaultScreen = !isConnecting && !isConnected;
 
-  return (
-    <div>
-      <button onClick={connect}>
-        <ProfileImage src={profilePicture} />
-      </button>
-      <Greeting message={greeting} />
-      {children}
-    </div>
-  );
+  if (renderDefaultScreen) {
+    return (
+      <Fragment>
+        <button onClick={connect}>
+          <ProfileImage src={profilePicture} />
+        </button>
+        <Greeting message={greeting} />
+      </Fragment>
+    );
+  }
+
+  return <Video autoConnect={false} loadingIndicator={loadingIndicator} />;
 }

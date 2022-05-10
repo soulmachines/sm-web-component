@@ -1,6 +1,5 @@
 import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
-import { Video } from '../../../components/Video';
 import { Widget } from '../../../components/Widget';
 
 export type SMWidgetProps = {
@@ -20,9 +19,11 @@ export function SMWidget({
 }: SMWidgetProps) {
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
-      <Widget greeting={greeting} profilePicture={profilePicture}>
-        <Video autoConnect={false} loadingIndicator={connectingIndicator} />
-      </Widget>
+      <Widget
+        greeting={greeting}
+        profilePicture={profilePicture}
+        loadingIndicator={connectingIndicator}
+      />
     </SoulMachinesProvider>
   );
 }
