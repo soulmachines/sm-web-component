@@ -1,8 +1,29 @@
-import { render } from '@testing-library/preact';
+import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
+
+const mockConnect = jest.fn();
+
+jest.mock('../../contexts/SoulMachinesContext', () => ({
+  useSoulMachines: () => ({
+    connect: mockConnect,
+  }),
+}));
 
 describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
+
+  it('does not connect automatically', () => {
+    expect(mockConnect).toBeCalledTimes(0);
+  });
+
+  it('calls connect when the button is clicked', async () => {
+    const { getByRole } = render(<Widget />);
+    const button = getByRole('button');
+
+    await fireEvent.click(button);
+
+    expect(mockConnect).toBeCalledTimes(1);
+  });
 
   it('renders children', () => {
     const { queryByText } = render(
