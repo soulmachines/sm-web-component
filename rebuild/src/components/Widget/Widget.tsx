@@ -3,6 +3,7 @@ import { ProfileImage } from '../ProfileImage';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Greeting } from '../Greeting';
 import { Video } from '../Video';
+import { VideoControls } from '../VideoControls';
 
 export type WidgetProps = {
   greeting?: string;
@@ -25,5 +26,10 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
     );
   }
 
-  return <Video autoConnect={false} loadingIndicator={loadingIndicator} />;
+  return (
+    <Fragment>
+      <Video autoConnect={false} loadingIndicator={loadingIndicator} />
+      <VideoControls />
+    </Fragment>
+  );
 }

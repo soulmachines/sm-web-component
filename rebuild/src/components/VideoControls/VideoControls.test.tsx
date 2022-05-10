@@ -16,7 +16,7 @@ describe('<VideoControls />', () => {
     expect(mockDisconnect).toBeCalledTimes(0);
   });
 
-  it('calls disconnect when the close video button is clicked', async () => {
+  it('calls disconnect when the disconnect button is clicked', async () => {
     const { getByTitle } = render(<VideoControls />);
     const button = getByTitle('Close video');
 
