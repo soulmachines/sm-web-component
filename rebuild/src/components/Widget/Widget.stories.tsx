@@ -1,9 +1,11 @@
 import { Widget } from '.';
+import { SMProviderDecorator } from '../../../.storybook/decorators/SMProviderDecorator';
 import { WidgetProps } from './Widget';
 
 export default {
   title: `Components / Widget`,
   component: Widget,
+  decorators: [SMProviderDecorator],
 };
 
 export const Basic = (props: WidgetProps) => (
