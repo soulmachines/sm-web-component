@@ -13,9 +13,15 @@ describe('<Widget />', () => {
     expect(queryByText('Some child text')).toBeInTheDocument();
   });
 
-  it('renders a profile picture when provided', () => {
-    const { queryByText } = render(<Widget profilePicture="My mock profile url" />);
-    expect(queryByText('My mock profile url')).toBeInTheDocument();
+  it('renders a profile image when profilePicture is provided', () => {
+    const src = 'My mock profile url';
+    const { getByAltText } = render(<Widget profilePicture={src} />);
+    expect(getByAltText('Digital person')).toHaveAttribute('src', src);
+  });
+
+  it('renders a default profile svg when profilePicture not provided', () => {
+    const { getByTitle } = render(<Widget />);
+    expect(getByTitle('Digital person')).toBeInTheDocument();
   });
 
   describe('when a greeting is provided', () => {
