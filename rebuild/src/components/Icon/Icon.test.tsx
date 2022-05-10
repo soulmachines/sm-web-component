@@ -1,0 +1,25 @@
+import { render } from '@testing-library/preact';
+import { Icon } from '.';
+
+describe('<Icon />', () => {
+  it('renders the name in the title', () => {
+    const { getByTitle } = render(<Icon name="profile" />);
+    expect(getByTitle('profile')).toBeInTheDocument();
+  });
+
+  it('defaults the width and height to 20', () => {
+    const { container } = render(<Icon name="profile" />);
+    const svg = container.querySelector('svg');
+
+    expect(svg).toHaveAttribute('width', '20');
+    expect(svg).toHaveAttribute('height', '20');
+  });
+
+  it('uses the size prop for the width and height value', () => {
+    const { container } = render(<Icon name="profile" size={99} />);
+    const svg = container.querySelector('svg');
+
+    expect(svg).toHaveAttribute('width', '99');
+    expect(svg).toHaveAttribute('height', '99');
+  });
+});
