@@ -18,7 +18,7 @@ export function Icon({ size, name, title }: IconProps) {
     >
       <title>{title || name}</title>
       {paths[name].map((path) => (
-        <path d={path} />
+        <path key={path} d={path} />
       ))}
     </svg>
   );
