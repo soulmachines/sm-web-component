@@ -1,0 +1,1 @@
+export { SMWidget } from './SMWidget';

@@ -16,7 +16,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         // Files listed here will be bundled individually
-        'sm-video': path.resolve(__dirname, 'src', 'web-components', 'sm-video.tsx'),
+        'sm-video': path.resolve(__dirname, 'src', 'web-components', 'sm-video'),
+        'sm-widget': path.resolve(__dirname, 'src', 'web-components', 'sm-widget'),
       },
     },
   },
