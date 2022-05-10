@@ -1,4 +1,4 @@
-import { Fragment } from 'preact';
+import { Fragment, JSX } from 'preact';
 import { ProfileImage } from '../ProfileImage';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Greeting } from '../Greeting';

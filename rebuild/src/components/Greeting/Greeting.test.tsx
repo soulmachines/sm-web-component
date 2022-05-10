@@ -12,12 +12,12 @@ describe('<Greeting />', () => {
   describe('when a custom message is provided', () => {
     const message = 'My custom message';
 
-    it('renders the custom message ', () => {
+    it('renders the custom message', () => {
       const { queryByText } = render(<Greeting message={message} />);
       expect(queryByText(message)).toBeInTheDocument();
     });
 
-    it('does not render the default message ', () => {
+    it('does not render the default message', () => {
       const { queryByText } = render(<Greeting message={message} />);
       expect(queryByText(defaultMessage)).not.toBeInTheDocument();
     });

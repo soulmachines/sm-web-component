@@ -40,7 +40,7 @@ describe('<Widget />', () => {
       expect(queryByTitle('Loading...')).not.toBeInTheDocument();
     });
 
-    it('does not render a video ', () => {
+    it('does not render a video', () => {
       const { container } = render(<Widget />);
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
@@ -89,7 +89,7 @@ describe('<Widget />', () => {
       expect(queryByTitle('Loading...')).toBeInTheDocument();
     });
 
-    it('does not render a video ', () => {
+    it('does not render a video', () => {
       const { container } = render(<Widget />);
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
@@ -106,7 +106,7 @@ describe('<Widget />', () => {
       mockIsConnected = true;
     });
 
-    it('renders a video ', () => {
+    it('renders a video', () => {
       const { container } = render(<Widget />);
       expect(container.querySelector('video')).toBeInTheDocument();
     });
