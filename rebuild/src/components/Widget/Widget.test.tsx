@@ -21,8 +21,8 @@ describe('<Widget />', () => {
   });
 
   it('calls connect when the button is clicked', async () => {
-    const { getByRole } = render(<Widget />);
-    const button = getByRole('button');
+    const { getByTitle } = render(<Widget />);
+    const button = getByTitle('Digital person');
 
     await fireEvent.click(button);
 
