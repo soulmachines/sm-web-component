@@ -1,6 +1,7 @@
 import { ComponentChildren } from 'preact';
 import { ProfileImage } from '../ProfileImage';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
+import { Greeting } from '../Greeting';
 
 export type WidgetProps = {
   greeting?: string;
@@ -16,7 +17,7 @@ export function Widget({ children, profilePicture, greeting }: WidgetProps) {
       <button onClick={connect}>
         <ProfileImage src={profilePicture} />
       </button>
-      <p>{greeting || "Got any questions? I'm happy to help."}</p>
+      <Greeting message={greeting} />
       {children}
     </div>
   );
