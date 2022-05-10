@@ -9,6 +9,7 @@ type Context = {
   isConnected: boolean;
   connectionError: Error | null;
   connect: () => void;
+  disconnect: () => void;
 };
 
 // Create context with default values
@@ -18,6 +19,7 @@ const SoulMachinesContext = createContext<Context>({
   isConnected: false,
   connectionError: null,
   connect: () => null,
+  disconnect: () => null,
 });
 
 type SoulMachinesProviderProps = {
@@ -35,7 +37,10 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
       }),
     [apiKey],
   );
-  const { connect, isConnected, isConnecting, connectionError } = useConnection(scene, tokenServer);
+  const { connect, disconnect, isConnected, isConnecting, connectionError } = useConnection(
+    scene,
+    tokenServer,
+  );
 
   return (
     <SoulMachinesContext.Provider
@@ -45,6 +50,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         isConnected,
         connectionError,
         connect,
+        disconnect,
       }}
     >
       {children}

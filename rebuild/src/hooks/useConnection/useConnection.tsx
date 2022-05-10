@@ -33,7 +33,13 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     }
   }, [scene, tokenServer]);
 
-  return { isConnected, connectionError, isConnecting, connect };
+  const disconnect = () => {
+    setIsConnected(false);
+    setIsConnecting(false);
+    scene.disconnect();
+  };
+
+  return { isConnected, connectionError, isConnecting, connect, disconnect };
 }
 
 export { useConnection };

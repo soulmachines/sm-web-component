@@ -40,6 +40,11 @@ describe('<Widget />', () => {
       expect(queryByTitle('Loading...')).not.toBeInTheDocument();
     });
 
+    it('does not render a disconnect button', () => {
+      const { queryByTitle } = render(<Widget />);
+      expect(queryByTitle('Close video')).not.toBeInTheDocument();
+    });
+
     it('does not render a video', () => {
       const { container } = render(<Widget />);
       expect(container.querySelector('video')).not.toBeInTheDocument();
@@ -89,6 +94,11 @@ describe('<Widget />', () => {
       expect(queryByTitle('Loading...')).toBeInTheDocument();
     });
 
+    it('renders a disconnect button', () => {
+      const { queryByTitle } = render(<Widget />);
+      expect(queryByTitle('Close video')).toBeInTheDocument();
+    });
+
     it('does not render a video', () => {
       const { container } = render(<Widget />);
       expect(container.querySelector('video')).not.toBeInTheDocument();
@@ -109,6 +119,11 @@ describe('<Widget />', () => {
     it('renders a video', () => {
       const { container } = render(<Widget />);
       expect(container.querySelector('video')).toBeInTheDocument();
+    });
+
+    it('renders a disconnect button', () => {
+      const { queryByTitle } = render(<Widget />);
+      expect(queryByTitle('Close video')).toBeInTheDocument();
     });
 
     it('does not render a loading indicator', () => {

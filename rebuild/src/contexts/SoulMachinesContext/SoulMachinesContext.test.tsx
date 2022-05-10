@@ -37,11 +37,6 @@ describe('<SoulMachinesProvider />', () => {
     expect(Scene).toHaveBeenCalledTimes(1);
   });
 
-  it('does not call connect', () => {
-    customRender();
-    expect(mockConnect).not.toHaveBeenCalled();
-  });
-
   it('calls useConnect with scene and the token server', () => {
     customRender();
     expect(useConnection).toHaveBeenCalledWith(mockScene, tokenServer);
