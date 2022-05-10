@@ -14,6 +14,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
       fill="currentcolor"
       class="default-spinner"
     >
+      <title>Loading...</title>
       <g transform="rotate(0 50 50)">
         <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="15" height="15">
           <animate
