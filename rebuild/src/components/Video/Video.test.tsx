@@ -108,15 +108,16 @@ describe('<Video />', () => {
 });
 
 describe('updateVideoBounds()', () => {
-  const width = 111;
+  const width = 111.342;
   const height = 222;
   const mockScene = { sendVideoBounds: jest.fn() } as unknown as Scene;
   const mockMeasurements = {
     contentRect: { width, height },
   } as unknown as ResizeObserverEntry;
 
-  it('calls scene.sendVideoBounds with the width and height measurements', () => {
+  it('calls scene.sendVideoBounds with the width/height, multiplying the values by the devicePixelRatio and rounding the number', () => {
+    window.devicePixelRatio = 2;
     updateVideoBounds(mockScene, mockMeasurements);
-    expect(mockScene.sendVideoBounds).toHaveBeenCalledWith(width, height);
+    expect(mockScene.sendVideoBounds).toHaveBeenCalledWith(223, 444);
   });
 });

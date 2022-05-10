@@ -11,7 +11,10 @@ type Props = {
 };
 
 export const updateVideoBounds = (scene: Scene | null, { contentRect }: ResizeObserverEntry) => {
-  scene?.sendVideoBounds(contentRect.width, contentRect.height);
+  const width = Math.round(contentRect.width * devicePixelRatio);
+  const height = Math.round(contentRect.height * devicePixelRatio);
+
+  scene?.sendVideoBounds(width, height);
 };
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
