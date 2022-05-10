@@ -1,5 +1,5 @@
 import { ComponentChildren } from 'preact';
-import { Icon } from '../Icon';
+import { ProfileImage } from '../ProfileImage';
 
 export type WidgetProps = {
   greeting?: string;
@@ -11,11 +11,7 @@ export function Widget({ children, profilePicture, greeting }: WidgetProps) {
   return (
     <div>
       <button>
-        {profilePicture ? (
-          <img src={profilePicture} alt="Digital person" />
-        ) : (
-          <Icon name="profile" title="Digital person" />
-        )}
+        <ProfileImage src={profilePicture} />
       </button>
       <p>{greeting || "Got any questions? I'm happy to help."}</p>
       {children}
