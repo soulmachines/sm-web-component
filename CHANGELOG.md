@@ -1,5 +1,27 @@
 # Change Log
 
+# [1.3.0](https://github.com/soulmachines/sm-web-component/compare/1.2.0...1.3.0) (2022-05-15)
+
+
+### Bug Fixes
+
+* black screen in safari when dp connects ([#173](https://github.com/soulmachines/sm-web-component/issues/173)) ([ade16b4](https://github.com/soulmachines/sm-web-component/commit/ade16b4a47773b01dbb23ffd8eef95cc8b402d22))
+* bump preactement and remove workaround ([#170](https://github.com/soulmachines/sm-web-component/issues/170)) ([280a4f9](https://github.com/soulmachines/sm-web-component/commit/280a4f964dc8da12fbed5304b2879eda8672c7d1))
+* use preact in storybook quic-1718 ([#177](https://github.com/soulmachines/sm-web-component/issues/177)) ([73e6762](https://github.com/soulmachines/sm-web-component/commit/73e6762ff3f76d11281c7c2ad2ca492d55ea7a1f))
+
+
+### Features
+
+* add disconnect button quic-1665 ([#182](https://github.com/soulmachines/sm-web-component/issues/182)) ([6e92519](https://github.com/soulmachines/sm-web-component/commit/6e92519815d85e60a8a8cad39429cb6c8cb61cdc))
+* add greeting logic quic-1663 ([#181](https://github.com/soulmachines/sm-web-component/issues/181)) ([ac2a8f9](https://github.com/soulmachines/sm-web-component/commit/ac2a8f9409eaae18ce5cceb8d6e6d94044f358cd))
+* connect when button is clicked quic-1662 ([#179](https://github.com/soulmachines/sm-web-component/issues/179)) ([de73c90](https://github.com/soulmachines/sm-web-component/commit/de73c908f720b33a9ba54b8b5427810dee001e5d))
+* create sm-widget component quic-1661 ([#176](https://github.com/soulmachines/sm-web-component/issues/176)) ([f4fc6bc](https://github.com/soulmachines/sm-web-component/commit/f4fc6bc7e2d428c5b9be6ee8188bf02d5a2938d3))
+* implement profile image quic-1664 ([#178](https://github.com/soulmachines/sm-web-component/issues/178)) ([663a37c](https://github.com/soulmachines/sm-web-component/commit/663a37c731ad05a7750cd19cd62f2c75b74d3469))
+* increase video size on higher res screens quic-1717 ([#180](https://github.com/soulmachines/sm-web-component/issues/180)) ([4ff2a07](https://github.com/soulmachines/sm-web-component/commit/4ff2a07d6a21c6fc305275cda228ddf28bf1c2ab))
+* put examples in root and seperate examples ([#175](https://github.com/soulmachines/sm-web-component/issues/175)) ([4e488a8](https://github.com/soulmachines/sm-web-component/commit/4e488a82b8671c602322aa709987bff23fb45333))
+* responsive design widget quic-1687 ([#172](https://github.com/soulmachines/sm-web-component/issues/172)) ([2961cf6](https://github.com/soulmachines/sm-web-component/commit/2961cf60660fb52f6a108d44b8073b5525bc2eff))
+* use better quality video on retina screens ([#174](https://github.com/soulmachines/sm-web-component/issues/174)) ([9f4e49a](https://github.com/soulmachines/sm-web-component/commit/9f4e49acc40a00b1e5d4e9861350c4b49216aa39))
+
 # [1.2.0](https://github.com/soulmachines/sm-web-component/compare/1.1.0...1.2.0) (2022-04-25)
 
 
