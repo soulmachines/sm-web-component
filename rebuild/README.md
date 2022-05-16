@@ -79,6 +79,10 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 
 (Tailwind)[https://tailwindcss.com/] is setup and used to style the web components.
 
+It compiles multiple css files for each entry point. This is so that someone can use the `sm-video` component, without inherting the `sm-widget` styles.
+
+### Local development
+
 Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview.
 
 ## Generating Components
