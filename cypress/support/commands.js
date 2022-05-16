@@ -1,6 +1,6 @@
 //This command launches a scene
-// Wait up to two minutes when launching a scene as the first connection takes time
-Cypress.Commands.add('launchScene', (timeout = 120000) => {
+// Wait up to a minute when launching a scene as the first connection takes time
+Cypress.Commands.add('launchScene', (timeout = 60000) => {
   cy.get('app-profile-picture').should('be.visible').click();
   cy.get('.close-button', { timeout }).should('be.visible');
 });
