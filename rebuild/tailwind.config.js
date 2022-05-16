@@ -1,5 +1,5 @@
 module.exports = {
-  content: ['./src/components/**/*.tsx'],
+  content: ['./src/**/*.tsx'],
   theme: {
     screens: {
       sm: '320px',

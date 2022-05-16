@@ -1,5 +1,7 @@
 const productionPlugins = {
-  cssnano: {},
+  cssnano: {
+    preset: ['default', { discardComments: { removeAll: true } }],
+  },
 };
 
 module.exports = {
