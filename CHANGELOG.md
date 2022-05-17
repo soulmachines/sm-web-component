@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.3.1](https://github.com/soulmachines/sm-web-component/compare/1.3.0...1.3.1) (2022-05-17)
+
+
+### Bug Fixes
+
+* video not playing on subsequent attempts quic-1739 ([#183](https://github.com/soulmachines/sm-web-component/issues/183)) ([21cc6c6](https://github.com/soulmachines/sm-web-component/commit/21cc6c6f77c8d1024a15a684deb0256a419a8e9b))
+
 # [1.3.0](https://github.com/soulmachines/sm-web-component/compare/1.2.0...1.3.0) (2022-05-15)
 
 
