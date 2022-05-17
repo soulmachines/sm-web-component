@@ -1,7 +1,7 @@
 import { Fragment, JSX } from 'preact';
 import { ProfileImage } from '../ProfileImage';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Greeting } from '../Greeting';
+import { Card } from '../Card';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
 
@@ -21,7 +21,10 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
         <button onClick={connect}>
           <ProfileImage src={profilePicture} />
         </button>
-        <Greeting message={greeting} />
+
+        <Card>
+          <p>{greeting || "Got any questions? I'm happy to help."}</p>
+        </Card>
       </Fragment>
     );
   }
