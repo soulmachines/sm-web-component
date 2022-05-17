@@ -5,8 +5,9 @@ import { SMVideo } from '.';
 let mockIsConnecting: boolean;
 let mockIsConnected: boolean;
 jest.mock('../../../contexts/SoulMachinesContext', () => {
+  const MockProvider = (props: { children: JSX.Element }) => props.children;
   return {
-    SoulMachinesProvider: (props: { children: JSX.Element }) => props.children,
+    SoulMachinesProvider: MockProvider,
     useSoulMachines: () => ({
       connect: () => null,
       isConnecting: mockIsConnecting,
