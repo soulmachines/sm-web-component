@@ -37,11 +37,15 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   }, [videoRef, videoStream]);
 
   if (isConnecting) {
-    return loadingIndicator || <DefaultLoadingIndicator />;
+    return (
+      <div className="sm-w-screen sm-h-screen sm-flex sm-items-center sm-justify-center">
+        {loadingIndicator || <DefaultLoadingIndicator size="96" />}
+      </div>
+    );
   }
 
   if (isConnected) {
-    return <video muted autoPlay ref={videoRef} />;
+    return <video muted autoPlay ref={videoRef} className="sm-w-screen sm-h-screen" />;
   }
 
   return null;

@@ -75,6 +75,16 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 - (Common mistakes)[https://kentcdodds.com/blog/common-mistakes-with-react-testing-library]
 - (Learning)[https://testing-library.com/docs/learning]
 
+## Styling
+
+(Tailwind)[https://tailwindcss.com/] is setup and used to style the web components. All tailwind styles are under a `sm-` prefix, to avoid naming collisions.
+
+It compiles multiple css files for each entry point. This is so that someone can use the `sm-video` component, without inherting the `sm-widget` styles.
+
+### Local development
+
+Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview.
+
 ## Generating Components
 
 Run `npm run generate` in your terminal and it will ask you what you'd like the component to be called. Enter the name and it will scaffold the files in the component directory.
