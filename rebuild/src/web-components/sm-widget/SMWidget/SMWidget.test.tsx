@@ -1,4 +1,5 @@
 import { render } from '@testing-library/preact';
+import { JSX } from 'preact';
 import { SMWidget } from '.';
 
 let mockIsConnecting: boolean;
