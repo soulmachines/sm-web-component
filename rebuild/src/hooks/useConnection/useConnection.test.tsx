@@ -11,7 +11,7 @@ const mockScene = {
       triggerDisconnectEvent = fn;
     },
   },
-  call: () => {},
+  call: () => null,
 } as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
