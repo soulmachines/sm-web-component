@@ -5,9 +5,8 @@ let mockIsConnecting: boolean;
 let mockIsConnected: boolean;
 
 jest.mock('../../../contexts/SoulMachinesContext', () => {
-  const { SoulMachinesProvider } = jest.requireActual('../../../contexts/SoulMachinesContext');
   return {
-    SoulMachinesProvider,
+    SoulMachinesProvider: (props: { children: JSX.Element }) => props.children,
     useSoulMachines: () => ({
       connect: () => null,
       isConnecting: mockIsConnecting,
