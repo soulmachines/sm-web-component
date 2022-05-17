@@ -4,17 +4,20 @@ import { Widget } from '.';
 const mockConnect = jest.fn();
 let mockIsConnecting: boolean;
 let mockIsConnected: boolean;
+let mockIsTimedOut: boolean;
 
 jest.mock('../../contexts/SoulMachinesContext', () => ({
   useSoulMachines: () => ({
     connect: mockConnect,
     isConnecting: mockIsConnecting,
     isConnected: mockIsConnected,
+    isTimedOut: mockIsTimedOut,
   }),
 }));
 
 describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
+  const timeoutMessage = /Your session has ended/;
 
   it('does not connect automatically', () => {
     expect(mockConnect).toBeCalledTimes(0);
@@ -50,6 +53,11 @@ describe('<Widget />', () => {
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
+    it('does not render a timeout message', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
+    });
+
     it('renders a profile image when profilePicture is provided', () => {
       const src = 'My mock profile url';
       const { getByAltText } = render(<Widget profilePicture={src} />);
@@ -81,6 +89,24 @@ describe('<Widget />', () => {
         expect(queryByText(defaultGreeting)).toBeInTheDocument();
       });
     });
+
+    describe('when a timeout occurs', () => {
+      beforeEach(() => {
+        mockIsTimedOut = true;
+      });
+
+      it('renders a timeout message', () => {
+        const { queryByText } = render(<Widget />);
+        expect(queryByText(timeoutMessage)).toBeInTheDocument();
+      });
+
+      it('calls connect() when the connect button is clicked', async () => {
+        const { getByText } = render(<Widget />);
+        await fireEvent.click(getByText('Connect'));
+
+        expect(mockConnect).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('when the scene is connecting', () => {
@@ -108,6 +134,11 @@ describe('<Widget />', () => {
       const { queryByText } = render(<Widget />);
       expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
     });
+
+    it('does not render a timeout message', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
+    });
   });
 
   describe('when the scene is connected', () => {
@@ -134,6 +165,11 @@ describe('<Widget />', () => {
     it('does not render the default greeting', () => {
       const { queryByText } = render(<Widget />);
       expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
+    });
+
+    it('does not render a timeout message', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
   });
 });
