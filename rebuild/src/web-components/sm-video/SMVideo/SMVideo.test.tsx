@@ -3,7 +3,6 @@ import { SMVideo } from '.';
 
 let mockIsConnecting: boolean;
 let mockIsConnected: boolean;
-jest.mock('@soulmachines/smwebsdk');
 jest.mock('../../../contexts/SoulMachinesContext', () => {
   const { SoulMachinesProvider } = jest.requireActual('../../../contexts/SoulMachinesContext');
   return {
