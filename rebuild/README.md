@@ -77,7 +77,7 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 
 ## Styling
 
-(Tailwind)[https://tailwindcss.com/] is setup and used to style the web components.
+(Tailwind)[https://tailwindcss.com/] is setup and used to style the web components. All tailwind styles are under a `sm-` prefix, to avoid naming collisions.
 
 It compiles multiple css files for each entry point. This is so that someone can use the `sm-video` component, without inherting the `sm-widget` styles.
 
