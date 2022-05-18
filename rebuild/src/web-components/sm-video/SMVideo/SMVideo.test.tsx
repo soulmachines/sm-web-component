@@ -1,30 +1,16 @@
 import { render } from '@testing-library/preact';
-import { JSX } from 'preact';
 import { SMVideo } from '.';
+import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
+import { useSoulMachinesDefaults } from '../../../contexts/SoulMachinesContext/__mocks__/SoulMachinesContext';
 
-let mockIsConnecting: boolean;
-let mockIsConnected: boolean;
-jest.mock('../../../contexts/SoulMachinesContext', () => {
-  const MockProvider = (props: { children: JSX.Element }) => props.children;
-  return {
-    SoulMachinesProvider: MockProvider,
-    useSoulMachines: () => ({
-      connect: () => null,
-      isConnecting: mockIsConnecting,
-      isConnected: mockIsConnected,
-      scene: {
-        isConnected: jest.fn(),
-        videoElement: {
-          srcObject: 'mock video src',
-        },
-      },
-    }),
-  };
-});
+jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMVideo />', () => {
   it('renders a loading indicator when connecting', () => {
-    mockIsConnecting = true;
+    jest
+      .spyOn(SoulMachinesContext, 'useSoulMachines')
+      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: true });
+
     const { getByText } = render(
       <SMVideo autoConnect="true" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
@@ -32,8 +18,10 @@ describe('<SMVideo />', () => {
   });
 
   it('renders a video when connected', () => {
-    mockIsConnecting = false;
-    mockIsConnected = true;
+    jest
+      .spyOn(SoulMachinesContext, 'useSoulMachines')
+      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: true });
+
     const { container } = render(
       <SMVideo autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
@@ -42,11 +30,14 @@ describe('<SMVideo />', () => {
   });
 
   it('renders nothing when it is not connecting or connected', () => {
-    mockIsConnecting = false;
-    mockIsConnected = false;
+    jest
+      .spyOn(SoulMachinesContext, 'useSoulMachines')
+      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: false });
+
     const { container } = render(
       <SMVideo autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
+
     expect(container).toBeEmptyDOMElement();
   });
 });

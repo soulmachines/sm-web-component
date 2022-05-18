@@ -1,15 +1,11 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { VideoControls } from '.';
+import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 
-const mockDisconnect = jest.fn();
 const mockToggleMicrophone = jest.fn();
 let mockIsMicrophoneEnabled: boolean;
 
-jest.mock('../../contexts/SoulMachinesContext', () => ({
-  useSoulMachines: () => ({
-    disconnect: mockDisconnect,
-  }),
-}));
+jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 jest.mock('../../hooks/useSMMedia', () => ({
   useSMMedia: () => ({
@@ -22,7 +18,7 @@ describe('<VideoControls />', () => {
   it('does not call disconnect on the initial render', () => {
     render(<VideoControls />);
 
-    expect(mockDisconnect).toBeCalledTimes(0);
+    expect(useSoulMachines().disconnect).toBeCalledTimes(0);
   });
 
   it('does not call toggleMicrophone on the initial render', () => {
@@ -37,7 +33,7 @@ describe('<VideoControls />', () => {
 
     await fireEvent.click(button);
 
-    expect(mockDisconnect).toBeCalledTimes(1);
+    expect(useSoulMachines().disconnect).toBeCalledTimes(1);
   });
 
   describe('when microphone is disabled', () => {

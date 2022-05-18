@@ -1,32 +1,16 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
+import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
+import { useSoulMachinesDefaults } from '../../contexts/SoulMachinesContext/__mocks__/SoulMachinesContext';
 
-const mockConnect = jest.fn();
-let mockIsConnecting: boolean;
-let mockIsConnected: boolean;
-let mockIsTimedOut: boolean;
-
-jest.mock('../../contexts/SoulMachinesContext', () => ({
-  useSoulMachines: () => ({
-    connect: mockConnect,
-    isConnecting: mockIsConnecting,
-    isConnected: mockIsConnected,
-    isTimedOut: mockIsTimedOut,
-    scene: {
-      isConnected: jest.fn(),
-      videoElement: {
-        srcObject: 'mock video src',
-      },
-    },
-  }),
-}));
+jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
 
   it('does not connect automatically', () => {
-    expect(mockConnect).toBeCalledTimes(0);
+    expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
   });
 
   it('calls connect when the button is clicked', async () => {
@@ -35,13 +19,14 @@ describe('<Widget />', () => {
 
     await fireEvent.click(button);
 
-    expect(mockConnect).toBeCalledTimes(1);
+    expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(1);
   });
 
   describe('when the scene is not connected or connecting', () => {
     beforeEach(() => {
-      mockIsConnecting = false;
-      mockIsConnected = false;
+      jest
+        .spyOn(SoulMachinesContext, 'useSoulMachines')
+        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: false });
     });
 
     it('does not render a loading indicator', () => {
@@ -98,7 +83,9 @@ describe('<Widget />', () => {
 
     describe('when a timeout occurs', () => {
       beforeEach(() => {
-        mockIsTimedOut = true;
+        jest
+          .spyOn(SoulMachinesContext, 'useSoulMachines')
+          .mockReturnValue({ ...useSoulMachinesDefaults, isTimedOut: true });
       });
 
       it('renders a timeout message', () => {
@@ -110,15 +97,16 @@ describe('<Widget />', () => {
         const { getByText } = render(<Widget />);
         await fireEvent.click(getByText('Connect'));
 
-        expect(mockConnect).toHaveBeenCalled();
+        expect(SoulMachinesContext.useSoulMachines().connect).toHaveBeenCalled();
       });
     });
   });
 
   describe('when the scene is connecting', () => {
     beforeEach(() => {
-      mockIsConnecting = true;
-      mockIsConnected = false;
+      jest
+        .spyOn(SoulMachinesContext, 'useSoulMachines')
+        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: true, isConnected: false });
     });
 
     it('renders a loading indicator', () => {
@@ -149,8 +137,9 @@ describe('<Widget />', () => {
 
   describe('when the scene is connected', () => {
     beforeEach(() => {
-      mockIsConnecting = false;
-      mockIsConnected = true;
+      jest
+        .spyOn(SoulMachinesContext, 'useSoulMachines')
+        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: true });
     });
 
     it('renders a video', () => {

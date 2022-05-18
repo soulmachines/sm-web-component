@@ -1,31 +1,16 @@
 import { render } from '@testing-library/preact';
-import { JSX } from 'preact';
 import { SMWidget } from '.';
+import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
+import { useSoulMachinesDefaults } from '../../../contexts/SoulMachinesContext/__mocks__/SoulMachinesContext';
 
-let mockIsConnecting: boolean;
-let mockIsConnected: boolean;
-
-jest.mock('../../../contexts/SoulMachinesContext', () => {
-  const MockProvider = (props: { children: JSX.Element }) => props.children;
-  return {
-    SoulMachinesProvider: MockProvider,
-    useSoulMachines: () => ({
-      connect: () => null,
-      isConnecting: mockIsConnecting,
-      isConnected: mockIsConnected,
-      scene: {
-        isConnected: jest.fn(),
-        videoElement: {
-          srcObject: 'mock video src',
-        },
-      },
-    }),
-  };
-});
+jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMWidget />', () => {
   it('renders a loading indicator when connecting', () => {
-    mockIsConnecting = true;
+    jest
+      .spyOn(SoulMachinesContext, 'useSoulMachines')
+      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: true });
+
     const { getByText } = render(
       <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
@@ -33,8 +18,10 @@ describe('<SMWidget />', () => {
   });
 
   it('renders a video when connected', () => {
-    mockIsConnecting = false;
-    mockIsConnected = true;
+    jest
+      .spyOn(SoulMachinesContext, 'useSoulMachines')
+      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: true });
+
     const { container } = render(
       <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
@@ -43,8 +30,10 @@ describe('<SMWidget />', () => {
   });
 
   it('renders a greeting when it is not connecting or connected', () => {
-    mockIsConnecting = false;
-    mockIsConnected = false;
+    jest
+      .spyOn(SoulMachinesContext, 'useSoulMachines')
+      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: false });
+
     const { getByText } = render(
       <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
     );
