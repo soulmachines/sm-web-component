@@ -7,6 +7,7 @@ type Context = {
   scene: Scene | null;
   isConnecting: boolean;
   isConnected: boolean;
+  isTimedOut: boolean;
   connectionError: Error | null;
   connect: () => void;
   disconnect: () => void;
@@ -17,6 +18,7 @@ const SoulMachinesContext = createContext<Context>({
   scene: null,
   isConnecting: true,
   isConnected: false,
+  isTimedOut: false,
   connectionError: null,
   connect: () => null,
   disconnect: () => null,
@@ -37,10 +39,9 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
       }),
     [apiKey],
   );
-  const { connect, disconnect, isConnected, isConnecting, connectionError } = useConnection(
-    scene,
-    tokenServer,
-  );
+
+  const { connect, disconnect, isConnected, isConnecting, connectionError, isTimedOut } =
+    useConnection(scene, tokenServer);
 
   return (
     <SoulMachinesContext.Provider
@@ -48,6 +49,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         scene,
         isConnecting,
         isConnected,
+        isTimedOut,
         connectionError,
         connect,
         disconnect,

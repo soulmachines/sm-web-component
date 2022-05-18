@@ -1,11 +1,12 @@
+import { JSX } from 'preact';
 import { useState } from 'preact/hooks';
 import { Icon } from '../Icon';
 
-export type GreetingProps = {
-  message?: string;
+export type CardProps = {
+  children?: JSX.Element;
 };
 
-export function Greeting({ message }: GreetingProps) {
+export function Card({ children }: CardProps) {
   const [isHidden, setIsHidden] = useState(false);
 
   if (isHidden) {
@@ -14,9 +15,10 @@ export function Greeting({ message }: GreetingProps) {
 
   return (
     <div>
-      <p>{message || "Got any questions? I'm happy to help."}</p>
+      {children}
+
       <button onClick={() => setIsHidden(true)}>
-        <Icon name="close" title="Hide greeting" />
+        <Icon name="close" title="Hide card" />
       </button>
     </div>
   );

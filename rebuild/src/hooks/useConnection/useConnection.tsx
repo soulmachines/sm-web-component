@@ -3,6 +3,7 @@ import { useCallback, useState } from 'preact/hooks';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [isConnecting, setIsConnecting] = useState(false);
+  const [isTimedOut, setIsTimedOut] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -10,6 +11,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     try {
       const connectOptions: ConnectOptions = {};
       setConnectionError(null);
+      setIsTimedOut(false);
       setIsConnecting(true);
 
       if (tokenServer) {
@@ -39,7 +41,13 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     scene.disconnect();
   };
 
-  return { isConnected, connectionError, isConnecting, connect, disconnect };
+  scene.onDisconnectedEvent.addListener(() => {
+    setIsTimedOut(true);
+    setIsConnecting(false);
+    setIsConnected(false);
+  });
+
+  return { isConnected, connectionError, isConnecting, connect, disconnect, isTimedOut };
 }
 
 export { useConnection };

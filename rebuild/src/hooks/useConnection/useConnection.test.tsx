@@ -2,7 +2,17 @@ import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { useConnection } from '.';
 
-const mockScene = { connect: jest.fn(), disconnect: jest.fn() } as unknown as Scene;
+let triggerDisconnectEvent: () => void;
+const mockScene = {
+  connect: jest.fn(),
+  disconnect: jest.fn(),
+  onDisconnectedEvent: {
+    addListener: (fn: () => void) => {
+      triggerDisconnectEvent = fn;
+    },
+  },
+  call: () => null,
+} as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
 }));
@@ -33,6 +43,11 @@ describe('useConnection()', () => {
   it('returns isConnecting defaulted to false', () => {
     const { result } = renderHook(() => useConnection(mockScene, tokenServer));
     expect(result.current.isConnecting).toEqual(false);
+  });
+
+  it('returns isTimedOut defaulted to false', () => {
+    const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+    expect(result.current.isTimedOut).toEqual(false);
   });
 
   it('calls scene.disconnect when disconnect is called', () => {
@@ -66,6 +81,34 @@ describe('useConnection()', () => {
       });
 
       expect(result.current.isConnecting).toEqual(false);
+    });
+
+    describe('when a timeout occurs', () => {
+      const customRender = () => {
+        const testUtils = renderHook(() => useConnection(mockScene, undefined));
+
+        act(() => {
+          testUtils.result.current.connect();
+          triggerDisconnectEvent();
+        });
+
+        return testUtils;
+      };
+
+      it('sets isConnecting to false', () => {
+        const { result } = customRender();
+        expect(result.current.isConnecting).toEqual(false);
+      });
+
+      it('sets isConnected to false', () => {
+        const { result } = customRender();
+        expect(result.current.isConnected).toEqual(false);
+      });
+
+      it('sets isTimedOut to true', () => {
+        const { result } = customRender();
+        expect(result.current.isTimedOut).toEqual(true);
+      });
     });
   });
 
@@ -130,6 +173,34 @@ describe('useConnection()', () => {
         });
 
         expect(result.current.isConnected).toEqual(false);
+      });
+
+      describe('when a timeout occurs', () => {
+        const customRender = async () => {
+          const testUtils = renderHook(() => useConnection(mockScene, tokenServer));
+          await testUtils.result.current.connect();
+
+          act(() => {
+            triggerDisconnectEvent();
+          });
+
+          return testUtils;
+        };
+
+        it('sets isConnecting to false', async () => {
+          const { result } = await customRender();
+          expect(result.current.isConnecting).toEqual(false);
+        });
+
+        it('sets isConnected to false', async () => {
+          const { result } = await customRender();
+          expect(result.current.isConnected).toEqual(false);
+        });
+
+        it('sets isTimedOut to true', async () => {
+          const { result } = await customRender();
+          expect(result.current.isTimedOut).toEqual(true);
+        });
       });
     });
 

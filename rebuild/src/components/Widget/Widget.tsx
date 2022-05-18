@@ -1,7 +1,7 @@
 import { Fragment, JSX } from 'preact';
 import { ProfileImage } from '../ProfileImage';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Greeting } from '../Greeting';
+import { Card } from '../Card';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
 
@@ -12,7 +12,7 @@ export type WidgetProps = {
 };
 
 export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetProps) {
-  const { isConnecting, isConnected, connect } = useSoulMachines();
+  const { isConnecting, isConnected, isTimedOut, connect } = useSoulMachines();
   const renderDefaultScreen = !isConnecting && !isConnected;
 
   if (renderDefaultScreen) {
@@ -21,7 +21,21 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
         <button onClick={connect}>
           <ProfileImage src={profilePicture} />
         </button>
-        <Greeting message={greeting} />
+
+        {isTimedOut && (
+          <Card>
+            <Fragment>
+              <p>Your session has ended. You can reconnect anytime you are ready.</p>
+              <button onClick={connect}>Connect</button>
+            </Fragment>
+          </Card>
+        )}
+
+        {!isTimedOut && (
+          <Card>
+            <p>{greeting || "Got any questions? I'm happy to help."}</p>
+          </Card>
+        )}
       </Fragment>
     );
   }
