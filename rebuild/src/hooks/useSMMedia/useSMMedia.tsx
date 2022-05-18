@@ -1,21 +1,17 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { useEffect, useState } from 'preact/hooks';
 
-function useSMMedia(scene: Scene | null) {
+function useSMMedia(scene: Scene) {
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
 
   // Set initial active state
   useEffect(() => {
-    if (scene?.isConnected()) {
+    if (scene.isConnected()) {
       setIsMicrophoneEnabled(scene.isMicrophoneActive);
     }
   }, [scene]);
 
   const toggleMicrophone = async () => {
-    if (!scene) {
-      return;
-    }
-
     try {
       await scene.setMediaDeviceActive({
         microphone: !isMicrophoneEnabled,

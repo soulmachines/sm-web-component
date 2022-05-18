@@ -10,15 +10,15 @@ type Props = {
   autoConnect: boolean;
 };
 
-export const updateVideoBounds = (scene: Scene | null, { contentRect }: ResizeObserverEntry) => {
+export const updateVideoBounds = (scene: Scene, { contentRect }: ResizeObserverEntry) => {
   const width = Math.round(contentRect.width * devicePixelRatio);
   const height = Math.round(contentRect.height * devicePixelRatio);
-  scene?.sendVideoBounds(width, height);
+  scene.sendVideoBounds(width, height);
 };
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
   const { scene, isConnecting, isConnected, connect } = useSoulMachines();
-  const videoStream = scene?.videoElement?.srcObject;
+  const videoStream = scene.videoElement?.srcObject;
   const videoRef = useResizeObserver<HTMLVideoElement>(
     useMemo(
       () => (measurements) => isConnected && updateVideoBounds(scene, measurements),

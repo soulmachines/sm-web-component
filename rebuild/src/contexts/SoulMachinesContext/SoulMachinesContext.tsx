@@ -4,7 +4,7 @@ import { useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 
 type Context = {
-  scene: Scene | null;
+  scene: Scene;
   isConnecting: boolean;
   isConnected: boolean;
   isTimedOut: boolean;
@@ -14,15 +14,7 @@ type Context = {
 };
 
 // Create context with default values
-const SoulMachinesContext = createContext<Context>({
-  scene: null,
-  isConnecting: true,
-  isConnected: false,
-  isTimedOut: false,
-  connectionError: null,
-  connect: () => null,
-  disconnect: () => null,
-});
+const SoulMachinesContext = createContext<Context | undefined>(undefined);
 
 type SoulMachinesProviderProps = {
   apiKey?: string;

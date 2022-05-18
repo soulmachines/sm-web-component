@@ -12,6 +12,12 @@ jest.mock('../../contexts/SoulMachinesContext', () => ({
     isConnecting: mockIsConnecting,
     isConnected: mockIsConnected,
     isTimedOut: mockIsTimedOut,
+    scene: {
+      isConnected: jest.fn(),
+      videoElement: {
+        srcObject: 'mock video src',
+      },
+    },
   }),
 }));
 

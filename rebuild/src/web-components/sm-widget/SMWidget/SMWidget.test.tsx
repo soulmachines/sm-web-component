@@ -13,6 +13,12 @@ jest.mock('../../../contexts/SoulMachinesContext', () => {
       connect: () => null,
       isConnecting: mockIsConnecting,
       isConnected: mockIsConnected,
+      scene: {
+        isConnected: jest.fn(),
+        videoElement: {
+          srcObject: 'mock video src',
+        },
+      },
     }),
   };
 });
