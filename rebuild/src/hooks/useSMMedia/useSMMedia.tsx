@@ -9,7 +9,7 @@ function useSMMedia(scene: Scene) {
     if (scene.isConnected()) {
       setIsMicrophoneEnabled(scene.isMicrophoneActive);
     }
-  }, [scene]);
+  }, [scene.isConnected()]);
 
   const toggleMicrophone = async () => {
     try {
