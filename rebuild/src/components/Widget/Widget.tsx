@@ -4,6 +4,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Card } from '../Card';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
+import { SMMediaProvider } from '../../contexts/SMMedia';
 
 export type WidgetProps = {
   greeting?: string;
@@ -43,7 +44,9 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   return (
     <Fragment>
       <Video autoConnect={false} loadingIndicator={loadingIndicator} />
-      <VideoControls />
+      <SMMediaProvider>
+        <VideoControls />
+      </SMMediaProvider>
     </Fragment>
   );
 }
