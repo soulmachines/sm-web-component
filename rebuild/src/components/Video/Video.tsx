@@ -47,7 +47,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   }
 
   if (isConnected) {
-    return <video muted autoPlay ref={videoRef} className="sm-w-full sm-h-full" />;
+    return <video autoPlay ref={videoRef} className="sm-w-full sm-h-full" />;
   }
 
   return null;
