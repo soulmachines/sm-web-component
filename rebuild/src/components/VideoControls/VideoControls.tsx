@@ -1,5 +1,5 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { useSMMedia } from '../../contexts/SoulMachinesMedia';
+import { useSMMedia } from '../../contexts/SMMedia';
 import { Icon } from '../Icon';
 
 export function VideoControls() {
