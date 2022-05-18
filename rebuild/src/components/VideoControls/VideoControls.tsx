@@ -1,10 +1,10 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { useSMMedia } from '../../contexts/SMMedia';
 import { Icon } from '../Icon';
+import { useSMMedia } from '../../hooks/useSMMedia';
 
 export function VideoControls() {
-  const { disconnect } = useSoulMachines();
-  const { toggleMicrophone, isMicrophoneEnabled } = useSMMedia();
+  const { scene, disconnect } = useSoulMachines();
+  const { isMicrophoneEnabled, toggleMicrophone } = useSMMedia(scene);
 
   const microphoneIcon = isMicrophoneEnabled ? 'mic' : 'micOff';
   const microphoneText = isMicrophoneEnabled ? 'Disable microphone' : 'Enable microphone';

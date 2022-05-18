@@ -11,7 +11,7 @@ jest.mock('../../contexts/SoulMachinesContext', () => ({
   }),
 }));
 
-jest.mock('../../contexts/SMMedia', () => ({
+jest.mock('../../hooks/useSMMedia', () => ({
   useSMMedia: () => ({
     isMicrophoneEnabled: mockIsMicrophoneEnabled,
     toggleMicrophone: mockToggleMicrophone,
