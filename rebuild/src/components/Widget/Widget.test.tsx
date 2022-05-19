@@ -191,7 +191,8 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: true,
+        isConnecting: false,
+        isConnected: false,
         connectionError: new Error('API Key is invalid'),
       });
     });
