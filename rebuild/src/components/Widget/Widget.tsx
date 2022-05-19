@@ -30,9 +30,9 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
           <button onClick={connect}>Connect</button>
         </Fragment>
       );
-    } else {
-      return <p>{greeting || "Got any questions? I'm happy to help."}</p>;
     }
+
+    return <p>{greeting || "Got any questions? I'm happy to help."}</p>;
   };
 
   if (isDisconnected) {
