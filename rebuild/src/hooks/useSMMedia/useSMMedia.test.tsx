@@ -7,7 +7,7 @@ const mockSetMediaDeviceActive = jest.fn();
 const mockScene = {
   isConnected: mockIsConnected,
   setMediaDeviceActive: mockSetMediaDeviceActive,
-  isMicrophoneActive: false,
+  isMicrophoneActive: jest.fn(() => false),
 } as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
@@ -36,7 +36,7 @@ describe('useSMMedia()', () => {
 
     it('sets isMicrophoneEnabled to the return value of scene.isMicrophoneActive', () => {
       const { result } = renderHook(() => useSMMedia(mockScene));
-      expect(result.current.isMicrophoneEnabled).toEqual(mockScene.isMicrophoneActive);
+      expect(result.current.isMicrophoneEnabled).toEqual(false);
     });
   });
 

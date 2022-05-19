@@ -7,6 +7,7 @@ function SoulMachinesProvider(props: { children: JSX.Element }) {
 
 const scene = {
   isConnected: jest.fn(),
+  isMicrophoneActive: jest.fn(() => false),
   videoElement: {
     srcObject: 'mock video src',
   },
