@@ -15,18 +15,6 @@ jest.mock('../../hooks/useSMMedia', () => ({
 }));
 
 describe('<VideoControls />', () => {
-  it('does not call disconnect on the initial render', () => {
-    render(<VideoControls />);
-
-    expect(useSoulMachines().disconnect).toBeCalledTimes(0);
-  });
-
-  it('does not call toggleMicrophone on the initial render', () => {
-    render(<VideoControls />);
-
-    expect(mockToggleMicrophone).toBeCalledTimes(0);
-  });
-
   it('calls disconnect when the disconnect button is clicked', async () => {
     const { getByTitle } = render(<VideoControls />);
     const button = getByTitle('Close video');
@@ -34,6 +22,20 @@ describe('<VideoControls />', () => {
     await fireEvent.click(button);
 
     expect(useSoulMachines().disconnect).toBeCalledTimes(1);
+  });
+
+  describe('on the initial render', () => {
+    it('does not call disconnect', () => {
+      render(<VideoControls />);
+
+      expect(useSoulMachines().disconnect).toBeCalledTimes(0);
+    });
+
+    it('does not call toggleMicrophone', () => {
+      render(<VideoControls />);
+
+      expect(mockToggleMicrophone).toBeCalledTimes(0);
+    });
   });
 
   describe('when microphone is disabled', () => {
