@@ -15,8 +15,10 @@ jest.mock('../../hooks/useSMMedia', () => ({
 }));
 
 describe('<VideoControls />', () => {
+  const customRender = () => render(<VideoControls />);
+
   it('calls disconnect when the disconnect button is clicked', async () => {
-    const { getByTitle } = render(<VideoControls />);
+    const { getByTitle } = customRender();
     const button = getByTitle('Close video');
 
     await fireEvent.click(button);
@@ -26,14 +28,12 @@ describe('<VideoControls />', () => {
 
   describe('on the initial render', () => {
     it('does not call disconnect', () => {
-      render(<VideoControls />);
-
+      customRender();
       expect(useSoulMachines().disconnect).toBeCalledTimes(0);
     });
 
     it('does not call toggleMicrophone', () => {
-      render(<VideoControls />);
-
+      customRender();
       expect(mockToggleMicrophone).toBeCalledTimes(0);
     });
   });
@@ -44,7 +44,7 @@ describe('<VideoControls />', () => {
     });
 
     it('calls toggleMicrophone when the enable button is clicked', async () => {
-      const { getByTitle } = render(<VideoControls />);
+      const { getByTitle } = customRender();
       const enableButton = getByTitle('Enable microphone');
       await fireEvent.click(enableButton);
 
@@ -58,7 +58,7 @@ describe('<VideoControls />', () => {
     });
 
     it('calls toggleMicrophone when the disable button is clicked', async () => {
-      const { getByTitle } = render(<VideoControls />);
+      const { getByTitle } = customRender();
       const disableButton = getByTitle('Disable microphone');
       await fireEvent.click(disableButton);
 

@@ -20,38 +20,39 @@ jest.mock('@soulmachines/smwebsdk', () => ({
 describe('useConnection()', () => {
   const tokenServer = 'mock token server';
   const mockFetch = jest.fn();
+  const customRender = () => renderHook(() => useConnection(mockScene, tokenServer));
 
   beforeEach(() => {
     window.fetch = mockFetch;
   });
 
   it('returns a connect function', () => {
-    const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+    const { result } = customRender();
     expect(typeof result.current.connect).toEqual('function');
   });
 
   it('returns isConnected defaulted to false', () => {
-    const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+    const { result } = customRender();
     expect(result.current.isConnected).toEqual(false);
   });
 
   it('returns connectionError defaulted to null', () => {
-    const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+    const { result } = customRender();
     expect(result.current.connectionError).toEqual(null);
   });
 
   it('returns isConnecting defaulted to false', () => {
-    const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+    const { result } = customRender();
     expect(result.current.isConnecting).toEqual(false);
   });
 
   it('returns isTimedOut defaulted to false', () => {
-    const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+    const { result } = customRender();
     expect(result.current.isTimedOut).toEqual(false);
   });
 
   it('calls scene.disconnect when disconnect is called', () => {
-    const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+    const { result } = customRender();
     result.current.disconnect();
     expect(mockScene.disconnect).toBeCalledTimes(1);
   });
@@ -73,7 +74,7 @@ describe('useConnection()', () => {
     });
 
     it('sets isConnecting to false when disconnect is called', async () => {
-      const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+      const { result } = customRender();
 
       act(() => {
         result.current.connect();
@@ -133,7 +134,7 @@ describe('useConnection()', () => {
       });
 
       it('calls scene.connect once with an object containing the token server creds', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
         await result.current.connect();
 
         expect(fetch).toHaveBeenCalledWith(tokenServer);
@@ -144,28 +145,28 @@ describe('useConnection()', () => {
       });
 
       it('updates isConnected to true', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
         await result.current.connect();
 
         expect(result.current.isConnected).toEqual(true);
       });
 
       it('updates isConnecting to false', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
         await result.current.connect();
 
         expect(result.current.isConnecting).toEqual(false);
       });
 
       it('updates connectionError to null', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
         await result.current.connect();
 
         expect(result.current.connectionError).toEqual(null);
       });
 
       it('sets isConnected to false when disconnect is called', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
         await result.current.connect();
 
         act(() => {
@@ -212,21 +213,21 @@ describe('useConnection()', () => {
       });
 
       it('updates connectionError with the error', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
 
         await result.current.connect();
         expect(result.current.connectionError).toEqual(error);
       });
 
       it('updates isConnected to false', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
         await result.current.connect();
 
         expect(result.current.isConnected).toEqual(false);
       });
 
       it('updates isConnecting to false', async () => {
-        const { result } = renderHook(() => useConnection(mockScene, tokenServer));
+        const { result } = customRender();
         await result.current.connect();
 
         expect(result.current.isConnecting).toEqual(false);

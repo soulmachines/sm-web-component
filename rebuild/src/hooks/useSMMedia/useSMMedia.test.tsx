@@ -14,18 +14,20 @@ jest.mock('@soulmachines/smwebsdk', () => ({
 }));
 
 describe('useSMMedia()', () => {
+  const customRender = () => renderHook(() => useSMMedia(mockScene));
+
   it('returns a toggleMicrophone function', () => {
-    const { result } = renderHook(() => useSMMedia(mockScene));
+    const { result } = customRender();
     expect(typeof result.current.toggleMicrophone).toEqual('function');
   });
 
   it('returns isMicrophoneEnabled defaulted to false', () => {
-    const { result } = renderHook(() => useSMMedia(mockScene));
+    const { result } = customRender();
     expect(result.current.isMicrophoneEnabled).toEqual(false);
   });
 
   it('does not call setMediaDeviceActive', () => {
-    renderHook(() => useSMMedia(mockScene));
+    customRender();
     expect(mockSetMediaDeviceActive).not.toHaveBeenCalled();
   });
 
@@ -41,12 +43,14 @@ describe('useSMMedia()', () => {
   });
 
   describe('when toggleMicrophone is called', () => {
+    const customRender = () => renderHook(() => useSMMedia(mockScene));
+
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
     });
 
     it('sets isMicrophoneEnabled to the opposite value', async () => {
-      const { result, rerender } = renderHook(() => useSMMedia(mockScene));
+      const { result, rerender } = customRender();
 
       expect(result.current.isMicrophoneEnabled).toEqual(false);
 
@@ -57,7 +61,7 @@ describe('useSMMedia()', () => {
     });
 
     it('calls setMediaDeviceActive with microphone and the opposite boolean value', async () => {
-      const { result } = renderHook(() => useSMMedia(mockScene));
+      const { result } = customRender();
 
       await result.current.toggleMicrophone();
       expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: true });

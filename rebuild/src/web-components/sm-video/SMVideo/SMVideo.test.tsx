@@ -5,14 +5,16 @@ import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/Soul
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMVideo />', () => {
+  const customRender = () =>
+    render(<SMVideo autoConnect="true" apiKey="123" connecting-indicator={<p>Loading...</p>} />);
+
   it('renders a loading indicator when connecting', () => {
     jest
       .spyOn(SoulMachinesContext, 'useSoulMachines')
       .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isConnecting: true });
 
-    const { getByText } = render(
-      <SMVideo autoConnect="true" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    const { getByText } = customRender();
+
     expect(getByText('Loading...')).toBeInTheDocument();
   });
 
@@ -23,9 +25,7 @@ describe('<SMVideo />', () => {
       isConnected: true,
     });
 
-    const { container } = render(
-      <SMVideo autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    const { container } = customRender();
 
     expect(container.querySelector('video')).toBeInTheDocument();
   });
@@ -37,9 +37,7 @@ describe('<SMVideo />', () => {
       isConnected: false,
     });
 
-    const { container } = render(
-      <SMVideo autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    const { container } = customRender();
 
     expect(container).toBeEmptyDOMElement();
   });

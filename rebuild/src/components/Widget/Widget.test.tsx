@@ -7,13 +7,14 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
+  const customRender = () => render(<Widget />);
 
   it('does not connect automatically', () => {
     expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
   });
 
   it('calls connect when the button is clicked', async () => {
-    const { getByTitle } = render(<Widget />);
+    const { getByTitle } = customRender();
     const button = getByTitle('Digital person');
 
     await fireEvent.click(button);
@@ -31,22 +32,22 @@ describe('<Widget />', () => {
     });
 
     it('does not render a loading indicator', () => {
-      const { queryByTitle } = render(<Widget />);
+      const { queryByTitle } = customRender();
       expect(queryByTitle('Loading...')).not.toBeInTheDocument();
     });
 
     it('does not render a disconnect button', () => {
-      const { queryByTitle } = render(<Widget />);
+      const { queryByTitle } = customRender();
       expect(queryByTitle('Close video')).not.toBeInTheDocument();
     });
 
     it('does not render a video', () => {
-      const { container } = render(<Widget />);
+      const { container } = customRender();
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
     it('does not render a timeout message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
 
@@ -57,7 +58,7 @@ describe('<Widget />', () => {
     });
 
     it('renders a default profile svg when profilePicture not provided', () => {
-      const { getByTitle } = render(<Widget />);
+      const { getByTitle } = customRender();
       expect(getByTitle('Digital person')).toBeInTheDocument();
     });
 
@@ -77,7 +78,7 @@ describe('<Widget />', () => {
 
     describe('when a greeting is not provided', () => {
       it('renders the default greeting', () => {
-        const { queryByText } = render(<Widget />);
+        const { queryByText } = customRender();
         expect(queryByText(defaultGreeting)).toBeInTheDocument();
       });
     });
@@ -90,12 +91,12 @@ describe('<Widget />', () => {
       });
 
       it('renders a timeout message', () => {
-        const { queryByText } = render(<Widget />);
+        const { queryByText } = customRender();
         expect(queryByText(timeoutMessage)).toBeInTheDocument();
       });
 
       it('calls connect() when the connect button is clicked', async () => {
-        const { getByText } = render(<Widget />);
+        const { getByText } = customRender();
         await fireEvent.click(getByText('Connect'));
 
         expect(SoulMachinesContext.useSoulMachines().connect).toHaveBeenCalled();
@@ -113,27 +114,27 @@ describe('<Widget />', () => {
     });
 
     it('renders a loading indicator', () => {
-      const { queryByTitle } = render(<Widget />);
+      const { queryByTitle } = customRender();
       expect(queryByTitle('Loading...')).toBeInTheDocument();
     });
 
     it('renders a disconnect button', () => {
-      const { queryByTitle } = render(<Widget />);
+      const { queryByTitle } = customRender();
       expect(queryByTitle('Close video')).toBeInTheDocument();
     });
 
     it('does not render a video', () => {
-      const { container } = render(<Widget />);
+      const { container } = customRender();
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
     it('does not render the default greeting', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
     });
 
     it('does not render a timeout message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
   });
@@ -148,27 +149,27 @@ describe('<Widget />', () => {
     });
 
     it('renders a video', () => {
-      const { container } = render(<Widget />);
+      const { container } = customRender();
       expect(container.querySelector('video')).toBeInTheDocument();
     });
 
     it('renders a disconnect button', () => {
-      const { queryByTitle } = render(<Widget />);
+      const { queryByTitle } = customRender();
       expect(queryByTitle('Close video')).toBeInTheDocument();
     });
 
     it('does not render a loading indicator', () => {
-      const { queryByTitle } = render(<Widget />);
+      const { queryByTitle } = customRender();
       expect(queryByTitle('Loading...')).not.toBeInTheDocument();
     });
 
     it('does not render the default greeting', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
     });
 
     it('does not render a timeout message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
   });

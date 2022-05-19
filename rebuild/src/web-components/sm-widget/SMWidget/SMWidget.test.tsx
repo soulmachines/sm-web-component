@@ -5,14 +5,14 @@ import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/Soul
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMWidget />', () => {
+  const customRender = () =>
+    render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />);
   it('renders a loading indicator when connecting', () => {
     jest
       .spyOn(SoulMachinesContext, 'useSoulMachines')
       .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isConnecting: true });
 
-    const { getByText } = render(
-      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    const { getByText } = customRender();
     expect(getByText('Loading...')).toBeInTheDocument();
   });
 
@@ -23,10 +23,7 @@ describe('<SMWidget />', () => {
       isConnected: true,
     });
 
-    const { container } = render(
-      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
-
+    const { container } = customRender();
     expect(container.querySelector('video')).toBeInTheDocument();
   });
 
@@ -37,9 +34,7 @@ describe('<SMWidget />', () => {
       isConnected: false,
     });
 
-    const { getByText } = render(
-      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    const { getByText } = customRender();
     expect(getByText("Got any questions? I'm happy to help.")).toBeInTheDocument();
   });
 });
