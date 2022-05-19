@@ -8,7 +8,7 @@ describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
   const customRender = () => render(<Widget />);
-  const genericErrorMessage = /Unable to connect/;
+  const unableToConnectMessage = /Unable to connect/;
 
   it('does not connect automatically', () => {
     expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
@@ -52,9 +52,9 @@ describe('<Widget />', () => {
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
 
-    it('does not render a error message', () => {
+    it('does not render a "unable to connect" message', () => {
       const { queryByText } = render(<Widget />);
-      expect(queryByText(genericErrorMessage)).not.toBeInTheDocument();
+      expect(queryByText(unableToConnectMessage)).not.toBeInTheDocument();
     });
 
     it('renders a profile image when profilePicture is provided', () => {
@@ -145,9 +145,9 @@ describe('<Widget />', () => {
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
 
-    it('does not render a error message', () => {
+    it('does not render a "unable to connect" message', () => {
       const { queryByText } = render(<Widget />);
-      expect(queryByText(genericErrorMessage)).not.toBeInTheDocument();
+      expect(queryByText(unableToConnectMessage)).not.toBeInTheDocument();
     });
   });
 
@@ -196,12 +196,12 @@ describe('<Widget />', () => {
       });
     });
 
-    it('renders the generic error message', () => {
+    it('renders a "unable to connect" message', () => {
       const { queryByText } = render(<Widget />);
-      expect(queryByText(genericErrorMessage)).toBeInTheDocument();
+      expect(queryByText(unableToConnectMessage)).toBeInTheDocument();
     });
 
-    it('renders the error that occurred message', () => {
+    it('renders the error message', () => {
       const { queryByText } = render(<Widget />);
       expect(queryByText(/API Key is invalid/)).toBeInTheDocument();
     });
