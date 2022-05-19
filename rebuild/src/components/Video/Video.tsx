@@ -13,7 +13,6 @@ type Props = {
 export const updateVideoBounds = (scene: Scene | null, { contentRect }: ResizeObserverEntry) => {
   const width = Math.round(contentRect.width * devicePixelRatio);
   const height = Math.round(contentRect.height * devicePixelRatio);
-
   scene?.sendVideoBounds(width, height);
 };
 
@@ -21,7 +20,10 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   const { scene, isConnecting, isConnected, connect } = useSoulMachines();
   const videoStream = scene?.videoElement?.srcObject;
   const videoRef = useResizeObserver<HTMLVideoElement>(
-    useMemo(() => (measurements) => updateVideoBounds(scene, measurements), [scene]),
+    useMemo(
+      () => (measurements) => isConnected && updateVideoBounds(scene, measurements),
+      [scene, isConnected],
+    ),
   );
 
   useEffect(() => {
@@ -38,14 +40,14 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
 
   if (isConnecting) {
     return (
-      <div className="sm-w-screen sm-h-screen sm-flex sm-items-center sm-justify-center">
+      <div className="sm-w-full sm-h-full sm-flex sm-items-center sm-justify-center">
         {loadingIndicator || <DefaultLoadingIndicator size="96" />}
       </div>
     );
   }
 
   if (isConnected) {
-    return <video muted autoPlay ref={videoRef} className="sm-w-screen sm-h-screen" />;
+    return <video muted autoPlay ref={videoRef} className="sm-w-full sm-h-full" />;
   }
 
   return null;
