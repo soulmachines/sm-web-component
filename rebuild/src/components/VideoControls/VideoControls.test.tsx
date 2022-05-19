@@ -1,27 +1,68 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { VideoControls } from '.';
+import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 
-const mockDisconnect = jest.fn();
+const mockToggleMicrophone = jest.fn();
+let mockIsMicrophoneEnabled: boolean;
 
-jest.mock('../../contexts/SoulMachinesContext', () => ({
-  useSoulMachines: () => ({
-    disconnect: mockDisconnect,
+jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
+
+jest.mock('../../hooks/useSMMedia', () => ({
+  useSMMedia: () => ({
+    isMicrophoneEnabled: mockIsMicrophoneEnabled,
+    toggleMicrophone: mockToggleMicrophone,
   }),
 }));
 
 describe('<VideoControls />', () => {
-  it('does not call disconnect on the initial render', () => {
-    render(<VideoControls />);
-
-    expect(mockDisconnect).toBeCalledTimes(0);
-  });
+  const customRender = () => render(<VideoControls />);
 
   it('calls disconnect when the disconnect button is clicked', async () => {
-    const { getByTitle } = render(<VideoControls />);
+    const { getByTitle } = customRender();
     const button = getByTitle('Close video');
 
     await fireEvent.click(button);
 
-    expect(mockDisconnect).toBeCalledTimes(1);
+    expect(useSoulMachines().disconnect).toBeCalledTimes(1);
+  });
+
+  describe('on the initial render', () => {
+    it('does not call disconnect', () => {
+      customRender();
+      expect(useSoulMachines().disconnect).toBeCalledTimes(0);
+    });
+
+    it('does not call toggleMicrophone', () => {
+      customRender();
+      expect(mockToggleMicrophone).toBeCalledTimes(0);
+    });
+  });
+
+  describe('when microphone is disabled', () => {
+    beforeEach(() => {
+      mockIsMicrophoneEnabled = false;
+    });
+
+    it('calls toggleMicrophone when the enable button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const enableButton = getByTitle('Enable microphone');
+      await fireEvent.click(enableButton);
+
+      expect(mockToggleMicrophone).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when microphone is enabled', () => {
+    beforeEach(() => {
+      mockIsMicrophoneEnabled = true;
+    });
+
+    it('calls toggleMicrophone when the disable button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const disableButton = getByTitle('Disable microphone');
+      await fireEvent.click(disableButton);
+
+      expect(mockToggleMicrophone).toBeCalledTimes(1);
+    });
   });
 });

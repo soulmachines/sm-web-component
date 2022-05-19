@@ -1,47 +1,40 @@
 import { render } from '@testing-library/preact';
-import { JSX } from 'preact';
 import { SMWidget } from '.';
+import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
 
-let mockIsConnecting: boolean;
-let mockIsConnected: boolean;
-
-jest.mock('../../../contexts/SoulMachinesContext', () => {
-  const MockProvider = (props: { children: JSX.Element }) => props.children;
-  return {
-    SoulMachinesProvider: MockProvider,
-    useSoulMachines: () => ({
-      connect: () => null,
-      isConnecting: mockIsConnecting,
-      isConnected: mockIsConnected,
-    }),
-  };
-});
+jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMWidget />', () => {
+  const customRender = () =>
+    render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />);
   it('renders a loading indicator when connecting', () => {
-    mockIsConnecting = true;
-    const { getByText } = render(
-      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    jest
+      .spyOn(SoulMachinesContext, 'useSoulMachines')
+      .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isConnecting: true });
+
+    const { getByText } = customRender();
     expect(getByText('Loading...')).toBeInTheDocument();
   });
 
   it('renders a video when connected', () => {
-    mockIsConnecting = false;
-    mockIsConnected = true;
-    const { container } = render(
-      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      ...SoulMachinesContext.useSoulMachines(),
+      isConnecting: false,
+      isConnected: true,
+    });
 
+    const { container } = customRender();
     expect(container.querySelector('video')).toBeInTheDocument();
   });
 
   it('renders a greeting when it is not connecting or connected', () => {
-    mockIsConnecting = false;
-    mockIsConnected = false;
-    const { getByText } = render(
-      <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
-    );
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      ...SoulMachinesContext.useSoulMachines(),
+      isConnecting: false,
+      isConnected: false,
+    });
+
+    const { getByText } = customRender();
     expect(getByText("Got any questions? I'm happy to help.")).toBeInTheDocument();
   });
 });

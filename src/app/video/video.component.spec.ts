@@ -140,7 +140,7 @@ describe('VideoComponent', () => {
       });
 
       it('does not send the video bounds', () => {
-        expect(mockSMWebSdkService.sendVideoBounds).toHaveBeenCalledTimes(0);
+        expect(mockSMWebSdkService.sendVideoBounds).not.toHaveBeenCalled();
       });
     });
 
