@@ -8,6 +8,7 @@ describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
   const customRender = () => render(<Widget />);
+  const genericErrorMessage = /Unable to connect/;
 
   it('does not connect automatically', () => {
     expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
@@ -49,6 +50,11 @@ describe('<Widget />', () => {
     it('does not render a timeout message', () => {
       const { queryByText } = customRender();
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
+    });
+
+    it('does not render a error message', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(genericErrorMessage)).not.toBeInTheDocument();
     });
 
     it('renders a profile image when profilePicture is provided', () => {
@@ -110,6 +116,7 @@ describe('<Widget />', () => {
         ...SoulMachinesContext.useSoulMachines(),
         isConnecting: true,
         isConnected: false,
+        isTimedOut: false,
       });
     });
 
@@ -137,6 +144,11 @@ describe('<Widget />', () => {
       const { queryByText } = customRender();
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
+
+    it('does not render a error message', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(genericErrorMessage)).not.toBeInTheDocument();
+    });
   });
 
   describe('when the scene is connected', () => {
@@ -145,6 +157,7 @@ describe('<Widget />', () => {
         ...SoulMachinesContext.useSoulMachines(),
         isConnecting: false,
         isConnected: true,
+        isTimedOut: false,
       });
     });
 
@@ -170,6 +183,41 @@ describe('<Widget />', () => {
 
     it('does not render a timeout message', () => {
       const { queryByText } = customRender();
+      expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when an error occurs', () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isConnecting: true,
+        connectionError: new Error('API Key is invalid'),
+      });
+    });
+
+    it('renders the generic error message', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(genericErrorMessage)).toBeInTheDocument();
+    });
+
+    it('renders the error that occurred message', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(/API Key is invalid/)).toBeInTheDocument();
+    });
+
+    it('does not render a video', () => {
+      const { container } = render(<Widget />);
+      expect(container.querySelector('video')).not.toBeInTheDocument();
+    });
+
+    it('does not render the default greeting', () => {
+      const { queryByText } = render(<Widget />);
+      expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
+    });
+
+    it('does not render a timeout message', () => {
+      const { queryByText } = render(<Widget />);
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
   });
