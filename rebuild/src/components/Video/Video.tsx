@@ -20,7 +20,10 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   const { scene, isConnecting, isConnected, connect } = useSoulMachines();
   const videoStream = scene?.videoElement?.srcObject;
   const videoRef = useResizeObserver<HTMLVideoElement>(
-    useMemo(() => (measurements) => isConnected && updateVideoBounds(scene, measurements), [scene]),
+    useMemo(
+      () => (measurements) => isConnected && updateVideoBounds(scene, measurements),
+      [scene, isConnected],
+    ),
   );
 
   useEffect(() => {
