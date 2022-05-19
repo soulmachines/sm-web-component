@@ -17,13 +17,11 @@ describe('<SMVideo />', () => {
   });
 
   it('renders a video when connected', () => {
-    jest
-      .spyOn(SoulMachinesContext, 'useSoulMachines')
-      .mockReturnValue({
-        ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: true,
-      });
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      ...SoulMachinesContext.useSoulMachines(),
+      isConnecting: false,
+      isConnected: true,
+    });
 
     const { container } = render(
       <SMVideo autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,
@@ -33,13 +31,11 @@ describe('<SMVideo />', () => {
   });
 
   it('renders nothing when it is not connecting or connected', () => {
-    jest
-      .spyOn(SoulMachinesContext, 'useSoulMachines')
-      .mockReturnValue({
-        ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: false,
-      });
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      ...SoulMachinesContext.useSoulMachines(),
+      isConnecting: false,
+      isConnected: false,
+    });
 
     const { container } = render(
       <SMVideo autoConnect="false" apiKey="123" connecting-indicator={<p>Loading...</p>} />,

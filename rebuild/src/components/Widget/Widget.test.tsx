@@ -23,13 +23,11 @@ describe('<Widget />', () => {
 
   describe('when the scene is not connected or connecting', () => {
     beforeEach(() => {
-      jest
-        .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({
-          ...SoulMachinesContext.useSoulMachines(),
-          isConnecting: false,
-          isConnected: false,
-        });
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isConnecting: false,
+        isConnected: false,
+      });
     });
 
     it('does not render a loading indicator', () => {
@@ -107,13 +105,11 @@ describe('<Widget />', () => {
 
   describe('when the scene is connecting', () => {
     beforeEach(() => {
-      jest
-        .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({
-          ...SoulMachinesContext.useSoulMachines(),
-          isConnecting: true,
-          isConnected: false,
-        });
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isConnecting: true,
+        isConnected: false,
+      });
     });
 
     it('renders a loading indicator', () => {
@@ -144,13 +140,11 @@ describe('<Widget />', () => {
 
   describe('when the scene is connected', () => {
     beforeEach(() => {
-      jest
-        .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({
-          ...SoulMachinesContext.useSoulMachines(),
-          isConnecting: false,
-          isConnected: true,
-        });
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isConnecting: false,
+        isConnected: true,
+      });
     });
 
     it('renders a video', () => {
