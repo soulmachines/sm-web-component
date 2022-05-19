@@ -1,7 +1,6 @@
 import { render } from '@testing-library/preact';
 import { SMWidget } from '.';
 import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
-import { useSoulMachinesDefaults } from '../../../contexts/SoulMachinesContext/__mocks__/SoulMachinesContext';
 
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -9,7 +8,7 @@ describe('<SMWidget />', () => {
   it('renders a loading indicator when connecting', () => {
     jest
       .spyOn(SoulMachinesContext, 'useSoulMachines')
-      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: true });
+      .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isConnecting: true });
 
     const { getByText } = render(
       <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
@@ -18,9 +17,11 @@ describe('<SMWidget />', () => {
   });
 
   it('renders a video when connected', () => {
-    jest
-      .spyOn(SoulMachinesContext, 'useSoulMachines')
-      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: true });
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      ...SoulMachinesContext.useSoulMachines(),
+      isConnecting: false,
+      isConnected: true,
+    });
 
     const { container } = render(
       <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,
@@ -30,9 +31,11 @@ describe('<SMWidget />', () => {
   });
 
   it('renders a greeting when it is not connecting or connected', () => {
-    jest
-      .spyOn(SoulMachinesContext, 'useSoulMachines')
-      .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: false });
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      ...SoulMachinesContext.useSoulMachines(),
+      isConnecting: false,
+      isConnected: false,
+    });
 
     const { getByText } = render(
       <SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />,

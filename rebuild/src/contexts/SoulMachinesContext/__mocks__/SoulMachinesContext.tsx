@@ -12,7 +12,7 @@ const scene = {
   },
 } as unknown as Scene;
 
-const useSoulMachinesDefaults = {
+const mockUseSoulMachines = {
   connect: jest.fn(),
   disconnect: jest.fn(),
   isConnecting: false,
@@ -22,8 +22,6 @@ const useSoulMachinesDefaults = {
   scene,
 };
 
-const useSoulMachines = jest.fn(() => {
-  return useSoulMachinesDefaults;
-});
+const useSoulMachines = jest.fn(() => mockUseSoulMachines);
 
-export { SoulMachinesProvider, useSoulMachines, useSoulMachinesDefaults };
+export { SoulMachinesProvider, useSoulMachines };

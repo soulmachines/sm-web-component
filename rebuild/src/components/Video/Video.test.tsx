@@ -4,16 +4,9 @@ import { Video } from '.';
 import { updateVideoBounds } from './Video';
 import { Scene } from '@soulmachines/smwebsdk';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { useSoulMachinesDefaults } from '../../contexts/SoulMachinesContext/__mocks__/SoulMachinesContext';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
-
-jest.mock('@bedrock-layout/use-resize-observer', () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
-    current: {},
-  })),
-}));
+jest.mock('@bedrock-layout/use-resize-observer');
 
 describe('<Video />', () => {
   const customRender = (props = { autoConnect: true }) => {
@@ -32,9 +25,11 @@ describe('<Video />', () => {
 
   describe('when it is not connecting or connected', () => {
     beforeEach(() => {
-      jest
-        .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: false });
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isConnecting: false,
+        isConnected: false,
+      });
     });
 
     it('renders nothing', () => {
@@ -50,9 +45,11 @@ describe('<Video />', () => {
 
   describe('when it is connecting', () => {
     beforeEach(() => {
-      jest
-        .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: true, isConnected: false });
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isConnecting: true,
+        isConnected: false,
+      });
     });
 
     it('renders the default svg loading indicator', () => {
@@ -75,9 +72,11 @@ describe('<Video />', () => {
 
   describe('when it is connected', () => {
     beforeEach(() => {
-      jest
-        .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: true });
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isConnecting: false,
+        isConnected: true,
+      });
     });
 
     it('sets the video srcObject to be the srcObject from scene.video', () => {

@@ -1,7 +1,6 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { useSoulMachinesDefaults } from '../../contexts/SoulMachinesContext/__mocks__/SoulMachinesContext';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -26,7 +25,11 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest
         .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: false });
+        .mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          isConnecting: false,
+          isConnected: false,
+        });
     });
 
     it('does not render a loading indicator', () => {
@@ -85,7 +88,7 @@ describe('<Widget />', () => {
       beforeEach(() => {
         jest
           .spyOn(SoulMachinesContext, 'useSoulMachines')
-          .mockReturnValue({ ...useSoulMachinesDefaults, isTimedOut: true });
+          .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isTimedOut: true });
       });
 
       it('renders a timeout message', () => {
@@ -106,7 +109,11 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest
         .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: true, isConnected: false });
+        .mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          isConnecting: true,
+          isConnected: false,
+        });
     });
 
     it('renders a loading indicator', () => {
@@ -139,7 +146,11 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest
         .spyOn(SoulMachinesContext, 'useSoulMachines')
-        .mockReturnValue({ ...useSoulMachinesDefaults, isConnecting: false, isConnected: true });
+        .mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          isConnecting: false,
+          isConnected: true,
+        });
     });
 
     it('renders a video', () => {
