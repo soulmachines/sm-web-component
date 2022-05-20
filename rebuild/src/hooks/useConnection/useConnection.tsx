@@ -1,18 +1,23 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useState } from 'preact/hooks';
 
+export enum ConnectionStatus {
+  DISCONNECTED = 'DISCONNECTED',
+  CONNECTING = 'CONNECTING',
+  CONNECTED = 'CONNECTED',
+  TIMED_OUT = 'TIMED_OUT',
+  ERRORED = 'ERRORED',
+}
+
 function useConnection(scene: Scene, tokenServer: string | undefined) {
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [isTimedOut, setIsTimedOut] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
 
   const connect = useCallback(async () => {
     try {
       const connectOptions: ConnectOptions = {};
       setConnectionError(null);
-      setIsTimedOut(false);
-      setIsConnecting(true);
+      setConnectionStatus(ConnectionStatus.CONNECTING);
 
       if (tokenServer) {
         const res = await fetch(tokenServer);
@@ -24,30 +29,31 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       }
 
       await scene.connect(connectOptions);
-      setIsConnected(true);
+      setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
-      setIsConnected(false);
+      setConnectionStatus(ConnectionStatus.ERRORED);
+
       if (error instanceof Error) {
         setConnectionError(error);
       }
-    } finally {
-      setIsConnecting(false);
     }
   }, [scene, tokenServer]);
 
   const disconnect = () => {
-    setIsConnected(false);
-    setIsConnecting(false);
+    setConnectionStatus(ConnectionStatus.DISCONNECTED);
     scene.disconnect();
   };
 
   scene.onDisconnectedEvent.addListener(() => {
-    setIsTimedOut(true);
-    setIsConnecting(false);
-    setIsConnected(false);
+    setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 
-  return { isConnected, connectionError, isConnecting, connect, disconnect, isTimedOut };
+  return {
+    connectionStatus,
+    connectionError,
+    connect,
+    disconnect,
+  };
 }
 
 export { useConnection };

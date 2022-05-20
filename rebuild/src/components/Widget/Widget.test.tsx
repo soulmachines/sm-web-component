@@ -1,10 +1,11 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
+import { ConnectionStatus } from '../../hooks/useConnection';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
-describe('<Widget />', () => {
+fdescribe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
   const customRender = () => render(<Widget />);
@@ -23,12 +24,11 @@ describe('<Widget />', () => {
     expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(1);
   });
 
-  describe('when the scene is not connected or connecting', () => {
+  describe('when the scene is disconnected', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: false,
+        connectionStatus: ConnectionStatus.DISCONNECTED,
       });
     });
 
@@ -91,9 +91,10 @@ describe('<Widget />', () => {
 
     describe('when a timeout occurs', () => {
       beforeEach(() => {
-        jest
-          .spyOn(SoulMachinesContext, 'useSoulMachines')
-          .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isTimedOut: true });
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          connectionStatus: ConnectionStatus.TIMED_OUT,
+        });
       });
 
       it('renders a timeout message', () => {
@@ -114,9 +115,7 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: true,
-        isConnected: false,
-        isTimedOut: false,
+        connectionStatus: ConnectionStatus.CONNECTING,
       });
     });
 
@@ -155,9 +154,7 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: true,
-        isTimedOut: false,
+        connectionStatus: ConnectionStatus.CONNECTED,
       });
     });
 
@@ -191,8 +188,7 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: false,
+        connectionStatus: ConnectionStatus.ERRORED,
         connectionError: new Error('API Key is invalid'),
       });
     });

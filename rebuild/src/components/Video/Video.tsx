@@ -4,6 +4,7 @@ import useResizeObserver from '@bedrock-layout/use-resize-observer';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import { Scene } from '@soulmachines/smwebsdk';
+import { ConnectionStatus } from '../../hooks/useConnection';
 
 type Props = {
   loadingIndicator?: JSX.Element;
@@ -17,8 +18,9 @@ export const updateVideoBounds = (scene: Scene, { contentRect }: ResizeObserverE
 };
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
-  const { scene, isConnecting, isConnected, connect } = useSoulMachines();
+  const { scene, connectionStatus, connect } = useSoulMachines();
   const videoStream = scene.videoElement?.srcObject;
+  const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const videoRef = useResizeObserver<HTMLVideoElement>(
     useMemo(
       () => (measurements) => isConnected && updateVideoBounds(scene, measurements),
@@ -38,7 +40,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     }
   }, [videoRef, videoStream]);
 
-  if (isConnecting) {
+  if (connectionStatus === ConnectionStatus.CONNECTING) {
     return (
       <div className="sm-w-full sm-h-full sm-flex sm-items-center sm-justify-center">
         {loadingIndicator || <DefaultLoadingIndicator size="96" />}

@@ -4,6 +4,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Card } from '../Card';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
+import { ConnectionStatus } from '../../hooks/useConnection';
 
 export type WidgetProps = {
   greeting?: string;
@@ -12,18 +13,17 @@ export type WidgetProps = {
 };
 
 export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetProps) {
-  const { isConnecting, isConnected, isTimedOut, connect, connectionError } = useSoulMachines();
-  const isDisconnected = !isConnecting && !isConnected;
+  const { connectionStatus, connect, connectionError } = useSoulMachines();
 
   const renderContent = () => {
-    if (connectionError) {
+    if (connectionStatus === ConnectionStatus.ERRORED) {
       return (
         <Fragment>
-          <p>Unable to connect. {connectionError.message}</p>
+          <p>Unable to connect. {connectionError?.message}</p>
           <button onClick={connect}>Retry</button>
         </Fragment>
       );
-    } else if (isTimedOut) {
+    } else if (connectionStatus === ConnectionStatus.TIMED_OUT) {
       return (
         <Fragment>
           <p>Your session has ended. You can reconnect anytime you are ready.</p>
@@ -35,24 +35,27 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
     return <p>{greeting || "Got any questions? I'm happy to help."}</p>;
   };
 
-  if (isDisconnected) {
+  if (
+    connectionStatus === ConnectionStatus.CONNECTING ||
+    connectionStatus === ConnectionStatus.CONNECTED
+  ) {
     return (
-      <Card>
-        <Fragment>
-          <button onClick={connect}>
-            <ProfileImage src={profilePicture} />
-          </button>
-
-          {renderContent()}
-        </Fragment>
-      </Card>
+      <Fragment>
+        <Video autoConnect={false} loadingIndicator={loadingIndicator} />
+        <VideoControls />
+      </Fragment>
     );
   }
 
   return (
-    <Fragment>
-      <Video autoConnect={false} loadingIndicator={loadingIndicator} />
-      <VideoControls />
-    </Fragment>
+    <Card>
+      <Fragment>
+        <button onClick={connect}>
+          <ProfileImage src={profilePicture} />
+        </button>
+
+        {renderContent()}
+      </Fragment>
+    </Card>
   );
 }
