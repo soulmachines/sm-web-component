@@ -5,7 +5,7 @@ import { ConnectionStatus } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
-fdescribe('<Widget />', () => {
+describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
   const customRender = () => render(<Widget />);
