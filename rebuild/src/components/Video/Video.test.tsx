@@ -4,7 +4,7 @@ import { Video } from '.';
 import { updateVideoBounds } from './Video';
 import { Scene } from '@soulmachines/smwebsdk';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { ConnectionStatus } from '../../hooks/useConnection';
+import { ConnectionStatus } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 jest.mock('@bedrock-layout/use-resize-observer');

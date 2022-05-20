@@ -1,7 +1,8 @@
 import { createContext, ComponentChildren } from 'preact';
 import { Scene } from '@soulmachines/smwebsdk';
 import { useContext, useMemo } from 'preact/hooks';
-import { ConnectionStatus, useConnection } from '../../hooks/useConnection';
+import { useConnection } from '../../hooks/useConnection';
+import { ConnectionStatus } from '../../enums';
 
 type Context = {
   scene: Scene;

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/preact';
 import { SMVideo } from '.';
 import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
-import { ConnectionStatus } from '../../../hooks/useConnection';
+import { ConnectionStatus } from '../../../enums';
 
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 

@@ -1,6 +1,6 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
-import { ConnectionStatus } from '../../../hooks/useConnection';
+import { ConnectionStatus } from '../../../enums';
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;

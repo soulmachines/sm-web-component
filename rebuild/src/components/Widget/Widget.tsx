@@ -4,7 +4,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Card } from '../Card';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
-import { ConnectionStatus } from '../../hooks/useConnection';
+import { ConnectionStatus } from '../../enums';
 
 export type WidgetProps = {
   greeting?: string;

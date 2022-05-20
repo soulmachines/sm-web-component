@@ -1,7 +1,7 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { useConnection } from '.';
-import { ConnectionStatus } from './useConnection';
+import { ConnectionStatus } from '../../enums';
 
 let triggerDisconnectEvent: () => void;
 const mockScene = {

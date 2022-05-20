@@ -4,7 +4,7 @@ import useResizeObserver from '@bedrock-layout/use-resize-observer';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import { Scene } from '@soulmachines/smwebsdk';
-import { ConnectionStatus } from '../../hooks/useConnection';
+import { ConnectionStatus } from '../../enums';
 
 type Props = {
   loadingIndicator?: JSX.Element;

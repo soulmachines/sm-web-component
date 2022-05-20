@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { ConnectionStatus } from '../../hooks/useConnection';
+import { ConnectionStatus } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 

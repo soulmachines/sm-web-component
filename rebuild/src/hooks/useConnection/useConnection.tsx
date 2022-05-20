@@ -1,13 +1,6 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useState } from 'preact/hooks';
-
-export enum ConnectionStatus {
-  DISCONNECTED = 'DISCONNECTED',
-  CONNECTING = 'CONNECTING',
-  CONNECTED = 'CONNECTED',
-  TIMED_OUT = 'TIMED_OUT',
-  ERRORED = 'ERRORED',
-}
+import { ConnectionStatus } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
