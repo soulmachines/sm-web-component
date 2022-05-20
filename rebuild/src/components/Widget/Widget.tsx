@@ -14,6 +14,7 @@ export type WidgetProps = {
 
 export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetProps) {
   const { connectionStatus, connect, connectionError } = useSoulMachines();
+  const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
 
   const renderContent = () => {
     if (connectionStatus === ConnectionStatus.ERRORED) {
@@ -35,14 +36,11 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
     return <p>{greeting || "Got any questions? I'm happy to help."}</p>;
   };
 
-  if (
-    connectionStatus === ConnectionStatus.CONNECTING ||
-    connectionStatus === ConnectionStatus.CONNECTED
-  ) {
+  if (connectionStatus === ConnectionStatus.CONNECTING || isConnected) {
     return (
       <Fragment>
         <Video autoConnect={false} loadingIndicator={loadingIndicator} />
-        <VideoControls />
+        {isConnected && <VideoControls />}
       </Fragment>
     );
   }

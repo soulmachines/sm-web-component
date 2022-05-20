@@ -124,9 +124,9 @@ fdescribe('<Widget />', () => {
       expect(queryByTitle('Loading...')).toBeInTheDocument();
     });
 
-    it('renders a disconnect button', () => {
+    it('does not render a disconnect button', () => {
       const { queryByTitle } = customRender();
-      expect(queryByTitle('Close video')).toBeInTheDocument();
+      expect(queryByTitle('Close video')).not.toBeInTheDocument();
     });
 
     it('does not render a video', () => {
@@ -145,7 +145,7 @@ fdescribe('<Widget />', () => {
     });
 
     it('does not render a "unable to connect" message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(unableToConnectMessage)).not.toBeInTheDocument();
     });
   });
@@ -194,27 +194,27 @@ fdescribe('<Widget />', () => {
     });
 
     it('renders a "unable to connect" message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(unableToConnectMessage)).toBeInTheDocument();
     });
 
     it('renders the error message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(/API Key is invalid/)).toBeInTheDocument();
     });
 
     it('does not render a video', () => {
-      const { container } = render(<Widget />);
+      const { container } = customRender();
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
     it('does not render the default greeting', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
     });
 
     it('does not render a timeout message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
   });
