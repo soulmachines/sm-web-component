@@ -10,6 +10,9 @@ module.exports = {
       fontFamily: {
         Rubik: ['Rubik', 'monospace'],
       },
+      maxWidth: {
+        xs: '17rem',
+      },
     },
   },
   plugins: [],
