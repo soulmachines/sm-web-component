@@ -8,6 +8,7 @@ jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 describe('<SMWidget />', () => {
   const customRender = () =>
     render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />);
+
   it('renders a loading indicator when connecting', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
