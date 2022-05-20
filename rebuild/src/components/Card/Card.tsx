@@ -14,7 +14,7 @@ export function Card({ children }: CardProps) {
   }
 
   return (
-    <div>
+    <div className="sm-bg-white sm-rounded-xl sm-relative sm-max-w-xs sm-w-full sm-px-6 sm-py-4 sm-shadow-lg">
       {children}
 
       <button onClick={() => setIsHidden(true)}>
