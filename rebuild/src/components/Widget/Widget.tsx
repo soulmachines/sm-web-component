@@ -12,31 +12,40 @@ export type WidgetProps = {
 };
 
 export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetProps) {
-  const { isConnecting, isConnected, isTimedOut, connect } = useSoulMachines();
-  const renderDefaultScreen = !isConnecting && !isConnected;
+  const { isConnecting, isConnected, isTimedOut, connect, connectionError } = useSoulMachines();
+  const isDisconnected = !isConnecting && !isConnected;
 
-  if (renderDefaultScreen) {
+  const renderContent = () => {
+    if (connectionError) {
+      return (
+        <Fragment>
+          <p>Unable to connect. {connectionError.message}</p>
+          <button onClick={connect}>Retry</button>
+        </Fragment>
+      );
+    } else if (isTimedOut) {
+      return (
+        <Fragment>
+          <p>Your session has ended. You can reconnect anytime you are ready.</p>
+          <button onClick={connect}>Connect</button>
+        </Fragment>
+      );
+    }
+
+    return <p>{greeting || "Got any questions? I'm happy to help."}</p>;
+  };
+
+  if (isDisconnected) {
     return (
-      <Fragment>
-        <button onClick={connect}>
-          <ProfileImage src={profilePicture} />
-        </button>
+      <Card>
+        <Fragment>
+          <button onClick={connect}>
+            <ProfileImage src={profilePicture} />
+          </button>
 
-        {isTimedOut && (
-          <Card>
-            <Fragment>
-              <p>Your session has ended. You can reconnect anytime you are ready.</p>
-              <button onClick={connect}>Connect</button>
-            </Fragment>
-          </Card>
-        )}
-
-        {!isTimedOut && (
-          <Card>
-            <p>{greeting || "Got any questions? I'm happy to help."}</p>
-          </Card>
-        )}
-      </Fragment>
+          {renderContent()}
+        </Fragment>
+      </Card>
     );
   }
 
