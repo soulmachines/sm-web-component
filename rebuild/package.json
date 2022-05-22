@@ -18,6 +18,7 @@
   "dependencies": {
     "@bedrock-layout/use-resize-observer": "^1.2.2",
     "@soulmachines/smwebsdk": "^14.2.0",
+    "classnames": "^2.3.1",
     "preact": "^10.7.2",
     "preactement": "^1.8.2"
   },

@@ -5,6 +5,7 @@ import { Card } from '../Card';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
 import { ConnectionStatus } from '../../enums';
+import { Text } from '../Text';
 
 export type WidgetProps = {
   greeting?: string;
@@ -20,20 +21,20 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
     if (connectionStatus === ConnectionStatus.ERRORED) {
       return (
         <Fragment>
-          <p>Unable to connect. {connectionError?.message}</p>
+          <Text>{`Unable to connect. ${connectionError?.message}`}</Text>
           <button onClick={connect}>Retry</button>
         </Fragment>
       );
     } else if (connectionStatus === ConnectionStatus.TIMED_OUT) {
       return (
         <Fragment>
-          <p>Your session has ended. You can reconnect anytime you are ready.</p>
+          <Text>Your session has ended. You can reconnect anytime you are ready.</Text>
           <button onClick={connect}>Connect</button>
         </Fragment>
       );
     }
 
-    return <p>{greeting || "Got any questions? I'm happy to help."}</p>;
+    return <Text>{greeting || "Got any questions? I'm happy to help."}</Text>;
   };
 
   if (connectionStatus === ConnectionStatus.CONNECTING || isConnected) {
