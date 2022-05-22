@@ -21,7 +21,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
     if (connectionStatus === ConnectionStatus.ERRORED) {
       return (
         <Fragment>
-          <Text>{`Unable to connect. ${connectionError.message}`}</Text>
+          <Text>{`Unable to connect. ${connectionError?.message}`}</Text>
           <button onClick={connect}>Retry</button>
         </Fragment>
       );
