@@ -1,6 +1,7 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { useConnection } from '.';
+import { ConnectionStatus } from '../../enums';
 
 let triggerDisconnectEvent: () => void;
 const mockScene = {
@@ -31,24 +32,14 @@ describe('useConnection()', () => {
     expect(typeof result.current.connect).toEqual('function');
   });
 
-  it('returns isConnected defaulted to false', () => {
+  it('returns connectionStatus defaulted to disconnected', () => {
     const { result } = customRender();
-    expect(result.current.isConnected).toEqual(false);
+    expect(result.current.connectionStatus).toEqual(ConnectionStatus.DISCONNECTED);
   });
 
   it('returns connectionError defaulted to null', () => {
     const { result } = customRender();
     expect(result.current.connectionError).toEqual(null);
-  });
-
-  it('returns isConnecting defaulted to false', () => {
-    const { result } = customRender();
-    expect(result.current.isConnecting).toEqual(false);
-  });
-
-  it('returns isTimedOut defaulted to false', () => {
-    const { result } = customRender();
-    expect(result.current.isTimedOut).toEqual(false);
   });
 
   it('calls scene.disconnect when disconnect is called', () => {
@@ -63,17 +54,17 @@ describe('useConnection()', () => {
       mockFetch.mockReturnValue(mockedFetchResponse);
     });
 
-    it('updates isConnecting to true when a request is pending', () => {
+    it('updates the connection status to connecting', () => {
       const { result } = renderHook(() => useConnection(mockScene, undefined));
 
       act(() => {
         result.current.connect();
       });
 
-      expect(result.current.isConnecting).toEqual(true);
+      expect(result.current.connectionStatus).toEqual(ConnectionStatus.CONNECTING);
     });
 
-    it('sets isConnecting to false when disconnect is called', async () => {
+    it('updates the connection status to disconnected when disconnect is called', async () => {
       const { result } = customRender();
 
       act(() => {
@@ -81,7 +72,7 @@ describe('useConnection()', () => {
         result.current.disconnect();
       });
 
-      expect(result.current.isConnecting).toEqual(false);
+      expect(result.current.connectionStatus).toEqual(ConnectionStatus.DISCONNECTED);
     });
 
     describe('when a timeout occurs', () => {
@@ -96,19 +87,9 @@ describe('useConnection()', () => {
         return testUtils;
       };
 
-      it('sets isConnecting to false', () => {
+      it('updates the connection status to timed out', () => {
         const { result } = customRender();
-        expect(result.current.isConnecting).toEqual(false);
-      });
-
-      it('sets isConnected to false', () => {
-        const { result } = customRender();
-        expect(result.current.isConnected).toEqual(false);
-      });
-
-      it('sets isTimedOut to true', () => {
-        const { result } = customRender();
-        expect(result.current.isTimedOut).toEqual(true);
+        expect(result.current.connectionStatus).toEqual(ConnectionStatus.TIMED_OUT);
       });
     });
   });
@@ -144,18 +125,11 @@ describe('useConnection()', () => {
         expect(mockScene.connect).toHaveBeenCalledTimes(1);
       });
 
-      it('updates isConnected to true', async () => {
+      it('updates the connection status to connected', async () => {
         const { result } = customRender();
         await result.current.connect();
 
-        expect(result.current.isConnected).toEqual(true);
-      });
-
-      it('updates isConnecting to false', async () => {
-        const { result } = customRender();
-        await result.current.connect();
-
-        expect(result.current.isConnecting).toEqual(false);
+        expect(result.current.connectionStatus).toEqual(ConnectionStatus.CONNECTED);
       });
 
       it('updates connectionError to null', async () => {
@@ -165,7 +139,7 @@ describe('useConnection()', () => {
         expect(result.current.connectionError).toEqual(null);
       });
 
-      it('sets isConnected to false when disconnect is called', async () => {
+      it('updates the connection status to disconnected when disconnect is called', async () => {
         const { result } = customRender();
         await result.current.connect();
 
@@ -173,7 +147,7 @@ describe('useConnection()', () => {
           result.current.disconnect();
         });
 
-        expect(result.current.isConnected).toEqual(false);
+        expect(result.current.connectionStatus).toEqual(ConnectionStatus.DISCONNECTED);
       });
 
       describe('when a timeout occurs', () => {
@@ -188,19 +162,9 @@ describe('useConnection()', () => {
           return testUtils;
         };
 
-        it('sets isConnecting to false', async () => {
+        it('updates the connection status to timed out', async () => {
           const { result } = await customRender();
-          expect(result.current.isConnecting).toEqual(false);
-        });
-
-        it('sets isConnected to false', async () => {
-          const { result } = await customRender();
-          expect(result.current.isConnected).toEqual(false);
-        });
-
-        it('sets isTimedOut to true', async () => {
-          const { result } = await customRender();
-          expect(result.current.isTimedOut).toEqual(true);
+          expect(result.current.connectionStatus).toEqual(ConnectionStatus.TIMED_OUT);
         });
       });
     });
@@ -219,18 +183,11 @@ describe('useConnection()', () => {
         expect(result.current.connectionError).toEqual(error);
       });
 
-      it('updates isConnected to false', async () => {
+      it('updates connection status to errored', async () => {
         const { result } = customRender();
         await result.current.connect();
 
-        expect(result.current.isConnected).toEqual(false);
-      });
-
-      it('updates isConnecting to false', async () => {
-        const { result } = customRender();
-        await result.current.connect();
-
-        expect(result.current.isConnecting).toEqual(false);
+        expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
       });
     });
   });

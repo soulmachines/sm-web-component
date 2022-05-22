@@ -2,12 +2,11 @@ import { createContext, ComponentChildren } from 'preact';
 import { Scene } from '@soulmachines/smwebsdk';
 import { useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
+import { ConnectionStatus } from '../../enums';
 
 type Context = {
   scene: Scene;
-  isConnecting: boolean;
-  isConnected: boolean;
-  isTimedOut: boolean;
+  connectionStatus: ConnectionStatus;
   connectionError: Error | null;
   connect: () => void;
   disconnect: () => void;
@@ -32,17 +31,17 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     [apiKey],
   );
 
-  const { connect, disconnect, isConnected, isConnecting, connectionError, isTimedOut } =
-    useConnection(scene, tokenServer);
+  const { connect, disconnect, connectionStatus, connectionError } = useConnection(
+    scene,
+    tokenServer,
+  );
 
   return (
     <SoulMachinesContext.Provider
       value={{
         scene,
-        isConnecting,
-        isConnected,
-        isTimedOut,
         connectionError,
+        connectionStatus,
         connect,
         disconnect,
       }}

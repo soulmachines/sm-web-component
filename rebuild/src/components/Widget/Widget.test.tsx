@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
+import { ConnectionStatus } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -23,12 +24,11 @@ describe('<Widget />', () => {
     expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(1);
   });
 
-  describe('when the scene is not connected or connecting', () => {
+  describe('when the scene is disconnected', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: false,
+        connectionStatus: ConnectionStatus.DISCONNECTED,
       });
     });
 
@@ -91,9 +91,10 @@ describe('<Widget />', () => {
 
     describe('when a timeout occurs', () => {
       beforeEach(() => {
-        jest
-          .spyOn(SoulMachinesContext, 'useSoulMachines')
-          .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isTimedOut: true });
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          connectionStatus: ConnectionStatus.TIMED_OUT,
+        });
       });
 
       it('renders a timeout message', () => {
@@ -114,9 +115,7 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: true,
-        isConnected: false,
-        isTimedOut: false,
+        connectionStatus: ConnectionStatus.CONNECTING,
       });
     });
 
@@ -125,9 +124,9 @@ describe('<Widget />', () => {
       expect(queryByTitle('Loading...')).toBeInTheDocument();
     });
 
-    it('renders a disconnect button', () => {
+    it('does not render a disconnect button', () => {
       const { queryByTitle } = customRender();
-      expect(queryByTitle('Close video')).toBeInTheDocument();
+      expect(queryByTitle('Close video')).not.toBeInTheDocument();
     });
 
     it('does not render a video', () => {
@@ -146,7 +145,7 @@ describe('<Widget />', () => {
     });
 
     it('does not render a "unable to connect" message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(unableToConnectMessage)).not.toBeInTheDocument();
     });
   });
@@ -155,9 +154,7 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: true,
-        isTimedOut: false,
+        connectionStatus: ConnectionStatus.CONNECTED,
       });
     });
 
@@ -191,34 +188,33 @@ describe('<Widget />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: false,
+        connectionStatus: ConnectionStatus.ERRORED,
         connectionError: new Error('API Key is invalid'),
       });
     });
 
     it('renders a "unable to connect" message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(unableToConnectMessage)).toBeInTheDocument();
     });
 
     it('renders the error message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(/API Key is invalid/)).toBeInTheDocument();
     });
 
     it('does not render a video', () => {
-      const { container } = render(<Widget />);
+      const { container } = customRender();
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
     it('does not render the default greeting', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
     });
 
     it('does not render a timeout message', () => {
-      const { queryByText } = render(<Widget />);
+      const { queryByText } = customRender();
       expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
     });
   });

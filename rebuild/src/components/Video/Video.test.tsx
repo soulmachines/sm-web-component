@@ -4,6 +4,7 @@ import { Video } from '.';
 import { updateVideoBounds } from './Video';
 import { Scene } from '@soulmachines/smwebsdk';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
+import { ConnectionStatus } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 jest.mock('@bedrock-layout/use-resize-observer');
@@ -23,12 +24,11 @@ describe('<Video />', () => {
     expect(SoulMachinesContext.useSoulMachines().connect).not.toHaveBeenCalled();
   });
 
-  describe('when it is not connecting or connected', () => {
+  describe('when it is disconnected', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: false,
+        connectionStatus: ConnectionStatus.DISCONNECTED,
       });
     });
 
@@ -47,8 +47,7 @@ describe('<Video />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: true,
-        isConnected: false,
+        connectionStatus: ConnectionStatus.CONNECTING,
       });
     });
 
@@ -74,8 +73,7 @@ describe('<Video />', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
-        isConnecting: false,
-        isConnected: true,
+        connectionStatus: ConnectionStatus.CONNECTED,
       });
     });
 

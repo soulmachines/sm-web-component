@@ -1,6 +1,7 @@
 import { render } from '@testing-library/preact';
 import { SMWidget } from '.';
 import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
+import { ConnectionStatus } from '../../../enums';
 
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -8,9 +9,10 @@ describe('<SMWidget />', () => {
   const customRender = () =>
     render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />);
   it('renders a loading indicator when connecting', () => {
-    jest
-      .spyOn(SoulMachinesContext, 'useSoulMachines')
-      .mockReturnValue({ ...SoulMachinesContext.useSoulMachines(), isConnecting: true });
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      ...SoulMachinesContext.useSoulMachines(),
+      connectionStatus: ConnectionStatus.CONNECTING,
+    });
 
     const { getByText } = customRender();
     expect(getByText('Loading...')).toBeInTheDocument();
@@ -19,19 +21,17 @@ describe('<SMWidget />', () => {
   it('renders a video when connected', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
-      isConnecting: false,
-      isConnected: true,
+      connectionStatus: ConnectionStatus.CONNECTED,
     });
 
     const { container } = customRender();
     expect(container.querySelector('video')).toBeInTheDocument();
   });
 
-  it('renders a greeting when it is not connecting or connected', () => {
+  it('renders a greeting when it is disconnected', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
-      isConnecting: false,
-      isConnected: false,
+      connectionStatus: ConnectionStatus.DISCONNECTED,
     });
 
     const { getByText } = customRender();

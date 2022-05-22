@@ -1,5 +1,6 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
+import { ConnectionStatus } from '../../../enums';
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
@@ -16,9 +17,7 @@ const scene = {
 const mockUseSoulMachines = {
   connect: jest.fn(),
   disconnect: jest.fn(),
-  isConnecting: false,
-  isConnected: false,
-  isTimedOut: false,
+  connectionStatus: ConnectionStatus.DISCONNECTED,
   connectionError: null,
   scene,
 };
