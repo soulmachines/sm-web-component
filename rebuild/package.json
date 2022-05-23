@@ -6,7 +6,7 @@
     "start": "vite",
     "build": "tsc && vite build",
     "build-snippet": "node ./scripts/build-snippet.js",
-    "preview": "vite preview",
+    "preview": "cp ./examples/snippet/* ./dist && vite preview",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "lint": "eslint src/",

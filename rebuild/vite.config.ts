@@ -12,6 +12,9 @@ export default defineConfig({
   server: {
     open: '/index.html',
   },
+  preview: {
+    port: 3000,
+  },
   build: {
     manifest: true,
     rollupOptions: {
