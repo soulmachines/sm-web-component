@@ -55,9 +55,10 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 ### Local development
 
 - `npm run start` to run the dev server with live reload
-- `npm run build` to compile the scripts
-- `npm run preview` to start a server and serve the dist files
+- `npm run preview` to start a server and serve the snippet code
 - `npm run storybook` to start storybook
+- `npm run build` to compile the scripts
+- `npm run build-snippet` to compile snippet script
 
 ### Linting
 
@@ -92,3 +93,29 @@ Run `npm run generate` in your terminal and it will ask you what you'd like the 
 ## Registering web components
 
 Web components are registered using the [preactement lib](https://github.com/jahilldev/component-elements). Multiple components can be registered a single file but it will bundled together into a single file. If you would like to have different javascript bundles for different web components then create individual files. You'll also need to inform the bundle Vite about these files. They are listed under the input key in `vite.config.ts`.
+
+## Working with the snippet
+
+### How the snippet works
+
+This project creates a bundle for each web component. The javascript bundles can be used directly but require a few of additional steps. The user needs to add the html element to their webpage, add the script/css files and pass through their API key.
+
+To lower the barrier to entry we have created a snippet. The snippet automates the above steps. Upon inseting the script to the page, it will:
+
+- Insert the web component javascript bundle and the stylesheet into the head of the html page
+- Insert the web component html element into the page
+- Covert an options object into attributes on the web component html element
+
+### How it is built
+
+1. `npm run build` is run to generate the assets. As part of this process it generates a file called `manifest.json`. This contains the asset names that were generated.
+2. There is a file called `build-snippet.js`. This:
+   - reads the `manifest.json` file.
+   - calls the template generation plugin we are using. The template is called `snippet.js.template`.
+   - it takes the template, populating the filenames using the data from the manifest file. It outputs `snippet.js` into the `dist` folder.
+3. You run the above file by typing `npm run build-snippet`
+4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the `dist` directory.
+
+### Running the snippet locally
+
+Run `npm run preview`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
