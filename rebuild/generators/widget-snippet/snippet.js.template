@@ -2,38 +2,30 @@
   * add support here for all JS-based config options,
   * assigning them to the web component's HTML attributes
   */
-function configureSMWidget() {
-  return {
-    configure: (options) => {
-      const el = document.createElement('sm-widget');
+function configureSMWidget(config) {
+  const el = document.createElement('sm-widget');
 
-      if (options.tokenServer) {
-        el.setAttribute('token-server', options.tokenServer);
-      }
+  if (config.smTokenServer) {
+    el.setAttribute('token-server', config.smTokenServer);
+  }
 
-      if (options.apiKey) {
-        el.setAttribute('api-key', options.apiKey);
-      }
+  if (config.smApiKey) {
+    el.setAttribute('api-key', config.smApiKey);
+  }
 
-      if (options.autoconnect) {
-        el.setAttribute('autoconnect', options.autoconnect);
-      }
+  if (config.smProfilePicture) {
+    el.setAttribute('profile-picture', config.smProfilePicture);
+  }
 
-      if (options.profilePicture) {
-        el.setAttribute('profile-picture', options.profilePicture);
-      }
+  if (config.smGreeting) {
+    el.setAttribute('greeting', config.smGreeting);
+  }
 
-      if (options.greeting) {
-        el.setAttribute('greeting', options.greeting);
-      }
-
-      document.body.appendChild(el);
-    },
-  };
+  document.body.appendChild(el);
 }
 
 function createCSSLink(fileName) {
-  var link = document.createElement('link');
+  const link = document.createElement('link');
   link.type = "text/css";
   link.rel = "stylesheet";
   link.href = fileName;
@@ -41,7 +33,7 @@ function createCSSLink(fileName) {
 }
 
 function createJsScript(fileName) {
-  var script = document.createElement('script');
+  const script = document.createElement('script');
   script.type = 'module';
   script.async = false;
   script.defer = true;
@@ -51,29 +43,22 @@ function createJsScript(fileName) {
 }
 
 function insertIntoHead(el) {
-  var parentScript = document.getElementsByTagName('script')[0];
+  const parentScript = document.getElementsByTagName('script')[0];
   parentScript.parentNode.insertBefore(el, parentScript);
 }
 
 (function () {
-  var cssFileNames = '{{ cssFileNames }}'.split(',');
-  var script = createJsScript('{{javascriptFileName}}');
-  var cssLinks = cssFileNames.map((fileName) => createCSSLink(fileName));
-
-  /**
-   * On every page where the web component is imported,
-   * a property `sm` will be attached to the global `window`
-   * object, so that the web page inline JS can call `window.sm()`
-   * to configure the web component widget.
-   */
-  window['sm'] = configureSMWidget();
+  const config = document.currentScript.dataset;
+  const cssFileNames = '{{ cssFileNames }}'.split(',');
+  const script = createJsScript('{{javascriptFileName}}');
+  const cssLinks = cssFileNames.map((fileName) => createCSSLink(fileName));
 
   script.onload = () => {
-    window.sm.configure(window.SM_CONFIG || {});
+    configureSMWidget(config);
   };
 
   window.addEventListener('DOMContentLoaded', () => {
-    cssLinks.forEach((link) =>   insertIntoHead(link));
+    cssLinks.forEach((link) => insertIntoHead(link));
     insertIntoHead(script);
   });
 })();
