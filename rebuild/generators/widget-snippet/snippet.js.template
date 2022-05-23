@@ -48,10 +48,13 @@ function insertIntoHead(el) {
 }
 
 (function () {
-  const config = document.currentScript.dataset;
   const cssFileNames = '{{ cssFileNames }}'.split(',');
   const script = createJsScript('{{javascriptFileName}}');
   const cssLinks = cssFileNames.map((fileName) => createCSSLink(fileName));
+  const config = {
+    ...document.currentScript.dataset,
+    ...window.smConfig
+  };
 
   script.onload = () => {
     configureSMWidget(config);
