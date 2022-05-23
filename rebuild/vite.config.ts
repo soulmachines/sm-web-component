@@ -13,6 +13,7 @@ export default defineConfig({
     open: '/index.html',
   },
   build: {
+    manifest: true,
     rollupOptions: {
       input: {
         // Files listed here will be bundled individually
