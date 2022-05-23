@@ -5,6 +5,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
+    "build-snippet": "node ./scripts/build-snippet.js",
     "preview": "vite preview",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
