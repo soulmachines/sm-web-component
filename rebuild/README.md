@@ -104,7 +104,32 @@ To lower the barrier to entry we have created a snippet. The snippet automates t
 
 - Insert the web component javascript bundle and the stylesheet into the head of the html page
 - Insert the web component html element (with <sm-widget> tag) into the page
-- Convert an options object (SM_CONFIG) into attributes on the web component html element
+- Convert options into attributes on the web component html element. These objects can come from a global variable called `window.smConfig` or from data attributes on the script tag.
+
+An example of data attributes.
+
+```
+<script
+  src="snippet.min.js"
+  data-sm-api-key="YOUR_API_KEY"
+></script>
+```
+
+An example of global variable. This is useful if the user cannot add a <script /> tag to their website and needs to paste in the script.
+
+```
+window.smConfig = {
+  smApiKey: 'YOUR_API_KEY',
+};
+<script src="snippet.min.js"></script>
+```
+
+The supported config options are:
+
+- `smApiKey` the api key used to access the digital person.
+- `smTokenServer` the url for the token server.
+- `smProfilePicture` define a custom digital person profile picture.
+- `smGreeting` define a custom greeting
 
 ### How it is built
 
