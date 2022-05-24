@@ -7,8 +7,6 @@ name: Release Rebuild Dev
 #   workflow_dispatch:
 on:
   pull_request:
-    paths:
-      - 'rebuild/**'
 
 defaults:
   run:
