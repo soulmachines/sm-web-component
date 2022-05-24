@@ -28,7 +28,7 @@ function createCSSLink(fileName) {
   const link = document.createElement('link');
   link.type = "text/css";
   link.rel = "stylesheet";
-  link.href = `https://static.soulmachines.com/${fileName}`;
+  link.href = fileName;
   return link;
 }
 
@@ -37,7 +37,7 @@ function createJsScript(fileName) {
   script.type = 'module';
   script.async = false;
   script.defer = true;
-  script.src = `https://static.soulmachines.com/${fileName}`;
+  script.src = fileName;
 
   return script;
 }

@@ -49,9 +49,13 @@ jobs:
 
       - name: Build Package
         run: npm run build
+        env:
+          NODE_ENV: production
 
       - name: Build Snippet
         run: npm run build-snippet
+        env:
+          NODE_ENV: production
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
