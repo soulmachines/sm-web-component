@@ -8,7 +8,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        rubik: ['Rubik', 'monospace'],
+        rubik: ['Rubik', 'Helvetica', 'sans-serif'],
       },
       maxWidth: {
         xs: '17rem',

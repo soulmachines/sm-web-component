@@ -1,0 +1,67 @@
+/**
+  * add support here for all JS-based config options,
+  * assigning them to the web component's HTML attributes
+  */
+function configureSMWidget(config) {
+  const el = document.createElement('sm-widget');
+
+  if (config.smTokenServer) {
+    el.setAttribute('token-server', config.smTokenServer);
+  }
+
+  if (config.smApiKey) {
+    el.setAttribute('api-key', config.smApiKey);
+  }
+
+  if (config.smProfilePicture) {
+    el.setAttribute('profile-picture', config.smProfilePicture);
+  }
+
+  if (config.smGreeting) {
+    el.setAttribute('greeting', config.smGreeting);
+  }
+
+  document.body.appendChild(el);
+}
+
+function createCSSLink(fileName) {
+  const link = document.createElement('link');
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href = fileName;
+  return link;
+}
+
+function createJsScript(fileName) {
+  const script = document.createElement('script');
+  script.type = 'module';
+  script.async = false;
+  script.defer = true;
+  script.src = fileName;
+
+  return script;
+}
+
+function insertIntoHead(el) {
+  const parentScript = document.getElementsByTagName('script')[0];
+  parentScript.parentNode.insertBefore(el, parentScript);
+}
+
+(function () {
+  const cssFileNames = '{{ cssFileNames }}'.split(',');
+  const script = createJsScript('{{javascriptFileName}}');
+  const cssLinks = cssFileNames.map((fileName) => createCSSLink(fileName));
+  const config = {
+    ...document.currentScript.dataset,
+    ...window.smConfig
+  };
+
+  script.onload = () => {
+    configureSMWidget(config);
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    cssLinks.forEach((link) => insertIntoHead(link));
+    insertIntoHead(script);
+  });
+})();
