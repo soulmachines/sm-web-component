@@ -110,7 +110,7 @@ An example of data attributes.
 
 ```
 <script
-  src="snippet.min.js"
+  src="widget-snippet.min.js"
   data-sm-api-key="YOUR_API_KEY"
 ></script>
 ```
@@ -121,7 +121,7 @@ An example of global variable. This is useful if the user cannot add a <script /
 window.smConfig = {
   smApiKey: 'YOUR_API_KEY',
 };
-<script src="snippet.min.js"></script>
+<script src="widget-snippet.min.js"></script>
 ```
 
 The supported config options are:
@@ -137,9 +137,9 @@ The supported config options are:
 2. There is a file called `build-snippet.js`. This:
    - reads the `manifest.json` file.
    - calls the template generation plugin we are using. The template is called `snippet.js.template`.
-   - it takes the template, populating the filenames using the data from the manifest file. It outputs `snippet.js` into the `dist` folder.
+   - it takes the template, populating the filenames using the data from the manifest file. It outputs `widget-snippet.js` into the `dist` folder.
 3. You run the above file by typing `npm run build-snippet`
-4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as snippet.min.js.
+4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as `widget-snippet.min.js`.
 
 ### Running the snippet locally
 
