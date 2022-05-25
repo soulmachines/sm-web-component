@@ -57,7 +57,7 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 - `npm run start` to run the dev server with live reload
 - `npm run preview` to start a server and serve the snippet code
 - `npm run storybook` to start storybook
-- `npm run build` to compile the scripts
+- `npm run build` to compile the scripts and build the snippet
 - `npm run build-snippet` to compile snippet script
 
 ### Linting
@@ -92,7 +92,7 @@ Run `npm run generate` in your terminal and it will ask you what you'd like the 
 
 ## Registering web components
 
-Web components are registered using the [preactement lib](https://github.com/jahilldev/component-elements). Multiple components can be registered a single file but it will bundled together into a single file. If you would like to have different javascript bundles for different web components then create individual files. You'll also need to inform the bundle Vite about these files. They are listed under the input key in `vite.config.ts`.
+Web components are registered using the [preactement lib](https://github.com/jahilldev/component-elements). You'll find these components in the web-components directory. All files listed in the main `index.ts` will be bundled into the web-components.js script. If this grows in future, we should consider splitting it out into multiple bundles.
 
 ## Working with the snippet
 
@@ -138,9 +138,19 @@ The supported config options are:
    - reads the `manifest.json` file.
    - calls the template generation plugin we are using. The template is called `snippet.js.template`.
    - it takes the template, populating the filenames using the data from the manifest file. It outputs `widget-snippet.js` into the `dist` folder.
+   - when the node env is production, it will preprend the asset urls with the CDN name
 3. You run the above file by typing `npm run build-snippet`
 4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as `widget-snippet.min.js`.
 
 ### Running the snippet locally
 
 Run `npm run preview`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
+
+## Deployment
+
+We deploy the bundles via github actions. The bundles are automatically deployed to the dev folder in the CDN, when code is merged in to master. There is a manual trigger which deploys the code to the production CDN.
+
+Helpful urls:
+
+- (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet.min.js`]
+- (Production snippet)[https://static.soulmachines.com/widget-snippet.min.js`]
