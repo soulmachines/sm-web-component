@@ -1,12 +1,9 @@
 name: Release Rebuild Dev
 
-# on:
-#   push:
-#     branches:
-#       - master
-#   workflow_dispatch:
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 defaults:
   run:
