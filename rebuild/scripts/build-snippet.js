@@ -4,7 +4,7 @@ try {
   const manifest = require('../dist/manifest.json');
   const isProduction = process.env.NODE_ENV === 'production';
   const CDN_URL = 'https://static.soulmachines.com/';
-  const { file, css } = manifest['src/web-components/sm-widget/index.tsx'];
+  const { file, css } = manifest['src/web-components/index.ts'];
   let jsFileName = file;
   let cssFileNames = css;
 

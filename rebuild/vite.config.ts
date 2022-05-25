@@ -16,7 +16,7 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       input: {
-        'sm-widget': path.resolve(__dirname, 'src', 'web-components', 'sm-widget'),
+        'web-components': path.resolve(__dirname, 'src', 'web-components'),
       },
     },
   },
