@@ -8,8 +8,8 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
-  const customRender = () => render(<Widget />);
   const unableToConnectMessage = /Unable to connect/;
+  const customRender = () => render(<Widget />);
 
   it('does not connect automatically', () => {
     expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
@@ -32,6 +32,16 @@ describe('<Widget />', () => {
       });
     });
 
+    it('renders a default greeting', () => {
+      const { queryByText } = customRender();
+      expect(queryByText(defaultGreeting)).toBeInTheDocument();
+    });
+
+    it('renders a svg of a digital person', () => {
+      const { getByTitle } = customRender();
+      expect(getByTitle('Digital person')).toBeInTheDocument();
+    });
+
     it('does not render a loading indicator', () => {
       const { queryByTitle } = customRender();
       expect(queryByTitle('Loading...')).not.toBeInTheDocument();
@@ -47,66 +57,16 @@ describe('<Widget />', () => {
       expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
-    it('does not render a timeout message', () => {
-      const { queryByText } = customRender();
-      expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
-    });
-
-    it('does not render a "unable to connect" message', () => {
-      const { queryByText } = render(<Widget />);
-      expect(queryByText(unableToConnectMessage)).not.toBeInTheDocument();
-    });
-
-    it('renders a profile image when profilePicture is provided', () => {
-      const src = 'My mock profile url';
-      const { getByAltText } = render(<Widget profilePicture={src} />);
-      expect(getByAltText('Digital person')).toHaveAttribute('src', src);
-    });
-
-    it('renders a default profile svg when profilePicture not provided', () => {
-      const { getByTitle } = customRender();
-      expect(getByTitle('Digital person')).toBeInTheDocument();
-    });
-
-    describe('when a greeting is provided', () => {
-      const customGreeting = 'My custom greeting';
-
-      it('renders the custom greeting', () => {
-        const { queryByText } = render(<Widget greeting={customGreeting} />);
-        expect(queryByText(customGreeting)).toBeInTheDocument();
+    describe('when a custom profile image is provided', () => {
+      it('renders the image', () => {
+        const src = 'My mock profile url';
+        const { getByText } = render(<Widget profilePicture={src} />);
+        expect(getByText('Digital person')).toBeInTheDocument();
       });
 
-      it('does not render the default greeting', () => {
-        const { queryByText } = render(<Widget greeting={customGreeting} />);
-        expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
-      });
-    });
-
-    describe('when a greeting is not provided', () => {
-      it('renders the default greeting', () => {
-        const { queryByText } = customRender();
-        expect(queryByText(defaultGreeting)).toBeInTheDocument();
-      });
-    });
-
-    describe('when a timeout occurs', () => {
-      beforeEach(() => {
-        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
-          ...SoulMachinesContext.useSoulMachines(),
-          connectionStatus: ConnectionStatus.TIMED_OUT,
-        });
-      });
-
-      it('renders a timeout message', () => {
-        const { queryByText } = customRender();
-        expect(queryByText(timeoutMessage)).toBeInTheDocument();
-      });
-
-      it('calls connect() when the connect button is clicked', async () => {
-        const { getByText } = customRender();
-        await fireEvent.click(getByText('Connect'));
-
-        expect(SoulMachinesContext.useSoulMachines().connect).toHaveBeenCalled();
+      it('does not render a default svg image', () => {
+        const { getByTitle } = customRender();
+        expect(getByTitle('Digital person')).toBeInTheDocument();
       });
     });
   });
@@ -171,41 +131,6 @@ describe('<Widget />', () => {
     it('does not render a loading indicator', () => {
       const { queryByTitle } = customRender();
       expect(queryByTitle('Loading...')).not.toBeInTheDocument();
-    });
-
-    it('does not render the default greeting', () => {
-      const { queryByText } = customRender();
-      expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
-    });
-
-    it('does not render a timeout message', () => {
-      const { queryByText } = customRender();
-      expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
-    });
-  });
-
-  describe('when an error occurs', () => {
-    beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
-        ...SoulMachinesContext.useSoulMachines(),
-        connectionStatus: ConnectionStatus.ERRORED,
-        connectionError: new Error('API Key is invalid'),
-      });
-    });
-
-    it('renders a "unable to connect" message', () => {
-      const { queryByText } = customRender();
-      expect(queryByText(unableToConnectMessage)).toBeInTheDocument();
-    });
-
-    it('renders the error message', () => {
-      const { queryByText } = customRender();
-      expect(queryByText(/API Key is invalid/)).toBeInTheDocument();
-    });
-
-    it('does not render a video', () => {
-      const { container } = customRender();
-      expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
     it('does not render the default greeting', () => {
