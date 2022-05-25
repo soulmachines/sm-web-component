@@ -34,7 +34,6 @@ function createCSSLink(fileName) {
 
 function createJsScript(fileName) {
   const script = document.createElement('script');
-  script.type = 'module';
   script.async = false;
   script.defer = true;
   script.src = fileName;
