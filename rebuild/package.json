@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && npm run build-snippet",
     "build-snippet": "node ./scripts/build-snippet.js && uglifyjs dist/widget-snippet.js --output dist/widget-snippet.min.js  --compress --mangle --toplevel ",
     "preview": "cp ./examples/snippet/* ./dist && vite preview",
     "prettier": "prettier --check .",
