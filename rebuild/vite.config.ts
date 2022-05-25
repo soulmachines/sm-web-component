@@ -5,10 +5,7 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    preact(),
-    createHtmlPlugin({ template: path.resolve(__dirname, 'examples', 'index.html') }),
-  ],
+  plugins: [preact(), createHtmlPlugin({ template: path.resolve(__dirname, 'index.html') })],
   server: {
     open: '/index.html',
   },
@@ -19,8 +16,6 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       input: {
-        // Files listed here will be bundled individually
-        'sm-video': path.resolve(__dirname, 'src', 'web-components', 'sm-video'),
         'sm-widget': path.resolve(__dirname, 'src', 'web-components', 'sm-widget'),
       },
     },
