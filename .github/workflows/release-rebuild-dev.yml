@@ -18,7 +18,7 @@ permissions:
 
 env:
   ASSET_LOCATION: dist
-  AWS_PATH: 's3://static-prod.soulmachines.com'
+  AWS_PATH: 's3://static-prod.soulmachines.com/dev'
   AWS_DEFAULT_OUTPUT: 'json'
   AWS_DEFAULT_REGION: 'us-east-1'
   AWS_ROLE_ARN: arn:aws:iam::924390807111:role/static_sm_com_GHA_Role
@@ -51,6 +51,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          CDN_ENDPOINT: 'https://static.soulmachines.com/dev/'
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
