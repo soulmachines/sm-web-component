@@ -23,7 +23,7 @@ import {
 import { of } from 'rxjs';
 import { convertToBool, convertToBoolString, boolstring } from '../types/boolstring.type';
 import { Theme, themes } from '../types/theme.type';
-import { ConnectOptions, SceneOptions } from '@soulmachines/smwebsdk';
+import { ConnectOptions, ContentCard, SceneOptions } from '@soulmachines/smwebsdk';
 
 @Component({
   selector: 'app-video',
@@ -96,6 +96,9 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   @Output()
   public speechMarker = new EventEmitter<SpeechMarkerEventArgs>();
+
+  @Output()
+  public cardChanged = new EventEmitter<Record<string, unknown>[]>();
 
   private get nativeElement() {
     return this.hostRef.nativeElement;
@@ -178,12 +181,17 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.onDisconnected();
     this.webSDKService.unregisterEventCallbacks(this.sceneCallbacks);
   }
-  private sendTextMessage(text: string) {
+
+  public sendTextMessage(text: string) {
     return this.executeCommand(
       () => this.webSDKService.persona.conversationSend(text, {}, {}),
       'sendTextMessage: ',
       text,
     );
+  }
+
+  public clearActiveCards() {
+    this.webSDKService.scene.conversation.clearActiveCards();
   }
 
   public setMicrophoneEnabled(enabled: boolean) {
@@ -296,9 +304,14 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.disconnect();
   };
 
+  private onCardChanged = (cards: ContentCard[]) => {
+    this.cardChanged.emit(cards);
+  };
+
   private sceneCallbacks: SceneCallbacks = {
     onConversationResult: this.onConversationResult,
     onSpeechMarker: this.onSpeechMarker,
     onDisconnectResult: this.onTimeout,
+    onCardChanged: this.onCardChanged,
   };
 }

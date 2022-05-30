@@ -10,6 +10,7 @@ export interface SceneCallbacks {
   onConversationResult: Function;
   onSpeechMarker: Function;
   onDisconnectResult: Function;
+  onCardChanged: Function;
 }
 
 export interface SpeechMarkerEventArgs {
@@ -96,6 +97,7 @@ export class SMWebSDKService {
       this.scene.onConversationResultEvents[personaId].addListener(callbacks.onConversationResult);
       this.scene.onSpeechMarkerEvents[personaId].addListener(callbacks.onSpeechMarker);
       this.scene.onDisconnectedEvent.addListener(callbacks.onDisconnectResult);
+      this.scene.conversation.onCardChanged.addListener(callbacks.onCardChanged);
     }
   }
 

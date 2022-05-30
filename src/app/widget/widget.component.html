@@ -1,8 +1,14 @@
 <div class="widget-container" [ngClass]="connectionState">
   <div class="cards">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
+    <div class="card" *ngFor="let card of activeCards">
+      <ng-container *ngIf="card.component === 'options'">
+        <ng-container *ngFor="let option of card.data.options">
+          <button (click)="sendTextMessage(option?.value || '')">
+            {{ option.label }}
+          </button>
+        </ng-container>
+      </ng-container>
+    </div>
   </div>
 
   <div class="video-notification-container">
@@ -31,6 +37,7 @@
         [auto-connect]="autoConnect"
         (connected)="onConnected()"
         (disconnected)="onDisconnected()"
+        (cardChanged)="onCardChanged($event)"
       ></app-video>
 
       <div class="user-controls">
