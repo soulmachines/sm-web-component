@@ -22,6 +22,8 @@ $neutral60: #455463;
   display: flex;
   align-items: flex-end;
   height: 100%;
+  // Allow items underneath to be clicked
+  pointer-events: none;
 }
 
 .widget-container {
@@ -40,6 +42,8 @@ $neutral60: #455463;
   flex-wrap: wrap;
   column-gap: 20px;
   row-gap: 20px;
+  // Allow items to be clicked/interacted with
+  pointer-events: auto;
 }
 
 .video-player-container {
@@ -147,6 +151,8 @@ app-video {
   border-radius: 12px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  // Allow items to be clicked/interacted with
+  pointer-events: auto;
 }
 
 .card-option {
