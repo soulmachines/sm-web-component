@@ -132,6 +132,9 @@ app-video {
   display: flex;
   row-gap: 12px;
   flex-direction: column;
+  transition: 0.2s all ease-out;
+  transform: translateY(20px);
+  opacity: 0;
   overflow: hidden;
   // Allow spacing around cards so overflow doesnt cut off shadows
   margin: -32px;
@@ -139,6 +142,11 @@ app-video {
 
   @media (min-width: 768px) {
     max-width: 350px;
+  }
+
+  &.active {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 

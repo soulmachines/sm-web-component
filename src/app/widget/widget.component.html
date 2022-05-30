@@ -1,5 +1,10 @@
 <div class="widget-container" [ngClass]="connectionState">
-  <div class="cards">
+  <div
+    [ngClass]="{
+      cards: true,
+      active: activeCards.length
+    }"
+  >
     <div class="card" *ngFor="let card of activeCards">
       <ng-container *ngIf="card.component === 'options'">
         <div class="card-option" *ngFor="let option of card.data.options">
