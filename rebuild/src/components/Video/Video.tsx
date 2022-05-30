@@ -1,9 +1,10 @@
 import { JSX } from 'preact';
 import { useEffect, useMemo } from 'preact/hooks';
 import useResizeObserver from '@bedrock-layout/use-resize-observer';
+import { Scene } from '@soulmachines/smwebsdk';
+import { useSpring, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
-import { Scene } from '@soulmachines/smwebsdk';
 import { ConnectionStatus } from '../../enums';
 
 type Props = {
@@ -27,6 +28,11 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       [scene, isConnected],
     ),
   );
+  const videoAnimation = useSpring({
+    opacity: isConnected ? '1' : '0',
+    delay: isConnected ? 200 : 0,
+    config: config.gentle,
+  });
 
   useEffect(() => {
     if (autoConnect) {
@@ -40,17 +46,23 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     }
   }, [videoRef, videoStream]);
 
-  if (connectionStatus === ConnectionStatus.CONNECTING) {
-    return (
-      <div className="sm-w-full sm-h-full sm-flex sm-items-center sm-justify-center">
-        {loadingIndicator || <DefaultLoadingIndicator size="96" />}
-      </div>
-    );
+  if (connectionStatus === ConnectionStatus.DISCONNECTED) {
+    return null;
   }
 
-  if (isConnected) {
-    return <video autoPlay ref={videoRef} className="sm-w-full sm-h-full" />;
-  }
+  return (
+    <div className="sm-w-full sm-h-full sm-overflow-hidden">
+      {connectionStatus === ConnectionStatus.CONNECTING &&
+        (loadingIndicator || <DefaultLoadingIndicator size="96" />)}
 
-  return null;
+      {isConnected && (
+        <animated.video
+          style={videoAnimation}
+          autoPlay
+          ref={videoRef}
+          className="sm-w-full sm-h-full sm-object-cover"
+        />
+      )}
+    </div>
+  );
 }

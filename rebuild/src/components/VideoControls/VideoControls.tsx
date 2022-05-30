@@ -10,14 +10,18 @@ export function VideoControls() {
   const microphoneText = isMicrophoneEnabled ? 'Disable microphone' : 'Enable microphone';
 
   return (
-    <div>
-      <button onClick={disconnect}>
-        <Icon name="close" title="Close video" />
-      </button>
+    <div className="sm-p-3 sm-flex sm-flex-col sm-justify-between sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
+      <div className="sm-flex sm-justify-between">
+        <button onClick={disconnect}>
+          <Icon name="close" title="Close video" />
+        </button>
+      </div>
 
-      <button onClick={toggleMicrophone}>
-        <Icon name={microphoneIcon} title={microphoneText} />
-      </button>
+      <div className="sm-flex sm-justify-between">
+        <button onClick={toggleMicrophone}>
+          <Icon name={microphoneIcon} title={microphoneText} />
+        </button>
+      </div>
     </div>
   );
 }

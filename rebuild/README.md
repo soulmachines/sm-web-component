@@ -5,6 +5,7 @@ The web components allow for integration of a Digital Person into any website.
 ## Tools
 
 - [Preact](https://preactjs.com/) for composing the UI
+- [React Spring](https://react-spring.io/) for UI animations
 - [Vite](https://vitejs.dev/) for bundling the code
 - [Eslint](https://eslint.org/) for finding and fixing code issues
 - [Prettier](https://prettier.io/) for code formatting
@@ -84,7 +85,13 @@ It compiles multiple css files for each entry point. This is so that someone can
 
 ### Local development
 
-Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview.
+Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview. By default it will only work when you are within `class=""` or `className=""`. We are using a npm library called `classNames` to conditionally apply classes. To get autocomplete working within this object you'll need to open your `settings.json` vscode file and add the below snippet.
+
+```
+"tailwindCSS.experimental.classRegex": [
+  ["classNames\\(([^\\)]*)\\)", "'([^']*)'"]
+]
+```
 
 ## Generating Components
 

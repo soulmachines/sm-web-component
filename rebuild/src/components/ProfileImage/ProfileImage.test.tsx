@@ -2,10 +2,14 @@ import { render } from '@testing-library/preact';
 import { ProfileImage } from '.';
 
 describe('<ProfileImage />', () => {
-  it('renders a profile image when src is provided', () => {
+  describe('when a src is provided', () => {
     const src = 'My mock profile url';
-    const { getByAltText } = render(<ProfileImage src={src} />);
-    expect(getByAltText('Digital person')).toHaveAttribute('src', src);
+    const customRender = () => render(<ProfileImage src={src} />);
+
+    it('renders a text saying the image is a digital person', () => {
+      const { getByText } = customRender();
+      expect(getByText('Digital person')).toBeInTheDocument();
+    });
   });
 
   it('renders a default profile svg when src is not provided', () => {
