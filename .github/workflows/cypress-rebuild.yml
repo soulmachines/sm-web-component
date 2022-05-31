@@ -44,7 +44,7 @@ jobs:
           headless: true
           build: npm run build
           start: npm run preview
-          wait-on: 'http://localhost:3030'
+          wait-on: 'http://localhost:3000'
           wait-on-timeout: 360 # 5 minutes
           config-file: cypress.json
           spec: cypress/integration/*.js
