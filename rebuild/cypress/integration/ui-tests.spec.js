@@ -28,7 +28,7 @@ describe('scene', () => {
   });
 
   describe('when it is not connected', () => {
-    it('checks if greeting is rendered and closes it', () => {
+    it('checks if greeting is rendered, () => {
       cy.get('sm-widget > div > p').should('be.visible');
     });
 
