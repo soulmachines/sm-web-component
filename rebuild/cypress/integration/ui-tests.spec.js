@@ -17,6 +17,7 @@ describe('scene', () => {
       cy.unmuteScene();
     });
 
+    // TODO: enable one camera buttons are enabled
     xit('checks that the camera button is rendered', () => {
       cy.cameraOn();
       cy.cameraOff();
@@ -28,10 +29,11 @@ describe('scene', () => {
   });
 
   describe('when it is not connected', () => {
-    it('checks if greeting is rendered and closes it', () => {
+    it('checks if greeting is rendered, () => {
       cy.get('sm-widget > div > p').should('be.visible');
     });
 
+    // TODO: enable one camera buttons are enabled
     xit('does not render a camera button', () => {
       cy.get('sm-widget .camera-button.inactive').should('not.be.visible');
     });
