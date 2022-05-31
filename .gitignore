@@ -6,3 +6,5 @@ examples/soulmachines.js
 .parcel-cache
 cypress/videos
 cypress/screenshots
+rebuild/cypress/videos
+rebuild/cypress/screenshots

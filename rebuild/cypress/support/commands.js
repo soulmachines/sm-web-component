@@ -1,7 +1,7 @@
 //This command launches a scene
 // Wait up to a minute when launching a scene as the first connection takes time
 Cypress.Commands.add('launchScene', (timeout = 20000) => {
-  cy.get('img').should('be.visible').click();
+  cy.get('[data-sm=connectButton]').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
   cy.get('title').contains('Loading...', { timeout }).should('not.exist');
   cy.get('title').contains('Close video').should('exist');
@@ -10,7 +10,7 @@ Cypress.Commands.add('launchScene', (timeout = 20000) => {
 //This command Disconnects from a scene
 Cypress.Commands.add('disconnectScene', () => {
   cy.get('title').contains('Close video').should('exist').click({ force: true });
-  cy.get('img').should('be.visible').should('exist');
+  cy.get('[data-sm=connectButton]').should('be.visible').should('exist');
 });
 
 //This command mutes the scene by click on the mute button
