@@ -36,6 +36,7 @@ jobs:
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v2
+        working-directory: rebuild
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -49,4 +50,3 @@ jobs:
           config-file: cypress.json
           spec: cypress/integration/*.js
           record: true
-          project: ./rebuild
