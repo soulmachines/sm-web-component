@@ -17,6 +17,7 @@ describe('scene', () => {
       cy.unmuteScene();
     });
 
+    // TODO: enable one camera buttons are enabled
     xit('checks that the camera button is rendered', () => {
       cy.cameraOn();
       cy.cameraOff();
