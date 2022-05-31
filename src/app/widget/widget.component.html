@@ -1,12 +1,18 @@
 <div class="widget-container" [ngClass]="connectionState">
-  <div class="cards">
+  <div
+    [ngClass]="{
+      cards: true,
+      active: activeCards.length
+    }"
+  >
     <div class="card" *ngFor="let card of activeCards">
       <ng-container *ngIf="card.component === 'options'">
-        <ng-container *ngFor="let option of card.data.options">
-          <button (click)="sendTextMessage(option?.value || '')">
+        <div class="card-option" *ngFor="let option of card.data.options">
+          <button class="button-outline" (click)="sendTextMessage(option?.value || '')">
             {{ option.label }}
+            <app-icon name="chevRight"></app-icon>
           </button>
-        </ng-container>
+        </div>
       </ng-container>
     </div>
   </div>
