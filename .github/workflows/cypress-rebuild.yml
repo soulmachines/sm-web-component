@@ -1,4 +1,4 @@
-name: Cypress UI Tests
+name: Cypress UI Tests React
 
 on:
   pull_request:
