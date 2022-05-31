@@ -3,25 +3,25 @@
 Cypress.Commands.add('launchScene', (timeout = 20000) => {
   cy.get('img').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
-  cy.get('title').contains('Loading...',{ timeout}).should('not.exist');
+  cy.get('title').contains('Loading...', { timeout }).should('not.exist');
   cy.get('title').contains('Close video').should('exist');
 });
 
 //This command Disconnects from a scene
 Cypress.Commands.add('disconnectScene', () => {
-  cy.get('title').contains('Close video').should('exist').click({force: true});
+  cy.get('title').contains('Close video').should('exist').click({ force: true });
   cy.get('img').should('be.visible').should('exist');
 });
 
 //This command mutes the scene by click on the mute button
 Cypress.Commands.add('muteScene', () => {
-  cy.get('title').contains('Disable microphone').should('exist').click({force: true});
+  cy.get('title').contains('Disable microphone').should('exist').click({ force: true });
   cy.get('title').contains('Enable microphone').should('exist');
 });
 
 //This command unmutes the scene by clicking the mute button
 Cypress.Commands.add('unmuteScene', () => {
-  cy.get('title').contains('Enable microphone').should('exist').click({force: true});
+  cy.get('title').contains('Enable microphone').should('exist').click({ force: true });
   cy.get('title').contains('Disable microphone').should('exist');
 });
 
