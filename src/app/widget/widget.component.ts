@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { ContentCard } from '@soulmachines/smwebsdk';
 import { VideoComponent } from '../video/video.component';
 
 enum ConnectionState {
@@ -24,8 +25,7 @@ export class WidgetComponent {
   public connectionState = ConnectionState.Disconnected;
   public cameraEnabled = false;
   public micEnabled = false;
-
-  constructor() {}
+  public activeCards: ContentCard[] = [];
 
   connect() {
     this.connectionState = ConnectionState.Connecting;
@@ -47,6 +47,10 @@ export class WidgetComponent {
     this.connectionState = ConnectionState.Disconnected;
   }
 
+  onCardChanged(cards: ContentCard[]) {
+    this.activeCards = cards;
+  }
+
   toggleCamera() {
     this.cameraEnabled = !this.cameraEnabled;
     this.videoElement.setCameraEnabled(this.cameraEnabled);
@@ -55,5 +59,10 @@ export class WidgetComponent {
   toggleMic() {
     this.micEnabled = !this.micEnabled;
     this.videoElement.setMicrophoneEnabled(this.micEnabled);
+  }
+
+  async sendTextMessage(message: string) {
+    await this.videoElement.sendTextMessage(message);
+    this.videoElement.clearActiveCards();
   }
 }
