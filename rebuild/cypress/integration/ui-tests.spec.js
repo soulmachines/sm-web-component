@@ -29,7 +29,7 @@ describe('scene', () => {
   });
 
   describe('when it is not connected', () => {
-    it('checks if greeting is rendered, () => {
+    it('checks if greeting is rendered', () => {
       cy.get('sm-widget > div > p').should('be.visible');
     });
 
