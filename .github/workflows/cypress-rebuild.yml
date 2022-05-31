@@ -49,3 +49,4 @@ jobs:
           config-file: cypress.json
           spec: cypress/integration/*.js
           record: true
+          project: ./rebuild
