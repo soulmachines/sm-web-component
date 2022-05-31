@@ -43,7 +43,7 @@ jobs:
           browser: chrome
           headless: true
           build: npm run build
-          start: npm run preview
+          start: npm run cypress:ci
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 360 # 5 minutes
           config-file: cypress.json
