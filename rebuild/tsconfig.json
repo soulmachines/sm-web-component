@@ -17,7 +17,7 @@
     "jsx": "preserve",
     "jsxFactory": "h",
     "jsxFragmentFactory": "preact",
-    "types": ["cypress", "jest", "@testing-library/jest-dom"]
+    "types": ["jest", "@testing-library/jest-dom", "cypress"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
