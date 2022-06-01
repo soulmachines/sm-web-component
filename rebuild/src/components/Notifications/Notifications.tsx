@@ -32,7 +32,7 @@ export function Notifications({ greeting }: NotificationsProps) {
 
     if (connectionStatus === ConnectionStatus.DISCONNECTED) {
       return (
-        <Text data-sm="greetingText">{greeting || "Got any questions? I'm happy to help."}</Text>
+        <Text data-sm-cy="greetingText">{greeting || "Got any questions? I'm happy to help."}</Text>
       );
     }
   };

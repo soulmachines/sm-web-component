@@ -57,7 +57,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
 
                 <button
                   onClick={connect}
-                  data-sm="connectButton"
+                  data-sm-cy="connectButton"
                   className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center"
                 >
                   <ProfileImage src={profilePicture} />

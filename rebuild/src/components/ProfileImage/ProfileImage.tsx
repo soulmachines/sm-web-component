@@ -13,7 +13,7 @@ export function ProfileImage({ src }: ProfileImageProps) {
       <div
         style={{ backgroundImage: `url(${src})` }}
         className="sm-w-full sm-h-full sm-bg-cover sm-bg-center"
-        data-sm="profileImage"
+        data-sm-cy="profileImage"
       >
         <span class="sm-sr-only">{altText}</span>
       </div>

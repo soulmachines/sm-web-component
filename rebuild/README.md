@@ -79,7 +79,7 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 
 ### Cypress
 
-It's best to use a (selector)[https://docs.cypress.io/guides/references/best-practices#Selecting-Elements] that is not brittle. You can use data attributes to select elements. These may need to be setup for the component. Look at the `<Text />` as an example. We use a data attribute that looks like `data-sm="yourSelector"`. This allows you to write selectors in your test like `cy.get('[data-sm=yourSelector]').click()`. A nice side effect of this is that consumers of the web component can also target these selectors in CSS if they wish.
+It's best to use a (selector)[https://docs.cypress.io/guides/references/best-practices#Selecting-Elements] that is not brittle. You can use data attributes to select elements. These may need to be setup for the component. Look at the `<Text />` as an example. We use a data attribute that looks like `data-sm-cy="yourSelector"`. This allows you to write selectors in your test like `cy.get('[data-sm-cy=yourSelector]').click()`. A nice side effect of this is that consumers of the web component can also target these selectors in CSS if they wish.
 
 ## Styling
 

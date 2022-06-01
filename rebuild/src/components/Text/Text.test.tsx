@@ -3,8 +3,8 @@ import { Text } from '.';
 
 describe('<Text />', () => {
   it('allows data attributes to be set', () => {
-    const { container } = render(<Text data-sm="test">Hello, I am some text.</Text>);
-    expect(container.querySelector('[data-sm="test"]')).toBeInTheDocument();
+    const { container } = render(<Text data-sm-cy="test">Hello, I am some text.</Text>);
+    expect(container.querySelector('[data-sm-cy="test"]')).toBeInTheDocument();
   });
 
   describe('it defaults the size to md', () => {

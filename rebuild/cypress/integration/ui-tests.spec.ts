@@ -9,7 +9,7 @@ describe('scene', () => {
     });
 
     it('checks that the profile picture is not rendered', () => {
-      cy.get('[data-sm=profileImage]').should('not.exist');
+      cy.get('[data-sm-cy=profileImage]').should('not.exist');
     });
 
     it('checks that the mute button is rendered', () => {
@@ -30,7 +30,7 @@ describe('scene', () => {
 
   describe('when it is not connected', () => {
     it('checks if greeting is rendered', () => {
-      cy.get('[data-sm=greetingText]').should('be.visible');
+      cy.get('[data-sm-cy=greetingText]').should('be.visible');
     });
 
     // TODO: enable one camera buttons are enabled
@@ -43,7 +43,7 @@ describe('scene', () => {
     });
 
     it('checks that the profile picture is rendered', () => {
-      cy.get('[data-sm=profileImage]').should('be.visible');
+      cy.get('[data-sm-cy=profileImage]').should('be.visible');
     });
   });
 });
