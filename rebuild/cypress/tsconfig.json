@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts"],
+  "exclude": []
+}
