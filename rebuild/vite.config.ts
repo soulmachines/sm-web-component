@@ -10,7 +10,7 @@ export default defineConfig({
     open: '/index.html',
   },
   preview: {
-    port: 3000,
+    port: 5050,
   },
   build: {
     manifest: true,

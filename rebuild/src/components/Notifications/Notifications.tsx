@@ -31,7 +31,9 @@ export function Notifications({ greeting }: NotificationsProps) {
     }
 
     if (connectionStatus === ConnectionStatus.DISCONNECTED) {
-      return <Text>{greeting || "Got any questions? I'm happy to help."}</Text>;
+      return (
+        <Text data-sm-cy="greetingText">{greeting || "Got any questions? I'm happy to help."}</Text>
+      );
     }
   };
 
