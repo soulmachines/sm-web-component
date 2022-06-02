@@ -8,7 +8,7 @@
     <div class="card" *ngFor="let card of activeCards">
       <ng-container *ngIf="card.component === 'options'">
         <div class="card-option" *ngFor="let option of card.data.options">
-          <button class="button-outline" (click)="sendTextMessage(option?.value || '')">
+          <button class="button-outline" (click)="sendTextMessage(option?.value || option.label)">
             {{ option.label }}
             <app-icon name="chevRight"></app-icon>
           </button>
