@@ -21,7 +21,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
-    <div className="sm-w-35 sm-h-35 sm-flex sm-items-center sm-justify-center">
+    <div className="sm-w-35 sm-h-35 sm-flex sm-items-center sm-justify-center sm-text-primary-600">
       {loadingIndicator ? loadingIndicator : <DefaultLoadingIndicator size="96" />}
     </div>
   );
@@ -58,7 +58,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center"
+                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-bg-secondary-100 sm-text-primary-300 sm-rounded-3xl"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
@@ -68,7 +68,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
             {!isDisconnected && (
               <div
                 className={classNames({
-                  'sm-relative': true,
+                  'sm-relative sm-bg-secondary-100 sm-rounded-3xl sm-overflow-hidden': true,
                   'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88': isConnected,
                 })}
               >
