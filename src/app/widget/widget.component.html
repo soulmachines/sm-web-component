@@ -6,7 +6,7 @@
     }"
   >
     <ng-container *ngFor="let card of activeCards">
-      <ng-container *ngIf="card.component === 'options'">
+      <ng-container *ngIf="card.type === 'options'">
         <div class="card">
           <div class="card-option" *ngFor="let option of card.data.options">
             <button class="button-outline" (click)="sendTextMessage(option?.value || option.label)">
