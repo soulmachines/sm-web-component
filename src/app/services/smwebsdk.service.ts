@@ -37,6 +37,7 @@ export class SMWebSDKService {
   public initialise(sceneOptions: SceneOptions) {
     this.scene = new Scene(sceneOptions);
     this.scene.onDisconnected = () => this.disconnect();
+    this.scene.conversation.autoClearCards = true;
 
     this.persona = new Persona(this.scene, personaId);
   }
