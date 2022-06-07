@@ -7,6 +7,16 @@ module.exports = {
       lg: '1024px',
     },
     extend: {
+      borderRadius: {
+        inherit: 'inherit',
+      },
+      boxShadow: {
+        // Translates to designs menu, hover, overlay and modal
+        sm: '0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04), 0px 4px 16px rgba(0, 0, 0, 0.06)',
+        md: '0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1)',
+        lg: '0px 4px 12px rgba(0, 0, 0, 0.06), 0px 12px 28px rgba(0, 0, 0, 0.12)',
+        xl: '0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.12), 0px 16px 32px rgba(0, 0, 0, 0.12)',
+      },
       fontFamily: {
         rubik: ['Rubik', 'Helvetica', 'sans-serif'],
       },
@@ -30,6 +40,30 @@ module.exports = {
       },
       zIndex: {
         max: '9999',
+      },
+      colors: {
+        primary: {
+          100: '#E8EBEF',
+          200: '#CCD4DD',
+          300: '#A5B5C7',
+          400: '#6E8CAD',
+          500: '#34669B',
+          600: '#215489',
+          700: '#234973',
+          800: '#223E5D',
+          900: '#1C2D41',
+        },
+        secondary: {
+          100: '#DFEDEE',
+          200: '#B6DADC',
+          300: '#6BC0C7',
+          400: '#2F979D',
+          500: '#346B6F',
+          600: '#31595B',
+          700: '#2D4C4F',
+          800: '#284142',
+          900: '#1F2F30',
+        },
       },
     },
   },
