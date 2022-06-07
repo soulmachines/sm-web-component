@@ -1,11 +1,12 @@
 import { createContext, ComponentChildren } from 'preact';
-import { Scene } from '@soulmachines/smwebsdk';
+import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus } from '../../enums';
 
 type Context = {
   scene: Scene;
+  persona: Persona;
   connectionStatus: ConnectionStatus;
   connectionError: Error | null;
   connect: () => void;
@@ -22,6 +23,7 @@ type SoulMachinesProviderProps = {
 };
 
 function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
+  const personaId = 1;
   const scene = useMemo(
     () =>
       new Scene({
@@ -30,6 +32,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
       }),
     [apiKey],
   );
+  const persona = new Persona(scene, personaId);
 
   const { connect, disconnect, connectionStatus, connectionError } = useConnection(
     scene,
@@ -40,6 +43,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     <SoulMachinesContext.Provider
       value={{
         scene,
+        persona,
         connectionError,
         connectionStatus,
         connect,

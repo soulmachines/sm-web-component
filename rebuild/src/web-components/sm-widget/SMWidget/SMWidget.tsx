@@ -8,6 +8,7 @@ export type SMWidgetProps = {
   connectingIndicator?: JSX.Element;
   greeting?: string;
   profilePicture?: string;
+  parent: HTMLElement;
 };
 
 export function SMWidget({
@@ -16,6 +17,7 @@ export function SMWidget({
   connectingIndicator,
   greeting,
   profilePicture,
+  parent,
 }: SMWidgetProps) {
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
