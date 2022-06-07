@@ -1,4 +1,4 @@
-import { Fragment, JSX } from 'preact';
+import { JSX } from 'preact';
 import { useSpring, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
