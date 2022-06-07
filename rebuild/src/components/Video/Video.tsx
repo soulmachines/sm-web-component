@@ -1,11 +1,12 @@
 import { JSX } from 'preact';
-import { useEffect, useMemo } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import useResizeObserver from '@bedrock-layout/use-resize-observer';
-import { Scene } from '@soulmachines/smwebsdk';
 import { useSpring, animated, config } from 'react-spring';
+import debounce from 'lodash-es/debounce';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import { ConnectionStatus } from '../../enums';
+import { Scene } from '@soulmachines/smwebsdk';
 
 type Props = {
   loadingIndicator?: JSX.Element;
@@ -15,6 +16,7 @@ type Props = {
 export const updateVideoBounds = (scene: Scene, { contentRect }: ResizeObserverEntry) => {
   const width = Math.round(contentRect.width * devicePixelRatio);
   const height = Math.round(contentRect.height * devicePixelRatio);
+
   scene.sendVideoBounds(width, height);
 };
 
@@ -23,10 +25,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   const videoStream = scene.videoElement?.srcObject;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const videoRef = useResizeObserver<HTMLVideoElement>(
-    useMemo(
-      () => (measurements) => isConnected && updateVideoBounds(scene, measurements),
-      [scene, isConnected],
-    ),
+    debounce((measurements: ResizeObserverEntry) => updateVideoBounds(scene, measurements), 500),
   );
   const videoAnimation = useSpring({
     opacity: isConnected ? '1' : '0',
