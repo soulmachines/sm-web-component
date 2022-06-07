@@ -21,6 +21,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   const isDisconnected =
     connectionStatus !== ConnectionStatus.CONNECTED &&
     connectionStatus !== ConnectionStatus.CONNECTING;
+
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
     <div className="sm-w-35 sm-h-35 sm-flex sm-items-center sm-justify-center sm-text-primary-600">
@@ -48,39 +49,38 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
           <div class="sm-w-full" />
         </div>
 
-        <div className={scaledDownClass}>
-          <animated.div
-            style={scaleAnimation}
-            className="sm-flex sm-flex-wrap sm-gap-5 sm-items-center sm-justify-end sm-origin-bottom-right"
-          >
-            {isDisconnected && (
-              <Fragment>
-                <Notifications greeting={greeting} />
+        <div className="sm-flex sm-flex-wrap sm-gap-5 sm-items-center sm-justify-end">
+          {isDisconnected && <Notifications greeting={greeting} />}
 
+          <div className={scaledDownClass}>
+            <animated.div
+              style={scaleAnimation}
+              className="sm-rounded-3xl sm-origin-bottom-right sm-shadow-lg sm-bg-secondary-100"
+            >
+              {isDisconnected && (
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-shadow-lg sm-bg-secondary-100 sm-text-primary-300 sm-rounded-3xl sm-border-2 sm-border-transparent hover:sm-border-primary-400 sm-transition-colors"
+                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-300 sm-border-2 sm-border-transparent hover:sm-border-primary-400 sm-transition-colors"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
-              </Fragment>
-            )}
+              )}
 
-            {!isDisconnected && (
-              <div
-                className={classNames({
-                  'sm-relative sm-bg-secondary-100 sm-rounded-3xl sm-overflow-hidden sm-shadow-lg':
-                    true,
-                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
-                    isConnected,
-                })}
-              >
-                <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
-                {isConnected && <VideoControls />}
-              </div>
-            )}
-          </animated.div>
+              {!isDisconnected && (
+                <div
+                  className={classNames({
+                    'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
+                    'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
+                      isConnected,
+                  })}
+                >
+                  <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
+                  {isConnected && <VideoControls />}
+                </div>
+              )}
+            </animated.div>
+          </div>
         </div>
       </div>
     </div>
