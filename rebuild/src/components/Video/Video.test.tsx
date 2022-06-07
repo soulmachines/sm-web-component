@@ -1,5 +1,5 @@
 import { render } from '@testing-library/preact';
-import useResizeObserver from '@bedrock-layout/use-resize-observer';
+import useDimensions from 'react-cool-dimensions';
 import { Video } from '.';
 import { updateVideoBounds } from './Video';
 import { Scene } from '@soulmachines/smwebsdk';
@@ -7,7 +7,7 @@ import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
-jest.mock('@bedrock-layout/use-resize-observer');
+jest.mock('react-cool-dimensions');
 
 describe('<Video />', () => {
   const customRender = (props = { autoConnect: true }) => {
@@ -37,9 +37,11 @@ describe('<Video />', () => {
       expect(container).toBeEmptyDOMElement();
     });
 
-    it('calls useResizeObserver with a function', () => {
+    it('calls useResizeObserver with a onResize function', () => {
       customRender();
-      expect(useResizeObserver).toHaveBeenCalledWith(expect.any(Function));
+      expect(useDimensions).toHaveBeenCalledWith({
+        onResize: expect.any(Function),
+      });
     });
   });
 
@@ -99,9 +101,7 @@ describe('updateVideoBounds()', () => {
   const width = 111.342;
   const height = 222;
   const mockScene = { sendVideoBounds: jest.fn() } as unknown as Scene;
-  const mockMeasurements = {
-    contentRect: { width, height },
-  } as unknown as ResizeObserverEntry;
+  const mockMeasurements = { width, height };
 
   it('calls scene.sendVideoBounds with the width/height, multiplying the values by the devicePixelRatio and rounding the number', () => {
     window.devicePixelRatio = 2;
