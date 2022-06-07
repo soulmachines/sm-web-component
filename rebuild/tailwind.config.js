@@ -7,6 +7,13 @@ module.exports = {
       lg: '1024px',
     },
     extend: {
+      boxShadow: {
+        // Translates to designs menu, hover, overlay and modal
+        sm: '0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04), 0px 4px 16px rgba(0, 0, 0, 0.06)',
+        md: '0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1)',
+        lg: '0px 4px 12px rgba(0, 0, 0, 0.06), 0px 12px 28px rgba(0, 0, 0, 0.12)',
+        xl: '0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.12), 0px 16px 32px rgba(0, 0, 0, 0.12)',
+      },
       fontFamily: {
         rubik: ['Rubik', 'Helvetica', 'sans-serif'],
       },

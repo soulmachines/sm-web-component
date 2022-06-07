@@ -58,7 +58,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-bg-secondary-100 sm-text-primary-300 sm-rounded-3xl"
+                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-shadow-lg sm-bg-secondary-100 sm-text-primary-300 sm-rounded-3xl sm-border-2 sm-border-transparent hover:sm-border-primary-400 sm-transition-colors"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
@@ -68,8 +68,10 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
             {!isDisconnected && (
               <div
                 className={classNames({
-                  'sm-relative sm-bg-secondary-100 sm-rounded-3xl sm-overflow-hidden': true,
-                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88': isConnected,
+                  'sm-relative sm-bg-secondary-100 sm-rounded-3xl sm-overflow-hidden sm-shadow-lg':
+                    true,
+                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
+                    isConnected,
                 })}
               >
                 <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
