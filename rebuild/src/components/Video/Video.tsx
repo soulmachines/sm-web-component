@@ -30,7 +30,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   );
   const videoAnimation = useSpring({
     opacity: isConnected ? '1' : '0',
-    delay: isConnected ? 200 : 0,
+    delay: isConnected ? 450 : 0,
     config: config.gentle,
   });
 
@@ -58,6 +58,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       {isConnected && (
         <animated.video
           style={videoAnimation}
+          muted
           autoPlay
           ref={videoRef}
           className="sm-w-full sm-h-full sm-object-cover"

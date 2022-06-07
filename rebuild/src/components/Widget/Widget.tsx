@@ -28,7 +28,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
 
   const scaleAnimation = useSpring({
     transform: isConnected ? 'scale(2)' : 'scale(1)',
-    config: config.gentle,
+    config: config.stiff,
   });
 
   // Scales down the above animation back to 1, the normal size
