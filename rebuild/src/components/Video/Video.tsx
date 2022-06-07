@@ -1,8 +1,8 @@
 import { JSX } from 'preact';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useRef } from 'preact/hooks';
 import useResizeObserver from '@bedrock-layout/use-resize-observer';
 import { useSpring, animated, config } from 'react-spring';
-import debounce from 'lodash-es/debounce';
+import debounce from 'lodash/debounce';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import { ConnectionStatus } from '../../enums';
