@@ -1,6 +1,6 @@
 import { JSX } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
-import useResizeObserver from '@bedrock-layout/use-resize-observer';
+import { useEffect, useRef, useMemo } from 'preact/hooks';
+import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
 import debounce from 'lodash/debounce';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
@@ -13,9 +13,9 @@ type Props = {
   autoConnect: boolean;
 };
 
-export const updateVideoBounds = (scene: Scene, { contentRect }: ResizeObserverEntry) => {
-  const width = Math.round(contentRect.width * devicePixelRatio);
-  const height = Math.round(contentRect.height * devicePixelRatio);
+export const updateVideoBounds = (scene: Scene, size: { width: number; height: number }) => {
+  const width = Math.round(size.width * devicePixelRatio);
+  const height = Math.round(size.height * devicePixelRatio);
 
   scene.sendVideoBounds(width, height);
 };
@@ -23,10 +23,17 @@ export const updateVideoBounds = (scene: Scene, { contentRect }: ResizeObserverE
 export function Video({ loadingIndicator, autoConnect }: Props) {
   const { scene, connectionStatus, connect } = useSoulMachines();
   const videoStream = scene.videoElement?.srcObject;
+  const videoRef = useRef<HTMLVideoElement>();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
-  const videoRef = useResizeObserver<HTMLVideoElement>(
-    debounce((measurements: ResizeObserverEntry) => updateVideoBounds(scene, measurements), 500),
-  );
+  const { observe } = useDimensions<HTMLVideoElement>({
+    onResize: useMemo(
+      () =>
+        debounce(({ width, height }) => {
+          updateVideoBounds(scene, { width, height });
+        }, 500),
+      [],
+    ),
+  });
   const videoAnimation = useSpring({
     opacity: isConnected ? '1' : '0',
     delay: isConnected ? 500 : 0,
@@ -58,9 +65,16 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         <animated.video
           style={videoAnimation}
           autoPlay
-          ref={videoRef}
-          data-sm="video"
+          data-sm-video
           className="sm-w-full sm-h-full sm-object-cover"
+          ref={(el) => {
+            // From the plugin docs https://github.com/wellyshen/react-cool-dimensions#how-to-share-a-ref
+            // Allows for our own ref and the resizers ref
+            observe(el);
+            if (el) {
+              videoRef.current = el;
+            }
+          }}
         />
       )}
     </div>

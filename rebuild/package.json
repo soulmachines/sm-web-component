@@ -20,13 +20,13 @@
     "cypress:ci": "start-server-and-test preview http://localhost:5050 test:cypress:chrome"
   },
   "dependencies": {
-    "@bedrock-layout/use-resize-observer": "^1.2.3",
     "@soulmachines/smwebsdk": "^14.2.0",
     "classnames": "^2.3.1",
     "cypress": "^9.7.0",
     "lodash": "^4.17.21",
     "preact": "^10.7.2",
     "preactement": "^1.8.2",
+    "react-cool-dimensions": "^2.0.7",
     "react-spring": "^9.4.5"
   },
   "devDependencies": {
