@@ -18,7 +18,9 @@ export type WidgetProps = {
 export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetProps) {
   const { connectionStatus, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
-  const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
+  const isDisconnected =
+    connectionStatus !== ConnectionStatus.CONNECTED &&
+    connectionStatus !== ConnectionStatus.CONNECTING;
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
     <div className="sm-w-35 sm-h-35 sm-flex sm-items-center sm-justify-center sm-text-primary-600">
