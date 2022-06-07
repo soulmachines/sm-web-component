@@ -60,6 +60,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
           style={videoAnimation}
           autoPlay
           ref={videoRef}
+          data-sm="video"
           className="sm-w-full sm-h-full sm-object-cover"
         />
       )}
