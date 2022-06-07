@@ -31,7 +31,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         debounce(({ width, height }) => {
           updateVideoBounds(scene, { width, height });
         }, 500),
-      [],
+      [scene],
     ),
   });
   const videoAnimation = useSpring({
