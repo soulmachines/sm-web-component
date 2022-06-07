@@ -7,6 +7,9 @@ module.exports = {
       lg: '1024px',
     },
     extend: {
+      borderRadius: {
+        inherit: 'inherit',
+      },
       boxShadow: {
         // Translates to designs menu, hover, overlay and modal
         sm: '0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04), 0px 4px 16px rgba(0, 0, 0, 0.06)',
