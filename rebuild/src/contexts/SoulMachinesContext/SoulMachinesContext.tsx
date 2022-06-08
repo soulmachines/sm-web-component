@@ -27,6 +27,8 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
       new Scene({
         videoElement: document.createElement('video'),
         apiKey,
+        requestedMediaDevices: { microphone: false, camera: false },
+        requiredMediaDevices: { microphone: false, camera: false },
       }),
     [apiKey],
   );
