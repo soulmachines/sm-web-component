@@ -63,6 +63,12 @@ declare global {
        * @example cy.closeGreeting()
        */
       closeGreeting(): Chainable<null>;
+
+      /**
+       * Send a message to the DP
+       * @example cy.sendTextMessage(message)
+       */
+      sendTextMessage(message: string): Chainable<null>;
     }
   }
 }

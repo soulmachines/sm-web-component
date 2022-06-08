@@ -43,3 +43,11 @@ Cypress.Commands.add('closeGreeting', () => {
   cy.get('app-greeting button').should('be.visible').click();
   cy.get('.greeting-container').should('not.be.visible');
 });
+
+Cypress.Commands.add('sendTextMessage', (message: string) => {
+  cy.get('sm-widget').then(($el) => {
+    cy.log(`sending text message: ${message}`);
+    const el: any = $el.get(0);
+    el.sendTextMessage(message);
+  });
+});
