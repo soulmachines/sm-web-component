@@ -1,10 +1,14 @@
-import { Scene } from '@soulmachines/smwebsdk';
+import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { ConnectionStatus } from '../../../enums';
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
 }
+
+const persona = {
+  conversationSend: jest.fn(),
+} as unknown as Persona;
 
 const scene = {
   isConnected: jest.fn(),
@@ -20,6 +24,7 @@ const mockUseSoulMachines = {
   connectionStatus: ConnectionStatus.DISCONNECTED,
   connectionError: null,
   scene,
+  persona,
 };
 
 const useSoulMachines = jest.fn(() => mockUseSoulMachines);

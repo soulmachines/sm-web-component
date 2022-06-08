@@ -1,6 +1,7 @@
 import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
 import { Widget } from '../../../components/Widget';
+import { BindPublicSmEvents } from '../../../components/BindPublicSmEvents';
 
 export type SMWidgetProps = {
   apiKey?: string;
@@ -21,6 +22,7 @@ export function SMWidget({
 }: SMWidgetProps) {
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+      <BindPublicSmEvents element={parent} />
       <Widget
         greeting={greeting}
         profilePicture={profilePicture}
