@@ -1,6 +1,6 @@
 //This command launches a scene
-// Wait up to a minute when launching a scene as the first connection takes time
-Cypress.Commands.add('launchScene', (timeout: number = 20000) => {
+// Wait up to to two minutes when launching a scene as the first connection takes time
+Cypress.Commands.add('launchScene', (timeout: number = 40000) => {
   cy.get('[data-sm-cy=connectButton]').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
   cy.get('title').contains('Loading...', { timeout }).should('not.exist');
