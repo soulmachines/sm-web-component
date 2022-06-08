@@ -21,11 +21,10 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
         };
       }
 
-      // Fixes issue in Safari where user gets a black video
-      // - The fix is to interact with the video in the same thread as the click
-      scene.videoElement?.play();
+      // Fixes issue in Safari
+      // - video.play() needs to occur in same browser thread as connect click to avoid user interaction error
+      await Promise.all([scene.startVideo(), scene.connect(connectOptions)]);
 
-      await scene.connect(connectOptions);
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
       setConnectionStatus(ConnectionStatus.ERRORED);
