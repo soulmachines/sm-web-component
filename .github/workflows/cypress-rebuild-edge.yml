@@ -1,0 +1,50 @@
+name: Edge Chromium Cypress UI Tests React
+
+on:
+  pull_request:
+    paths:
+      - 'rebuild/**'
+
+defaults:
+  run:
+    working-directory: rebuild
+
+jobs:
+  cypress-run:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Caching Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        with:
+          browser: edge
+          headless: true
+          build: npm run build
+          start: npm run cypress:ci:edge
+          wait-on: 'http://localhost:5050'
+          wait-on-timeout: 360 # 5 minutes
+          config-file: cypress.json
+          spec: cypress/integration/*.ts
+          record: true
+          working-directory: rebuild
