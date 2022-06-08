@@ -10,7 +10,9 @@ export type BindPublicSmEventsProps = {
   element: WebComponentElement;
 };
 
-type GenericFunction = (args: unknown) => void;
+// Ignoring as I want to use the generic Function type since we don't know what the Function will look like
+// eslint-disable-next-line @typescript-eslint/ban-types
+type GenericFunction = Function;
 
 export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
   const htmlElement = element as unknown as Record<string, GenericFunction | undefined>;
