@@ -17,7 +17,9 @@
     "generate": "plop --plopfile generators/index.js",
     "cypress:open": "cypress open",
     "test:cypress:chrome": "cypress run --headless --browser chrome",
-    "cypress:ci": "start-server-and-test preview http://localhost:5050 test:cypress:chrome"
+    "test:cypress:edge": "cypress run --headless --browser edge",
+    "cypress:ci:chrome": "start-server-and-test preview http://localhost:5050 test:cypress:chrome",
+    "cypress:ci:edge": "start-server-and-test preview http://localhost:5050 test:cypress:edge"
   },
   "dependencies": {
     "@soulmachines/smwebsdk": "^14.2.0",

@@ -1,4 +1,4 @@
-name: Cypress UI Tests React
+name: Edge Chromium Cypress UI Tests React
 
 on:
   pull_request:
@@ -11,9 +11,7 @@ defaults:
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
-    # Cypress Docker image with Chrome v97
-    container: cypress/browsers:node16.13.2-chrome97-ff96
+    runs-on: windows-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -40,10 +38,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
-          browser: chrome
+          browser: edge
           headless: true
           build: npm run build
-          start: npm run cypress:ci:chrome
+          start: npm run cypress:ci:edge
           wait-on: 'http://localhost:5050'
           wait-on-timeout: 360 # 5 minutes
           config-file: cypress.json
