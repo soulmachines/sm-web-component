@@ -1,6 +1,6 @@
 //This command launches a scene
-// Wait up to a minute when launching a scene as the first connection takes time
-Cypress.Commands.add('launchScene', (timeout: number = 20000) => {
+// Wait up to to two minutes when launching a scene as the first connection takes time
+Cypress.Commands.add('launchScene', (timeout: number = 40000) => {
   cy.get('[data-sm-cy=connectButton]').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
   cy.get('title').contains('Loading...', { timeout }).should('not.exist');
@@ -42,4 +42,12 @@ Cypress.Commands.add('cameraOff', () => {
 Cypress.Commands.add('closeGreeting', () => {
   cy.get('app-greeting button').should('be.visible').click();
   cy.get('.greeting-container').should('not.be.visible');
+});
+
+Cypress.Commands.add('sendTextMessage', (message: string) => {
+  cy.get('sm-widget').then(($el) => {
+    cy.log(`sending text message: ${message}`);
+    const el: any = $el.get(0);
+    el.sendTextMessage(message);
+  });
 });

@@ -1,12 +1,14 @@
-import { Scene } from '@soulmachines/smwebsdk';
+import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { render } from '@testing-library/preact';
 import { SoulMachinesProvider } from '.';
 import { useConnection } from '../../hooks/useConnection';
 
 const mockConnect = jest.fn();
 const mockScene = { scene: 'mock' };
+const mockPersona = {};
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
+  Persona: jest.fn(() => mockPersona),
 }));
 jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({ connect: mockConnect })),
@@ -35,6 +37,11 @@ describe('<SoulMachinesProvider />', () => {
   it('creates a Scene once', () => {
     customRender();
     expect(Scene).toHaveBeenCalledTimes(1);
+  });
+
+  it('creates a Persona passing in the scene and persona id', () => {
+    customRender();
+    expect(Persona).toHaveBeenCalledWith(mockScene, 1);
   });
 
   it('calls useConnect with scene and the token server', () => {

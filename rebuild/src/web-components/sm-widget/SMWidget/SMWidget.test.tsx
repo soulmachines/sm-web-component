@@ -6,8 +6,9 @@ import { ConnectionStatus } from '../../../enums';
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMWidget />', () => {
+  const mockParent = document.createElement('div');
   const customRender = () =>
-    render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} />);
+    render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} parent={mockParent} />);
 
   it('renders a loading indicator when connecting', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({

@@ -6,7 +6,13 @@ export default {
   component: ProfileImage,
 };
 
-export const Basic = ({ src }: ProfileImageProps) => <ProfileImage src={src} />;
+export const Basic = ({ src }: ProfileImageProps) => {
+  return (
+    <div style="width: 400px; height: 400px;">
+      <ProfileImage src={src} />
+    </div>
+  );
+};
 Basic.args = {
   src: 'https://assets.cdn.soulmachines.cloud/AvatarCoverImages/image-sam-l.jpg',
 };
