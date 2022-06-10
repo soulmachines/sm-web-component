@@ -8,5 +8,5 @@ export default {
 export const Basic = ({title}: ButtonProps) => <Button title={title} />;
 
 Basic.args = { 
-  title: "Button" 
+  title: "button" 
 }
