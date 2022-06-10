@@ -1,8 +1,8 @@
-import { ButtonIcon } from '.';
+import { ButtonControls } from '.';
 
 export default {
   title: `Components / ButtonIcon`,
-  component: ButtonIcon,
+  component: ButtonControls,
 };
 
-export const Basic = () => <ButtonIcon />;
+export const Basic = () => <ButtonControls />;
