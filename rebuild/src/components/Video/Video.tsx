@@ -49,7 +49,6 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   useEffect(() => {
     if (videoRef.current && videoStream) {
       videoRef.current.srcObject = videoStream;
-      videoRef.current.play();
     }
   }, [videoRef, videoStream]);
 

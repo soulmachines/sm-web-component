@@ -9,6 +9,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const connect = useCallback(async () => {
     try {
       const connectOptions: ConnectOptions = {};
+
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
@@ -22,6 +23,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       }
 
       await scene.connect(connectOptions);
+      await scene.startVideo();
+
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
       setConnectionStatus(ConnectionStatus.ERRORED);
