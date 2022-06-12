@@ -25,15 +25,6 @@ describe('<SoulMachinesProvider />', () => {
       </SoulMachinesProvider>,
     );
 
-  it('creates a Scene passing in an api key and video element', () => {
-    customRender();
-
-    expect(Scene).toHaveBeenCalledWith({
-      apiKey,
-      videoElement: document.createElement('video'),
-    });
-  });
-
   it('creates a Scene once', () => {
     customRender();
     expect(Scene).toHaveBeenCalledTimes(1);
@@ -47,5 +38,49 @@ describe('<SoulMachinesProvider />', () => {
   it('calls useConnect with scene and the token server', () => {
     customRender();
     expect(useConnection).toHaveBeenCalledWith(mockScene, tokenServer);
+  });
+
+  describe('creating a scene', () => {
+    beforeEach(() => {
+      customRender();
+    });
+
+    it('passes in an api key', () => {
+      expect(Scene).toHaveBeenCalledWith(
+        expect.objectContaining({
+          apiKey,
+        }),
+      );
+    });
+
+    it('passes in a video element', () => {
+      expect(Scene).toHaveBeenCalledWith(
+        expect.objectContaining({
+          videoElement: document.createElement('video'),
+        }),
+      );
+    });
+
+    it('passes in false for requested mic/cam devices', () => {
+      expect(Scene).toHaveBeenCalledWith(
+        expect.objectContaining({
+          requestedMediaDevices: {
+            camera: false,
+            microphone: false,
+          },
+        }),
+      );
+    });
+
+    it('passes in false for required mic/cam devices', () => {
+      expect(Scene).toHaveBeenCalledWith(
+        expect.objectContaining({
+          requiredMediaDevices: {
+            camera: false,
+            microphone: false,
+          },
+        }),
+      );
+    });
   });
 });
