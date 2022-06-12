@@ -65,6 +65,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         <animated.video
           style={videoAnimation}
           autoPlay
+          playsInline
           data-sm-video
           className="sm-w-full sm-h-full sm-object-cover"
           ref={(el) => {
