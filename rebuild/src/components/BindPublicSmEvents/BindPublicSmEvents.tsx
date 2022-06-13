@@ -16,12 +16,9 @@ type GenericFunction = Function;
 
 export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
   const htmlElement = element as unknown as Record<string, GenericFunction | undefined>;
-  const { persona, connectionStatus } = useSoulMachines();
+  const { connectionStatus, sendTextMessage } = useSoulMachines();
 
   useEffect(() => {
-    const sendTextMessage = (text: string) => {
-      persona.conversationSend(text, {}, {});
-    };
     const publicMethods: [string, GenericFunction][] = [['sendTextMessage', sendTextMessage]];
 
     const addPublicMethods = () => {
@@ -40,7 +37,7 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
     } else {
       removePublicMethods();
     }
-  }, [connectionStatus, htmlElement, persona]);
+  }, [connectionStatus, htmlElement, sendTextMessage]);
 
   return null;
 }

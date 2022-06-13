@@ -21,6 +21,7 @@ const scene = {
 const mockUseSoulMachines = {
   connect: jest.fn(),
   disconnect: jest.fn(),
+  sendTextMessage: jest.fn(),
   connectionStatus: ConnectionStatus.DISCONNECTED,
   connectionError: null,
   scene,
