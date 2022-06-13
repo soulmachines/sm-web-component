@@ -52,7 +52,7 @@ describe('useSMMedia()', () => {
       expect(result.current.isMicrophoneEnabled).toEqual(false);
     });
 
-    it('sets isMicrophoneEnabled to the return value of scene.isMicrophoneActive', () => {
+    it('sets isCameraEnabled to the return value of scene.isCameraActive', () => {
       const { result } = renderHook(() => useSMMedia(mockScene));
       expect(result.current.isCameraEnabled).toEqual(false);
     });

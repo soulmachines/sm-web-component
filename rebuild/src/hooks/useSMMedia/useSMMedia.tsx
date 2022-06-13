@@ -14,7 +14,7 @@ function useSMMedia(scene: Scene) {
       setIsMicrophoneEnabled(isMicrophoneActive);
       setIsCameraEnabled(isCameraActive);
     }
-  }, [isConnected, isMicrophoneActive]);
+  }, [isConnected, isMicrophoneActive, isCameraActive]);
 
   const toggleMicrophone = async () => {
     try {
