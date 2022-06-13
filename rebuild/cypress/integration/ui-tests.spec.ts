@@ -8,41 +8,41 @@ describe('scene', () => {
       cy.launchScene();
     });
 
-    it('checks that the profile picture is not rendered', () => {
+    it('does not render a profile picture', () => {
       cy.get('[data-sm-cy=profileImage]').should('not.exist');
     });
 
-    it('checks that the mute button is rendered', () => {
-      cy.unmuteScene();
-      cy.muteScene();
+    it('renders a enable microphone button and then renders a disable microphone button once clicked', () => {
+      cy.enableMicrophone();
+      cy.disableMicrophone();
     });
 
-    // TODO: enable one camera buttons are enabled
-    xit('checks that the camera button is rendered', () => {
-      cy.cameraOn();
-      cy.cameraOff();
+    it('renders a enable camera button and then renders a disable camera button once clicked', () => {
+      cy.enableCamera();
+      cy.disableCamera();
     });
 
-    it('checks that the scene can be disconnected', () => {
+    it('renders a disconnect scene button', () => {
       cy.disconnectScene();
     });
   });
 
   describe('when it is not connected', () => {
-    it('checks if greeting is rendered', () => {
+    it('renders a greeting', () => {
       cy.get('[data-sm-cy=greetingText]').should('be.visible');
     });
 
-    // TODO: enable one camera buttons are enabled
-    xit('does not render a camera button', () => {
-      cy.get('sm-widget .camera-button.inactive').should('not.be.visible');
+    it('does not render a camera button', () => {
+      cy.get('title').contains('Disable camera').should('not.exist');
+      cy.get('title').contains('Enable camera').should('not.exist');
     });
 
     it('does not render a mute button', () => {
       cy.get('title').contains('Disable microphone').should('not.exist');
+      cy.get('title').contains('Enable microphone').should('not.exist');
     });
 
-    it('checks that the profile picture is rendered', () => {
+    it('renderes a profile picture', () => {
       cy.get('[data-sm-cy=profileImage]').should('be.visible');
     });
   });
