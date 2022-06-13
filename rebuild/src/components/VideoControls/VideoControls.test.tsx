@@ -3,14 +3,18 @@ import { VideoControls } from '.';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 
 const mockToggleMicrophone = jest.fn();
+const mockToggleCamera = jest.fn();
 let mockIsMicrophoneEnabled: boolean;
+let mockIsCameraEnabled: boolean;
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 jest.mock('../../hooks/useSMMedia', () => ({
   useSMMedia: () => ({
     isMicrophoneEnabled: mockIsMicrophoneEnabled,
+    isCameraEnabled: mockIsCameraEnabled,
     toggleMicrophone: mockToggleMicrophone,
+    toggleCamera: mockToggleCamera,
   }),
 }));
 
@@ -35,6 +39,11 @@ describe('<VideoControls />', () => {
     it('does not call toggleMicrophone', () => {
       customRender();
       expect(mockToggleMicrophone).toBeCalledTimes(0);
+    });
+
+    it('does not call toggleCamera', () => {
+      customRender();
+      expect(mockToggleCamera).toBeCalledTimes(0);
     });
   });
 
@@ -63,6 +72,34 @@ describe('<VideoControls />', () => {
       await fireEvent.click(disableButton);
 
       expect(mockToggleMicrophone).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when camera is disabled', () => {
+    beforeEach(() => {
+      mockIsCameraEnabled = false;
+    });
+
+    it('calls toggleCamera when the enable button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const enableButton = getByTitle('Enable camera');
+      await fireEvent.click(enableButton);
+
+      expect(mockToggleCamera).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when camera is enabled', () => {
+    beforeEach(() => {
+      mockIsCameraEnabled = true;
+    });
+
+    it('calls toggleCamera when the disable button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const disableButton = getByTitle('Disable camera');
+      await fireEvent.click(disableButton);
+
+      expect(mockToggleCamera).toBeCalledTimes(1);
     });
   });
 });
