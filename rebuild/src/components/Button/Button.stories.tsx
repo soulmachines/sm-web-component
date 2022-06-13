@@ -1,12 +1,12 @@
 import { Button, ButtonProps } from '.';
 
 export default {
-    title: `Components / Button`,
-    component: Button,
+  title: `Components / Button`,
+  component: Button,
 };
 
-export const Basic = ({children}: ButtonProps) => <Button children={children} />;
+export const Basic = ({ children }: ButtonProps) => <Button children={children} />;
 
 Basic.args = {
-  children: "button" 
-}
+  children: 'button',
+};
