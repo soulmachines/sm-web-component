@@ -65,9 +65,9 @@ describe('<Video />', () => {
       expect(getByText('Loading...')).toBeInTheDocument();
     });
 
-    it('does not render a video', () => {
+    it('renders a video', () => {
       const { container } = customRender();
-      expect(container.querySelector('video')).not.toBeInTheDocument();
+      expect(container.querySelector('video')).toBeInTheDocument();
     });
   });
 

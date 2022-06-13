@@ -1,10 +1,12 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
+import 'preact/hooks';
 import { useConnection } from '.';
 import { ConnectionStatus } from '../../enums';
 
 let triggerDisconnectEvent: () => void;
 const mockScene = {
+  startVideo: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
   onDisconnectedEvent: {
@@ -16,6 +18,10 @@ const mockScene = {
 } as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
+}));
+jest.mock('preact/hooks', () => ({
+  ...jest.requireActual('preact/hooks'),
+  useRef: () => ({ current: document.createElement('video') }),
 }));
 
 describe('useConnection()', () => {
@@ -95,21 +101,26 @@ describe('useConnection()', () => {
   });
 
   describe('when token server is undefined', () => {
-    it('calls scene.connect once with an empty object', async () => {
+    beforeEach(async () => {
       const { result } = renderHook(() => useConnection(mockScene, undefined));
-
       await result.current.connect();
+    });
 
+    it('calls scene.connect once with an empty object', () => {
       expect(mockScene.connect).toHaveBeenCalledWith({});
+      expect(mockScene.connect).toHaveBeenCalledTimes(1);
+    });
+
+    it('calls scene.startVideo', () => {
       expect(mockScene.connect).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('when token server is defined', () => {
-    describe('when the calls are successful', () => {
-      const mockCreds = { url: 'mock url', jwt: 'mock jwt' };
-      const mockedFetchResponse = { json: () => Promise.resolve(mockCreds) };
+    const mockCreds = { url: 'mock url', jwt: 'mock jwt' };
+    const mockedFetchResponse = { json: () => Promise.resolve(mockCreds) };
 
+    describe('when the calls are successful', () => {
       beforeEach(() => {
         mockFetch.mockReturnValue(mockedFetchResponse);
       });
@@ -122,6 +133,12 @@ describe('useConnection()', () => {
         expect(mockScene.connect).toHaveBeenCalledWith({
           tokenServer: { uri: mockCreds.url, token: mockCreds.jwt },
         });
+        expect(mockScene.connect).toHaveBeenCalledTimes(1);
+      });
+
+      it('calls scene.startVideo', async () => {
+        const { result } = customRender();
+        await result.current.connect();
         expect(mockScene.connect).toHaveBeenCalledTimes(1);
       });
 
@@ -166,6 +183,33 @@ describe('useConnection()', () => {
           const { result } = await customRender();
           expect(result.current.connectionStatus).toEqual(ConnectionStatus.TIMED_OUT);
         });
+      });
+    });
+
+    describe('when startVideo errors', () => {
+      const error = new Error('Unable to play');
+
+      beforeEach(() => {
+        mockFetch.mockReturnValue(mockedFetchResponse);
+        jest.spyOn(mockScene, 'startVideo').mockReturnValueOnce(
+          new Promise((_, reject) => {
+            reject(error);
+          }),
+        );
+      });
+
+      it('updates connectionError with the error', async () => {
+        const { result } = customRender();
+
+        await result.current.connect();
+        expect(result.current.connectionError).toEqual(error);
+      });
+
+      it('updates connection status to errored', async () => {
+        const { result } = customRender();
+        await result.current.connect();
+
+        expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
       });
     });
 

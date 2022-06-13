@@ -22,7 +22,7 @@
     "cypress:ci:edge": "start-server-and-test preview http://localhost:5050 test:cypress:edge"
   },
   "dependencies": {
-    "@soulmachines/smwebsdk": "^14.2.0",
+    "@soulmachines/smwebsdk": "^14.3.0",
     "classnames": "^2.3.1",
     "cypress": "^9.7.0",
     "lodash": "^4.17.21",

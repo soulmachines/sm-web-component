@@ -1,6 +1,6 @@
 import { createContext, ComponentChildren } from 'preact';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
-import { useContext, useMemo } from 'preact/hooks';
+import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus } from '../../enums';
 
@@ -11,6 +11,7 @@ type Context = {
   connectionError: Error | null;
   connect: () => void;
   disconnect: () => void;
+  videoRef: MutableRef<HTMLVideoElement | null>;
 };
 
 // Create context with default values
@@ -29,12 +30,14 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
       new Scene({
         videoElement: document.createElement('video'),
         apiKey,
+        requestedMediaDevices: { microphone: false, camera: false },
+        requiredMediaDevices: { microphone: false, camera: false },
       }),
     [apiKey],
   );
   const persona = new Persona(scene, personaId);
 
-  const { connect, disconnect, connectionStatus, connectionError } = useConnection(
+  const { videoRef, connect, disconnect, connectionStatus, connectionError } = useConnection(
     scene,
     tokenServer,
   );
@@ -48,6 +51,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         connectionStatus,
         connect,
         disconnect,
+        videoRef,
       }}
     >
       {children}

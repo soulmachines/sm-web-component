@@ -1,16 +1,23 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
-import { useCallback, useState } from 'preact/hooks';
+import { useCallback, useRef, useState } from 'preact/hooks';
 import { ConnectionStatus } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const connect = useCallback(async () => {
     try {
       const connectOptions: ConnectOptions = {};
+
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
+
+      if (videoRef.current) {
+        await scene.startVideo(videoRef.current);
+        videoRef.current.muted = false;
+      }
 
       if (tokenServer) {
         const res = await fetch(tokenServer);
@@ -22,6 +29,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       }
 
       await scene.connect(connectOptions);
+
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
       setConnectionStatus(ConnectionStatus.ERRORED);
@@ -46,6 +54,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     connectionError,
     connect,
     disconnect,
+    videoRef,
   };
 }
 
