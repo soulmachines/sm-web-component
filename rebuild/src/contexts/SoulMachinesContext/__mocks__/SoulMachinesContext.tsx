@@ -25,6 +25,7 @@ const mockUseSoulMachines = {
   connectionError: null,
   scene,
   persona,
+  videoRef: jest.fn(),
 };
 
 const useSoulMachines = jest.fn(() => mockUseSoulMachines);

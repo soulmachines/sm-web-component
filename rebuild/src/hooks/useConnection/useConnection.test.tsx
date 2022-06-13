@@ -1,5 +1,6 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
+import 'preact/hooks';
 import { useConnection } from '.';
 import { ConnectionStatus } from '../../enums';
 
@@ -17,6 +18,10 @@ const mockScene = {
 } as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
+}));
+jest.mock('preact/hooks', () => ({
+  ...jest.requireActual('preact/hooks'),
+  useRef: () => ({ current: document.createElement('video') }),
 }));
 
 describe('useConnection()', () => {
@@ -186,10 +191,11 @@ describe('useConnection()', () => {
 
       beforeEach(() => {
         mockFetch.mockReturnValue(mockedFetchResponse);
-        mockScene.startVideo = () =>
+        jest.spyOn(mockScene, 'startVideo').mockReturnValueOnce(
           new Promise((_, reject) => {
             reject(error);
-          });
+          }),
+        );
       });
 
       it('updates connectionError with the error', async () => {
