@@ -13,8 +13,8 @@ describe('scene', () => {
     });
 
     it('checks that the mute button is rendered', () => {
-      cy.muteScene();
       cy.unmuteScene();
+      cy.muteScene();
     });
 
     // TODO: enable one camera buttons are enabled
