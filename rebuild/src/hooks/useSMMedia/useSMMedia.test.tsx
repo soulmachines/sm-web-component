@@ -8,6 +8,7 @@ const mockScene = {
   isConnected: mockIsConnected,
   setMediaDeviceActive: mockSetMediaDeviceActive,
   isMicrophoneActive: jest.fn(() => false),
+  isCameraActive: jest.fn(() => false),
 } as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
@@ -21,9 +22,19 @@ describe('useSMMedia()', () => {
     expect(typeof result.current.toggleMicrophone).toEqual('function');
   });
 
+  it('returns a toggleCamera function', () => {
+    const { result } = customRender();
+    expect(typeof result.current.toggleCamera).toEqual('function');
+  });
+
   it('returns isMicrophoneEnabled defaulted to false', () => {
     const { result } = customRender();
     expect(result.current.isMicrophoneEnabled).toEqual(false);
+  });
+
+  it('returns isCameraEnabled defaulted to false', () => {
+    const { result } = customRender();
+    expect(result.current.isCameraEnabled).toEqual(false);
   });
 
   it('does not call setMediaDeviceActive', () => {
@@ -39,6 +50,11 @@ describe('useSMMedia()', () => {
     it('sets isMicrophoneEnabled to the return value of scene.isMicrophoneActive', () => {
       const { result } = renderHook(() => useSMMedia(mockScene));
       expect(result.current.isMicrophoneEnabled).toEqual(false);
+    });
+
+    it('sets isMicrophoneEnabled to the return value of scene.isMicrophoneActive', () => {
+      const { result } = renderHook(() => useSMMedia(mockScene));
+      expect(result.current.isCameraEnabled).toEqual(false);
     });
   });
 
@@ -69,6 +85,38 @@ describe('useSMMedia()', () => {
       await result.current.toggleMicrophone();
 
       expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
+
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('when toggleCamera is called', () => {
+    const customRender = () => renderHook(() => useSMMedia(mockScene));
+
+    beforeEach(() => {
+      mockIsConnected.mockReturnValue(true);
+    });
+
+    it('sets isCameraEnabled to the opposite value', async () => {
+      const { result, rerender } = customRender();
+
+      expect(result.current.isCameraEnabled).toEqual(false);
+
+      await result.current.toggleCamera();
+      rerender();
+
+      expect(result.current.isCameraEnabled).toEqual(true);
+    });
+
+    it('calls setMediaDeviceActive with camera and the opposite boolean value', async () => {
+      const { result } = customRender();
+
+      await result.current.toggleCamera();
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: true });
+
+      await result.current.toggleCamera();
+
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
 
       expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
     });
