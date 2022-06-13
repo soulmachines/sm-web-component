@@ -1,4 +1,11 @@
+import { isPermissionAllowed } from 'cypress-browser-permissions';
+
+
 describe('scene', () => {
+  it("should be enabled", () => {
+    expect(isPermissionAllowed("camera")).to.be.true;
+    expect(isPermissionAllowed("microphone")).to.be.true;
+})
   before(() => {
     cy.visit('/');
   });
@@ -13,8 +20,8 @@ describe('scene', () => {
     });
 
     it('checks that the mute button is rendered', () => {
-      cy.muteScene();
       cy.unmuteScene();
+      cy.muteScene();
     });
 
     // TODO: enable one camera buttons are enabled

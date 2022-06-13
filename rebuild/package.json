@@ -18,8 +18,10 @@
     "cypress:open": "cypress open",
     "test:cypress:chrome": "cypress run --headless --browser chrome",
     "test:cypress:edge": "cypress run --headless --browser edge",
+    "test:cypress:firefox": "cypress run --headless --browser firefox",
     "cypress:ci:chrome": "start-server-and-test preview http://localhost:5050 test:cypress:chrome",
-    "cypress:ci:edge": "start-server-and-test preview http://localhost:5050 test:cypress:edge"
+    "cypress:ci:edge": "start-server-and-test preview http://localhost:5050 test:cypress:edge",
+    "cypress:ci:firefox": "start-server-and-test preview http://localhost:5050 test:cypress:firefox"
   },
   "dependencies": {
     "@soulmachines/smwebsdk": "^14.2.0",
@@ -49,6 +51,7 @@
     "autoprefixer": "^10.4.7",
     "copyfiles": "^2.4.1",
     "cssnano": "^5.1.7",
+    "cypress-browser-permissions": "^1.1.0",
     "eslint": "^8.12.0",
     "eslint-config-preact": "^1.3.0",
     "eslint-plugin-react-hooks": "^4.4.0",

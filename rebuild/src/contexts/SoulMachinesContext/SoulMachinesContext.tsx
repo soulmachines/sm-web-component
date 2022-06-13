@@ -26,10 +26,12 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   const personaId = 1;
   const scene = useMemo(
     () =>
-      new Scene({
-        videoElement: document.createElement('video'),
-        apiKey,
-      }),
+    new Scene({
+      videoElement: document.createElement('video'),
+      apiKey,
+      requestedMediaDevices: { microphone: false, camera: false },
+      requiredMediaDevices: { microphone: false, camera: false },
+    }),
     [apiKey],
   );
   const persona = new Persona(scene, personaId);
