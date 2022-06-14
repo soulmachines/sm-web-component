@@ -165,3 +165,29 @@ Helpful urls:
 
 - (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet.min.js`]
 - (Production snippet)[https://static.soulmachines.com/widget-snippet.min.js`]
+
+## Linking to a local version of the Web SDK
+
+Sometimes it's helpful to link to your local smwebsdk repo when debugging an issue. There are a few steps you need to do. These instructions assume you have the websdk repo checked out locally.
+
+### Linking
+
+1. In your terminal navigate to the websdk folder and run `npm link`
+2. Run `npm run watch` to start watching the sdk files
+3. In a seperate terminal navigate to the sm web component folder
+4. Link to your local websdk by running `npm link "@soulmachines/smwebsdk"`
+5. Open `vite.config.ts` and add optimizeDeps to the config. This is needed as vite does some special caching locally
+   ```
+   export default defineConfig({
+     optimizeDeps: {
+       exclude: ['@soulmachines/smwebsdk'],
+     },
+     ....
+   ```
+6. Run `npm run start` and it should be using your local websdk
+
+### Unlinking
+
+1. Remove the `optimizeDeps` object in `vite.config.ts` that you previously added
+2. Open your terminal to the sm web component repo and run `npm unlink "@soulmachines/smwebsdk"`
+3. Run `npm install`
