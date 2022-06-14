@@ -8,6 +8,7 @@ import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import classNames from 'classnames';
+import { ContentCards } from '../ContentCards';
 
 export type WidgetProps = {
   greeting?: string;
@@ -42,11 +43,8 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   return (
     <div className="sm-fixed sm-bottom-0 sm-right-0 sm-p-5 sm-z-max">
       <div className="sm-flex sm-flex-wrap sm-flex-col sm-items-end sm-gap-y-5">
-        {/* Placeholder for the cards component */}
         <div class="sm-w-full sm-max-w-md">
-          <div class="sm-w-full" />
-          <div class="sm-w-full" />
-          <div class="sm-w-full" />
+          <ContentCards />
         </div>
 
         <div className="sm-flex sm-flex-wrap sm-gap-5 sm-items-center sm-justify-end">

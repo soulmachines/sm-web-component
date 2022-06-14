@@ -11,6 +11,7 @@ type Context = {
   connectionError: Error | null;
   connect: () => void;
   disconnect: () => void;
+  sendTextMessage: (text: string) => void;
   videoRef: MutableRef<HTMLVideoElement | null>;
 };
 
@@ -37,6 +38,10 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   );
   const persona = new Persona(scene, personaId);
 
+  const sendTextMessage = (text: string) => {
+    persona.conversationSend(text, {}, {});
+  };
+
   const { videoRef, connect, disconnect, connectionStatus, connectionError } = useConnection(
     scene,
     tokenServer,
@@ -51,6 +56,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         connectionStatus,
         connect,
         disconnect,
+        sendTextMessage,
         videoRef,
       }}
     >

@@ -16,13 +16,13 @@ describe('<BindPublicSmEvents />', () => {
       });
     });
 
-    it('does not call persona.conversationSend', () => {
-      const { persona } = SoulMachinesContext.useSoulMachines();
+    it('does not call sendTextMessage', () => {
+      const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
       render(<BindPublicSmEvents element={element} />);
 
       element.sendTextMessage?.('test');
 
-      expect(persona.conversationSend).not.toHaveBeenCalled();
+      expect(sendTextMessage).not.toHaveBeenCalled();
     });
   });
 
@@ -34,13 +34,13 @@ describe('<BindPublicSmEvents />', () => {
       });
     });
 
-    it('calls persona.conversationSend with the text when sendTextMessage is called', () => {
-      const { persona } = SoulMachinesContext.useSoulMachines();
+    it('calls sendTextMessage with the text when element.sendTextMessage is called', () => {
+      const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
       render(<BindPublicSmEvents element={element} />);
 
       element.sendTextMessage?.('test');
 
-      expect(persona.conversationSend).toHaveBeenCalledWith('test', {}, {});
+      expect(sendTextMessage).toHaveBeenCalledWith('test');
     });
   });
 });
