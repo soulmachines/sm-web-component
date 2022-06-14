@@ -43,7 +43,6 @@ function useSMMedia(scene: Scene) {
   return {
     isMicrophoneEnabled,
     isCameraEnabled,
-    setIsCameraEnabled,
     toggleMicrophone,
     toggleCamera,
   };
