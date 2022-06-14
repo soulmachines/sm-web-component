@@ -14,6 +14,7 @@ let onCardChangedCallback: (data: ContentCard[]) => void;
 const scene = {
   isConnected: jest.fn(),
   isMicrophoneActive: jest.fn(() => false),
+  isCameraActive: jest.fn(() => false),
   videoElement: {
     srcObject: 'mock video src',
   },

@@ -13,17 +13,14 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
 import './commands';
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
 
 declare global {
   namespace Cypress {
     interface Chainable {
       /**
        * Launch the scene. Verify that it shows the loader and then the video
+       * It waits a longer peroid of time (currently 2 minutes) as the first connection takes time
        * @example cy.launchScene()
        */
       launchScene(): Chainable<null>;
@@ -35,28 +32,28 @@ declare global {
       disconnectScene(): Chainable<null>;
 
       /**
-       * Mute the persona
-       * @example cy.muteScene()
+       * Disable the users microphone
+       * @example cy.disableMicrophone()
        */
-      muteScene(): Chainable<null>;
+      disableMicrophone(): Chainable<null>;
 
       /**
-       * Unmute the persona
-       * @example cy.unmuteScene()
+       * Enable the users microphone
+       * @example cy.enableMicrophone()
        */
-      unmuteScene(): Chainable<null>;
+      enableMicrophone(): Chainable<null>;
 
       /**
-       * Turn on the users camera
-       * @example cy.cameraOn()
+       * Enable the users camera
+       * @example cy.enableCamera()
        */
-      cameraOn(): Chainable<null>;
+      enableCamera(): Chainable<null>;
 
       /**
-       * Turn off the users camera
-       * @example cy.cameraOff()
+       * Disable the users camera
+       * @example cy.disableCamera()
        */
-      cameraOff(): Chainable<null>;
+      disableCamera(): Chainable<null>;
 
       /**
        * Close the greeting
