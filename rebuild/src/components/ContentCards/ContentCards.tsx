@@ -4,12 +4,15 @@ import { useState } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { OptionsCard } from '../OptionsCard';
 
+export type CardComponent = {
+  content: ContentCard;
+};
+
 export function ContentCards() {
   const { scene } = useSoulMachines();
   const [cards, setCards] = useState<ContentCard[]>([]);
 
-  // TODO: share type around
-  const cardComponents: Record<string, ({ content }: { content: ContentCard }) => JSX.Element> = {
+  const cardComponents: Record<string, (props: CardComponent) => JSX.Element> = {
     options: OptionsCard,
   };
 
@@ -17,26 +20,21 @@ export function ContentCards() {
     setCards(activeCards),
   );
 
-  if (!cards.length) return null;
-
   return (
     <div>
-      {
-        // todo: use id instead of index when sdk is released
-        cards.map((card, index) => {
-          if (!card.type) return null;
+      {cards.map((card) => {
+        if (!card.type) return null;
 
-          const CardComponent = cardComponents[card.type];
+        const CardComponent = cardComponents[card.type];
 
-          if (!CardComponent) return null;
+        if (!CardComponent) return null;
 
-          return (
-            <div key={index} class="sm-w-full">
-              <CardComponent content={card} />
-            </div>
-          );
-        })
-      }
+        return (
+          <div key={card.id} class="sm-w-full">
+            <CardComponent content={card} />
+          </div>
+        );
+      })}
     </div>
   );
 }
