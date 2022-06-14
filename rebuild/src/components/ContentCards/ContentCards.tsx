@@ -23,9 +23,7 @@ export function ContentCards() {
   return (
     <div>
       {cards.map((card) => {
-        if (!card.type) return null;
-
-        const CardComponent = cardComponents[card.type];
+        const CardComponent = cardComponents[card?.type || ''];
 
         if (!CardComponent) return null;
 
