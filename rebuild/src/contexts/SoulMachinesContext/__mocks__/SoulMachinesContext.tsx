@@ -19,7 +19,7 @@ const scene = {
   },
   conversation: {
     onCardChanged: {
-      addListener: (cb: any) => {
+      addListener: (cb: () => void) => {
         onCardChangedCallback = cb;
       },
       call: jest.fn((data: ContentCard[]) => {

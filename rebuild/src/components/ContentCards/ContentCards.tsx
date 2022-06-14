@@ -12,7 +12,7 @@ export function ContentCards() {
   const { scene } = useSoulMachines();
   const [cards, setCards] = useState<ContentCard[]>([]);
 
-  const cardComponents: Record<string, (props: CardComponent) => JSX.Element> = {
+  const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
   };
 

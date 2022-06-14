@@ -6,9 +6,9 @@ import { ContentCard } from '@soulmachines/smwebsdk';
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<ContentCards />', () => {
-  const customRender = (contentCards: ContentCard[] = []) => {
-    const { scene } = useSoulMachines();
+  const { scene } = useSoulMachines();
 
+  const customRender = (contentCards: ContentCard[] = []) => {
     const testUtils = render(<ContentCards />);
     scene.conversation.onCardChanged.call(contentCards);
 

@@ -1,6 +1,5 @@
 import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { fireEvent, render } from '@testing-library/preact';
-import { renderHook } from '@testing-library/react-hooks';
 import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
 
