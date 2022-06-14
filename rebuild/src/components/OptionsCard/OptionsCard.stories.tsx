@@ -8,6 +8,8 @@ export default {
 };
 
 const content = {
+  id: 'id',
+  type: 'options',
   data: {
     options: [
       {
