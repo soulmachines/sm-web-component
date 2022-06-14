@@ -1,11 +1,13 @@
 import { Scene, Persona } from '@soulmachines/smwebsdk';
-import { render } from '@testing-library/preact';
-import { SoulMachinesProvider } from '.';
+import { fireEvent, render } from '@testing-library/preact';
+import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
 
 const mockConnect = jest.fn();
 const mockScene = { scene: 'mock' };
-const mockPersona = {};
+const mockPersona = {
+  conversationSend: jest.fn(),
+};
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
   Persona: jest.fn(() => mockPersona),
@@ -81,6 +83,28 @@ describe('<SoulMachinesProvider />', () => {
           },
         }),
       );
+    });
+  });
+
+  describe('sendTextMessage', () => {
+    const TestComponent = () => {
+      const { sendTextMessage } = useSoulMachines();
+
+      return (
+        <button onClick={() => sendTextMessage('test message')}>Trigger send text message</button>
+      );
+    };
+
+    it('calls persona conversationSend with the text and two empty objects for the optional args', async () => {
+      const { getByText } = render(
+        <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+          <TestComponent />
+        </SoulMachinesProvider>,
+      );
+
+      await fireEvent.click(getByText('Trigger send text message'));
+
+      expect(mockPersona.conversationSend).toHaveBeenCalledWith('test message', {}, {});
     });
   });
 });
