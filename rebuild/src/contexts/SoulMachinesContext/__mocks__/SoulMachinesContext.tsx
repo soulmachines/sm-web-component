@@ -1,4 +1,4 @@
-import { Persona, Scene } from '@soulmachines/smwebsdk';
+import { ContentCard, Persona, Scene } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { ConnectionStatus } from '../../../enums';
 
@@ -10,11 +10,22 @@ const persona = {
   conversationSend: jest.fn(),
 } as unknown as Persona;
 
+let onCardChangedCallback: (data: ContentCard[]) => void;
 const scene = {
   isConnected: jest.fn(),
   isMicrophoneActive: jest.fn(() => false),
   videoElement: {
     srcObject: 'mock video src',
+  },
+  conversation: {
+    onCardChanged: {
+      addListener: (cb: any) => {
+        onCardChangedCallback = cb;
+      },
+      call: jest.fn((data: ContentCard[]) => {
+        onCardChangedCallback(data);
+      }),
+    },
   },
 } as unknown as Scene;
 
