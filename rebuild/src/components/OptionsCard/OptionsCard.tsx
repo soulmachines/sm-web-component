@@ -21,7 +21,7 @@ export function OptionsCard({ content }: CardComponent) {
   }
 
   return (
-    <Card>
+    <Card isDismissible={false}>
       <div data-sm-content={content.id}>
         {data.options.map((option) => {
           return (
