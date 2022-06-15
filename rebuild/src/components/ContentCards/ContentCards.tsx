@@ -27,7 +27,7 @@ export function ContentCards() {
   );
 
   return (
-    <div>
+    <div className="sm-flex sm-flex-col sm-gap-y-3">
       {transitions((style, card) => {
         const CardComponent = cardComponents[card?.type || ''];
         if (!CardComponent) return null;
