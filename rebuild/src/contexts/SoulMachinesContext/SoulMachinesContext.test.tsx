@@ -4,7 +4,12 @@ import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
 
 const mockConnect = jest.fn();
-const mockScene = { scene: 'mock' };
+const mockScene = {
+  scene: 'mock',
+  conversation: {
+    autoClearCards: jest.fn(),
+  },
+};
 const mockPersona = {
   conversationSend: jest.fn(),
 };
@@ -40,6 +45,10 @@ describe('<SoulMachinesProvider />', () => {
   it('calls useConnect with scene and the token server', () => {
     customRender();
     expect(useConnection).toHaveBeenCalledWith(mockScene, tokenServer);
+  });
+
+  it('sets conversation autoClearCards to true', () => {
+    expect(mockScene.conversation.autoClearCards).toEqual(true);
   });
 
   describe('creating a scene', () => {

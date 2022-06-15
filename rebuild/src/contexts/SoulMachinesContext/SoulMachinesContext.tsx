@@ -37,7 +37,6 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     [apiKey],
   );
   const persona = new Persona(scene, personaId);
-
   const sendTextMessage = (text: string) => {
     persona.conversationSend(text, {}, {});
   };
@@ -46,6 +45,8 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     scene,
     tokenServer,
   );
+
+  scene.conversation.autoClearCards = true;
 
   return (
     <SoulMachinesContext.Provider
