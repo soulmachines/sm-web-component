@@ -1,6 +1,7 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { useState } from 'preact/hooks';
+import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { OptionsCard } from '../OptionsCard';
 
@@ -11,6 +12,12 @@ export type CardComponent = {
 export function ContentCards() {
   const { scene } = useSoulMachines();
   const [cards, setCards] = useState<ContentCard[]>([]);
+  const transitions = useTransition(cards, {
+    from: { opacity: 0, transform: 'translateY(20px)' },
+    enter: { opacity: 1, transform: 'translateY(0px)' },
+    leave: { opacity: 0, transform: 'translateY(20px)' },
+    config: config.gentle,
+  });
 
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
@@ -22,15 +29,14 @@ export function ContentCards() {
 
   return (
     <div>
-      {cards.map((card) => {
+      {transitions((style, card) => {
         const CardComponent = cardComponents[card?.type || ''];
-
         if (!CardComponent) return null;
 
         return (
-          <div key={card.id} class="sm-w-full">
+          <animated.div style={style} class="sm-w-full">
             <CardComponent content={card} />
-          </div>
+          </animated.div>
         );
       })}
     </div>
