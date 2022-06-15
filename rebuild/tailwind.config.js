@@ -20,6 +20,9 @@ module.exports = {
       fontFamily: {
         rubik: ['Rubik', 'Helvetica', 'sans-serif'],
       },
+      maxHeight: {
+        contentCard: '34.25rem',
+      },
       height: {
         35: '8.75rem',
         54: '13.5rem',

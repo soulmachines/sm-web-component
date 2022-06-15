@@ -41,8 +41,8 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   });
 
   return (
-    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-p-5 sm-z-max">
-      <div className="sm-flex sm-flex-wrap sm-flex-col sm-items-end sm-gap-y-5">
+    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-p-5 sm-z-max sm-pointer-events-none sm-h-full">
+      <div className="sm-flex sm-flex-col sm-items-end sm-gap-y-5 sm-h-full sm-justify-end sm-max-h-full">
         <div class="sm-w-63 md:sm-w-88">
           <ContentCards />
         </div>
@@ -61,7 +61,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-300 sm-border-2 sm-border-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
+                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-300 sm-border-2 sm-border-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden sm-pointer-events-auto"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
