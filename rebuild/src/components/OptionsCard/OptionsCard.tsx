@@ -26,7 +26,7 @@ export function OptionsCard({ content }: CardComponent) {
         {data.options.map((option) => {
           return (
             <button
-              key={content.id}
+              key={content.id + option.label}
               className="sm-flex sm-items-center"
               onClick={() => sendTextMessage(option?.value || option.label)}
             >
