@@ -11,6 +11,16 @@ describe('<Card />', () => {
     expect(queryByText('Some text')).toBeInTheDocument();
   });
 
+  it('does not render a close button when isDismissible is false', () => {
+    const { queryByTitle } = render(
+      <Card isDismissible={false}>
+        <p>Some text</p>
+      </Card>,
+    );
+
+    expect(queryByTitle('Hide card')).not.toBeInTheDocument();
+  });
+
   describe('when the close button is clicked', () => {
     it('renders nothing', async () => {
       const { getByTitle, container } = render(<Card />);
