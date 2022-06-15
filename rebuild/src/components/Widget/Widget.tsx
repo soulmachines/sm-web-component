@@ -43,12 +43,14 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   return (
     <div className="sm-fixed sm-bottom-0 sm-right-0 sm-p-5 sm-z-max">
       <div className="sm-flex sm-flex-wrap sm-flex-col sm-items-end sm-gap-y-5">
-        <div class="sm-w-full sm-max-w-md">
+        <div class="sm-w-63 md:sm-w-88">
           <ContentCards />
         </div>
 
         <div className="sm-flex sm-flex-wrap sm-gap-5 sm-items-center sm-justify-end">
-          {isDisconnected && <Notifications greeting={greeting} />}
+          <div className="sm-max-w-xs">
+            {isDisconnected && <Notifications greeting={greeting} />}
+          </div>
 
           <div className={scaledDownClass}>
             <animated.div

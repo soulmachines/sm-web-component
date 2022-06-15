@@ -15,7 +15,7 @@ export function Card({ children, isDismissible }: CardProps = { isDismissible: t
   }
 
   return (
-    <div className="sm-bg-white sm-rounded-xl sm-relative sm-max-w-xs sm-w-full sm-px-6 sm-py-4 sm-shadow-lg">
+    <div className="sm-bg-white sm-rounded-xl sm-relative sm-w-full sm-px-6 sm-py-4 sm-shadow-lg">
       {children}
 
       {isDismissible && (
