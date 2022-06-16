@@ -1,4 +1,4 @@
-name: Release Dev Internal WebSDK
+name: Release Widget with Internal WebSDK
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions:
 
 env:
   ASSET_LOCATION: examples/soulmachines.js
-  ASSET_NAME: 'webcomponent-dev-websdk.js'
+  ASSET_NAME: 'widget-websdk-${GITHUB_REF##*/}.js'
   AWS_PATH: 's3://static-prod.soulmachines.com'
   AWS_DEFAULT_OUTPUT: 'json'
   AWS_DEFAULT_REGION: 'us-east-1'
