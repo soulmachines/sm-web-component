@@ -22,6 +22,10 @@ describe('<ContentCards />', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
+  it('sets conversation autoClearCards to true', () => {
+    expect(scene.conversation.autoClearCards).toEqual(true);
+  });
+
   describe('when cards are present', () => {
     it('renders nothing when the card type is not defined', () => {
       const { container } = customRender([

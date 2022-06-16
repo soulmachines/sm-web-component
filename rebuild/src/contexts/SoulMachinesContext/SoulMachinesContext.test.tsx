@@ -47,10 +47,6 @@ describe('<SoulMachinesProvider />', () => {
     expect(useConnection).toHaveBeenCalledWith(mockScene, tokenServer);
   });
 
-  it('sets conversation autoClearCards to true', () => {
-    expect(mockScene.conversation.autoClearCards).toEqual(true);
-  });
-
   describe('creating a scene', () => {
     beforeEach(() => {
       customRender();

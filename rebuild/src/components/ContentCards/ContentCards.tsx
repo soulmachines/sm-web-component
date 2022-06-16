@@ -1,6 +1,6 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { Fragment, JSX } from 'preact';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { OptionsCard } from '../OptionsCard';
@@ -22,9 +22,13 @@ export function ContentCards() {
     options: OptionsCard,
   };
 
-  scene.conversation.onCardChanged.addListener((activeCards: ContentCard[]) =>
-    setCards(activeCards),
-  );
+  useEffect(() => {
+    scene.conversation.onCardChanged.addListener((activeCards: ContentCard[]) =>
+      setCards(activeCards),
+    );
+
+    scene.conversation.autoClearCards = true;
+  }, [scene]);
 
   return (
     <Fragment>

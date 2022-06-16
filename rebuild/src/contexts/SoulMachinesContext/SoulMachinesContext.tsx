@@ -46,8 +46,6 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     tokenServer,
   );
 
-  scene.conversation.autoClearCards = true;
-
   return (
     <SoulMachinesContext.Provider
       value={{
