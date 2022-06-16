@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { VideoComponent } from '../video/video.component';
 
@@ -13,7 +13,8 @@ enum ConnectionState {
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.scss'],
 })
-export class WidgetComponent {
+export class WidgetComponent implements AfterViewInit{
+
   @Input('token-server') public tokenServer: string;
   @Input('api-key') public apiKey: string;
   @Input('auto-connect') public autoConnect: string;
@@ -26,6 +27,12 @@ export class WidgetComponent {
   public cameraEnabled = false;
   public micEnabled = false;
   public activeCards: ContentCard[] = [];
+
+  ngAfterViewInit(): void {
+    if (sessionStorage.getItem('sm-session-id')) {
+      this.connect();
+    }
+  }
 
   connect() {
     this.connectionState = ConnectionState.Connecting;
