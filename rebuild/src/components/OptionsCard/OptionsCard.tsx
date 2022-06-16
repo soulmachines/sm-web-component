@@ -27,23 +27,21 @@ export function OptionsCard({ content, style }: OptionsCardProps) {
   }
 
   return (
-    <div style={style}>
-      <Card isDismissible={false}>
-        <div data-sm-content={content.id} className="sm-max-h-contentCard">
-          {data.options.map((option) => {
-            return (
-              <button
-                key={content.id + option.label}
-                className="sm-flex sm-items-center"
-                onClick={() => sendTextMessage(option?.value || option.label)}
-              >
-                {option.label}
-                <Icon name="chevronRight" />
-              </button>
-            );
-          })}
-        </div>
-      </Card>
-    </div>
+    <Card isDismissible={false} style={style}>
+      <div data-sm-content={content.id} className="sm-max-h-contentCard">
+        {data.options.map((option) => {
+          return (
+            <button
+              key={content.id + option.label}
+              className="sm-flex sm-items-center"
+              onClick={() => sendTextMessage(option?.value || option.label)}
+            >
+              {option.label}
+              <Icon name="chevronRight" />
+            </button>
+          );
+        })}
+      </div>
+    </Card>
   );
 }
