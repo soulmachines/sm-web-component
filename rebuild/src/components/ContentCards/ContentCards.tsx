@@ -1,5 +1,5 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
-import { JSX } from 'preact';
+import { Fragment, JSX } from 'preact';
 import { useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
@@ -27,17 +27,19 @@ export function ContentCards() {
   );
 
   return (
-    <div className="sm-flex sm-flex-col sm-gap-y-3">
+    <Fragment>
       {transitions((style, card) => {
-        const CardComponent = cardComponents[card?.type || ''];
-        if (!CardComponent) return null;
+        // Get the custom content card to render
+        const ContentCardComponent = cardComponents[card?.type || ''];
 
-        return (
-          <animated.div style={style} class="sm-w-full">
-            <CardComponent content={card} />
-          </animated.div>
-        );
+        // Return if one does not exist
+        if (!ContentCardComponent) return null;
+
+        // Wrap content card in react springs animation hooks
+        const AnimatedContentCardComponent = animated(ContentCardComponent);
+
+        return <AnimatedContentCardComponent style={style} content={card} />;
       })}
-    </div>
+    </Fragment>
   );
 }
