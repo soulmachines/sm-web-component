@@ -26,7 +26,7 @@ describe('scene', () => {
       cy.sendTextMessage('47');
       cy.get('[data-sm-content=options]', { timeout: 4000 }).should('exist');
       cy.get('button').contains('Tell me a joke').should('exist').click();
-      cy.get('[data-sm-content=options]').should('not.exist');
+      //cy.get('[data-sm-content=options]').should('not.exist');
     });
 
     it('renders a disconnect scene button', () => {
