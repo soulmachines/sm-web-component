@@ -17,23 +17,23 @@ describe('<ContentCards />', () => {
     return testUtils;
   };
 
-  it('renders an empty div by default', () => {
+  it('renders nothing by default', () => {
     const { container } = render(<ContentCards />);
-    expect(container.firstChild).toBeEmptyDOMElement();
+    expect(container).toBeEmptyDOMElement();
   });
 
   describe('when cards are present', () => {
-    it('renders an empty div when the card type is not defined', () => {
+    it('renders nothing when the card type is not defined', () => {
       const { container } = customRender([
         {
           id: 'id',
           data: {},
         },
       ]);
-      expect(container.firstChild).toBeEmptyDOMElement();
+      expect(container).toBeEmptyDOMElement();
     });
 
-    it('renders an empty div when the card type is unknown', () => {
+    it('renders nothing when the card type is unknown', () => {
       const { container } = customRender([
         {
           id: 'id',
@@ -42,7 +42,7 @@ describe('<ContentCards />', () => {
         },
       ]);
 
-      expect(container.firstChild).toBeEmptyDOMElement();
+      expect(container).toBeEmptyDOMElement();
     });
 
     it('renders an each option when the card type is options', () => {
