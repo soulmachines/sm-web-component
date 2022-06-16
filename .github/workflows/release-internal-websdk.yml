@@ -1,0 +1,58 @@
+name: Release Widget with Internal WebSDK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write # Required for configure AWS credentials
+  contents: read # Required for checkout the source code
+
+env:
+  ASSET_LOCATION: examples/soulmachines.js
+  ASSET_NAME: 'widget-websdk-${GITHUB_REF##*/}.js'
+  AWS_PATH: 's3://static-prod.soulmachines.com'
+  AWS_DEFAULT_OUTPUT: 'json'
+  AWS_DEFAULT_REGION: 'us-east-1'
+  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/static_sm_com_GHA_Role
+  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.17' # Required for semantic-release for stable release
+
+      - name: Caching Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Set registry path and credentials for internal builds
+        run: echo "@soulmachines:registry=https://npm.pkg.github.com/soulmachines" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{ secrets.SMGITHUBBOT_READ_PACKAGES }}" >> .npmrc
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Asset
+        run: npm run package
+
+      - name: Configure AWS credential
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+
+      - name: Release to CDN
+        run: |
+          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/${{ env.ASSET_NAME }}
+          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+          echo "dev release done"
