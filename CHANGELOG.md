@@ -1,5 +1,43 @@
 # Change Log
 
+# [1.4.0](https://github.com/soulmachines/sm-web-component/compare/1.3.1...1.4.0) (2022-06-19)
+
+
+### Bug Fixes
+
+* bring in latest sdk changes ([#207](https://github.com/soulmachines/sm-web-component/issues/207)) ([34b6e80](https://github.com/soulmachines/sm-web-component/commit/34b6e80608ba88501d4ebcfddb60c4dec389b22a))
+* dont render empty box for unsupported cards quic-1789 ([#204](https://github.com/soulmachines/sm-web-component/issues/204)) ([1795d7f](https://github.com/soulmachines/sm-web-component/commit/1795d7f760f6ee10021038b2b9918ad9c146f5c4))
+* improve video resizer quic-1809 ([#209](https://github.com/soulmachines/sm-web-component/issues/209)) ([d909088](https://github.com/soulmachines/sm-web-component/commit/d909088a6362a7224962c4b4f863d297260922ae))
+* only call updateVideoBounds if video is connected and make video 100% width/height ([#188](https://github.com/soulmachines/sm-web-component/issues/188)) ([9b52145](https://github.com/soulmachines/sm-web-component/commit/9b52145f741b44e2c0dc1a0943fcef67cb209c5d))
+
+
+### Features
+
+* add button to toggle mic quic-1668 ([#187](https://github.com/soulmachines/sm-web-component/issues/187)) ([58ba497](https://github.com/soulmachines/sm-web-component/commit/58ba4977bec1e5f9a07251ec60c29c9bae150a1c))
+* add public method for sending messages to dp quic-1801 ([#210](https://github.com/soulmachines/sm-web-component/issues/210)) ([7b9175c](https://github.com/soulmachines/sm-web-component/commit/7b9175c98f8d05131e6e0215692fef6d5cb97466))
+* add workflow to deploy bundles quic-1755 ([#194](https://github.com/soulmachines/sm-web-component/issues/194)) ([31438f7](https://github.com/soulmachines/sm-web-component/commit/31438f7e99a6f6a1c99db67987e6eaa5118d37b0))
+* add workflow to do prod release ([#195](https://github.com/soulmachines/sm-web-component/issues/195)) ([a9aad30](https://github.com/soulmachines/sm-web-component/commit/a9aad3015d759ab232ecadc1c3cbee8f41cac643))
+* allow card to have not close button quic-1824 ([#221](https://github.com/soulmachines/sm-web-component/issues/221)) ([66496c5](https://github.com/soulmachines/sm-web-component/commit/66496c5dd125d0c83c407015d5f1e760a9ba78cb))
+* autoclear cards quic-1783 ([#206](https://github.com/soulmachines/sm-web-component/issues/206)) ([51906d3](https://github.com/soulmachines/sm-web-component/commit/51906d3a84c81e4915481821fb983580b83379df))
+* change x to down chevron quic-1814 ([#220](https://github.com/soulmachines/sm-web-component/issues/220)) ([be9ab8f](https://github.com/soulmachines/sm-web-component/commit/be9ab8fcfc1e8aa4d9c7aa9deefa8fb98062a0cf))
+* connect without cam and mic (fix safari issue) ([#214](https://github.com/soulmachines/sm-web-component/issues/214)) ([b3e24b9](https://github.com/soulmachines/sm-web-component/commit/b3e24b9623a3ad0c1e71b51eed93fd77d694d12c))
+* content cards quic-1776  ([#218](https://github.com/soulmachines/sm-web-component/issues/218)) ([25338ba](https://github.com/soulmachines/sm-web-component/commit/25338bad09e57f72d28285968f76d55b761c556e))
+* create button with tailwind styling ([#215](https://github.com/soulmachines/sm-web-component/issues/215)) ([1c43dbc](https://github.com/soulmachines/sm-web-component/commit/1c43dbcdd45ea1b0493971401f0c9d7cbb61f089))
+* create snippet for react quic-1742 ([#193](https://github.com/soulmachines/sm-web-component/issues/193)) ([f1b4ffc](https://github.com/soulmachines/sm-web-component/commit/f1b4ffc0312bc1ffa8ef0bec8e84f722bac524b5))
+* create text component quic-1752  ([#191](https://github.com/soulmachines/sm-web-component/issues/191)) ([baae590](https://github.com/soulmachines/sm-web-component/commit/baae590b8adc229f5f2105d3d8c38f9f52ff0385))
+* handle connection errors quic-1667 ([#189](https://github.com/soulmachines/sm-web-component/issues/189)) ([4b4e525](https://github.com/soulmachines/sm-web-component/commit/4b4e52568645d78541a87bf2bb25eda616870bfb))
+* handle timeouts quic-1666 ([#186](https://github.com/soulmachines/sm-web-component/issues/186)) ([45df4df](https://github.com/soulmachines/sm-web-component/commit/45df4dfb1b30f46d5060df0e300b95da0621732d))
+* output options content card ([#197](https://github.com/soulmachines/sm-web-component/issues/197)) ([c5a284a](https://github.com/soulmachines/sm-web-component/commit/c5a284ae88a250ec9e88e643dc46472530fd57b2))
+* position layout the widget + add small animation ([#196](https://github.com/soulmachines/sm-web-component/issues/196)) ([a65c21f](https://github.com/soulmachines/sm-web-component/commit/a65c21f6496c1b922824137eedb02e4910041693))
+* refactor connection booleans into an enum status quic-1751 ([#192](https://github.com/soulmachines/sm-web-component/issues/192)) ([acaf948](https://github.com/soulmachines/sm-web-component/commit/acaf948062e465e6fbc629153f69721e687b932e))
+* run cypress tests against react widget QUIC-1723 ([#201](https://github.com/soulmachines/sm-web-component/issues/201)) ([34c8476](https://github.com/soulmachines/sm-web-component/commit/34c8476e5f950578e03e9b554bd00c854dda5728))
+* send label when value is undefined for options card quic-1782 ([#203](https://github.com/soulmachines/sm-web-component/issues/203)) ([ee2d2f5](https://github.com/soulmachines/sm-web-component/commit/ee2d2f556446913bc9c954b9d9b51c4d125fb5aa))
+* setup styling quic-1721 ([#185](https://github.com/soulmachines/sm-web-component/issues/185)) ([1849880](https://github.com/soulmachines/sm-web-component/commit/1849880e14e2d3cdf76e4c409b9167b5a3d23bbd))
+* style dp connect button quic-1763 ([#208](https://github.com/soulmachines/sm-web-component/issues/208)) ([5883429](https://github.com/soulmachines/sm-web-component/commit/5883429867d235f3fd811d5c5a2c7198a238141d))
+* style options card quic-1775 ([#198](https://github.com/soulmachines/sm-web-component/issues/198)) ([a58e261](https://github.com/soulmachines/sm-web-component/commit/a58e261465357ede606dbe1652ba5778a40ca92b))
+* toggle camera button quic-1669 ([#217](https://github.com/soulmachines/sm-web-component/issues/217)) ([547d9bd](https://github.com/soulmachines/sm-web-component/commit/547d9bd0533394f9b47ad0bd5484b709a69ec39f))
+* use type when deciding what cc to show quic-1792 ([#205](https://github.com/soulmachines/sm-web-component/issues/205)) ([f733df9](https://github.com/soulmachines/sm-web-component/commit/f733df9903c267b40504672c7c703f5c4992b9e0))
+
 ## [1.3.1](https://github.com/soulmachines/sm-web-component/compare/1.3.0...1.3.1) (2022-05-17)
 
 
