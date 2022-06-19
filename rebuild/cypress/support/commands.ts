@@ -52,9 +52,7 @@ Cypress.Commands.add('closeGreeting', () => {
 });
 
 Cypress.Commands.add('sendTextMessage', (message: string) => {
-  cy.get('sm-widget').then(($el) => {
-    cy.log(`sending text message: ${message}`);
-    const el: any = $el.get(0);
-    el.sendTextMessage(message);
-  });
+  cy.get('#textMessage').type(message);
+  cy.log(`sending text message: ${message}`);
+  cy.get('#sendMessage').click();
 });

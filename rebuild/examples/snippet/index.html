@@ -5,12 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SM Widget</title>
 
+    <label for="textMessage">Text message</label>
+    <input type="text" name="textMessage" id="textMessage" />
+    <button id="sendMessage" type="submit">Send</button>
+
     <script
       src="widget-snippet.min.js"
       data-sm-greeting="Welcome"
       data-sm-profile-picture="https://assets.cdn.soulmachines.cloud/AvatarCoverImages/image-sam-l.jpg"
       data-sm-api-key="eyJzb3VsSWQiOiJkZG5hLXNvdWxfbWFjaGluZXMtcHJvZHdlYmNvbXBvbmVudCIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzBhYzgyOGZhLTJhMTAtNDk2NS1iYjI4LWE4ZTkzYWQ5OTZmYyJ9"
     ></script>
+
+    <script>
+      const sendMessageButton = document.getElementById('sendMessage');
+      const textMessage = document.getElementById('textMessage');
+
+      sendMessageButton.addEventListener(
+        'click',
+        () => {
+          document.querySelector('sm-widget').sendTextMessage(textMessage.value);
+        },
+        false,
+      );
+    </script>
   </head>
   <body></body>
 </html>
