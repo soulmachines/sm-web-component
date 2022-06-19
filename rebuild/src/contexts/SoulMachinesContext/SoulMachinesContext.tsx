@@ -38,7 +38,11 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   );
   const persona = new Persona(scene, personaId);
   const sendTextMessage = (text: string) => {
-    persona.conversationSend(text, {}, {});
+    try {
+      persona.conversationSend(text, {}, {});
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const { videoRef, connect, disconnect, connectionStatus, connectionError } = useConnection(
