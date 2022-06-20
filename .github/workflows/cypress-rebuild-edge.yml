@@ -44,7 +44,7 @@ jobs:
           start: npm run cypress:ci:edge
           wait-on: 'http://localhost:5050'
           wait-on-timeout: 360 # 5 minutes
-          config-file: cypress.json
+          config-file: cypress.config.ts
           spec: cypress/integration/*.ts
           record: true
           working-directory: rebuild
