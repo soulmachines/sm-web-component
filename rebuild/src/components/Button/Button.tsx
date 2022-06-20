@@ -11,7 +11,7 @@ export function Button({ children, theme }: ButtonProps) {
       true,
     'sm-text-white sm-rounded-lg sm-bg-primary-600 hover:sm-bg-primary-700 active:sm-bg-primary-800 focus:sm-bg-primary-600 focus:sm-outline-2 focus:sm-outline-primary-200':
       theme === 'default',
-    'sm-rounded-sm sm-border-alpha-black10 sm-border sm-border-solid sm-transition-colors sm-outline-1 hover:sm-border-neutral-600  hover:sm-outline-neutral-600  focus:sm-border-neutral-600 focus:sm-outline-neutral-600 active:sm-text-white active:sm-bg-neutral-600':
+    'sm-rounded-sm sm-text-neutral-700 sm-capitalize sm-border-alpha-black10 sm-border sm-border-solid sm-transition-colors sm-outline-1 hover:sm-border-neutral-600  hover:sm-outline-neutral-600  focus:sm-border-neutral-600 focus:sm-outline-neutral-600 active:sm-text-white active:sm-bg-neutral-600':
       theme === 'outline',
   });
 
