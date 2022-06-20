@@ -12,13 +12,13 @@ export type IconButtonProps = {
 };
 
 export function IconButton( { name, size, shadow, styleType }: IconButtonProps) {
-  const styleClasses = classNames({
+  const buttonClass = classNames({
     "sm-bg-white sm-rounded-full sm-p-3 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200" : styleType == StyleType.default,
     "sm-bg-error-400 sm-rounded-full sm-p-3 sm-text-white hover:sm-bg-error-500 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200" : styleType == StyleType.danger,
+    "sm-shadow": shadow
   });
-  const shadowStyle = shadow == true ? "sm-shadow" : "";
   return (
-    <button className={`${styleClasses} ${shadowStyle}`}>
+    <button className={`${buttonClass}`}>
         <Icon name={name} size={size}/>
     </button>
   );
