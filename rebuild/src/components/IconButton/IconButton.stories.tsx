@@ -11,7 +11,7 @@ export const Basic = ({ styleType, shadow, size }: IconButtonProps) => <div>
   {Object.keys(paths).map((key) => {
   return (
     <div>
-      <IconButton name={key} size={size} shadow={shadow} styleType={styleType}/>
+      <IconButton name={key} size={size} title={key} shadow={shadow} styleType={styleType}/>
     </div>
   );
   })}
