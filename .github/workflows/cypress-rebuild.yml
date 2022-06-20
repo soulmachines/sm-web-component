@@ -47,6 +47,6 @@ jobs:
           wait-on: 'http://localhost:5050'
           wait-on-timeout: 360 # 5 minutes
           config-file: cypress.config.ts
-          spec: cypress/integration/*.ts
+          spec: cypress/e2e/*.ts
           record: true
           working-directory: rebuild
