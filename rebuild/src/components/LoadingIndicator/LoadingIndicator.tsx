@@ -1,22 +1,17 @@
-export type LoadingIndicatorProps = {
-  size?: number | string;
-};
-
-export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%' }) {
+export function LoadingIndicator() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width={size}
-      height={size}
+      width="6.25rem"
+      height="6.25rem"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
       fill="currentcolor"
-      class="default-spinner"
     >
       <title>Loading...</title>
       <g transform="rotate(0 50 50)">
-        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="15" height="15">
+        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="0.938rem" height="0.938rem">
           <animate
             attributeName="opacity"
             values="1;0"
@@ -28,7 +23,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
         </rect>
       </g>
       <g transform="rotate(72 50 50)">
-        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="15" height="15">
+        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="0.938rem" height="0.938rem">
           <animate
             attributeName="opacity"
             values="1;0"
@@ -40,7 +35,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
         </rect>
       </g>
       <g transform="rotate(144 50 50)">
-        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="15" height="15">
+        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="0.938rem" height="0.938rem">
           <animate
             attributeName="opacity"
             values="1;0"
@@ -52,7 +47,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
         </rect>
       </g>
       <g transform="rotate(216 50 50)">
-        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="15" height="15">
+        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="0.938rem" height="0.938rem">
           <animate
             attributeName="opacity"
             values="1;0"
@@ -64,7 +59,7 @@ export function LoadingIndicator({ size }: LoadingIndicatorProps = { size: '100%
         </rect>
       </g>
       <g transform="rotate(288 50 50)">
-        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="15" height="15">
+        <rect x="42.5" y="22.5" rx="7.5" ry="7.5" width="0.938rem" height="0.938rem">
           <animate
             attributeName="opacity"
             values="1;0"
