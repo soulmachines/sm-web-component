@@ -29,11 +29,15 @@ export function OptionsCard({ content, style }: OptionsCardProps) {
 
   return (
     <Card isDismissible={false} style={style}>
-      <div data-sm-content={content.id} className="sm-max-h-contentCard">
+      <div
+        data-sm-content={content.id}
+        className="sm-max-h-contentCard sm-flex sm-flex-col sm-gap-y-2"
+      >
         {data.options.map((option) => {
           return (
             <Button
               key={content.id + option.label}
+              theme="outline"
               onClick={() => sendTextMessage(option?.value || option.label)}
             >
               {option.label}
