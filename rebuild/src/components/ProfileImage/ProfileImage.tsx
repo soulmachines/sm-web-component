@@ -20,5 +20,5 @@ export function ProfileImage({ src }: ProfileImageProps) {
     );
   }
 
-  return <Icon name="profile" title={altText} size={46} />;
+  return <Icon name="profile" title={altText} size="2.875rem" />;
 }
