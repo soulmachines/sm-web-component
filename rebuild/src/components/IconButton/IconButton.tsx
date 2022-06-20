@@ -6,17 +6,20 @@ export enum StyleType { default, danger };
 
 export type IconButtonProps = {
   name: keyof typeof paths,
+  size?: number,
+  shadow?: boolean,
   styleType: StyleType
 };
 
-export function IconButton( { name, styleType }: IconButtonProps) {
+export function IconButton( { name, size, shadow, styleType }: IconButtonProps) {
   const styleClasses = classNames({
-    "sm-bg-primary-600" : styleType == StyleType.default,
-    "sm-bg-error-500" : styleType == StyleType.danger
+    "sm-bg-white sm-rounded-full sm-p-3 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200" : styleType == StyleType.default,
+    "sm-bg-error-400 sm-rounded-full sm-p-3 sm-text-white hover:sm-bg-error-500 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200" : styleType == StyleType.danger,
   });
+  const shadowStyle = shadow == true ? "sm-shadow" : "";
   return (
-    <button className={`${styleClasses}`}>
-        <Icon name={name}/>
+    <button className={`${styleClasses} ${shadowStyle}`}>
+        <Icon name={name} size={size}/>
     </button>
   );
 }
