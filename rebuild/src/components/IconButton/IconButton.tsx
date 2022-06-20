@@ -24,3 +24,7 @@ export function IconButton( { name, size, title, shadow, theme }: IconButtonProp
     </button>
   );
 }
+
+IconButton.defaultProps = {
+  theme: Theme.default
+ }
