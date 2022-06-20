@@ -4,7 +4,12 @@ import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
 
 const mockConnect = jest.fn();
-const mockScene = { scene: 'mock' };
+const mockScene = {
+  scene: 'mock',
+  conversation: {
+    autoClearCards: jest.fn(),
+  },
+};
 const mockPersona = {
   conversationSend: jest.fn(),
 };

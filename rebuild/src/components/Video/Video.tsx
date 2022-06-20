@@ -72,7 +72,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         playsInline
         data-sm-video
         className={videoClass}
-        ref={(el) => {
+        ref={(el: HTMLVideoElement) => {
           // From the plugin docs https://github.com/wellyshen/react-cool-dimensions#how-to-share-a-ref
           // Allows for our own ref and the resizers ref
           observe(el);

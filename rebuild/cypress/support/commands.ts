@@ -1,3 +1,17 @@
+// Temporary fix that solves "remoteJQuery is not a function"
+// Thread here: https://github.com/cypress-io/cypress/issues/1502#issuecomment-832403402
+// Remove once solution is released
+Cypress.on('window:before:load', () => {
+  /**
+   * Thankfully, Cypress searches for "jQuery" property on the state
+   *  variable (cy), if that's present, it takes the precedence
+   *  over window.$
+   *  https://github.com/cypress-io/cypress/blob/7.0-release/packages/driver/src/cy/jquery.js#L12
+   */
+  // @ts-ignore
+  Cypress.cy.state('jQuery', Cypress.$);
+});
+
 Cypress.Commands.add('launchScene', (timeout: number = 40000) => {
   cy.get('[data-sm-cy=connectButton]').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
@@ -38,9 +52,7 @@ Cypress.Commands.add('closeGreeting', () => {
 });
 
 Cypress.Commands.add('sendTextMessage', (message: string) => {
-  cy.get('sm-widget').then(($el) => {
-    cy.log(`sending text message: ${message}`);
-    const el: any = $el.get(0);
-    el.sendTextMessage(message);
-  });
+  cy.get('#textMessage').type(message);
+  cy.log(`sending text message: ${message}`);
+  cy.get('#sendMessage').click();
 });

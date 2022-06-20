@@ -5,9 +5,10 @@ import { Icon } from '../Icon';
 export type CardProps = {
   children?: JSX.Element;
   isDismissible?: boolean;
+  style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 
-export function Card({ children, isDismissible }: CardProps = { isDismissible: true }) {
+export function Card({ children, isDismissible, style }: CardProps = { isDismissible: true }) {
   const [isHidden, setIsHidden] = useState(false);
 
   if (isHidden) {
@@ -15,13 +16,18 @@ export function Card({ children, isDismissible }: CardProps = { isDismissible: t
   }
 
   return (
-    <div className="sm-bg-white sm-rounded-xl sm-relative sm-max-w-xs sm-w-full sm-px-6 sm-py-4 sm-shadow-lg">
-      {children}
+    <div
+      className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8"
+      style={style}
+    >
+      <div className="sm-bg-white sm-rounded-xl sm-w-full sm-px-6 sm-py-4 sm-shadow-lg sm-overflow-y-auto">
+        {children}
+      </div>
 
       {isDismissible && (
         <button
           onClick={() => setIsHidden(true)}
-          className="sm-absolute sm-top-0 sm-right-0 sm-translate-x-1/2 -sm-translate-y-2/4"
+          className="sm-absolute sm-top-8 sm-right-8 sm-translate-x-1/2 -sm-translate-y-2/4"
         >
           <Icon name="close" title="Hide card" />
         </button>
