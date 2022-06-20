@@ -24,7 +24,7 @@ describe('scene', () => {
 
     it('renders an options content block the hides options block once its interacted with', () => {
       cy.sendTextMessage('47');
-      cy.get('[data-sm-content=options]', { timeout: 4000 }).should('exist');
+      cy.get('[data-sm-content=options]', { timeout: 5000 }).should('exist');
       cy.get('button').contains('Tell me a joke').should('exist').click();
       cy.get('[data-sm-content=options]').should('not.exist');
     });
