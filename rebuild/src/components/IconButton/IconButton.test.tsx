@@ -7,7 +7,7 @@ describe('<IconButton />', () => {
         expect(queryByTitle('microphone')).toBeInTheDocument();
     });
 
-    it('passes the onClick function to the button', async () => {
+    it('calls the passed in onClick function when the button is clicked', async () => {
         const mock = jest.fn();
         const { queryByTitle } = render(<IconButton name={'microphone'} title={'microphone'} onClick={mock}/>);
         const button = queryByTitle('microphone');
