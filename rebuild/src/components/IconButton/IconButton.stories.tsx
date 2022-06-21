@@ -6,17 +6,13 @@ export default {
   title: `Components / IconButton`,
   component: IconButton,
   argTypes: { 
-    theme: {  control: 'check', options: ['default', 'danger'] }, 
+    theme: {  control: 'radio', options: ['default', 'danger'] }, 
     shadow: {  control: 'boolean' },
     size: { control: 'number' },
-    name: { control: 'check', options: Object.keys(paths) }
+    name: { control: 'radio', options: Object.keys(paths) }
   }
 };
 
-export const Basic = ({ theme, shadow, size, name }: IconButtonProps) => {
-  <div>
-    <div>
-      <IconButton name={name} size={size} title={name} shadow={shadow} theme={theme}/>
-    </div>
-  </div>
-}
+export const Basic = ({ theme, shadow, size, name }: IconButtonProps) => (
+  <IconButton name={name} size={size} title={name} shadow={shadow} theme={theme}/>
+)
