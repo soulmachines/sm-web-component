@@ -43,7 +43,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   });
 
   return (
-    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-p-5 sm-z-max sm-pointer-events-none sm-h-full">
+    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-p-2 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ">
       <div className="sm-flex sm-flex-col sm-items-end sm-gap-y-5 sm-h-full sm-justify-end">
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-3 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content">
           <ContentCards />
