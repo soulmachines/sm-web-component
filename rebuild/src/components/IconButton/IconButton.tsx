@@ -30,5 +30,6 @@ export function IconButton( { name, size, title, shadow, theme, onClick }: IconB
 }
 
 IconButton.defaultProps = {
-  theme: Theme.default
+  theme: Theme.default,
+  size: '1.375rem', // rem for 22px.
  }
