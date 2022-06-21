@@ -8,6 +8,7 @@ export function LoadingIndicator() {
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 100 100"
     >
+      <title>Loading...</title>
       <rect width="0.938em" height="0.938em" x="42.5" y="22.5" rx="7.5" ry="7.5">
         <animate
           attributeName="opacity"
