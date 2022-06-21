@@ -25,10 +25,12 @@ module.exports = {
         contentCard: '34.25rem',
       },
       height: {
+        18: '4.5rem',
         35: '8.75rem',
         54: '13.5rem',
       },
       width: {
+        18: '4.5rem',
         35: '8.75rem',
         63: '15.75rem',
         88: '22rem',

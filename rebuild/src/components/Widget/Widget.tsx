@@ -25,7 +25,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
 
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
-    <div className="sm-w-35 sm-h-35 sm-flex sm-items-center sm-justify-center sm-text-primary-600">
+    <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-items-center sm-justify-center sm-text-primary-600">
       <div className="sm-w-12 sm-h-12 md:sm-w-24 md:sm-h-24">
         {loadingIndicator ? loadingIndicator : <DefaultLoadingIndicator />}
       </div>
@@ -59,13 +59,13 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
           <div className={scaledDownClass}>
             <animated.div
               style={scaleAnimation}
-              className="sm-rounded-3xl sm-origin-bottom-right sm-shadow-lg sm-bg-secondary-100 sm-pointer-events-auto"
+              className="sm-rounded-xl sm-origin-bottom-right sm-shadow-lg sm-bg-secondary-100 sm-pointer-events-auto md:sm-rounded-3xl"
             >
               {isDisconnected && (
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-35 sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-300 sm-border-2 sm-border-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
+                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-300 sm-border-2 sm-border-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>

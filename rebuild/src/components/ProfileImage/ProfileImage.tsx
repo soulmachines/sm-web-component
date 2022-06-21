@@ -19,6 +19,9 @@ export function ProfileImage({ src }: ProfileImageProps) {
       </div>
     );
   }
-
-  return <Icon name="profile" title={altText} size="2.875rem" />;
+  return (
+    <div className="sm-w-5 md:sm-w-12">
+      <Icon name="profile" title={altText} size="100%" />
+    </div>
+  );
 }
