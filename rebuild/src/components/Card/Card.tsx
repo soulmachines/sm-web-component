@@ -20,7 +20,7 @@ export function Card({ children, isDismissible, style }: CardProps = { isDismiss
       className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8"
       style={style}
     >
-      <div className="sm-bg-white sm-rounded-xl sm-w-full sm-px-6 sm-py-4 sm-shadow-lg sm-overflow-y-auto">
+      <div className="sm-bg-white sm-rounded-xl sm-w-full sm-px-6 sm-py-6 sm-shadow-lg sm-overflow-y-auto">
         {children}
       </div>
 
