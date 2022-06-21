@@ -1,11 +1,9 @@
-import { render } from '@testing-library/preact';
-import { IconButton, StyleType } from '.';
+import { fireEvent, render } from '@testing-library/preact';
+import { IconButton } from '.';
 
 describe('<IconButton />', () => {
     it('render button and verify it appears in document', () => {
-        const { container } = render(<IconButton name={'microphone'} styleType={StyleType.default}/>);
-        const svg = container.querySelector('svg');
-
-        expect(svg).not.toBeNull();
+        const { queryByTitle } = render(<IconButton name={'microphone'} title={"microphone"}/>);
+        expect(queryByTitle('microphone')).toBeInTheDocument();
     });
 });
