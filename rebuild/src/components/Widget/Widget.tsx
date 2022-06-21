@@ -49,7 +49,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
           <ContentCards />
         </div>
 
-        <div className="sm-flex sm-flex-wrap sm-gap-5 sm-items-center sm-justify-end">
+        <div className="sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5">
           {isDisconnected && (
             <div className="sm-max-w-xs">
               <Notifications greeting={greeting} />
