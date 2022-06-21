@@ -1,24 +1,22 @@
 import { IconButton } from '.';
 import paths from '../Icon/paths';
-import { IconButtonProps, Theme } from './IconButton';
+import { IconButtonProps } from './IconButton';
 
 export default {
   title: `Components / IconButton`,
   component: IconButton,
+  argTypes: { 
+    theme: {  control: 'check', options: ['default', 'danger'] }, 
+    shadow: {  control: 'boolean' },
+    size: { control: 'number' },
+    name: { control: 'check', options: Object.keys(paths) }
+  }
 };
 
-export const Basic = ({ theme, shadow, size }: IconButtonProps) => <div>
-  {Object.keys(paths).map((key) => {
-  return (
+export const Basic = ({ theme, shadow, size, name }: IconButtonProps) => {
+  <div>
     <div>
-      <IconButton name={key} size={size} title={key} shadow={shadow} theme={theme}/>
+      <IconButton name={name} size={size} title={name} shadow={shadow} theme={theme}/>
     </div>
-  );
-  })}
   </div>
-
-Basic.args = {
-  theme: Theme.default,
-  shadow: false,
-  size: 40
 }

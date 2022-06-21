@@ -2,7 +2,10 @@ import classNames from "classnames";
 import { Icon } from "../Icon";
 import paths from "../Icon/paths";
 
-export enum Theme { default, danger };
+export enum Theme { 
+  default = 'default', 
+  danger = 'danger',
+}
 
 export type IconButtonProps = {
   name: keyof typeof paths,
@@ -10,7 +13,7 @@ export type IconButtonProps = {
   title: string,
   shadow?: boolean,
   theme: Theme
-};
+}
 
 export function IconButton( { name, size, title, shadow, theme }: IconButtonProps) {
   const buttonClass = classNames({
