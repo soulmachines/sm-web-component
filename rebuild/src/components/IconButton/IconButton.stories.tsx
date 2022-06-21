@@ -6,10 +6,10 @@ export default {
   title: `Components / IconButton`,
   component: IconButton,
   argTypes: { 
-    theme: {  control: 'radio', options: ['default', 'danger'] }, 
-    shadow: {  control: 'boolean' },
-    size: { control: 'number' },
-    name: { control: 'radio', options: Object.keys(paths) }
+    theme: {  control: 'radio', options: ['default', 'danger'], defaultValue: 'default' }, 
+    shadow: {  control: 'boolean' , defaultValue: true},
+    size: { control: 'number', defaultValue: 40 },
+    name: { control: 'radio', options: Object.keys(paths), defaultValue: 'microphone' }
   }
 };
 
