@@ -9,12 +9,12 @@ describe('<IconButton />', () => {
 
     it('calls the passed in onClick function when the button is clicked', async () => {
         const mock = jest.fn();
-        const { queryByTitle } = render(<IconButton name={'microphone'} title={'microphone'} onClick={mock}/>);
-        const button = queryByTitle('microphone');
-        expect(button).not.toBeNull();
-        if (button) {
-            await fireEvent.click(button);
-            expect(mock).toHaveBeenCalled();
-        }
+        const { getByTitle } = render(
+          <IconButton name={'microphone'} title={'microphone'} onClick={mock} />,
+        );
+        const button = getByTitle('microphone');
+    
+        await fireEvent.click(button);
+        expect(mock).toHaveBeenCalled();expect(mock).toHaveBeenCalled();
     });
 });
