@@ -26,7 +26,9 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
     <div className="sm-w-35 sm-h-35 sm-flex sm-items-center sm-justify-center sm-text-primary-600">
-      {loadingIndicator ? loadingIndicator : <DefaultLoadingIndicator size="96" />}
+      <div className="sm-w-12 sm-h-12 md:sm-w-24 md:sm-h-24">
+        {loadingIndicator ? loadingIndicator : <DefaultLoadingIndicator />}
+      </div>
     </div>
   );
 
