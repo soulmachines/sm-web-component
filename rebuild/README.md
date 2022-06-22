@@ -87,6 +87,16 @@ It's best to use a (selector)[https://docs.cypress.io/guides/references/best-pra
 
 It compiles multiple css files for each entry point. This is so that someone can use the `sm-video` component, without inherting the `sm-widget` styles.
 
+### Sizing
+
+By default Tailwind uses `rem` which has some benefits over pixel sizing. Such as scaling up content nicely when the zoom is increased, which is great for accessibility. Unfortunately `rem` sizing is based off the `html` element. Our styles assume the font-size on the `html` element is `16px`. The web component can be embedded on any website and the website may have changed the font size on `html` element to another value(eg: 10px is common). This would make our web component appear at a different size than we expect.
+
+Tailwind currently only supports `rem`. To work around this i've added a postcss plugin which converts all `rem` values to `px`. Postcss works by running scripts against your compiled css. In future we can stick with `rem` if we want or switch to another sizing in Tailwind supports it.
+
+### CSS Reset
+
+Tailwind includes a (global css reset)[https://tailwindcss.com/docs/preflight]. We've disabled this as it will collide with the users website and potentially change the rendering of their UI. Tailwind does not support scoping it. To get around this we've copied across the css reset and prefixed it with `sm-widget`. This way we get the reset styles but it is scoped to our code.
+
 ### Local development
 
 Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview. By default it will only work when you are within `class=""` or `className=""`. We are using a npm library called `classNames` to conditionally apply classes. To get autocomplete working within this object you'll need to open your `settings.json` vscode file and add the below snippet.
