@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/preact';
+import { fireEvent, render, waitFor } from '@testing-library/preact';
 import { Card } from '.';
 
 describe('<Card />', () => {
@@ -28,7 +28,10 @@ describe('<Card />', () => {
 
       await fireEvent.click(button);
 
-      expect(container).toBeEmptyDOMElement();
+      // Wait for animation to complete
+      await waitFor(() => {
+        expect(container).toBeEmptyDOMElement();
+      });
     });
   });
 });
