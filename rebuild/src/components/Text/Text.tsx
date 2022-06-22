@@ -13,7 +13,7 @@ export function Text({ children, size, ...rest }: TextProps) {
   });
 
   return (
-    <p className={`sm-font-rubik sm-font-normal ${sizeClass}`} {...rest}>
+    <p className={`sm-text-neutral-700 sm-font-rubik sm-font-normal ${sizeClass}`} {...rest}>
       {children}
     </p>
   );
