@@ -91,4 +91,7 @@ module.exports = {
     },
   ],
   prefix: 'sm-',
+  corePlugins: {
+    preflight: false,
+  },
 };
