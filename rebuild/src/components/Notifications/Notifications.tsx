@@ -3,6 +3,7 @@ import { Card } from '../Card';
 import { Text } from '../Text';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
+import { Button } from '../Button';
 
 export type NotificationsProps = {
   greeting?: string;
@@ -16,7 +17,7 @@ export function Notifications({ greeting }: NotificationsProps) {
       return (
         <Fragment>
           <Text>{`Unable to connect. ${connectionError?.message}`}</Text>
-          <button onClick={connect}>Retry</button>
+          <Button onClick={connect}>Retry</Button>
         </Fragment>
       );
     }
@@ -25,7 +26,7 @@ export function Notifications({ greeting }: NotificationsProps) {
       return (
         <Fragment>
           <Text>Your session has ended. You can reconnect anytime you are ready.</Text>
-          <button onClick={connect}>Connect</button>
+          <Button onClick={connect}>Connect</Button>
         </Fragment>
       );
     }
