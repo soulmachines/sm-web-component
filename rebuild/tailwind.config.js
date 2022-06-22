@@ -9,7 +9,6 @@ module.exports = {
     extend: {
       borderRadius: {
         inherit: 'inherit',
-        sm: '0.25rem',
       },
       boxShadow: {
         // Translates to designs menu, hover, overlay and modal
@@ -46,9 +45,6 @@ module.exports = {
         max: '9999',
       },
       colors: {
-        alpha: {
-          black10: 'rgba(0,0,0, 0.10)',
-        },
         primary: {
           100: '#E8EBEF',
           200: '#CCD4DD',
