@@ -64,7 +64,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   return (
     <div className="sm-w-full sm-h-full sm-overflow-hidden">
       {connectionStatus === ConnectionStatus.CONNECTING &&
-        (loadingIndicator || <DefaultLoadingIndicator size="96" />)}
+        (loadingIndicator || <DefaultLoadingIndicator />)}
 
       <animated.video
         style={videoAnimation}

@@ -2,9 +2,7 @@ module.exports = {
   content: ['./src/**/**/**.tsx'],
   theme: {
     screens: {
-      sm: '320px',
-      md: '768px',
-      lg: '1024px',
+      md: { raw: '(min-width: 768px) and (min-height: 450px)' },
     },
     extend: {
       borderRadius: {
@@ -25,10 +23,12 @@ module.exports = {
         contentCard: '34.25rem',
       },
       height: {
+        18: '4.5rem',
         35: '8.75rem',
         54: '13.5rem',
       },
       width: {
+        18: '4.5rem',
         35: '8.75rem',
         63: '15.75rem',
         88: '22rem',

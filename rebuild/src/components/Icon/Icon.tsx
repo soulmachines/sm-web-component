@@ -3,7 +3,7 @@ import paths from './paths';
 export type IconProps = {
   name: keyof typeof paths;
   title?: string;
-  size?: number;
+  size?: number | string;
 };
 
 export function Icon({ size, name, title }: IconProps) {
@@ -24,5 +24,5 @@ export function Icon({ size, name, title }: IconProps) {
   );
 }
 Icon.defaultProps = {
-  size: 20,
+  size: '1.25rem',
 };
