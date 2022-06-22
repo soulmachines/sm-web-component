@@ -2,6 +2,7 @@ import { JSX } from 'preact';
 import { useState } from 'preact/hooks';
 import { animated, useTransition } from 'react-spring';
 import { Icon } from '../Icon';
+import { IconButton } from '../IconButton';
 
 export type CardProps = {
   children?: JSX.Element;
@@ -29,12 +30,11 @@ export function Card({ children, isDismissible, style }: CardProps = { isDismiss
           </div>
 
           {isDismissible && (
-            <button
-              onClick={() => setIsHidden(true)}
-              className="sm-absolute sm-top-8 sm-right-8 sm-translate-x-1/2 -sm-translate-y-2/4"
-            >
-              <Icon name="close" title="Hide card" />
-            </button>
+            <div className="sm-absolute sm-top-8 sm-right-8 sm-translate-x-1/2 -sm-translate-y-2/4">
+              <IconButton name="close" title="Hide card" shadow={true}
+                onClick={() => setIsHidden(true)}
+              />
+            </div>
           )}
         </animated.div>
       ),
