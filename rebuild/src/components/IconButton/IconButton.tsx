@@ -21,7 +21,7 @@ export function IconButton({ name, size, title, shadow, theme, onClick }: IconBu
     'sm-border-none sm-cursor-pointer': true,
     'sm-bg-white sm-rounded-full sm-p-3 hover:sm-bg-grayscale-100 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200':
       theme == Theme.default,
-    'sm-bg-error-400 sm-rounded-full sm-p-3 sm-text-grayscale-100 hover:sm-bg-error-500 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200':
+    'sm-bg-error-400 sm-rounded-full sm-p-3 sm-text-white hover:sm-bg-error-500 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200':
       theme == Theme.danger,
     'sm-shadow': shadow,
   });
