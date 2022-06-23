@@ -1,6 +1,6 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { useSMMedia } from '../../hooks/useSMMedia';
-import { IconButton } from '../IconButton';
+import { IconButton, Theme } from '../IconButton';
 
 export function VideoControls() {
   const { scene, disconnect } = useSoulMachines();
@@ -19,8 +19,8 @@ export function VideoControls() {
       </div>
 
       <div className="sm-flex sm-justify-between">
-        <IconButton onClick={toggleMicrophone} name={microphoneIcon} title={microphoneText} />
-        <IconButton onClick={toggleCamera} name={cameraIcon} title={cameraText} />
+        <IconButton onClick={toggleMicrophone} name={microphoneIcon} title={microphoneText} theme={Theme.danger} />
+        <IconButton onClick={toggleCamera} name={cameraIcon} title={cameraText} theme={Theme.danger} />
       </div>
     </div>
   );

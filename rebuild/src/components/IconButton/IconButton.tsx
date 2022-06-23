@@ -34,5 +34,5 @@ export function IconButton({ name, size, title, shadow, theme, onClick }: IconBu
 
 IconButton.defaultProps = {
   theme: Theme.default,
-  size: '1.375rem', // rem for 22px.
+  size: '1.25rem', // rem for 22px.
 };
