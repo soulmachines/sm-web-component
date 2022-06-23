@@ -18,7 +18,7 @@ export type IconButtonProps = {
 
 export function IconButton({ name, size, title, shadow, theme, onClick }: IconButtonProps) {
   const buttonClass = classNames({
-    'sm-border-none sm-cursor-pointer': true,
+    'sm-border-none sm-cursor-pointer sm-transition-colors': true,
     'sm-bg-white sm-rounded-full sm-p-3 hover:sm-bg-grayscale-100 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200':
       theme == Theme.default,
     'sm-bg-error-400 sm-rounded-full sm-p-3 sm-text-white hover:sm-bg-error-500 focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-200':
@@ -34,5 +34,5 @@ export function IconButton({ name, size, title, shadow, theme, onClick }: IconBu
 
 IconButton.defaultProps = {
   theme: Theme.default,
-  size: '1.25rem', // rem for 22px.
+  size: '1.25rem', // rem for 20px.
 };
