@@ -19,8 +19,18 @@ export function VideoControls() {
       </div>
 
       <div className="sm-flex sm-justify-between">
-        <IconButton onClick={toggleMicrophone} name={microphoneIcon} title={microphoneText} theme={Theme.danger} />
-        <IconButton onClick={toggleCamera} name={cameraIcon} title={cameraText} theme={Theme.danger} />
+        <IconButton
+          onClick={toggleMicrophone}
+          name={microphoneIcon}
+          title={microphoneText}
+          theme={Theme.danger}
+        />
+        <IconButton
+          onClick={toggleCamera}
+          name={cameraIcon}
+          title={cameraText}
+          theme={Theme.danger}
+        />
       </div>
     </div>
   );
