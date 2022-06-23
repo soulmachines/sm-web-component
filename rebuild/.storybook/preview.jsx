@@ -1,3 +1,4 @@
+import React from 'react';
 import '../src/web-components/sm-widget/sm-widget.css';
 
 export const parameters = {
@@ -19,3 +20,6 @@ export const parameters = {
     ],
   },
 };
+
+// Render our stories into a sm-widget so we get the global styles
+export const decorators = [(Story) => <sm-widget>{Story()}</sm-widget>];
