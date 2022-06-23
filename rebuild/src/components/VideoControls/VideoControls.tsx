@@ -1,5 +1,4 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Icon } from '../Icon';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { IconButton } from '../IconButton';
 
@@ -16,7 +15,7 @@ export function VideoControls() {
   return (
     <div className="sm-p-3 sm-flex sm-flex-col sm-justify-between sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
       <div className="sm-flex sm-justify-between sm-ml-auto">
-        <IconButton onClick={disconnect} name="chevronDown" title="Close video"/>
+        <IconButton onClick={disconnect} name="chevronDown" title="Close video" />
       </div>
 
       <div className="sm-flex sm-justify-between">

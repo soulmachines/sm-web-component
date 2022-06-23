@@ -1,7 +1,6 @@
 import { JSX } from 'preact';
 import { useState } from 'preact/hooks';
 import { animated, useTransition } from 'react-spring';
-import { Icon } from '../Icon';
 import { IconButton } from '../IconButton';
 
 export type CardProps = {
