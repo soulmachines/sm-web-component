@@ -30,7 +30,10 @@ export function Card({ children, isDismissible, style }: CardProps = { isDismiss
 
           {isDismissible && (
             <div className="sm-absolute sm-top-8 sm-right-8 sm-translate-x-1/2 -sm-translate-y-2/4">
-              <IconButton name="close" title="Hide card" shadow={true}
+              <IconButton
+                name="close"
+                title="Hide card"
+                shadow={true}
                 onClick={() => setIsHidden(true)}
               />
             </div>
