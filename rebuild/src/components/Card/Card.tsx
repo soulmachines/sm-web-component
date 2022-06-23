@@ -29,7 +29,7 @@ export function Card({ children, isDismissible, style }: CardProps = { isDismiss
           </div>
 
           {isDismissible && (
-            <div className="sm-absolute sm-top-8 sm-right-8 sm-translate-x-1/2 -sm-translate-y-2/4">
+            <div className="sm-absolute sm-top-8 sm-right-8 sm-translate-x-1/3-sm-translate-y-1/3">
               <IconButton
                 name="close"
                 title="Hide card"
