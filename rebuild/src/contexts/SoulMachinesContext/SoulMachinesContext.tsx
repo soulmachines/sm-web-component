@@ -3,6 +3,7 @@ import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus } from '../../enums';
+import { useSMMedia } from '../../hooks/useSMMedia';
 
 type Context = {
   scene: Scene;
@@ -13,6 +14,12 @@ type Context = {
   disconnect: () => void;
   sendTextMessage: (text: string) => void;
   videoRef: MutableRef<HTMLVideoElement | null>;
+  isMicrophoneEnabled: boolean;
+  isCameraEnabled: boolean;
+  isVideoMuted: boolean;
+  toggleMicrophone: () => void;
+  toggleCamera: () => void;
+  toggleVideoMuted: () => void;
 };
 
 // Create context with default values
@@ -45,22 +52,17 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     }
   };
 
-  const { videoRef, connect, disconnect, connectionStatus, connectionError } = useConnection(
-    scene,
-    tokenServer,
-  );
+  const useConnectionData = useConnection(scene, tokenServer);
+  const useMediaData = useSMMedia(scene);
 
   return (
     <SoulMachinesContext.Provider
       value={{
         scene,
         persona,
-        connectionError,
-        connectionStatus,
-        connect,
-        disconnect,
         sendTextMessage,
-        videoRef,
+        ...useConnectionData,
+        ...useMediaData,
       }}
     >
       {children}

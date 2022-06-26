@@ -20,6 +20,7 @@ jest.mock('@soulmachines/smwebsdk', () => ({
 jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({ connect: mockConnect })),
 }));
+jest.mock('../../hooks/useSMMedia');
 
 describe('<SoulMachinesProvider />', () => {
   const apiKey = 'mock api key';
