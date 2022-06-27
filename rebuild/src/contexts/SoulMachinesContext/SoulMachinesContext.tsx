@@ -34,13 +34,16 @@ type SoulMachinesProviderProps = {
 function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
   const personaId = 1;
   const scene = useMemo(
-    () =>
-      new Scene({
+    () => {
+      const cameraSaved = sessionStorage.getItem('sm-camera') === "true";
+      const microphoneSaved = sessionStorage.getItem('sm-mic') === "true";
+      return new Scene({
         videoElement: document.createElement('video'),
         apiKey,
-        requestedMediaDevices: { microphone: false, camera: false },
+        requestedMediaDevices: { microphone: microphoneSaved, camera: cameraSaved },
         requiredMediaDevices: { microphone: false, camera: false },
-      }),
+      })
+    },
     [apiKey],
   );
   const persona = new Persona(scene, personaId);

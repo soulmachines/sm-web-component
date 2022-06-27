@@ -9,6 +9,7 @@ import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
+import { useEffect } from 'preact/hooks';
 
 export type WidgetProps = {
   greeting?: string;
@@ -22,6 +23,15 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   const isDisconnected =
     connectionStatus !== ConnectionStatus.CONNECTED &&
     connectionStatus !== ConnectionStatus.CONNECTING;
+
+  // Connect directly if it's resume session
+  useEffect(() => {
+    if (isDisconnected) {
+      if (sessionStorage.getItem('sm-session-id')){
+        connect();
+      }
+    }
+  }, [connect, isDisconnected]);
 
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (

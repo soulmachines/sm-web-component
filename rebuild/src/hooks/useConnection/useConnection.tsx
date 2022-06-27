@@ -32,6 +32,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
+      cleanupSessionStorage();
       setConnectionStatus(ConnectionStatus.ERRORED);
 
       if (error instanceof Error) {
@@ -42,8 +43,17 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
   const disconnect = () => {
     setConnectionStatus(ConnectionStatus.DISCONNECTED);
+    cleanupSessionStorage();
     scene.disconnect();
   };
+
+  const cleanupSessionStorage = () =>{
+      sessionStorage.removeItem('sm-camera');
+      sessionStorage.removeItem('sm-mic');
+      sessionStorage.removeItem('sm-server');
+      sessionStorage.removeItem('sm-session-id');
+      sessionStorage.removeItem('sm-api-key');
+  }
 
   scene.onDisconnectedEvent.addListener(() => {
     setConnectionStatus(ConnectionStatus.TIMED_OUT);

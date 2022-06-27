@@ -14,8 +14,14 @@ function useSMMedia(scene: Scene) {
     if (isConnected) {
       setIsMicrophoneEnabled(isMicrophoneActive);
       setIsCameraEnabled(isCameraActive);
+      scene.onCameraActive.addListener((cameraStatus:boolean) =>
+        sessionStorage.setItem('sm-camera', cameraStatus.toString())
+      );
+      scene.onMicrophoneActive.addListener((micStatus:boolean) =>
+        sessionStorage.setItem('sm-mic', micStatus.toString())
+      );
     }
-  }, [isConnected, isMicrophoneActive, isCameraActive]);
+  }, [isConnected, isMicrophoneActive, isCameraActive, scene.onCameraActive, scene.onMicrophoneActive, scene.onDisconnectedEvent]);
 
   const toggleMicrophone = async () => {
     try {
