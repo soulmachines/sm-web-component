@@ -56,10 +56,11 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 ### Local development
 
 - `npm run start` to run the dev server with live reload
-- `npm run preview` to start a server and serve the snippet code
+- `npm run serve-snippet` to start a server and serve the snippet code
 - `npm run storybook` to start storybook
 - `npm run build` to compile the scripts and build the snippet
 - `npm run build-snippet` to compile snippet script
+- `npm run copy-cypress-pages` to copy cypress test pages into dist folder
 
 ### Linting
 
@@ -165,7 +166,7 @@ The supported config options are:
 
 ### Running the snippet locally
 
-Run `npm run preview`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
+Run `npm run serve-snippet`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
 
 ## Deployment
 
