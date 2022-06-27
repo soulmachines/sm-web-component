@@ -22,6 +22,13 @@ describe('scene', () => {
       cy.disableCamera();
     });
 
+    it('renders a mute button and then renders a unmute video button once clicked', () => {
+      cy.get('title').contains('Unmute video').should('not.exist');
+      cy.get('title').contains('Mute video').should('exist').click({ force: true });
+      cy.get('title').contains('Mute video').should('not.exist');
+      cy.get('title').contains('Unmute video').should('exist');
+    });
+
     it('renders an options content block the hides options block once its interacted with', () => {
       cy.sendTextMessage('47');
       cy.get('[data-sm-content=options]', { timeout: 5000 }).should('exist');
@@ -44,7 +51,7 @@ describe('scene', () => {
       cy.get('title').contains('Enable camera').should('not.exist');
     });
 
-    it('does not render a mute button', () => {
+    it('does not render a microphone button', () => {
       cy.get('title').contains('Disable microphone').should('not.exist');
       cy.get('title').contains('Enable microphone').should('not.exist');
     });

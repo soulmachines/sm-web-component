@@ -1,22 +1,8 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { VideoControls } from '.';
-import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-
-const mockToggleMicrophone = jest.fn();
-const mockToggleCamera = jest.fn();
-let mockIsMicrophoneEnabled: boolean;
-let mockIsCameraEnabled: boolean;
+import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
-
-jest.mock('../../hooks/useSMMedia', () => ({
-  useSMMedia: () => ({
-    isMicrophoneEnabled: mockIsMicrophoneEnabled,
-    isCameraEnabled: mockIsCameraEnabled,
-    toggleMicrophone: mockToggleMicrophone,
-    toggleCamera: mockToggleCamera,
-  }),
-}));
 
 describe('<VideoControls />', () => {
   const customRender = () => render(<VideoControls />);
@@ -27,29 +13,37 @@ describe('<VideoControls />', () => {
 
     await fireEvent.click(button);
 
-    expect(useSoulMachines().disconnect).toBeCalledTimes(1);
+    expect(SoulMachinesContext.useSoulMachines().disconnect).toBeCalledTimes(1);
   });
 
   describe('on the initial render', () => {
     it('does not call disconnect', () => {
       customRender();
-      expect(useSoulMachines().disconnect).toBeCalledTimes(0);
+      expect(SoulMachinesContext.useSoulMachines().disconnect).toBeCalledTimes(0);
     });
 
     it('does not call toggleMicrophone', () => {
       customRender();
-      expect(mockToggleMicrophone).toBeCalledTimes(0);
+      expect(SoulMachinesContext.useSoulMachines().toggleMicrophone).toBeCalledTimes(0);
     });
 
     it('does not call toggleCamera', () => {
       customRender();
-      expect(mockToggleCamera).toBeCalledTimes(0);
+      expect(SoulMachinesContext.useSoulMachines().toggleCamera).toBeCalledTimes(0);
+    });
+
+    it('does not call toggleVideoMuted', () => {
+      customRender();
+      expect(SoulMachinesContext.useSoulMachines().toggleVideoMuted).toBeCalledTimes(0);
     });
   });
 
   describe('when microphone is disabled', () => {
     beforeEach(() => {
-      mockIsMicrophoneEnabled = false;
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isMicrophoneEnabled: false,
+      });
     });
 
     it('calls toggleMicrophone when the enable button is clicked', async () => {
@@ -57,13 +51,16 @@ describe('<VideoControls />', () => {
       const enableButton = getByTitle('Enable microphone');
       await fireEvent.click(enableButton);
 
-      expect(mockToggleMicrophone).toBeCalledTimes(1);
+      expect(SoulMachinesContext.useSoulMachines().toggleMicrophone).toBeCalledTimes(1);
     });
   });
 
   describe('when microphone is enabled', () => {
     beforeEach(() => {
-      mockIsMicrophoneEnabled = true;
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isMicrophoneEnabled: true,
+      });
     });
 
     it('calls toggleMicrophone when the disable button is clicked', async () => {
@@ -71,13 +68,16 @@ describe('<VideoControls />', () => {
       const disableButton = getByTitle('Disable microphone');
       await fireEvent.click(disableButton);
 
-      expect(mockToggleMicrophone).toBeCalledTimes(1);
+      expect(SoulMachinesContext.useSoulMachines().toggleMicrophone).toBeCalledTimes(1);
     });
   });
 
   describe('when camera is disabled', () => {
     beforeEach(() => {
-      mockIsCameraEnabled = false;
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isCameraEnabled: false,
+      });
     });
 
     it('calls toggleCamera when the enable button is clicked', async () => {
@@ -85,13 +85,16 @@ describe('<VideoControls />', () => {
       const enableButton = getByTitle('Enable camera');
       await fireEvent.click(enableButton);
 
-      expect(mockToggleCamera).toBeCalledTimes(1);
+      expect(SoulMachinesContext.useSoulMachines().toggleCamera).toBeCalledTimes(1);
     });
   });
 
   describe('when camera is enabled', () => {
     beforeEach(() => {
-      mockIsCameraEnabled = true;
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isCameraEnabled: true,
+      });
     });
 
     it('calls toggleCamera when the disable button is clicked', async () => {
@@ -99,7 +102,41 @@ describe('<VideoControls />', () => {
       const disableButton = getByTitle('Disable camera');
       await fireEvent.click(disableButton);
 
-      expect(mockToggleCamera).toBeCalledTimes(1);
+      expect(SoulMachinesContext.useSoulMachines().toggleCamera).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when video is muted', () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isVideoMuted: true,
+      });
+    });
+
+    it('calls toggleVideoMuted when the unmute button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const unmuteButton = getByTitle('Unmute video');
+      await fireEvent.click(unmuteButton);
+
+      expect(SoulMachinesContext.useSoulMachines().toggleVideoMuted).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when video is unmuted', () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isVideoMuted: false,
+      });
+    });
+
+    it('calls toggleVideoMuted when the mute button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const muteButton = getByTitle('Mute video');
+      await fireEvent.click(muteButton);
+
+      expect(SoulMachinesContext.useSoulMachines().toggleVideoMuted).toBeCalledTimes(1);
     });
   });
 });

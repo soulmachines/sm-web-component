@@ -36,9 +36,15 @@ const mockUseSoulMachines = {
   sendTextMessage: jest.fn(),
   connectionStatus: ConnectionStatus.DISCONNECTED,
   connectionError: null,
+  isMicrophoneEnabled: false,
+  isCameraEnabled: false,
+  isVideoMuted: false,
   scene,
   persona,
   videoRef: jest.fn(),
+  toggleMicrophone: jest.fn(),
+  toggleCamera: jest.fn(),
+  toggleVideoMuted: jest.fn(),
 };
 
 const useSoulMachines = jest.fn(() => mockUseSoulMachines);
