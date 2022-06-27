@@ -22,7 +22,7 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
 };
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
-  const { videoRef, scene, connectionStatus, connect } = useSoulMachines();
+  const { videoRef, scene, connectionStatus, isVideoMuted, connect } = useSoulMachines();
   const videoStream = scene.videoElement?.srcObject;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const { observe } = useDimensions<HTMLVideoElement>({
@@ -72,6 +72,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         playsInline
         data-sm-video
         className={videoClass}
+        muted={isVideoMuted}
         ref={(el: HTMLVideoElement) => {
           // From the plugin docs https://github.com/wellyshen/react-cool-dimensions#how-to-share-a-ref
           // Allows for our own ref and the resizers ref

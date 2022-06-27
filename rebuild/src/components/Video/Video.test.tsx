@@ -94,6 +94,26 @@ describe('<Video />', () => {
       const { container } = customRender();
       expect(container.querySelector('svg')).not.toBeInTheDocument();
     });
+
+    it('sets video muted to true whenn isVideoMuted is true', () => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isVideoMuted: true,
+      });
+
+      const { container } = customRender();
+      expect(container.querySelector('video')?.muted).toEqual(true);
+    });
+
+    it('sets video muted to false when isVideoMuted is false', () => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        isVideoMuted: false,
+      });
+
+      const { container } = customRender();
+      expect(container.querySelector('video')?.muted).toEqual(false);
+    });
   });
 });
 
