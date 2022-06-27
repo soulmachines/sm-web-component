@@ -2,6 +2,7 @@ import { Scene } from '@soulmachines/smwebsdk';
 import { useEffect, useState } from 'preact/hooks';
 
 function useSMMedia(scene: Scene) {
+  const [isVideoMuted, setIsVideoMuted] = useState(scene.videoElement?.muted || false);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
   const [isCameraEnabled, setIsCameraEnabled] = useState(false);
   const isConnected = scene.isConnected();
@@ -40,11 +41,17 @@ function useSMMedia(scene: Scene) {
     }
   };
 
+  const toggleVideoMuted = () => {
+    setIsVideoMuted(!isVideoMuted);
+  };
+
   return {
     isMicrophoneEnabled,
     isCameraEnabled,
+    isVideoMuted,
     toggleMicrophone,
     toggleCamera,
+    toggleVideoMuted,
   };
 }
 
