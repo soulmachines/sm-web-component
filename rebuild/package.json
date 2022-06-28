@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build && npm run build-snippet",
+    "build": "tsc && vite build && npm run build-snippet && npm run copy-cypress-pages",
     "build-snippet": "node ./scripts/build-snippet.js && uglifyjs dist/widget-snippet.js --output dist/widget-snippet.min.js  --compress --mangle --toplevel ",
-    "preview": "copyfiles -f ./examples/snippet/* ./dist && vite preview",
+    "copy-cypress-pages": "copyfiles -f ./examples/snippet/* ./dist",
+    "serve-snippet": "sirv dist -p 5050",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "lint": "eslint src/",
@@ -17,9 +18,7 @@
     "generate": "plop --plopfile generators/index.js",
     "cypress:open": "cypress open",
     "test:cypress:chrome": "cypress run --headless --browser chrome",
-    "test:cypress:edge": "cypress run --headless --browser edge",
-    "cypress:ci:chrome": "start-server-and-test preview http://localhost:5050 test:cypress:chrome",
-    "cypress:ci:edge": "start-server-and-test preview http://localhost:5050 test:cypress:edge"
+    "test:cypress:edge": "cypress run --headless --browser edge"
   },
   "dependencies": {
     "@soulmachines/smwebsdk": "^14.3.1",
@@ -50,6 +49,7 @@
     "copyfiles": "^2.4.1",
     "cssnano": "^5.1.12",
     "cypress": "^10.1.0",
+    "cypress-log-to-output": "^1.1.2",
     "eslint": "^8.18.0",
     "eslint-config-preact": "^1.3.0",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -58,7 +58,7 @@
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "shelljs": "^0.8.5",
-    "start-server-and-test": "^1.14.0",
+    "sirv-cli": "^2.0.2",
     "tailwindcss": "^3.1.3",
     "ts-jest": "^27.1.4",
     "typescript": "^4.7.4",
