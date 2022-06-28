@@ -65,6 +65,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
   scene.onDisconnectedEvent.addListener(() => {
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
+    cleanupSessionStorage();
   });
 
   return {
