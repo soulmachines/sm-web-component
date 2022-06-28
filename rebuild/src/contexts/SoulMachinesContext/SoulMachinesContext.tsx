@@ -35,12 +35,10 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   const personaId = 1;
   const scene = useMemo(
     () => {
-      const cameraSaved = sessionStorage.getItem('sm-camera') === "true";
-      const microphoneSaved = sessionStorage.getItem('sm-mic') === "true";
       return new Scene({
         videoElement: document.createElement('video'),
         apiKey,
-        requestedMediaDevices: { microphone: microphoneSaved, camera: cameraSaved },
+        requestedMediaDevices: { microphone: false, camera: false },
         requiredMediaDevices: { microphone: false, camera: false },
       })
     },
