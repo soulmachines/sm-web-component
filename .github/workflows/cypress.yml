@@ -6,7 +6,7 @@ on:
 jobs:
   cypress-install:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.6-slim-chrome100-ff99-edge
+    container: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-      - run: npm run build
+      - run: npm run build:cypress
 
       # Upload build folder to be used in subsequent jobs (run-chrome, run-edge etc)
       - name: Save dist folder

@@ -18,6 +18,12 @@ The web components allow for integration of a Digital Person into any website.
 
 Copy the `.env.template` file and rename it to `.env`.
 
+### Using the correct node version
+
+Most of the team uses (nvm)[https://github.com/nvm-sh/nvm], which allows you to switch node versions quickly. You can see what node version to use by looking at our `.nvmrc` file.
+
+You can setup your terminal to switch node versions automatically based on the node version. The docs have (illustrate)[https://github.com/nvm-sh/nvm#deeper-shell-integration]how to do it. If you don't want to setup automatic switching and you use `nvm`, you can type `nvm use` and it will switch to the correct node version. You'll see the automatic node switching working when you navigate into the folder. A message will appear "Now using node v16.14.2 (npm v8.5.0)". If you see something like this "You need to run "nvm install 16.14.2" to install it before using it." you'll need to run the command to install the node version.
+
 ### Connecting via an API Key
 
 When working locally you'll need an api key to connect to a digital person.
@@ -59,6 +65,7 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 - `npm run serve-snippet` to start a server and serve the snippet code
 - `npm run storybook` to start storybook
 - `npm run build` to compile the scripts and build the snippet
+- `npm run build:cypress` to compile the code and copy across the cypress test pages
 - `npm run build-snippet` to compile snippet script
 - `npm run copy-cypress-pages` to copy cypress test pages into dist folder
 
