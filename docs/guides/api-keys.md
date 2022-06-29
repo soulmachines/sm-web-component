@@ -5,7 +5,7 @@ The web component has an optional `api-key` attribute. API Keys for a project ca
 Either an `api-key` or `token-server` must be provided. If both are provided, the API key will be prioritised.
 
 ```
-<sm-video
+<sm-widget
   api-key="abc123456789"
-></sm-video>
+></sm-widget>
 ```
