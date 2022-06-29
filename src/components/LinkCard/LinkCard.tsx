@@ -18,7 +18,7 @@ export function LinkCard({ content, text }: LinkCardProps) {
   const data = content.data as unknown as LinkData;
   return (
     <Card>
-      <div data-sm-content={data.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
+      <div data-sm-content={content.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
         <Text>{text}</Text>
         <Button>
           <a className="sm-text-white sm-no-underline" href={data.url} target="_blank">
