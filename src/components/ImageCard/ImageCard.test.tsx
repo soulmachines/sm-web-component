@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/preact';
+import { render } from '@testing-library/preact';
 import { ImageCard } from '.';
 
 describe('<ImageCard />', () => {
