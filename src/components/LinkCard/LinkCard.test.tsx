@@ -1,5 +1,3 @@
 import { LinkCard } from '.';
 
-describe('<LinkCard />', () => {
-
-});
+describe('<LinkCard />', () => {});

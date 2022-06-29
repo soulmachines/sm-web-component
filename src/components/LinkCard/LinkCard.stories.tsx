@@ -10,9 +10,9 @@ const content = {
   type: 'externalLink',
   data: {
     url: '"https://www.soulmachines.com"',
-    title: "Soul Machines",
-    imageUrl: "https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png"
-  }
-}
+    title: 'Soul Machines',
+    imageUrl: 'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
+  },
+};
 
 export const Basic = () => <LinkCard content={content} text="Placeholder text" />;
