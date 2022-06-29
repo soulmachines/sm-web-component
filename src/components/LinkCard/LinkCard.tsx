@@ -6,6 +6,7 @@ import { ContentCard } from '@soulmachines/smwebsdk';
 export type LinkCardProps = {
   content: ContentCard;
   text?: string;
+  style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 
 export type LinkData = {
@@ -14,10 +15,10 @@ export type LinkData = {
   title: string;
 };
 
-export function LinkCard({ content, text }: LinkCardProps) {
+export function LinkCard({ content, text, style }: LinkCardProps) {
   const data = content.data as unknown as LinkData;
   return (
-    <Card>
+    <Card style={style}>
       <div data-sm-content={content.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
         <Text>{text}</Text>
         <Button>
