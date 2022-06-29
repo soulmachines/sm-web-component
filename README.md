@@ -1,145 +1,204 @@
-# Soul Machines Video Web Component
+# Web Component
 
-The Video web component allows integration of a Digital Person into any website.
+The web components allow for integration of a Digital Person into any website.
 
-Please refer to the [Usage Guide](./docs/USAGE.md) and [API Documentation](./docs/API-DOCS.md) for implementation guidance.
+## Tools
 
-## Usage Examples
+- [Preact](https://preactjs.com/) for composing the UI
+- [React Spring](https://react-spring.io/) for UI animations
+- [Vite](https://vitejs.dev/) for bundling the code
+- [Eslint](https://eslint.org/) for finding and fixing code issues
+- [Prettier](https://prettier.io/) for code formatting
+- [Storybook](https://storybook.js.org/) for building and previewing components
+- [Jest](https://jestjs.io/) for the test runner
+- [Testing Tools](https://testing-library.com/) for testing utils
+- [Plop](https://plopjs.com/) for generating files and folders
 
-See the `examples` folder for more usage examples.
+## Getting started
 
-## Local Development
+Copy the `.env.template` file and rename it to `.env`.
 
-The project consists of 2 parts:
+### Connecting via an API Key
 
-- An Angular project, which builds a web component
-- A Parcel configuration, which serves the compiled library and examples as a static site
+When working locally you'll need an api key to connect to a digital person.
 
-### Setup
+#### Creating an API Key
 
-Create a `.env` file in the root folder, copied from `.env.template` with the relevant values taken from your DP in DDNA Studio -> Edit Project -> Conection Config (Advanced)
+**Prerequisites**
 
-### Github token for local development
+- You have created a project in DDNA Studio dev.
+- You are connected to the full vpn
 
-Go to your GitHub profile -> Settings -> Developer settings -> Personal access tokens -> Generate new token ->
-Enter a note ie: 'SM private packages'
-Select scopes:
+**Steps**
 
-repo - Full control of private repositories
-read:packages - Download packages from GitHub Package Registry
+- Visit the (create api key page)[https://studio-dev.soulmachines.cloud/api-keys/create] in studio
+- Give your key a memorable name, eg: Web Component Local Development
+- Pick "web" for the scope
+- Select your project
+- Tick "I'm developing locally"
+- Enter your IP address and subnet mask. Make sure you are on the VPN when doing this.
 
-Generate token -> Copy token to save later -> Enable SSO -> Authorize to soulmachines org
+  - Find your IP address by running this command in your terminal `curl ifconfig.me && echo`
+  - Most likely your subnet mask is 32
 
-Add your personal access token to ~/.npmrc file in the user root directory with the following line, replacing TOKEN with your personal access token. Create a new ~/.npmrc file if one doesn't exist.
+- Enter the domains that the api keys are allowed to be used.
+  - To cover our local html files and storybook, enter `http://localhost:6006` and `http://localhost:3000`
+- Select an expiry
+- Publish
+- Copy your api key and open your `.env` file. Paste your api key as the value of `VITE__PROJECT_API_KEY=`
 
-```
-@soulmachines:registry=https://npm.pkg.github.com/soulmachines
-//npm.pkg.github.com/:_authToken=TOKEN
-```
+### Connecting via a Token Server
 
-Reference: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
+To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=` in your `.dotenv` file.
 
-### Start local development
+## Commands
 
-Remember to install all npm dependencies before starting the app:
+### Local development
 
-```
-npm i
-```
+- `npm run start` to run the dev server with live reload
+- `npm run serve-snippet` to start a server and serve the snippet code
+- `npm run storybook` to start storybook
+- `npm run build` to compile the scripts and build the snippet
+- `npm run build-snippet` to compile snippet script
+- `npm run copy-cypress-pages` to copy cypress test pages into dist folder
 
-You can then start the Angular app:
+### Linting
 
-```
-npm start
-```
+- `npm run lint` to run eslint over the files
+- `npm run prettier` to verify files are formatted
+- `npm run prettier:fix` to auto format files
 
-An Angular-based preview of the app will be available at `http://localhost:4210`.
+### Unit testing
 
-A JWT token server is also hosted by the Angular app, and will be available at `http://localhost:4210/auth/authorize`. This token server can be used to issue JWTs for the Angular app, or for examples in the `examples` folder, served separately.
+- `npm run test` to run the test suite in watch mode
+- `npm run test:ci` to run the tests just once
 
-### Serving the examples in `examples` folder
+**Helpful links**
 
-Ensure the Angular app is being served using the `watch:app` command (not `start`), as this is configured to write the output files to the file system (as opposed to in-memory) so that Parcel has access to them:
+- (Common mistakes)[https://kentcdodds.com/blog/common-mistakes-with-react-testing-library]
+- (Learning)[https://testing-library.com/docs/learning]
 
-```
-npm run watch:app
-```
+### Cypress
 
-In a **separate terminal window**, run the npm command to bundle the `soulmachines.js` output file and serve the examples folder as a static site. This server can remain running. Refresh in browser to view changes - there's no auto-refresh. Hard refresh is often required.
+It's best to use a (selector)[https://docs.cypress.io/guides/references/best-practices#Selecting-Elements] that is not brittle. You can use data attributes to select elements. These may need to be setup for the component. Look at the `<Text />` as an example. We use a data attribute that looks like `data-sm-cy="yourSelector"`. This allows you to write selectors in your test like `cy.get('[data-sm-cy=yourSelector]').click()`. A nice side effect of this is that consumers of the web component can also target these selectors in CSS if they wish.
 
-```
-npm run serve
-```
+## Styling
 
-This command will serve the `examples` folder at `http://127.0.0.1:5000`. Use the browser's URL bar to navigate directly to the desired example page.
+(Tailwind)[https://tailwindcss.com/] is setup and used to style the web components. All tailwind styles are under a `sm-` prefix, to avoid naming collisions.
 
-### Mobile device development and testing
+It compiles multiple css files for each entry point. This is so that someone can use the `sm-video` component, without inherting the `sm-widget` styles.
 
-You will need an account under the SoulMachines org on ngrok.com to easily debug on mobile.
+### Sizing
 
-Install ngrok by following the instructions in the Ngrok dashboard under Getting Started > Setup & Installation.
+By default Tailwind uses `rem` which has some benefits over pixel sizing. Such as scaling up content nicely when the zoom is increased, which is great for accessibility. Unfortunately `rem` sizing is based off the `html` element. Our styles assume the font-size on the `html` element is `16px`. The web component can be embedded on any website and the website may have changed the font size on `html` element to another value(eg: 10px is common). This would make our web component appear at a different size than we expect.
 
-After installing, configure a personal domain for your own use under Cloud Edge > Domains. You will use this personal domain for all future projects where you want to use ngrok to share your localhost - it's not specific just this repo.
+Tailwind currently only supports `rem`. To work around this i've added a postcss plugin which converts all `rem` values to `px`. Postcss works by running scripts against your compiled css. In future we can stick with `rem` if we want or switch to another sizing in Tailwind supports it.
 
-#### To view the examples from a mobile device
+### CSS Reset
 
-1. Install and configure ngrok on your computer
-2. Create a personalized ngrok domain
-3. Ensure the examples are running locally and are available at `http://localhost:5000`
-4. From the CLI, start ngrok, replacing YOUR_DOMAIN with your custom ngrok domain:
-   `ngrok http http://localhost:5000 --region=ap --hostname=YOUR_DOMAIN.ap.ngrok.io --host-header=rewrite`
-5. From your mobile device, navigate to your domain `http://YOUR_DOMAIN.ap.ngrok.io`
+Tailwind includes a (global css reset)[https://tailwindcss.com/docs/preflight]. We've disabled this as it will collide with the users website and potentially change the rendering of their UI. Tailwind does not support scoping it. To get around this we've copied across the css reset and prefixed it with `sm-widget`. This way we get the reset styles but it is scoped to our code.
 
-#### Android Remote Debugging
+### Local development
 
-Android devices must do any remote debugging use Chrome on both the mobile device and desktop.
-
-1. Connect your device to your desktop via a USB cable
-2. Enable developer mode for Chrome on your device
-3. On your desktop, use Chrome to navigate to `chrome://inspect/#devices`
-4. Select your mobile device from the list
-5. Debug using the dev tools as usual
-
-#### iOS Remote Debugging
-
-iOS devices must do remote debugging using Safari on both the mobile device and desktop.
-
-1. Connect your device to your desktop via a USB cable
-2. Enable Web Inspector on the device under Settings > Safari > Advanced > Web Inspector
-3. On your desktop, enable the Develop menu for Safari under Safari > Open Preferences > Advanced > Show Develop menu in menu bar
-4. Select your mobile device from the list under Develop > Your Device Name
-5. Debug using the dev tools as usual
-
-### Known Issues
-
-**API Keys must be configured with your ngrok domain.** Because the requests to the server appear to be coming from your ngrok domain, not from localhost, any API keys used in the examples will need to have your ngrok domain whitelisted for the session server connection to work from your mobile device.
-
-**VPN must be used for any connections to dev / playground.** Your mobile device will connect directly to the session server specified by either the API Key or JWT Token being used. If the DP being connected to was created via DDNA Studio Dev, or is hosted on the "playground" session server, then the Soul Machines VPN must be installed and connected on the mobile device for the DP session to connect successfully.
-
-### Building the output soulmachines.js library
-
-To create a bundled output file, use the `package` command:
+Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview. By default it will only work when you are within `class=""` or `className=""`. We are using a npm library called `classNames` to conditionally apply classes. To get autocomplete working within this object you'll need to open your `settings.json` vscode file and add the below snippet.
 
 ```
-npm run package
+"tailwindCSS.experimental.classRegex": [
+  ["classNames\\(([^\\)]*)\\)", "'([^']*)'"]
+]
 ```
 
-This will build the Angular app, produce standard Angular output files, then concat those into a single file for distribution.
+## Generating Components
 
-### Release
+Run `npm run generate` in your terminal and it will ask you what you'd like the component to be called. Enter the name and it will scaffold the files in the component directory.
 
-#### Dev Release
+## Registering web components
 
-Any PR merged to `master` branch will trigger workflow [Release Dev](https://github.com/soulmachines/sm-web-component/actions/workflows/release-dev.yml). `examples/soulmachines.js` file will be uploaded to `https://static.soulmachines.com/webcomponent-dev.js`
+Web components are registered using the [preactement lib](https://github.com/jahilldev/component-elements). You'll find these components in the web-components directory. All files listed in the main `index.ts` will be bundled into the web-components.js script. If this grows in future, we should consider splitting it out into multiple bundles.
 
-#### Stable Release
+## Working with the snippet
 
-To release a stable version to CDN, manually trigger workflow [Release Stable](https://github.com/soulmachines/sm-web-component/actions/workflows/release-stable.yml). This workflow runs semantic release, publishes stable release version to CDN and update the latest script `https://static.soulmachines.com/soulmachines-latest.js`
+### How the snippet works
 
-The table below shows which commit message gets you which release type when `semantic-release` runs:
+This project creates a bundle for each web component. The javascript bundles can be used directly but require a few of additional steps. The user needs to add the html element to their webpage, add the script/css files and pass through their API key.
 
-| Commit message                                                                                                                                                                                   | Release type     |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
-| `fix(pencil): stop graphite breaking when too much pressure applied`                                                                                                                             | Patch Release    |
-| `feat(pencil): add 'graphiteWidth' option`                                                                                                                                                       | Feature Release  |
-| `perf(pencil): remove graphiteWidth option`<br><br>`BREAKING CHANGE: The graphiteWidth option has been removed.`<br>`The default graphite width of 10mm is always used for performance reasons.` | Breaking Release |
+To lower the barrier to entry we have created a snippet. The snippet automates the above steps. Upon inserting the script to the page, it will:
+
+- Insert the web component javascript bundle and the stylesheet into the head of the html page
+- Insert the web component html element (with <sm-widget> tag) into the page
+- Convert options into attributes on the web component html element. These objects can come from a global variable called `window.smConfig` or from data attributes on the script tag.
+
+An example of data attributes.
+
+```
+<script
+  src="widget-snippet.min.js"
+  data-sm-api-key="YOUR_API_KEY"
+></script>
+```
+
+An example of global variable. This is useful if the user cannot add a <script /> tag to their website and needs to paste in the script.
+
+```
+window.smConfig = {
+  smApiKey: 'YOUR_API_KEY',
+};
+<script src="widget-snippet.min.js"></script>
+```
+
+The supported config options are:
+
+- `smApiKey` the api key used to access the digital person.
+- `smTokenServer` the url for the token server.
+- `smProfilePicture` define a custom digital person profile picture.
+- `smGreeting` define a custom greeting
+
+### How it is built
+
+1. `npm run build` is run to generate the assets. As part of this process it generates a file called `manifest.json`. This contains the asset names and paths that were generated.
+2. There is a file called `build-snippet.js`. This:
+   - reads the `manifest.json` file.
+   - calls the template generation plugin we are using. The template is called `snippet.js.template`.
+   - it takes the template, populating the filenames using the data from the manifest file. It outputs `widget-snippet.js` into the `dist` folder.
+   - when the node env is production, it will preprend the asset urls with the CDN name
+3. You run the above file by typing `npm run build-snippet`
+4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as `widget-snippet.min.js`.
+
+### Running the snippet locally
+
+Run `npm run serve-snippet`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
+
+## Deployment
+
+We deploy the bundles via github actions. The bundles are automatically deployed to the dev folder in the CDN, when code is merged in to master. There is a manual trigger which deploys the code to the production CDN.
+
+Helpful urls:
+
+- (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet.min.js`]
+- (Production snippet)[https://static.soulmachines.com/widget-snippet.min.js`]
+
+## Linking to a local version of the Web SDK
+
+Sometimes it's helpful to link to your local smwebsdk repo when debugging an issue. There are a few steps you need to do. These instructions assume you have the websdk repo checked out locally.
+
+### Linking
+
+1. In your terminal navigate to the websdk folder and run `npm link`
+2. Run `npm run watch` to start watching the sdk files
+3. In a seperate terminal navigate to the sm web component folder
+4. Link to your local websdk by running `npm link "@soulmachines/smwebsdk"`
+5. Open `vite.config.ts` and add optimizeDeps to the config. This is needed as vite does some special caching locally
+   ```
+   export default defineConfig({
+     optimizeDeps: {
+       exclude: ['@soulmachines/smwebsdk'],
+     },
+     ....
+   ```
+6. Run `npm run start` and it should be using your local websdk
+
+### Unlinking
+
+1. Remove the `optimizeDeps` object in `vite.config.ts` that you previously added
+2. Open your terminal to the sm web component repo and run `npm unlink "@soulmachines/smwebsdk"`
+3. Run `npm install`
