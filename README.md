@@ -65,6 +65,7 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 - `npm run serve-snippet` to start a server and serve the snippet code
 - `npm run storybook` to start storybook
 - `npm run build` to compile the scripts and build the snippet
+- `npm run build:cypress` to compile the code and copy across the cypress test pages
 - `npm run build-snippet` to compile snippet script
 - `npm run copy-cypress-pages` to copy cypress test pages into dist folder
 
