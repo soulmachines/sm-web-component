@@ -70,5 +70,20 @@ describe('<ContentCards />', () => {
       expect(getByText('option one')).toBeInTheDocument();
       expect(getByText('option two')).toBeInTheDocument();
     });
+
+    it('renders an image alt text when the card type is image', () => {
+      const { getByText } = customRender([
+        {
+          id: 'id',
+          type: 'image',
+          data: {
+            url: 'mock url',
+            alt: 'mock alt text',
+          },
+        },
+      ]);
+
+      expect(getByText('mock alt text')).toBeInTheDocument();
+    });
   });
 });

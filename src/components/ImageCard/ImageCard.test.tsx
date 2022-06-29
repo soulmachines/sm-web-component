@@ -35,7 +35,7 @@ describe('<ImageCard />', () => {
   });
 
   it('renders screen hidden alt text', () => {
-    const { queryByText } = render(<ImageCard content={imageCard} />);
-    expect(queryByText('mock alt text')).toBeInTheDocument();
+    const { getByText } = render(<ImageCard content={imageCard} />);
+    expect(getByText('mock alt text')).toBeInTheDocument();
   });
 });
