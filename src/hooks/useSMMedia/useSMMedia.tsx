@@ -6,17 +6,47 @@ function useSMMedia(scene: Scene) {
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
   const [isCameraEnabled, setIsCameraEnabled] = useState(false);
   const isConnected = scene.isConnected();
-  const isMicrophoneActive = scene.isMicrophoneActive();
-  const isCameraActive = scene.isCameraActive();
 
   // Set initial active state
   useEffect(() => {
     if (isConnected) {
       setIsVideoMuted(scene.videoElement?.muted || false);
-      setIsMicrophoneEnabled(isMicrophoneActive);
-      setIsCameraEnabled(isCameraActive);
+      setIsMicrophoneEnabled(scene.isMicrophoneActive());
+      setIsCameraEnabled(scene.isCameraActive());
     }
-  }, [isConnected, isMicrophoneActive, isCameraActive, scene.videoElement?.muted]);
+  }, [isConnected, scene]);
+
+
+  useEffect(() => {
+    if (isConnected) {
+      //update status based on session storage
+      const cameraSaved = sessionStorage.getItem('sm-camera') === "true";
+      const microphoneSaved = sessionStorage.getItem('sm-mic') === "true";
+      if(cameraSaved){
+        scene.setMediaDeviceActive({
+          camera: true,
+        });
+        setIsCameraEnabled(cameraSaved);
+      }
+      if(microphoneSaved){
+        scene.setMediaDeviceActive({
+          microphone: true,
+        });
+        setIsMicrophoneEnabled(microphoneSaved)
+      }
+    }
+  }, [isConnected, scene]);
+
+  useEffect(() => {
+    if (isConnected) {
+      scene.onCameraActive.addListener((cameraStatus:boolean) =>
+        sessionStorage.setItem('sm-camera', cameraStatus.toString())
+      );
+      scene.onMicrophoneActive.addListener((micStatus:boolean) =>
+        sessionStorage.setItem('sm-mic', micStatus.toString())
+      );
+    }
+  }, [isConnected, scene.onCameraActive, scene.onMicrophoneActive]);
 
   // Reset state when not connected
   useEffect(() => {
