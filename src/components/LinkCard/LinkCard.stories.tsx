@@ -12,7 +12,8 @@ const content = {
     url: 'https://www.soulmachines.com',
     title: 'Soul Machines',
     imageUrl: 'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
+    description: 'Placeholder'
   },
 };
 
-export const Basic = () => <LinkCard content={content} text="Placeholder text" />;
+export const Basic = () => <LinkCard content={content}/>;
