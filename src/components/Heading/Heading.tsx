@@ -9,7 +9,7 @@ export function Heading({ type, children }: HeadingProps) {
   return createElement(
     type,
     {
-      className: 'sm-text-xl sm-font-rubik sm-font-medium sm-m-0',
+      className: 'sm-text-2xl sm-font-rubik sm-font-medium sm-m-0 sm-text-neutral-700',
     },
     children,
   );
