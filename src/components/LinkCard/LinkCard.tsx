@@ -23,11 +23,11 @@ export function LinkCard({ content, style }: LinkCardProps) {
       <div data-sm-content={content.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
         <Heading type="h2">{data.title}</Heading>
         <Text>{data.description}</Text>
-        <Button>
           <a className="sm-text-white sm-no-underline" href={data.url} target="_blank" rel="noopener">
-            View Page
+            <Button>
+              View Page
+            </Button>
           </a>
-        </Button>
       </div>
     </Card>
   );
