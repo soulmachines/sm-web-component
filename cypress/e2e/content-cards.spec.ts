@@ -2,6 +2,7 @@ describe('content cards', () => {
   const corpusCommands = {
     optionsCard: '47',
     imageCard: '46',
+    externalLink: '48',
   };
 
   before(() => {
@@ -21,5 +22,12 @@ describe('content cards', () => {
     cy.get('[data-sm-content=image]', { timeout: 6000 }).should('exist');
     cy.get('button').contains('svg', 'Hide card').click();
     cy.get('[data-sm-content=image]').should('not.exist');
+  });
+
+  it('renders an link card and hides the card once the close button is clicked', () => {
+    cy.sendTextMessage(corpusCommands.externalLink);
+    cy.get('[data-sm-content=externalLink]', { timeout: 6000 }).should('exist');
+    cy.get('button').contains('svg', 'Hide card').click();
+    cy.get('[data-sm-content=externalLink]').should('not.exist');
   });
 });

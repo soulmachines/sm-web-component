@@ -71,6 +71,26 @@ describe('<ContentCards />', () => {
       expect(getByText('option two')).toBeInTheDocument();
     });
 
+    it('renders a link and description when the card type is externalLink', () => {
+      const { getByText, getByRole } = customRender([
+        {
+          id: 'mockId',
+          type: 'externalLink',
+          data: {
+            url: 'https://www.soulmachines.com',
+            title: 'Soul Machines',
+            imageUrl:
+              'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
+            description: 'placeholder text',
+          },
+        },
+      ]);
+      expect(getByText('placeholder text')).toBeInTheDocument();
+      expect(getByRole('link', { name: 'View Page' }).getAttribute('href')).toEqual(
+        'https://www.soulmachines.com',
+      );
+    });
+
     it('renders an image alt text when the card type is image', () => {
       const { getByText } = customRender([
         {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ImageCard } from '../ImageCard';
+import { LinkCard } from '../LinkCard';
 import { OptionsCard } from '../OptionsCard';
 
 export type CardComponent = {
@@ -22,6 +23,7 @@ export function ContentCards() {
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
     image: ImageCard,
+    externalLink: LinkCard,
   };
 
   useEffect(() => {
