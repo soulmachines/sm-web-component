@@ -79,7 +79,8 @@ describe('<ContentCards />', () => {
           data: {
             url: 'https://www.soulmachines.com',
             title: 'Soul Machines',
-            imageUrl: 'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
+            imageUrl:
+              'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
             description: 'placeholder text',
           },
         },

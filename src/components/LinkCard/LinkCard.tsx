@@ -23,11 +23,9 @@ export function LinkCard({ content, style }: LinkCardProps) {
       <div data-sm-content={content.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
         <Heading type="h2">{data.title}</Heading>
         <Text>{data.description}</Text>
-          <a className="sm-text-white sm-no-underline" href={data.url} target="_blank" rel="noopener">
-            <Button>
-              View Page
-            </Button>
-          </a>
+        <a className="sm-text-white sm-no-underline" href={data.url} target="_blank" rel="noopener">
+          <Button>View Page</Button>
+        </a>
       </div>
     </Card>
   );
