@@ -1,6 +1,7 @@
 describe('content cards', () => {
   const corpusCommands = {
     optionsCard: '47',
+    imageCard: '46',
   };
 
   before(() => {
@@ -8,10 +9,17 @@ describe('content cards', () => {
     cy.launchScene();
   });
 
-  it('renders an options content block and the hides options block once its interacted with', () => {
+  it('renders an options card and hides the card once its interacted with', () => {
     cy.sendTextMessage(corpusCommands.optionsCard);
     cy.get('[data-sm-content=options]', { timeout: 6000 }).should('exist');
     cy.get('button').contains('Tell me a joke').should('exist').click();
     cy.get('[data-sm-content=options]').should('not.exist');
+  });
+
+  it('renders an image card and hides the card once the close button is clicked', () => {
+    cy.sendTextMessage(corpusCommands.imageCard);
+    cy.get('[data-sm-content=image]', { timeout: 6000 }).should('exist');
+    cy.get('button').contains('svg', 'Hide card').click();
+    cy.get('[data-sm-content=image]').should('not.exist');
   });
 });

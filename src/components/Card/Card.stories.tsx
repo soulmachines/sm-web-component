@@ -6,12 +6,13 @@ export default {
   component: Card,
   args: {
     isDismissible: true,
+    flush: false,
   },
 };
 
-export const Basic = ({ isDismissible }: CardProps) => {
+export const Basic = ({ isDismissible, flush }: CardProps) => {
   return (
-    <Card isDismissible={isDismissible}>
+    <Card isDismissible={isDismissible} flush={flush}>
       <div>
         <p>Any content can be passed here</p>
         <Button>Trigger</Button>

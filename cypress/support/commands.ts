@@ -55,4 +55,5 @@ Cypress.Commands.add('sendTextMessage', (message: string) => {
   cy.get('#textMessage').type(message);
   cy.log(`sending text message: ${message}`);
   cy.get('#sendMessage').click();
+  cy.get('#textMessage').clear();
 });
