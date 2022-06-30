@@ -6,10 +6,10 @@ export enum ConnectionStatus {
   ERRORED = 'ERRORED',
 }
 
-export enum SessionDataKeys  {
+export enum SessionDataKeys {
   sessionId = 'sm-session-id',
   apiKey = 'sm-api-key',
   server = 'sm-server',
-  camera = 'sm-camera-enabled',
-  mic = 'sm-mic-enabled',
+  cameraEnabled = 'sm-camera-enabled',
+  microphoneEnabled = 'sm-microphone-enabled',
 }
