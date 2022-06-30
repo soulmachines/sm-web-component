@@ -24,7 +24,7 @@ export function LinkCard({ content, style }: LinkCardProps) {
         <Heading type="h2">{data.title}</Heading>
         <Text>{data.description}</Text>
         <Button>
-          <a className="sm-text-white sm-no-underline" href={data.url} target="_blank">
+          <a className="sm-text-white sm-no-underline" href={data.url} target="_blank" rel="noopener">
             View Page
           </a>
         </Button>
