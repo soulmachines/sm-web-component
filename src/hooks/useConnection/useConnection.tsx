@@ -2,7 +2,6 @@ import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
-
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
@@ -48,13 +47,13 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     scene.disconnect();
   };
 
-  const cleanupSessionStorage = () =>{
-      sessionStorage.removeItem(SessionDataKeys.sessionId);
-      sessionStorage.removeItem(SessionDataKeys.apiKey);
-      sessionStorage.removeItem(SessionDataKeys.server);
-      sessionStorage.removeItem(SessionDataKeys.camera);
-      sessionStorage.removeItem(SessionDataKeys.mic);
-  }
+  const cleanupSessionStorage = () => {
+    sessionStorage.removeItem(SessionDataKeys.sessionId);
+    sessionStorage.removeItem(SessionDataKeys.apiKey);
+    sessionStorage.removeItem(SessionDataKeys.server);
+    sessionStorage.removeItem(SessionDataKeys.cameraEnabled);
+    sessionStorage.removeItem(SessionDataKeys.microphoneEnabled);
+  };
 
   scene.onDisconnectedEvent.addListener(() => {
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
