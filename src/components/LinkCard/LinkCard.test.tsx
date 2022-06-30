@@ -1,4 +1,4 @@
-import { fireEvent, getByText, render } from '@testing-library/preact';
+import { render } from '@testing-library/preact';
 import { LinkCard } from '.';
 
 describe('<LinkCard />', () => {
