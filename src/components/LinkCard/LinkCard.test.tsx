@@ -18,7 +18,7 @@ describe('<LinkCard />', () => {
     expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
   });
 
-  it('renders card text', () => {
+  it('renders card description', () => {
     const { getByText } = render(<LinkCard content={mockCard} />);
     expect(getByText('placeholder text')).toBeInTheDocument();
   });
