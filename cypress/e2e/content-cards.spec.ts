@@ -2,7 +2,7 @@ describe('content cards', () => {
   const corpusCommands = {
     optionsCard: '47',
     imageCard: '46',
-    externalLink: '48'
+    externalLink: '48',
   };
 
   before(() => {
