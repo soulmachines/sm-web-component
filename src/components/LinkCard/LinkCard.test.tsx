@@ -25,7 +25,7 @@ describe('<LinkCard />', () => {
 
   it('renders card link anchor with label', async () => {
     const { getByRole } = render(<LinkCard content={mockCard} />);
-    const linkButton = getByRole('link', { name: 'Soul Machines' });
+    const linkButton = getByRole('link', { name: 'View Page' });
     expect(linkButton).toBeInTheDocument();
     expect(linkButton.getAttribute('href')).toEqual('https://www.soulmachines.com');
   });
