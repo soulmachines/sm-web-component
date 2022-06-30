@@ -30,6 +30,11 @@ describe('<LinkCard />', () => {
     expect(linkButton.getAttribute('href')).toEqual('https://www.soulmachines.com');
   });
 
+  it('renders card title', () => {
+    const { getByRole } = render(<LinkCard content={mockCard} />);
+    expect(getByRole('heading', { level: 2, name: 'Soul Machines' })).toBeInTheDocument();
+  });
+
   it('renders link card without description', () => {
     const mockCardNoDescription = {
       id: 'mockId',
