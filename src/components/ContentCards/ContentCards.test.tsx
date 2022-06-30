@@ -71,8 +71,8 @@ describe('<ContentCards />', () => {
       expect(getByText('option two')).toBeInTheDocument();
     });
 
-    it('renders a link when the card type is externalLink', () => {
-      const { getByText } = customRender([
+    it('renders a link and description when the card type is externalLink', () => {
+      const { getByText, getByRole } = customRender([
         {
           id: 'mockId',
           type: 'externalLink',
@@ -86,6 +86,8 @@ describe('<ContentCards />', () => {
         },
       ]);
       expect(getByText('placeholder text')).toBeInTheDocument();
+      expect(getByRole('link', { name: 'View Page' }).getAttribute('href')).toEqual('https://www.soulmachines.com');
+
     });
 
     it('renders an image alt text when the card type is image', () => {
