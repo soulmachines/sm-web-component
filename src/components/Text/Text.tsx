@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 
 export type TextProps = {
-  children?: string;
-  size?: 'sm' | 'md' | 'lg';
+  children: string;
+  size: 'sm' | 'md' | 'lg';
 };
 
 export function Text({ children, size, ...rest }: TextProps) {
