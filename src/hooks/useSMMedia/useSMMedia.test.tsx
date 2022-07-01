@@ -130,7 +130,7 @@ describe('useSMMedia()', () => {
 
       expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
 
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(3);
     });
   });
 
@@ -160,7 +160,7 @@ describe('useSMMedia()', () => {
 
       expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
 
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(3);
     });
   });
 });

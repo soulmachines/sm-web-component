@@ -1,20 +1,44 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
 function useSMMedia(scene: Scene) {
   const [isVideoMuted, setIsVideoMuted] = useState(scene.videoElement?.muted || false);
-  const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
-  const [isCameraEnabled, setIsCameraEnabled] = useState(false);
-  const isConnected = scene.isConnected();
+  const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
+  const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
+  const isConnected = scene?.isConnected();
 
-  // Set initial active state
-  useEffect(() => {
-    if (isConnected) {
-      setIsMicrophoneEnabled(scene.isMicrophoneActive());
-      setIsCameraEnabled(scene.isCameraActive());
-    }
-  }, [isConnected, scene]);
+  const setMicrophone = useCallback(
+    async (microphoneStatus: boolean) => {
+      try {
+        await scene.setMediaDeviceActive({
+          microphone: microphoneStatus,
+        });
+
+        setIsMicrophoneEnabled(microphoneStatus);
+        sessionStorage.setItem(SessionDataKeys.microphoneEnabled, microphoneStatus.toString());
+      } catch (error) {
+        // Silently ignore this error. Revisit in QUIC-1744
+      }
+    },
+    [scene],
+  );
+
+  const setCamera = useCallback(
+    async (cameraStatus: boolean) => {
+      try {
+        await scene.setMediaDeviceActive({
+          camera: cameraStatus,
+        });
+
+        setIsCameraEnabled(cameraStatus);
+        sessionStorage.setItem(SessionDataKeys.cameraEnabled, cameraStatus.toString());
+      } catch (error) {
+        // Silently ignore this error. Revisit in QUIC-1744
+      }
+    },
+    [scene],
+  );
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close. 
@@ -23,47 +47,19 @@ function useSMMedia(scene: Scene) {
    */
   useEffect(() => {
     if (isConnected) {
-      //update status based on session storage
       const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
       const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
-      scene.setMediaDeviceActive({
-        camera: cameraSaved,
-      });
-      setIsCameraEnabled(cameraSaved);
-
-      scene.setMediaDeviceActive({
-        microphone: microphoneSaved,
-      });
-      setIsMicrophoneEnabled(microphoneSaved);
+      if (cameraSaved) setCamera(true);
+      if (microphoneSaved) setMicrophone(true);
     }
-  }, [isConnected, scene]);
+  }, [isConnected, setCamera, setMicrophone]);
 
   const toggleMicrophone = async () => {
-    try {
-      const micStatus = !isMicrophoneEnabled;
-      await scene.setMediaDeviceActive({
-        microphone: !isMicrophoneEnabled,
-      });
-
-      setIsMicrophoneEnabled(micStatus);
-      sessionStorage.setItem(SessionDataKeys.microphoneEnabled, micStatus.toString());
-    } catch (error) {
-      // Silently ignore this error. Revisit in QUIC-1744
-    }
+    await setMicrophone(!isMicrophoneEnabled);
   };
 
   const toggleCamera = async () => {
-    try {
-      const cameraStatus = !isCameraEnabled;
-      await scene.setMediaDeviceActive({
-        camera: cameraStatus,
-      });
-
-      setIsCameraEnabled(cameraStatus);
-      sessionStorage.setItem(SessionDataKeys.cameraEnabled, cameraStatus.toString());
-    } catch (error) {
-      // Silently ignore this error. Revisit in QUIC-1744
-    }
+    await setCamera(!isCameraEnabled);
   };
 
   const toggleVideoMuted = () => {
