@@ -19,7 +19,8 @@
     "generate": "plop --plopfile generators/index.js",
     "cypress:open": "cypress open",
     "test:cypress:chrome": "cypress run --headless --browser chrome",
-    "test:cypress:edge": "cypress run --headless --browser edge"
+    "test:cypress:edge": "cypress run --headless --browser edge",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@soulmachines/smwebsdk": "^14.3.1",
@@ -53,8 +54,11 @@
     "cypress-log-to-output": "^1.1.2",
     "eslint": "^8.18.0",
     "eslint-config-preact": "^1.3.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.1",
     "jest": "^27.5.1",
+    "lint-staged": "^13.0.3",
     "plop": "^3.1.1",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
@@ -66,5 +70,9 @@
     "uglify-js": "^3.16.1",
     "vite": "^2.9.13",
     "vite-plugin-html": "^3.2.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --cache --fix",
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

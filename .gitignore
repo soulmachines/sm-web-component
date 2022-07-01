@@ -4,4 +4,4 @@ dist
 .DS_Store
 cypress/videos
 cypress/screenshots
-
+.eslintcache
