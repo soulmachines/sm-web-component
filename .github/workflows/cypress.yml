@@ -14,6 +14,8 @@ jobs:
         # Installs our npm deps and cypress tests
       - name: Cypress install
         uses: cypress-io/github-action@v4
+        env:
+          HUSKY: 0
         with:
           # Disable running of tests within install job
           runTests: false
