@@ -57,6 +57,7 @@ function insertIntoHead(el) {
 
   script.onload = () => {
     configureSMWidget(config);
+    console.log('Web component snippet verison: {{ version }}');
   };
 
   window.addEventListener('DOMContentLoaded', () => {

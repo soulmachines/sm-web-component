@@ -20,6 +20,8 @@ jobs:
           # Disable running of tests within install job
           runTests: false
       - run: npm run build:cypress
+        env:
+          VERSION: 'latest'
 
       # Upload build folder to be used in subsequent jobs (run-chrome, run-edge etc)
       - name: Save dist folder

@@ -12,6 +12,12 @@ module.exports = {
       message: 'Enter the built css filename',
       default: [],
     },
+    {
+      type: 'input',
+      name: 'version',
+      message: 'Enter the version of the web component',
+      default: [],
+    },
   ],
   actions: () => {
     // Generate file
