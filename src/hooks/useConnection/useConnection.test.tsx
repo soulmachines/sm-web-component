@@ -2,7 +2,7 @@ import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
 import 'preact/hooks';
 import { useConnection } from '.';
-import { ConnectionStatus } from '../../enums';
+import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 let triggerDisconnectEvent: () => void;
 const mockScene = {
@@ -52,6 +52,16 @@ describe('useConnection()', () => {
     const { result } = customRender();
     result.current.disconnect();
     expect(mockScene.disconnect).toBeCalledTimes(1);
+  });
+
+  it('clears session storage data when disconnect is called', () => {
+    const { result } = customRender();
+    result.current.disconnect();
+    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toEqual(null);
+    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toEqual(null);
+    expect(sessionStorage.getItem(SessionDataKeys.server)).toEqual(null);
+    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toEqual(null);
+    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toEqual(null);
   });
 
   describe('when request is pending', () => {
@@ -233,12 +243,17 @@ describe('useConnection()', () => {
 
         expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
       });
-    });
-  });
 
-  describe('clean up SessionStorage when', () => {
-    const { result } = customRender();
-    result.current.disconnect();
-    expect(result.current.cleanupSessionStorage).toBeCalledTimes(1);
+      it('clears session storage data', async () => {
+        const { result } = customRender();
+        await result.current.connect();
+
+        expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toEqual(null);
+        expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toEqual(null);
+        expect(sessionStorage.getItem(SessionDataKeys.server)).toEqual(null);
+        expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toEqual(null);
+        expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toEqual(null);
+      });
+    });
   });
 });
