@@ -19,16 +19,12 @@ export type LinkData = {
 
 export function LinkCard({ content, style }: LinkCardProps) {
   const data = content.data as unknown as LinkData;
-  let image;
-  if (data.imageUrl) {
-    image = <img src={data.imageUrl} alt={data.title} />;
-  }
   return (
     <Card style={style}>
       <div data-sm-content={content.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
-        {image}
+        {data.imageUrl && <img src={data.imageUrl} alt={data.title} />}
         <Heading type="h2">{data.title}</Heading>
-        <Text>{data.description}</Text>
+        {data.description && <Text>{data.description}</Text>}
         <a
           className="sm-text-white sm-no-underline"
           href={data.url}
