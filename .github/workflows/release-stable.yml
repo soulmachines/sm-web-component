@@ -66,11 +66,11 @@ jobs:
         env:
           NODE_ENV: production
           CDN_ENDPOINT: 'https://static.soulmachines.com/'
-          VERSION: ${{ needs.build.outputs.RELEASE_VERSION }}
+          VERSION: ${{ needs.version.outputs.RELEASE_VERSION }}
 
       - name: Version Snippet
         env:
-          VERSION: ${{ needs.build.outputs.RELEASE_VERSION }}
+          VERSION: ${{ needs.version.outputs.RELEASE_VERSION }}
           # take latest files and create a copy with the current version number
         run: |
           cp "dist/widget-snippet.js" "dist/widget-snippet-${{ env.VERSION }}.js"
