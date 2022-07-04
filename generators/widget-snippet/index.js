@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {
   description: 'Create sm-widget snippet',
@@ -20,7 +20,7 @@ module.exports = {
     const actions = [
       {
         type: 'add',
-        path: '../dist/widget-snippet.js',
+        path: '../dist/widget-snippet-latest.js',
         templateFile: './widget-snippet/snippet.js.template',
         abortOnFail: true,
         force: true,
