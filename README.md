@@ -189,7 +189,7 @@ Helpful urls:
 **Web component**
 The web component is built with a environment variable called `VERSION`. Depending on the enviroment it will be a different value:
 
-- Local development it is set to the current date/time
+- Local development it is set to a time stamp
 - Dev it is set to the commit hash
 - Prod it is set to the semantic release version
 

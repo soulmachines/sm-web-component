@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
-  const version = env.VERSION || new Date().toISOString();
+  const version = env.VERSION || new Date().getTime();
 
   return {
     plugins: [preact(), createHtmlPlugin({ template: path.resolve(__dirname, 'index.html') })],
