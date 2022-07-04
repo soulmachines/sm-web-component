@@ -184,6 +184,30 @@ Helpful urls:
 - (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet.min.js`]
 - (Production snippet)[https://static.soulmachines.com/widget-snippet.min.js`]
 
+### Versioning
+
+We are using semantic release which creates releases using git tags. As part of our release stable pipeline we have a step to generate a json file which contains all the tags. This is so that it will be deployed to our CDN and we can fetch the file and determine what releases are available.
+
+**Web component**
+The web component is built with a environment variable called `VERSION`. Depending on the enviroment it will be a different value:
+
+- Local development it is set to a time stamp
+- Dev it is set to the commit hash
+- Prod it is set to the semantic release version
+
+The built file name will look like this `web-components-<version-number-here>.js`
+
+**Snippet**
+
+We'll always deploy a latest version of the snippet to use. As part of the production release we'll copy the latest files and rename them to a specific version that we get from semantic release. Say we were release version 1.5, you'd find these files in the CDN
+
+```
+dist/widget-snippet.js
+dist/widget-snippet.min.js
+dist/widget-snippet-1.5.0.js
+dist/widget-snippet-1.5.0.min.js
+```
+
 ## Linking to a local version of the Web SDK
 
 Sometimes it's helpful to link to your local smwebsdk repo when debugging an issue. There are a few steps you need to do. These instructions assume you have the websdk repo checked out locally.

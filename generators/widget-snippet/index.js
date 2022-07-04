@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   description: 'Create sm-widget snippet',
   prompts: [

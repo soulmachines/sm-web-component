@@ -12,10 +12,30 @@ env:
   CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
 
 jobs:
-  build:
+  version:
     runs-on: ubuntu-latest
     outputs:
       RELEASE_VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: Create Release
+        id: RELEASE_VERSION
+        env:
+          GITHUB_TOKEN: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
+        run: |
+          npx semantic-release
+          echo $(git describe --abbrev=0 --tags)
+          version=$(git describe --abbrev=0 --tags)
+          echo "::set-output name=tag::${version}"
+
+  release:
+    needs: [version]
+    permissions:
+      id-token: write # Required for configure AWS credentials
+      contents: read # Required for checkout the source code
 
     steps:
       - name: Checkout Source Code
@@ -37,11 +57,24 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Create Release File
+        # Get all tags in latest order and pipe it into a json file { "versions": [ "1.4.0", "1.3.0", "1.2.0" ] }
+        run: git tag  --sort=-v:refname | jq -nR '{versions:[inputs]}' > ./dist/widget-versions.json
+
       - name: Build Package
         run: npm run build
         env:
           NODE_ENV: production
           CDN_ENDPOINT: 'https://static.soulmachines.com/'
+          VERSION: ${{ needs.version.outputs.RELEASE_VERSION }}
+
+      - name: Version Snippet
+        env:
+          VERSION: ${{ needs.version.outputs.RELEASE_VERSION }}
+          # take latest files and create a copy with the current version number
+        run: |
+          cp "dist/widget-snippet.js" "dist/widget-snippet-${{ env.VERSION }}.js"
+          cp "dist/widget-snippet.min.js" "dist/widget-snippet-${{ env.VERSION }}.min.js"
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
