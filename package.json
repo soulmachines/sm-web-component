@@ -81,8 +81,7 @@
   },
   "release": {
     "branches": [
-      "master",
-      "quic-1884-add-versioning"
+      "master"
     ],
     "tagFormat": "${version}",
     "plugins": [
