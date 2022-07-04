@@ -3,7 +3,7 @@ import { useSpring, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
-import { ConnectionStatus } from '../../enums';
+import { ConnectionStatus, SessionDataKeys } from '../../enums';
 import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
@@ -27,7 +27,7 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   // Connect directly if it's resume session
 
   useEffect(() => {
-    if (isDisconnected && sessionStorage.getItem('sm-session-id')) {
+    if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
   }, [connect, isDisconnected]);

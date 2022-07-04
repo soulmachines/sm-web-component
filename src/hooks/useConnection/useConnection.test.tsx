@@ -235,4 +235,10 @@ describe('useConnection()', () => {
       });
     });
   });
+
+  describe('clean up SessionStorage when', () => {
+    const { result } = customRender();
+    result.current.disconnect();
+    expect(result.current.cleanupSessionStorage).toBeCalledTimes(1);
+  });
 });

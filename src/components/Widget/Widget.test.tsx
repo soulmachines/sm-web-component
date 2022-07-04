@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { ConnectionStatus } from '../../enums';
+import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -11,17 +11,27 @@ describe('<Widget />', () => {
   const unableToConnectMessage = /Unable to connect/;
   const customRender = () => render(<Widget />);
 
-  it('does not connect automatically', () => {
-    expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
+  describe('When connect for the first time', () => {
+    it('does not connect automatically', () => {
+      expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
+    });
+
+    it('calls connect when the button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const button = getByTitle('Digital person');
+
+      await fireEvent.click(button);
+
+      expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(1);
+    });
   });
 
-  it('calls connect when the button is clicked', async () => {
-    const { getByTitle } = customRender();
-    const button = getByTitle('Digital person');
-
-    await fireEvent.click(button);
-
-    expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(1);
+  describe('When conenct in the resume session by using the sm-session-id in session storage', () => {
+    it('calls connect automatically', () => {
+      sessionStorage.setItem(SessionDataKeys.sessionId, 'xxx-xxx-xxx');
+      customRender();
+      expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(1);
+    });
   });
 
   describe('when the scene is disconnected', () => {
