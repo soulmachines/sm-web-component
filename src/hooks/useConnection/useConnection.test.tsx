@@ -56,7 +56,7 @@ describe('useConnection()', () => {
 
   it('clears session storage data when disconnect is called', () => {
     const { result } = customRender();
-    
+
     expect(sessionStorage.getItem(SessionDataKeys.sessionId)).not.toBeNull;
     expect(sessionStorage.getItem(SessionDataKeys.apiKey)).not.toBeNull;
     expect(sessionStorage.getItem(SessionDataKeys.server)).not.toBeNull;
