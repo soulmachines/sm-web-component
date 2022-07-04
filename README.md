@@ -181,8 +181,30 @@ We deploy the bundles via github actions. The bundles are automatically deployed
 
 Helpful urls:
 
-- (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet.min.js`]
-- (Production snippet)[https://static.soulmachines.com/widget-snippet.min.js`]
+- (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet-latest.min.js`]
+- (Production snippet)[https://static.soulmachines.com/widget-snippet-latest.min.js`]
+
+### Versioning
+
+**Web component**
+The web component is built with a environment variable called `VERSION`. Depending on the enviroment it will be a different value:
+
+- Local development it is set to `local`
+- Dev it is set to the commit hash
+- Prod it is set to the semantic release version
+
+The built file name will look like this `web-components-<version-number-here>.js`
+
+**Snippet**
+
+We'll always deploy a latest version of the snippet to use. As part of the production release we'll copy the latest files and rename them to a specific version that we get from semantic release. Say we were release version 1.5, you'd find these files in the CDN
+
+```
+dist/widget-snippet-latest.js
+dist/widget-snippet-latest.min.js
+dist/widget-snippet-1.5.0.js
+dist/widget-snippet-1.5.0.min.js
+```
 
 ## Linking to a local version of the Web SDK
 
