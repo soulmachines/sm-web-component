@@ -14,8 +14,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      RELEASE_VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
 
     steps:
       - name: Checkout Source Code
@@ -37,11 +35,25 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
+        run: npx semantic-releasnp
+
       - name: Build Package
         run: npm run build
         env:
           NODE_ENV: production
           CDN_ENDPOINT: 'https://static.soulmachines.com/'
+
+      - name: Version Snippet
+        env:
+          # semantic release will create a version using the latest tag
+          VERSION: ${{git describe --abbrev=0 --tags}}
+          # take latest files and create a copy with the current version number
+        run: |
+          cp "dist/widget-snippet-latest.js" "dist/widget-snippet-${{ env.VERSION }}.js"
+          cp "dist/widget-snippet-latest.min.js" "dist/widget-snippet-${{ env.VERSION }}.min.js"
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
