@@ -186,6 +186,8 @@ Helpful urls:
 
 ### Versioning
 
+We are using semantic release which creates releases using git tags. As part of our release stable pipeline we have a step to generate a json file which contains all the tags. This is so that it will be deployed to our CDN and we can fetch the file and determine what releases are available.
+
 **Web component**
 The web component is built with a environment variable called `VERSION`. Depending on the enviroment it will be a different value:
 
