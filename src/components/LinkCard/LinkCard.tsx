@@ -13,14 +13,20 @@ export type LinkData = {
   id: string;
   url: string;
   title: string;
-  description: string;
+  description?: string;
+  imageUrl?: string;
 };
 
 export function LinkCard({ content, style }: LinkCardProps) {
   const data = content.data as unknown as LinkData;
+  let image;
+  if (data.imageUrl) {
+    image = <img src={data.imageUrl} alt={data.title}></img>
+  }
   return (
     <Card style={style}>
       <div data-sm-content={content.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
+        {image}
         <Heading type="h2">{data.title}</Heading>
         <Text>{data.description}</Text>
         <a

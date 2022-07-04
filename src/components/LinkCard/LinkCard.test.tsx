@@ -8,7 +8,7 @@ describe('<LinkCard />', () => {
     data: {
       url: 'https://www.soulmachines.com',
       title: 'Soul Machines',
-      imageUrl: 'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
+      imageUrl: 'https://placekitten.com/300/300',
       description: 'placeholder text',
     },
   };
@@ -21,6 +21,11 @@ describe('<LinkCard />', () => {
   it('renders card description', () => {
     const { getByText } = render(<LinkCard content={mockCard} />);
     expect(getByText('placeholder text')).toBeInTheDocument();
+  });
+
+  it('renders card image', () => {
+    const { getByRole } = render(<LinkCard content={mockCard} />);
+    expect(getByRole('img', {name: 'Soul Machines'})).toBeInTheDocument();
   });
 
   it('renders card link anchor with label', async () => {
@@ -42,9 +47,24 @@ describe('<LinkCard />', () => {
       data: {
         url: 'https://www.soulmachines.com',
         title: 'Soul Machines',
+        imageUrl: 'https://placekitten.com/300/300',
       },
     };
     const { queryByText } = render(<LinkCard content={mockCardNoDescription} />);
     expect(queryByText('placeholder text')).not.toBeInTheDocument();
+  });
+
+  it('render link card without image', () => {
+    const mockCardNoImage = {
+      id: 'mockId',
+      type: 'externalLink',
+      data: {
+        url: 'https://www.soulmachines.com',
+        title: 'Soul Machines',
+        description: 'placeholder text',
+      },
+    };
+    const { container } = render(<LinkCard content={mockCardNoImage} />);
+    expect(container.querySelector('img')).not.toBeInTheDocument();
   });
 });

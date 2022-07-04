@@ -11,7 +11,7 @@ const content = {
   data: {
     url: 'https://www.soulmachines.com',
     title: 'Soul Machines',
-    imageUrl: 'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
+    imageUrl: 'https://placekitten.com/300/300',
     description: 'Placeholder',
   },
 };
