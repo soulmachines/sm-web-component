@@ -14,6 +14,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
 
     steps:
       - name: Checkout Source Code
@@ -35,23 +37,26 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Release
+      - name: Create Release
+        id: RELEASE_VERSION
         env:
           GITHUB_TOKEN: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
-        run: npx semantic-releasnp
+        run: |
+          npx semantic-release
+          echo $(git describe --abbrev=0 --tags)
+          version=$(git describe --abbrev=0 --tags)
+          echo "::set-output name=tag::${version}"
 
       - name: Build Package
         run: npm run build
         env:
           NODE_ENV: production
-          CDN_ENDPOINT:
-            'https://static.soulmachines.com/'
-            # semantic release will create a version using the latest tag
-          VERSION: ${{git describe --abbrev=0 --tags}}
+          CDN_ENDPOINT: 'https://static.soulmachines.com/'
+          VERSION: ${{ needs.build.outputs.RELEASE_VERSION }}
 
       - name: Version Snippet
         env:
-          VERSION: ${{git describe --abbrev=0 --tags}}
+          VERSION: ${{ needs.build.outputs.RELEASE_VERSION }}
           # take latest files and create a copy with the current version number
         run: |
           cp "dist/widget-snippet-latest.js" "dist/widget-snippet-${{ env.VERSION }}.js"
