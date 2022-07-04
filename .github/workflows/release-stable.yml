@@ -44,11 +44,13 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          CDN_ENDPOINT: 'https://static.soulmachines.com/'
+          CDN_ENDPOINT:
+            'https://static.soulmachines.com/'
+            # semantic release will create a version using the latest tag
+          VERSION: ${{git describe --abbrev=0 --tags}}
 
       - name: Version Snippet
         env:
-          # semantic release will create a version using the latest tag
           VERSION: ${{git describe --abbrev=0 --tags}}
           # take latest files and create a copy with the current version number
         run: |
