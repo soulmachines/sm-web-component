@@ -21,7 +21,7 @@ export function LinkCard({ content, style }: LinkCardProps) {
   const data = content.data as unknown as LinkData;
   let image;
   if (data.imageUrl) {
-    image = <img src={data.imageUrl} alt={data.title}></img>;
+    image = <img src={data.imageUrl} alt={data.title} />;
   }
   return (
     <Card style={style}>
