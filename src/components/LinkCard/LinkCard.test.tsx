@@ -25,7 +25,7 @@ describe('<LinkCard />', () => {
 
   it('renders card image', () => {
     const { getByRole } = render(<LinkCard content={mockCard} />);
-    expect(getByRole('img', {name: 'Soul Machines'})).toBeInTheDocument();
+    expect(getByRole('img', { name: 'Soul Machines' })).toBeInTheDocument();
   });
 
   it('renders card link anchor with label', async () => {
