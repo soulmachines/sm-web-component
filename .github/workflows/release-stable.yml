@@ -63,8 +63,8 @@ jobs:
           VERSION: ${{ needs.build.outputs.RELEASE_VERSION }}
           # take latest files and create a copy with the current version number
         run: |
-          cp "dist/widget-snippet-latest.js" "dist/widget-snippet-${{ env.VERSION }}.js"
-          cp "dist/widget-snippet-latest.min.js" "dist/widget-snippet-${{ env.VERSION }}.min.js"
+          cp "dist/widget-snippet.js" "dist/widget-snippet-${{ env.VERSION }}.js"
+          cp "dist/widget-snippet.min.js" "dist/widget-snippet-${{ env.VERSION }}.min.js"
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master

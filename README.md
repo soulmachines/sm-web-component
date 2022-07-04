@@ -139,7 +139,7 @@ An example of data attributes.
 
 ```
 <script
-  src="widget-snippet-latest.min.js"
+  src="widget-snippet.min.js"
   data-sm-api-key="YOUR_API_KEY"
 ></script>
 ```
@@ -150,7 +150,7 @@ An example of global variable. This is useful if the user cannot add a <script /
 window.smConfig = {
   smApiKey: 'YOUR_API_KEY',
 };
-<script src="widget-snippet-latest.min.js"></script>
+<script src="widget-snippet.min.js"></script>
 ```
 
 The supported config options are:
@@ -169,7 +169,7 @@ The supported config options are:
    - it takes the template, populating the filenames using the data from the manifest file. It outputs `widget-snippet.js` into the `dist` folder.
    - when the node env is production, it will preprend the asset urls with the CDN name
 3. You run the above file by typing `npm run build-snippet`
-4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as `widget-snippet-latest.min.js`.
+4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as `widget-snippet.min.js`.
 
 ### Running the snippet locally
 
@@ -181,8 +181,8 @@ We deploy the bundles via github actions. The bundles are automatically deployed
 
 Helpful urls:
 
-- (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet-latest.min.js`]
-- (Production snippet)[https://static.soulmachines.com/widget-snippet-latest.min.js`]
+- (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet.min.js`]
+- (Production snippet)[https://static.soulmachines.com/widget-snippet.min.js`]
 
 ### Versioning
 
@@ -202,8 +202,8 @@ The built file name will look like this `web-components-<version-number-here>.js
 We'll always deploy a latest version of the snippet to use. As part of the production release we'll copy the latest files and rename them to a specific version that we get from semantic release. Say we were release version 1.5, you'd find these files in the CDN
 
 ```
-dist/widget-snippet-latest.js
-dist/widget-snippet-latest.min.js
+dist/widget-snippet.js
+dist/widget-snippet.min.js
 dist/widget-snippet-1.5.0.js
 dist/widget-snippet-1.5.0.min.js
 ```

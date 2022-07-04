@@ -18,7 +18,7 @@ module.exports = {
     const actions = [
       {
         type: 'add',
-        path: '../dist/widget-snippet-latest.js',
+        path: '../dist/widget-snippet.js',
         templateFile: './widget-snippet/snippet.js.template',
         abortOnFail: true,
         force: true,
