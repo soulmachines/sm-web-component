@@ -8,15 +8,15 @@ function useSMMedia(scene: Scene) {
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
 
-  const setMicrophone = useCallback(
-    async (microphoneStatus: boolean) => {
+  const setMicrophoneActive = useCallback(
+    async (enabled: boolean) => {
       try {
         await scene.setMediaDeviceActive({
-          microphone: microphoneStatus,
+          microphone: enabled,
         });
 
-        setIsMicrophoneEnabled(microphoneStatus);
-        sessionStorage.setItem(SessionDataKeys.microphoneEnabled, microphoneStatus.toString());
+        setIsMicrophoneEnabled(enabled);
+        sessionStorage.setItem(SessionDataKeys.microphoneEnabled, enabled.toString());
       } catch (error) {
         // Silently ignore this error. Revisit in QUIC-1744
       }
@@ -24,15 +24,15 @@ function useSMMedia(scene: Scene) {
     [scene],
   );
 
-  const setCamera = useCallback(
-    async (cameraStatus: boolean) => {
+  const setCameraActive = useCallback(
+    async (enabled: boolean) => {
       try {
         await scene.setMediaDeviceActive({
-          camera: cameraStatus,
+          camera: enabled,
         });
 
-        setIsCameraEnabled(cameraStatus);
-        sessionStorage.setItem(SessionDataKeys.cameraEnabled, cameraStatus.toString());
+        setIsCameraEnabled(enabled);
+        sessionStorage.setItem(SessionDataKeys.cameraEnabled, enabled.toString());
       } catch (error) {
         // Silently ignore this error. Revisit in QUIC-1744
       }
@@ -49,17 +49,17 @@ function useSMMedia(scene: Scene) {
     if (isConnected) {
       const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
       const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
-      if (cameraSaved) setCamera(true);
-      if (microphoneSaved) setMicrophone(true);
+      if (cameraSaved) setCameraActive(true);
+      if (microphoneSaved) setMicrophoneActive(true);
     }
-  }, [isConnected, setCamera, setMicrophone]);
+  }, [isConnected, setCameraActive, setMicrophoneActive]);
 
   const toggleMicrophone = async () => {
-    await setMicrophone(!isMicrophoneEnabled);
+    await setMicrophoneActive(!isMicrophoneEnabled);
   };
 
   const toggleCamera = async () => {
-    await setCamera(!isCameraEnabled);
+    await setCameraActive(!isCameraEnabled);
   };
 
   const toggleVideoMuted = () => {

@@ -66,6 +66,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     connect,
     disconnect,
     videoRef,
+    cleanupSessionStorage,
   };
 }
 

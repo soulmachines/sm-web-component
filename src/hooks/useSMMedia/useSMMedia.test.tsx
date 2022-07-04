@@ -1,6 +1,7 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSMMedia } from '.';
+import { SessionDataKeys } from '../../enums';
 
 const mockIsConnected = jest.fn(() => false);
 const mockSetMediaDeviceActive = jest.fn();
@@ -93,12 +94,11 @@ describe('useSMMedia()', () => {
 
   describe('when toggleVideoMuted is called', () => {
     it('sets isVideoMuted to the opposite value', async () => {
-      const { result, rerender } = customRender();
+      const { result } = customRender();
 
       expect(result.current.isVideoMuted).toEqual(false);
 
       await result.current.toggleVideoMuted();
-      rerender();
 
       expect(result.current.isVideoMuted).toEqual(true);
     });
@@ -107,15 +107,15 @@ describe('useSMMedia()', () => {
   describe('when toggleCamera is called', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
+      sessionStorage.removeItem('sm-camera-enabled');
     });
 
     it('sets isCameraEnabled to the opposite value', async () => {
-      const { result, rerender } = customRender();
+      const { result } = customRender();
 
       expect(result.current.isCameraEnabled).toEqual(false);
 
       await result.current.toggleCamera();
-      rerender();
 
       expect(result.current.isCameraEnabled).toEqual(true);
     });
@@ -130,22 +130,22 @@ describe('useSMMedia()', () => {
 
       expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
 
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(3);
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
     });
   });
 
   describe('when toggleMicrophone is called', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
+      sessionStorage.removeItem('sm-microphone-enabled');
     });
 
     it('sets isMicrophoneEnabled to the opposite value', async () => {
-      const { result, rerender } = customRender();
+      const { result } = customRender();
 
       expect(result.current.isMicrophoneEnabled).toEqual(false);
 
       await result.current.toggleMicrophone();
-      rerender();
 
       expect(result.current.isMicrophoneEnabled).toEqual(true);
     });
@@ -160,7 +160,23 @@ describe('useSMMedia()', () => {
 
       expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
 
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(3);
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('when scene is connected with camera and microphone status saved in session storage', () => {
+    beforeEach(() => {
+      mockIsConnected.mockReturnValue(true);
+      sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
+      sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
+    });
+
+    it('calls setMediaDeviceActive with camera and microphone values only when it is true in session storage', () => {
+      customRender();
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
+        camera: sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true',
+      });
+      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(1);
     });
   });
 });
