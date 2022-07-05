@@ -45,7 +45,8 @@ jobs:
         env:
           NODE_ENV: production
           CDN_ENDPOINT: 'https://static.soulmachines.com/dev/'
-          VERSION: 'latest'
+          # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
+          VERSION: ${{git rev-parse --short HEAD }}
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
