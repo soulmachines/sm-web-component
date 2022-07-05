@@ -1,6 +1,4 @@
-# Web Component
-
-The web components allow for integration of a Digital Person into any website.
+# Web Components
 
 ## Contents
 
@@ -14,6 +12,18 @@ The web components allow for integration of a Digital Person into any website.
 - [Linking to local version of Web SDK](#linking-to-a-local-version-of-the-web-sdk)
 
 ## About the project
+
+The aim of the web components is to allow for easy integration of a Digital Person into any website. We have two main types of users, a developer and a non tech person.
+
+To support these two different types of users we out two different scripts.
+
+The first is a script called `web-components.js`. Once added to a web page you'll be able to use our custom html elements `<sm-video />` and `<sm-widget />`.
+
+The second script is `widget-snippet.js`, it's goal is to be a low code solution. This is our main focus currently and what users from DDNA Studio will copy. They will paste this script into their webpage and it will inject:
+
+- The web components script
+- A css file for styling
+- The html for the `<sm-widget />`
 
 ### Tooling
 
