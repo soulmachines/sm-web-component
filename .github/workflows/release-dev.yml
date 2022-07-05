@@ -3,7 +3,8 @@ name: Release Dev
 on:
   push:
     branches:
-      - master
+      # - master
+      - quic-1884-fix-pipeline
 
 permissions:
   id-token: write # Required for configure AWS credentials
@@ -20,9 +21,16 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
     steps:
       - name: Checkout Source Code
+        id: RELEASE_VERSION
         uses: actions/checkout@v3
+        run: |
+          version=$(git rev-parse --short HEAD)
+          echo "::set-output name=tag::${version}"
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -46,7 +54,7 @@ jobs:
           NODE_ENV: production
           CDN_ENDPOINT: 'https://static.soulmachines.com/dev/'
           # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
-          VERSION: ${{git rev-parse --short HEAD }}
+          VERSION: ${{ needs.release.outputs.RELEASE_VERSION }}
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
