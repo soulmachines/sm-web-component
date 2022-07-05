@@ -28,14 +28,16 @@ export function LinkCard({ content, style }: LinkCardProps) {
         {data.imageUrl && <img src={data.imageUrl} alt={data.title} />}
         <Heading type="h2">{data.title}</Heading>
         {data.description && <Text>{data.description}</Text>}
-        <a
-          className="sm-text-white sm-no-underline"
-          href={data.url}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Button>View Page</Button>
-        </a>
+        <div className="sm-bg-white sm-sticky sm-bottom-0">
+          <a
+            className="sm-text-white sm-no-underline"
+            href={data.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Button>View Page</Button>
+          </a>
+        </div>
       </div>
     </Card>
   );

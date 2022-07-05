@@ -1,9 +1,4 @@
-import { LinkCard } from '.';
-
-export default {
-  title: `Components / LinkCard`,
-  component: LinkCard,
-};
+import { LinkCard, LinkCardProps } from '.';
 
 const content = {
   id: 'id',
@@ -16,4 +11,12 @@ const content = {
   },
 };
 
-export const Basic = () => <LinkCard content={content} />;
+export default {
+  title: `Components / LinkCard`,
+  component: LinkCard,
+  argTypes: {
+    content: { control: 'object', defaultValue: content },
+  },
+};
+
+export const Basic = ({ content }: LinkCardProps) => <LinkCard content={content} />;
