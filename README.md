@@ -9,6 +9,7 @@
 - [Registering web components](#registering-web-components)
 - [Widget snippet](#widget-snippet)
 - [Deployment](#deployment)
+- [Debugging](#debugging)
 - [Linking to local version of Web SDK](#linking-to-a-local-version-of-the-web-sdk)
 
 ## About the project
@@ -25,7 +26,7 @@ The second script is `widget-snippet.js`, it's goal is to be a low code solution
 - A css file for styling
 - The html for the `<sm-widget />`
 
-### Tooling
+**Tooling**
 
 - [Preact](https://preactjs.com/) for composing the UI
 - [React Spring](https://react-spring.io/) for UI animations
@@ -230,6 +231,10 @@ dist/widget-snippet.min.js
 dist/widget-snippet-1.5.0.js
 dist/widget-snippet-1.5.0.min.js
 ```
+
+## Debugging
+
+We log the version of the widget to the console. This means if a user reports an issue with the widget, you can ask them to tell you what version they are using.
 
 ## Linking to a local version of the Web SDK
 
