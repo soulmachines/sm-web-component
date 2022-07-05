@@ -23,12 +23,12 @@ export function LinkCard({ content, style }: LinkCardProps) {
     <Card style={style}>
       <div
         data-sm-content={content.id}
-        className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-max-h-contentCard"
+        className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-max-h-contentCard sm-overflow-y-scroll"
       >
         {data.imageUrl && <img src={data.imageUrl} alt={data.title} />}
         <Heading type="h2">{data.title}</Heading>
         {data.description && <Text>{data.description}</Text>}
-        <div className="sm-bg-white sm-sticky sm-bottom-0">
+        <div className="sm-bg-white sm-sticky sm-bottom-0 sm-w-full sm-pt-5">
           <a
             className="sm-text-white sm-no-underline"
             href={data.url}
