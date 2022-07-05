@@ -76,7 +76,7 @@
     "vite-plugin-html": "^3.2.0"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": "eslint --cache --fix",
+    "*.{js,ts,tsx}": "eslint ./src --cache --fix",
     "**/*": "prettier --write --ignore-unknown"
   },
   "release": {

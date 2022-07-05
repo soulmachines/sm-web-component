@@ -11,6 +11,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Set Version
+        id: RELEASE_VERSION
+        run: |
+          version=$(git rev-parse --short HEAD)
+          echo "::set-output name=tag::${version}"
+
         # Installs our npm deps and cypress tests
       - name: Cypress install
         uses: cypress-io/github-action@v4
@@ -20,6 +26,9 @@ jobs:
           # Disable running of tests within install job
           runTests: false
       - run: npm run build:cypress
+        env:
+          # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
+          VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
 
       # Upload build folder to be used in subsequent jobs (run-chrome, run-edge etc)
       - name: Save dist folder
