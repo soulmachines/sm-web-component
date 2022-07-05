@@ -1,8 +1,40 @@
-# Web Component
+# Web Components
 
-The web components allow for integration of a Digital Person into any website.
+## Contents
 
-## Tools
+- [About the project](#about-the-project)
+- [Installation](#installation)
+- [Helpful commands](#commands)
+- [Styling](#styling)
+- [Registering web components](#registering-web-components)
+- [Widget snippet](#widget-snippet)
+- [Deployment](#deployment)
+- [Debugging](#debugging)
+- [Linking to local version of Web SDK](#linking-to-a-local-version-of-the-web-sdk)
+
+## About the project
+
+The aim of the web components is to allow for easy integration of a Digital Person into any website. We have two main types of users, a developer and a non tech person.
+
+To support these two different types of users we out two different scripts.
+
+The first is a script called `web-components.js`. Once added to a web page you'll be able to use our custom html elements `<sm-video />` and `<sm-widget />`.
+
+The second script is `widget-snippet.js`, it's goal is to be a low code solution. This is our main focus currently and what users from DDNA Studio will copy. They will paste this script into their webpage and it will inject:
+
+- The web components script
+- A css file for styling
+- The html for the `<sm-widget />`
+
+```mermaid
+graph TD
+    w[widget.js]
+    w -->|wc register + app| js[web-components.js]
+    w -->|sm-widget styling| css[web-components.css]
+    w -->|element on webpage| element["&lt;sm-widget/&gt;"]
+```
+
+**Tooling**
 
 - [Preact](https://preactjs.com/) for composing the UI
 - [React Spring](https://react-spring.io/) for UI animations
@@ -14,7 +46,7 @@ The web components allow for integration of a Digital Person into any website.
 - [Testing Tools](https://testing-library.com/) for testing utils
 - [Plop](https://plopjs.com/) for generating files and folders
 
-## Getting started
+## Installation
 
 Copy the `.env.template` file and rename it to `.env`.
 
@@ -89,6 +121,10 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 
 It's best to use a (selector)[https://docs.cypress.io/guides/references/best-practices#Selecting-Elements] that is not brittle. You can use data attributes to select elements. These may need to be setup for the component. Look at the `<Text />` as an example. We use a data attribute that looks like `data-sm-cy="yourSelector"`. This allows you to write selectors in your test like `cy.get('[data-sm-cy=yourSelector]').click()`. A nice side effect of this is that consumers of the web component can also target these selectors in CSS if they wish.
 
+### Generating Components
+
+Run `npm run generate` in your terminal and it will ask you what you'd like the component to be called. Enter the name and it will scaffold the files in the component directory.
+
 ## Styling
 
 (Tailwind)[https://tailwindcss.com/] is setup and used to style the web components. All tailwind styles are under a `sm-` prefix, to avoid naming collisions.
@@ -115,15 +151,11 @@ Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind
 ]
 ```
 
-## Generating Components
-
-Run `npm run generate` in your terminal and it will ask you what you'd like the component to be called. Enter the name and it will scaffold the files in the component directory.
-
 ## Registering web components
 
 Web components are registered using the [preactement lib](https://github.com/jahilldev/component-elements). You'll find these components in the web-components directory. All files listed in the main `index.ts` will be bundled into the web-components.js script. If this grows in future, we should consider splitting it out into multiple bundles.
 
-## Working with the snippet
+## Widget snippet
 
 ### How the snippet works
 
@@ -207,6 +239,19 @@ dist/widget-snippet.min.js
 dist/widget-snippet-1.5.0.js
 dist/widget-snippet-1.5.0.min.js
 ```
+
+```mermaid
+graph TD
+    V[Versioning]
+    V -->|DEV| D[Commit Hash]
+    V -->|PROD| P[Semantic release]
+    D --> Ds[web-components-3ec02b9.js]
+    P --> Ps[web-components-1.2.3.js]
+```
+
+## Debugging
+
+We log the version of the widget to the console. This means if a user reports an issue with the widget, you can ask them to tell you what version they are using.
 
 ## Linking to a local version of the Web SDK
 
