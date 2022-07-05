@@ -26,8 +26,10 @@ jobs:
 
     steps:
       - name: Checkout Source Code
-        id: RELEASE_VERSION
         uses: actions/checkout@v3
+
+      - name: Set version
+        id: RELEASE_VERSION
         run: |
           version=$(git rev-parse --short HEAD)
           echo "::set-output name=tag::${version}"
