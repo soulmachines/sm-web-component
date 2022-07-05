@@ -3,8 +3,7 @@ name: Release Dev
 on:
   push:
     branches:
-      # - master
-      - quic-1884-fix-pipeline
+      - master
 
 permissions:
   id-token: write # Required for configure AWS credentials
