@@ -26,6 +26,14 @@ The second script is `widget-snippet.js`, it's goal is to be a low code solution
 - A css file for styling
 - The html for the `<sm-widget />`
 
+```mermaid
+graph TD
+    w[widget.js]
+    w -->|wc register + app| js[web-components.js]
+    w -->|sm-widget styling| css[web-components.css]
+    w -->|element on webpage| element["&lt;sm-widget/&gt;"]
+```
+
 **Tooling**
 
 - [Preact](https://preactjs.com/) for composing the UI
@@ -230,6 +238,15 @@ dist/widget-snippet.js
 dist/widget-snippet.min.js
 dist/widget-snippet-1.5.0.js
 dist/widget-snippet-1.5.0.min.js
+```
+
+```mermaid
+graph TD
+    V[Versioning]
+    V -->|DEV| D[Commit Hash]
+    V -->|PROD| P[Semantic release]
+    D --> Ds[web-components-3ec02b9.js]
+    P --> Ps[web-components-1.2.3.js]
 ```
 
 ## Debugging
