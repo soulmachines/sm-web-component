@@ -21,7 +21,10 @@ export function LinkCard({ content, style }: LinkCardProps) {
   const data = content.data as unknown as LinkData;
   return (
     <Card style={style}>
-      <div data-sm-content={content.id} className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start">
+      <div
+        data-sm-content={content.id}
+        className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-max-h-contentCard"
+      >
         {data.imageUrl && <img src={data.imageUrl} alt={data.title} />}
         <Heading type="h2">{data.title}</Heading>
         {data.description && <Text>{data.description}</Text>}
