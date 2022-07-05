@@ -18,9 +18,18 @@ env:
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
+
+      - name: Set Version
+        id: RELEASE_VERSION
+        run: |
+          version=$(git rev-parse --short HEAD)
+          echo "::set-output name=tag::${version}"
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -45,7 +54,10 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          CDN_ENDPOINT: 'https://static.soulmachines.com/internal/'
+          CDN_ENDPOINT:
+            'https://static.soulmachines.com/internal/'
+            # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
+          VERSION: ${{ needs.release.outputs.RELEASE_VERSION }}
 
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
