@@ -19,8 +19,8 @@ describe('<LinkCard />', () => {
   });
 
   it('renders card description', () => {
-    const { getByText } = render(<LinkCard content={mockCard} />);
-    expect(getByText('placeholder text')).toBeInTheDocument();
+    const { container } = render(<LinkCard content={mockCard} />);
+    expect(container.querySelector('p')).toBeInTheDocument();
   });
 
   it('renders card image', () => {
