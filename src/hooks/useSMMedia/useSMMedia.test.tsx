@@ -10,7 +10,7 @@ const mockScene = {
   setMediaDeviceActive: mockSetMediaDeviceActive,
   isMicrophoneActive: jest.fn(() => false),
   isCameraActive: jest.fn(() => false),
-  videoElement: undefined,
+  videoElement: document.createElement('video'),
 } as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
@@ -93,6 +93,11 @@ describe('useSMMedia()', () => {
   });
 
   describe('when toggleVideoMuted is called', () => {
+    beforeEach(() => {
+      mockIsConnected.mockReturnValue(true);
+      sessionStorage.removeItem(SessionDataKeys.videoMuted);
+    });
+
     it('sets isVideoMuted to the opposite value', async () => {
       const { result } = customRender();
 
@@ -107,7 +112,7 @@ describe('useSMMedia()', () => {
   describe('when toggleCamera is called', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
-      sessionStorage.removeItem('sm-camera-enabled');
+      sessionStorage.removeItem(SessionDataKeys.cameraEnabled);
     });
 
     it('sets isCameraEnabled to the opposite value', async () => {
@@ -137,7 +142,7 @@ describe('useSMMedia()', () => {
   describe('when toggleMicrophone is called', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
-      sessionStorage.removeItem('sm-microphone-enabled');
+      sessionStorage.removeItem(SessionDataKeys.microphoneEnabled);
     });
 
     it('sets isMicrophoneEnabled to the opposite value', async () => {
@@ -164,19 +169,25 @@ describe('useSMMedia()', () => {
     });
   });
 
-  describe('when scene is connected with camera and microphone status saved in session storage', () => {
+  describe('when control states are saved in session storage', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
       sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
       sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
+      sessionStorage.setItem(SessionDataKeys.videoMuted, 'true');
     });
 
-    it('calls setMediaDeviceActive with camera and microphone values only when it is true in session storage', () => {
+    it('calls setMediaDeviceActive with camera and microphone values when it is true in session storage', () => {
       customRender();
       expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
         camera: sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true',
       });
       expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(1);
+    });
+
+    it('mutes scene video when previous video status is muted in session storage', () => {
+      customRender();
+      expect(mockScene.videoElement?.muted).toEqual(true);
     });
   });
 });

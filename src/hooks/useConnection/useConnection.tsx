@@ -53,6 +53,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     sessionStorage.removeItem(SessionDataKeys.server);
     sessionStorage.removeItem(SessionDataKeys.cameraEnabled);
     sessionStorage.removeItem(SessionDataKeys.microphoneEnabled);
+    sessionStorage.removeItem(SessionDataKeys.videoMuted);
   };
 
   scene.onDisconnectedEvent.addListener(() => {
