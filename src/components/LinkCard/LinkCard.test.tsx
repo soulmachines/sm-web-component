@@ -50,8 +50,8 @@ describe('<LinkCard />', () => {
         imageUrl: 'https://placekitten.com/300/300',
       },
     };
-    const { queryByText } = render(<LinkCard content={mockCardNoDescription} />);
-    expect(queryByText('placeholder text')).not.toBeInTheDocument();
+    const { container } = render(<LinkCard content={mockCardNoDescription} />);
+    expect(container.querySelector('p')).not.toBeInTheDocument();
   });
 
   it('render link card without image', () => {
