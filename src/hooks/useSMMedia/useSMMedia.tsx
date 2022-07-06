@@ -17,6 +17,13 @@ function useSMMedia(scene: Scene) {
     }
   }, [isConnected, isMicrophoneActive, isCameraActive]);
 
+  // Reset state when not connected
+  useEffect(() => {
+    if (!isConnected) {
+      setIsVideoMuted(false);
+    }
+  }, [isConnected, setIsVideoMuted]);
+
   const toggleMicrophone = async () => {
     try {
       await scene.setMediaDeviceActive({
