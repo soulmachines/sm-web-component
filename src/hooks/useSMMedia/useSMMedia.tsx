@@ -40,6 +40,17 @@ function useSMMedia(scene: Scene) {
     [scene],
   );
 
+  const setVideoMuted = useCallback(
+    (enabled: boolean) => {
+      if (scene.videoElement) {
+        scene.videoElement.muted = enabled;
+        setIsVideoMuted(enabled);
+        sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
+      }
+    },
+    [scene],
+  );
+
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close. 
    This could be WebRTC lib related issue, will be revisit later after upgrading WebRTC in video host.
@@ -49,10 +60,12 @@ function useSMMedia(scene: Scene) {
     if (isConnected) {
       const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
       const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
+      const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
       if (cameraSaved) setCameraActive(true);
       if (microphoneSaved) setMicrophoneActive(true);
+      if (videoMuted) setVideoMuted(true);
     }
-  }, [isConnected, setCameraActive, setMicrophoneActive]);
+  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
 
   const toggleMicrophone = async () => {
     await setMicrophoneActive(!isMicrophoneEnabled);
@@ -63,7 +76,7 @@ function useSMMedia(scene: Scene) {
   };
 
   const toggleVideoMuted = () => {
-    setIsVideoMuted(!isVideoMuted);
+    setVideoMuted(!isVideoMuted);
   };
 
   return {

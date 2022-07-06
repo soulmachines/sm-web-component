@@ -12,4 +12,5 @@ export enum SessionDataKeys {
   server = 'sm-server',
   cameraEnabled = 'sm-camera-enabled',
   microphoneEnabled = 'sm-microphone-enabled',
+  videoMuted = 'sm-video-muted',
 }

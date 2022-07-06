@@ -57,19 +57,21 @@ describe('useConnection()', () => {
   it('clears session storage data when disconnect is called', () => {
     const { result } = customRender();
 
-    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).not.toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).not.toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.server)).not.toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).not.toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).not.toBeNull;
+    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).not.toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).not.toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.server)).not.toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).not.toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).not.toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).not.toBeNull();
 
     result.current.disconnect();
 
-    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull;
-    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull;
+    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull();
+    expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toBeNull();
   });
 
   describe('when request is pending', () => {
@@ -256,11 +258,11 @@ describe('useConnection()', () => {
         const { result } = customRender();
         await result.current.connect();
 
-        expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull;
-        expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull;
-        expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull;
-        expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull;
-        expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull;
+        expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull();
+        expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull();
+        expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull();
+        expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull();
+        expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull();
       });
     });
   });
