@@ -1,9 +1,4 @@
-import { LinkCard } from '.';
-
-export default {
-  title: `Components / LinkCard`,
-  component: LinkCard,
-};
+import { LinkCard, LinkCardProps } from '.';
 
 const content = {
   id: 'id',
@@ -11,9 +6,17 @@ const content = {
   data: {
     url: 'https://www.soulmachines.com',
     title: 'Soul Machines',
-    imageUrl: 'https://www.soulmachines.com/wp-content/themes/soulmachines/images/sm-logo.png',
+    imageUrl: 'https://placekitten.com/300/300',
     description: 'Placeholder',
   },
 };
 
-export const Basic = () => <LinkCard content={content} />;
+export default {
+  title: `Components / LinkCard`,
+  component: LinkCard,
+  argTypes: {
+    content: { control: 'object', defaultValue: content },
+  },
+};
+
+export const Basic = ({ content }: LinkCardProps) => <LinkCard content={content} />;
