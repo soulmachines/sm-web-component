@@ -23,7 +23,7 @@ export function LinkCard({ content, style }: LinkCardProps) {
     <Card style={style}>
       <div
         data-sm-content={content.id}
-        className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-max-h-contentCard sm-overflow-y-auto"
+        className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto"
       >
         {data.imageUrl && <img src={data.imageUrl} alt={data.title} />}
         <Heading type="h2">{data.title}</Heading>
