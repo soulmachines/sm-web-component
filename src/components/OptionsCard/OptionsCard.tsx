@@ -31,7 +31,7 @@ export function OptionsCard({ content, style }: OptionsCardProps) {
     <Card isDismissible={false} style={style}>
       <div
         data-sm-content={content.id}
-        className="sm-max-h-contentCard sm-flex sm-flex-col sm-gap-y-2 sm-overflow-y-auto"
+        className="sm-max-h-contentCard sm-h-full sm-flex sm-flex-col sm-gap-y-2 sm-overflow-y-auto"
       >
         {data.options.map((option) => {
           return (
