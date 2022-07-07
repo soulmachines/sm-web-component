@@ -16,7 +16,7 @@ export function Card(
 ) {
   const [isHidden, setIsHidden] = useState(false);
   const cardStyles = classNames({
-    'sm-bg-white sm-rounded-xl sm-w-full sm-shadow-lg sm-overflow-y-auto': true,
+    'sm-bg-white sm-rounded-xl sm-w-full sm-shadow-lg sm-overflow-hidden': true,
     'sm-p-6': !flush,
   });
   const transitions = useTransition(!isHidden, {
