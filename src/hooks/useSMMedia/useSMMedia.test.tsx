@@ -48,14 +48,9 @@ describe('useSMMedia()', () => {
     expect(mockSetMediaDeviceActive).not.toHaveBeenCalled();
   });
 
-  describe('isVideoMuted default state', () => {
-    it('uses the videoElements muted state if present', () => {
-      const scene = {
-        ...mockScene,
-        videoElement: { muted: true },
-      } as unknown as Scene;
-      const { result } = customRender(scene);
-      expect(result.current.isVideoMuted).toEqual(true);
+  describe('when scene is disconnected', () => {
+    beforeEach(() => {
+      mockIsConnected.mockReturnValue(false);
     });
 
     it('defaults to false when the video element is not present', () => {
@@ -77,6 +72,22 @@ describe('useSMMedia()', () => {
     it('sets isCameraEnabled to the return value of scene.isCameraActive', () => {
       const { result } = customRender();
       expect(result.current.isCameraEnabled).toEqual(false);
+    });
+
+    describe('isVideoMuted state', () => {
+      it('uses the videoElements muted state if present', () => {
+        const scene = {
+          ...mockScene,
+          videoElement: { muted: true },
+        } as unknown as Scene;
+        const { result } = customRender(scene);
+        expect(result.current.isVideoMuted).toEqual(true);
+      });
+
+      it('defaults to false when the video element is not present', () => {
+        const { result } = customRender();
+        expect(result.current.isVideoMuted).toEqual(false);
+      });
     });
   });
 
