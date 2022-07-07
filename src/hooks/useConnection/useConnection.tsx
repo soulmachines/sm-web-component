@@ -15,7 +15,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
       if (videoRef.current) {
-        await scene.startVideo(videoRef.current);
+        scene.startVideo(videoRef.current);
         videoRef.current.muted = false;
       }
 
