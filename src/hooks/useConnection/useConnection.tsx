@@ -1,4 +1,4 @@
-import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
+import { ConnectOptions, Persona, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
@@ -7,6 +7,18 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const sendTextMessage = (persona: Persona, text: string) => {
+    if (!persona) {
+      return;
+    }
+    persona.conversationSend(text, {}, {});
+  };
+
+  const setPersonaMuted = (videoElement: HTMLVideoElement, enabled: boolean) => {
+    videoElement.muted = enabled;
+    console.log(`>> setPersonaMuted: ${enabled}`);
+  };
+
   const connect = useCallback(async () => {
     try {
       const connectOptions: ConnectOptions = {};
@@ -14,9 +26,26 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
+      console.log('>> before');
       if (videoRef.current) {
-        await scene.startVideo(videoRef.current);
-        videoRef.current.muted = false;
+        console.log('>> after');
+        scene.startVideo(videoRef.current);
+        //videoRef.current.muted = false;
+        // await scene.startVideo(videoRef.current);
+        // videoRef.current.muted = false;
+        //const { video, audio } = await scene.startVideo() as  { video: boolean; audio: boolean; };
+        //console.log('>>', { video, audio });
+
+        // const persona = new Persona(scene, 0);
+
+        // if (video && audio) {
+        //   sendTextMessage(persona, 'hello');
+        // }
+
+        // if (!audio) {
+        //   if(videoRef.current)
+        //   setPersonaMuted(videoRef.current, true);
+        // }
       }
 
       if (tokenServer) {
@@ -36,11 +65,15 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
-      cleanupSessionStorage();
-      setConnectionStatus(ConnectionStatus.ERRORED);
+      if (error instanceof Error && error.name === 'userInteractionRequired') {
+        console.error(error);
+      } else {
+        cleanupSessionStorage();
+        setConnectionStatus(ConnectionStatus.ERRORED);
 
-      if (error instanceof Error) {
-        setConnectionError(error);
+        if (error instanceof Error) {
+          setConnectionError(error);
+        }
       }
     }
   }, [scene, tokenServer]);

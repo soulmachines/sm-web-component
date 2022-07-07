@@ -57,9 +57,9 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     }
   }, [videoRef, videoStream]);
 
-  if (connectionStatus === ConnectionStatus.DISCONNECTED) {
-    return null;
-  }
+  // if (connectionStatus === ConnectionStatus.DISCONNECTED) {
+  //   return null;
+  // }
 
   return (
     <div className="sm-w-full sm-h-full sm-overflow-hidden">

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
 function useSMMedia(scene: Scene) {
-  const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(scene.videoElement?.muted || false);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
@@ -58,14 +58,18 @@ function useSMMedia(scene: Scene) {
    */
   useEffect(() => {
     if (isConnected) {
+      setVideoMuted(scene.videoElement?.muted || false);
+      //session states
       const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
       const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
       const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
       if (cameraSaved) setCameraActive(true);
       if (microphoneSaved) setMicrophoneActive(true);
-      if (videoMuted) setVideoMuted(true);
+      if (videoMuted) {
+        setVideoMuted(true);
+      }
     }
-  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
+  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted, scene]);
 
   // Reset state when not connected
   useEffect(() => {

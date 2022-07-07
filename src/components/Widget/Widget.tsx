@@ -80,18 +80,16 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
                 </button>
               )}
 
-              {!isDisconnected && (
-                <div
-                  className={classNames({
-                    'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
-                    'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
-                      isConnected,
-                  })}
-                >
-                  <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
-                  {isConnected && <VideoControls />}
-                </div>
-              )}
+              <div
+                className={classNames({
+                  'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
+                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
+                    isConnected,
+                })}
+              >
+                <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
+                {isConnected && <VideoControls />}
+              </div>
             </animated.div>
           </div>
         </div>
