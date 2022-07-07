@@ -31,7 +31,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       await scene.connect(connectOptions);
 
       console.log(
-        `>> Is Session Persistence Supported: ${scene.supportsSessionPersistence()}\n>> Is Current Seesion Resumed Session: ${scene.isResumedSession()}`,
+        `>> Is Session Persistence Supported: ${scene.supportsSessionPersistence()}\n>> Is Current Session Resumed Session: ${scene.isResumedSession()}`,
       );
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
