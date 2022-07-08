@@ -171,9 +171,9 @@ describe('useSMMedia()', () => {
         expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(1);
       });
 
-      it('mutes scene video when previous video status is muted in session storage', () => {
-        customRender();
-        expect(mockScene.videoElement?.muted).toEqual(true);
+      it('sets the video muted state to the saved muted state in session storage', () => {
+        const { result } = customRender();
+        expect(result.current.isVideoMuted).toEqual(true);
       });
     });
   });
