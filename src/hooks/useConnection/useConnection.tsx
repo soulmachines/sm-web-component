@@ -38,10 +38,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
-      if (videoRef.current) {
-        scene.startVideo(videoRef.current);
-        videoRef.current.muted = false;
-      }
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
       if (error instanceof Error) {
