@@ -40,6 +40,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
+      console.log('>>> ', error);
       if (error instanceof Error) {
         setConnectionError(error);
       }

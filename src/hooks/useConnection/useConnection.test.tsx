@@ -1,6 +1,7 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
 import 'preact/hooks';
+import canAutoPlay from 'can-autoplay';
 import { useConnection } from '.';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
@@ -16,6 +17,7 @@ const mockScene = {
   },
   call: () => null,
 } as unknown as Scene;
+jest.mock('can-autoplay');
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
 }));
@@ -211,11 +213,7 @@ describe('useConnection()', () => {
 
       beforeEach(() => {
         mockFetch.mockReturnValue(mockedFetchResponse);
-        jest.spyOn(mockScene, 'startVideo').mockReturnValueOnce(
-          new Promise((_, reject) => {
-            reject(error);
-          }),
-        );
+        jest.spyOn(canAutoPlay, 'audio').mockRejectedValueOnce(error);
       });
 
       it('updates connectionError with the error', async () => {
