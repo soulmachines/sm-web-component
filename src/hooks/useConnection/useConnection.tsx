@@ -1,5 +1,6 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
+import canAutoPlay from 'can-autoplay';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
@@ -13,6 +14,18 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
+
+      canAutoPlay.audio().then(({ result }) => {
+        if (videoRef.current && scene.videoElement) {
+          if (result === true) {
+            scene.videoElement.muted = false;
+            videoRef.current.muted = false;
+          } else {
+            scene.videoElement.muted = true;
+            videoRef.current.muted = true;
+          }
+        }
+      });
 
       if (tokenServer) {
         const res = await fetch(tokenServer);
