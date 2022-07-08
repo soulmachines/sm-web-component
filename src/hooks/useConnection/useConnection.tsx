@@ -1,4 +1,4 @@
-import { ConnectOptions, Persona, Scene } from '@soulmachines/smwebsdk';
+import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
@@ -6,17 +6,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const sendTextMessage = (persona: Persona, text: string) => {
-    if (!persona) {
-      return;
-    }
-    persona.conversationSend(text, {}, {});
-  };
-
-  const setPersonaMuted = (videoElement: HTMLVideoElement, enabled: boolean) => {
-    videoElement.muted = enabled;
-  };
 
   const connect = useCallback(async () => {
     try {
@@ -42,23 +31,19 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
-      if (error instanceof Error && error.name === 'userInteractionRequired') {
-        console.error(error);
-      } else {
-        cleanupSessionStorage();
-        setConnectionStatus(ConnectionStatus.ERRORED);
-
-        if (error instanceof Error) {
-          setConnectionError(error);
-        }
+      if (error instanceof Error) {
+        setConnectionError(error);
       }
+
+      cleanupSessionStorage();
+      setConnectionStatus(ConnectionStatus.ERRORED);
     }
   }, [scene, tokenServer]);
 
   const disconnect = () => {
-    setConnectionStatus(ConnectionStatus.DISCONNECTED);
     cleanupSessionStorage();
     scene.disconnect();
+    setConnectionStatus(ConnectionStatus.DISCONNECTED);
   };
 
   const cleanupSessionStorage = () => {
@@ -71,8 +56,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   };
 
   scene.onDisconnectedEvent.addListener(() => {
-    setConnectionStatus(ConnectionStatus.TIMED_OUT);
     cleanupSessionStorage();
+    setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 
   return {
