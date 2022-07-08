@@ -57,12 +57,12 @@ describe('useConnection()', () => {
   it('clears session storage data when disconnect is called', () => {
     const { result } = customRender();
 
-    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).not.toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).not.toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.server)).not.toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).not.toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).not.toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).not.toBeNull();
+    sessionStorage.setItem(SessionDataKeys.sessionId, 'mock-value');
+    sessionStorage.setItem(SessionDataKeys.apiKey, 'mock-value');
+    sessionStorage.setItem(SessionDataKeys.server, 'mock-value');
+    sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
+    sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
+    sessionStorage.setItem(SessionDataKeys.videoMuted, 'true');
 
     result.current.disconnect();
 
