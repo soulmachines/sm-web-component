@@ -71,13 +71,9 @@ function useSMMedia(scene: Scene) {
     }
   }, [isConnected, setIsVideoMuted]);
 
-  const toggleMicrophone = async () => {
-    await setMicrophoneActive(!isMicrophoneEnabled);
-  };
+  const toggleMicrophone = () => setMicrophoneActive(!isMicrophoneEnabled);
 
-  const toggleCamera = async () => {
-    await setCameraActive(!isCameraEnabled);
-  };
+  const toggleCamera = () => setCameraActive(!isCameraEnabled);
 
   const toggleVideoMuted = () => {
     setVideoMuted(!isVideoMuted);
