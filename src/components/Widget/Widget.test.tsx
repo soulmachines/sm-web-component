@@ -52,6 +52,11 @@ describe('<Widget />', () => {
       expect(getByTitle('Digital person')).toBeInTheDocument();
     });
 
+    it('renders a video', () => {
+      const { container } = customRender();
+      expect(container.querySelector('video')).toBeInTheDocument();
+    });
+
     it('does not render a loading indicator', () => {
       const { queryByTitle } = customRender();
       expect(queryByTitle('Loading...')).not.toBeInTheDocument();
@@ -60,11 +65,6 @@ describe('<Widget />', () => {
     it('does not render a disconnect button', () => {
       const { queryByTitle } = customRender();
       expect(queryByTitle('Close video')).not.toBeInTheDocument();
-    });
-
-    it('does not render a video', () => {
-      const { container } = customRender();
-      expect(container.querySelector('video')).not.toBeInTheDocument();
     });
 
     describe('when a custom profile image is provided', () => {
