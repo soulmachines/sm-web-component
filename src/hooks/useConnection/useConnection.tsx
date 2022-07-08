@@ -16,7 +16,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
   const setPersonaMuted = (videoElement: HTMLVideoElement, enabled: boolean) => {
     videoElement.muted = enabled;
-    console.log(`>> setPersonaMuted: ${enabled}`);
   };
 
   const connect = useCallback(async () => {
@@ -26,26 +25,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
-      console.log('>> before');
       if (videoRef.current) {
-        console.log('>> after');
-        scene.startVideo(videoRef.current);
-        //videoRef.current.muted = false;
-        // await scene.startVideo(videoRef.current);
-        // videoRef.current.muted = false;
-        //const { video, audio } = await scene.startVideo() as  { video: boolean; audio: boolean; };
-        //console.log('>>', { video, audio });
-
-        // const persona = new Persona(scene, 0);
-
-        // if (video && audio) {
-        //   sendTextMessage(persona, 'hello');
-        // }
-
-        // if (!audio) {
-        //   if(videoRef.current)
-        //   setPersonaMuted(videoRef.current, true);
-        // }
+        await scene.startVideo(videoRef.current);
       }
 
       if (tokenServer) {
@@ -58,10 +39,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       }
 
       await scene.connect(connectOptions);
-
-      console.log(
-        `>> Is Session Persistence Supported: ${scene.supportsSessionPersistence()}\n>> Is Current Session Resumed Session: ${scene.isResumedSession()}`,
-      );
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
