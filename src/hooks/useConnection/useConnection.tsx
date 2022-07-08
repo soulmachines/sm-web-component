@@ -14,11 +14,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
-      // if (videoRef.current) {
-      //    scene.startVideo(videoRef.current);
-      //    videoRef.current.muted = false;
-      // }
-
       if (tokenServer) {
         const res = await fetch(tokenServer);
         const { url, jwt } = await res.json();
@@ -30,6 +25,10 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
+      if (videoRef.current) {
+        scene.startVideo(videoRef.current);
+        videoRef.current.muted = false;
+      }
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
       if (error instanceof Error) {
