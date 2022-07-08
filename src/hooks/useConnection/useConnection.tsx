@@ -15,17 +15,15 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
-      canAutoPlay.audio().then(({ result }) => {
-        if (videoRef.current && scene.videoElement) {
-          if (result === true) {
-            scene.videoElement.muted = false;
-            videoRef.current.muted = false;
-          } else {
-            scene.videoElement.muted = true;
-            videoRef.current.muted = true;
-          }
-        }
-      });
+      const autoPlay = await canAutoPlay.audio();
+      const audioPlayable = autoPlay.result;
+
+      if (videoRef.current && scene.videoElement) {
+        // Sync both video elements to ensure states are correct
+        // We use scene.videoElement to determine mute icon state
+        scene.videoElement.muted = !audioPlayable;
+        videoRef.current.muted = !audioPlayable;
+      }
 
       if (tokenServer) {
         const res = await fetch(tokenServer);
@@ -40,7 +38,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
-      console.log('>>> ', error);
       if (error instanceof Error) {
         setConnectionError(error);
       }
