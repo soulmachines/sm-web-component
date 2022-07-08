@@ -12,10 +12,6 @@ describe('when a scene error occurs', () => {
     cy.contains('button', 'Retry');
   });
 
-  it('does not render a video', () => {
-    cy.get('video').should('not.exist');
-  });
-
   it('does not render a greeting', () => {
     cy.get('[data-sm-cy=greetingText]').should('not.exist');
   });
