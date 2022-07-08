@@ -25,7 +25,6 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
     connectionStatus !== ConnectionStatus.CONNECTING;
 
   // Connect directly if it's resume session
-
   useEffect(() => {
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
