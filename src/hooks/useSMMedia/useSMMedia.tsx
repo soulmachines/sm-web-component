@@ -71,14 +71,6 @@ function useSMMedia(scene: Scene) {
     }
   }, [isConnected, setIsVideoMuted]);
 
-  useEffect(() => {
-    // Detect Safari (hack)
-    const safariAgent = navigator.userAgent.indexOf('Safari') > -1;
-    if (isConnected && safariAgent) {
-      setIsVideoMuted(true);
-    }
-  }, [isConnected]);
-
   const toggleMicrophone = async () => {
     await setMicrophoneActive(!isMicrophoneEnabled);
   };
