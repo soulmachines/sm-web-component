@@ -3,12 +3,13 @@ import { useSpring, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
-import { ConnectionStatus } from '../../enums';
+import { ConnectionStatus, SessionDataKeys } from '../../enums';
 import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
+import { useEffect } from 'preact/hooks';
 
 export type WidgetProps = {
   greeting?: string;
@@ -22,6 +23,13 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   const isDisconnected =
     connectionStatus !== ConnectionStatus.CONNECTED &&
     connectionStatus !== ConnectionStatus.CONNECTING;
+
+  // Connect directly if it's resume session
+  useEffect(() => {
+    if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
+      connect();
+    }
+  }, [connect, isDisconnected]);
 
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
@@ -71,18 +79,16 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
                 </button>
               )}
 
-              {!isDisconnected && (
-                <div
-                  className={classNames({
-                    'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
-                    'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
-                      isConnected,
-                  })}
-                >
-                  <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
-                  {isConnected && <VideoControls />}
-                </div>
-              )}
+              <div
+                className={classNames({
+                  'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
+                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
+                    isConnected,
+                })}
+              >
+                <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
+                {isConnected && <VideoControls />}
+              </div>
             </animated.div>
           </div>
         </div>

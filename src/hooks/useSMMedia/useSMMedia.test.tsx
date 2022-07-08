@@ -1,6 +1,7 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
 import { useSMMedia } from '.';
+import { SessionDataKeys } from '../../enums';
 
 const mockIsConnected = jest.fn(() => false);
 const mockSetMediaDeviceActive = jest.fn();
@@ -62,6 +63,9 @@ describe('useSMMedia()', () => {
   describe('when scene is connected', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
+      sessionStorage.removeItem(SessionDataKeys.videoMuted);
+      sessionStorage.removeItem(SessionDataKeys.cameraEnabled);
+      sessionStorage.removeItem(SessionDataKeys.microphoneEnabled);
     });
 
     it('sets isMicrophoneEnabled to the return value of scene.isMicrophoneActive', () => {
@@ -89,78 +93,88 @@ describe('useSMMedia()', () => {
         expect(result.current.isVideoMuted).toEqual(false);
       });
     });
-  });
 
-  describe('when toggleVideoMuted is called', () => {
-    it('sets isVideoMuted to the opposite value', async () => {
-      const { result, rerender } = customRender();
+    describe('when toggleVideoMuted is called', () => {
+      it('sets isVideoMuted to the opposite value', async () => {
+        const { result } = customRender();
 
-      expect(result.current.isVideoMuted).toEqual(false);
+        expect(result.current.isVideoMuted).toEqual(false);
 
-      await result.current.toggleVideoMuted();
-      rerender();
+        await result.current.toggleVideoMuted();
 
-      expect(result.current.isVideoMuted).toEqual(true);
-    });
-  });
-
-  describe('when toggleCamera is called', () => {
-    beforeEach(() => {
-      mockIsConnected.mockReturnValue(true);
+        expect(result.current.isVideoMuted).toEqual(true);
+      });
     });
 
-    it('sets isCameraEnabled to the opposite value', async () => {
-      const { result, rerender } = customRender();
+    describe('when toggleCamera is called', () => {
+      it('sets isCameraEnabled to the opposite value', async () => {
+        const { result } = customRender();
 
-      expect(result.current.isCameraEnabled).toEqual(false);
+        expect(result.current.isCameraEnabled).toEqual(false);
 
-      await result.current.toggleCamera();
-      rerender();
+        await result.current.toggleCamera();
 
-      expect(result.current.isCameraEnabled).toEqual(true);
+        expect(result.current.isCameraEnabled).toEqual(true);
+      });
+
+      it('calls setMediaDeviceActive with camera and the opposite boolean value', async () => {
+        const { result } = customRender();
+
+        await result.current.toggleCamera();
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: true });
+
+        await result.current.toggleCamera();
+
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
+
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+      });
     });
 
-    it('calls setMediaDeviceActive with camera and the opposite boolean value', async () => {
-      const { result } = customRender();
+    describe('when toggleMicrophone is called', () => {
+      it('sets isMicrophoneEnabled to the opposite value', async () => {
+        const { result } = customRender();
 
-      await result.current.toggleCamera();
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: true });
+        expect(result.current.isMicrophoneEnabled).toEqual(false);
 
-      await result.current.toggleCamera();
+        await result.current.toggleMicrophone();
 
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
+        expect(result.current.isMicrophoneEnabled).toEqual(true);
+      });
 
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
-    });
-  });
+      it('calls setMediaDeviceActive with microphone and the opposite boolean value', async () => {
+        const { result } = customRender();
 
-  describe('when toggleMicrophone is called', () => {
-    beforeEach(() => {
-      mockIsConnected.mockReturnValue(true);
-    });
+        await result.current.toggleMicrophone();
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: true });
 
-    it('sets isMicrophoneEnabled to the opposite value', async () => {
-      const { result, rerender } = customRender();
+        await result.current.toggleMicrophone();
 
-      expect(result.current.isMicrophoneEnabled).toEqual(false);
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
 
-      await result.current.toggleMicrophone();
-      rerender();
-
-      expect(result.current.isMicrophoneEnabled).toEqual(true);
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+      });
     });
 
-    it('calls setMediaDeviceActive with microphone and the opposite boolean value', async () => {
-      const { result } = customRender();
+    describe('when control states are saved in session storage', () => {
+      beforeEach(() => {
+        sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
+        sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
+        sessionStorage.setItem(SessionDataKeys.videoMuted, 'true');
+      });
 
-      await result.current.toggleMicrophone();
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: true });
+      it('calls setMediaDeviceActive with camera and microphone values when it is true in session storage', () => {
+        customRender();
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
+          camera: sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true',
+        });
+        expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(1);
+      });
 
-      await result.current.toggleMicrophone();
-
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
-
-      expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+      it('sets the video muted state to the saved muted state in session storage', () => {
+        const { result } = customRender();
+        expect(result.current.isVideoMuted).toEqual(true);
+      });
     });
   });
 });

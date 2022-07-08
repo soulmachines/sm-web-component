@@ -1,6 +1,7 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
-import { ConnectionStatus } from '../../enums';
+import canAutoPlay from 'can-autoplay';
+import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
@@ -14,9 +15,14 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
-      if (videoRef.current) {
-        await scene.startVideo(videoRef.current);
-        videoRef.current.muted = false;
+      const autoPlay = await canAutoPlay.audio();
+      const audioPlayable = autoPlay.result;
+
+      if (videoRef.current && scene.videoElement) {
+        // Sync both video elements to ensure states are correct
+        // We use scene.videoElement to determine mute icon state
+        scene.videoElement.muted = !audioPlayable;
+        videoRef.current.muted = !audioPlayable;
       }
 
       if (tokenServer) {
@@ -32,20 +38,32 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
-      setConnectionStatus(ConnectionStatus.ERRORED);
-
       if (error instanceof Error) {
         setConnectionError(error);
       }
+
+      cleanupSessionStorage();
+      setConnectionStatus(ConnectionStatus.ERRORED);
     }
   }, [scene, tokenServer]);
 
   const disconnect = () => {
-    setConnectionStatus(ConnectionStatus.DISCONNECTED);
+    cleanupSessionStorage();
     scene.disconnect();
+    setConnectionStatus(ConnectionStatus.DISCONNECTED);
+  };
+
+  const cleanupSessionStorage = () => {
+    sessionStorage.removeItem(SessionDataKeys.sessionId);
+    sessionStorage.removeItem(SessionDataKeys.apiKey);
+    sessionStorage.removeItem(SessionDataKeys.server);
+    sessionStorage.removeItem(SessionDataKeys.cameraEnabled);
+    sessionStorage.removeItem(SessionDataKeys.microphoneEnabled);
+    sessionStorage.removeItem(SessionDataKeys.videoMuted);
   };
 
   scene.onDisconnectedEvent.addListener(() => {
+    cleanupSessionStorage();
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 
@@ -55,6 +73,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     connect,
     disconnect,
     videoRef,
+    cleanupSessionStorage,
   };
 }
 

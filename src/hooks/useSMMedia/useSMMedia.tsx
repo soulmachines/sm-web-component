@@ -1,22 +1,74 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
+import { SessionDataKeys } from '../../enums';
 
 function useSMMedia(scene: Scene) {
   const [isVideoMuted, setIsVideoMuted] = useState(false);
-  const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(false);
-  const [isCameraEnabled, setIsCameraEnabled] = useState(false);
-  const isConnected = scene.isConnected();
-  const isMicrophoneActive = scene.isMicrophoneActive();
-  const isCameraActive = scene.isCameraActive();
+  const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
+  const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
+  const isConnected = scene?.isConnected();
 
-  // Set initial active state
+  const setMicrophoneActive = useCallback(
+    async (enabled: boolean) => {
+      try {
+        await scene.setMediaDeviceActive({
+          microphone: enabled,
+        });
+
+        setIsMicrophoneEnabled(enabled);
+        sessionStorage.setItem(SessionDataKeys.microphoneEnabled, enabled.toString());
+      } catch (error) {
+        // Silently ignore this error. Revisit in QUIC-1744
+      }
+    },
+    [scene],
+  );
+
+  const setCameraActive = useCallback(
+    async (enabled: boolean) => {
+      try {
+        await scene.setMediaDeviceActive({
+          camera: enabled,
+        });
+
+        setIsCameraEnabled(enabled);
+        sessionStorage.setItem(SessionDataKeys.cameraEnabled, enabled.toString());
+      } catch (error) {
+        // Silently ignore this error. Revisit in QUIC-1744
+      }
+    },
+    [scene],
+  );
+
+  const setVideoMuted = useCallback((enabled: boolean) => {
+    setIsVideoMuted(enabled);
+    sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
+  }, []);
+
+  useEffect(() => {
+    if (scene.videoElement) {
+      setIsVideoMuted(scene.videoElement.muted);
+    }
+  }, [scene.videoElement, scene.videoElement?.muted]);
+
+  /*
+   In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
+   This could be WebRTC lib related issue, will be revisit later after upgrading WebRTC in video host.
+   The alternative here is to always connect resume session without cam & mic and toggle them on later.
+   */
   useEffect(() => {
     if (isConnected) {
-      setIsVideoMuted(scene.videoElement?.muted || false);
-      setIsMicrophoneEnabled(isMicrophoneActive);
-      setIsCameraEnabled(isCameraActive);
+      //session states
+      const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
+      const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
+      const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
+      if (cameraSaved) setCameraActive(true);
+      if (microphoneSaved) setMicrophoneActive(true);
+      if (videoMuted) {
+        setVideoMuted(true);
+      }
     }
-  }, [isConnected, isMicrophoneActive, isCameraActive, scene.videoElement?.muted]);
+  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
 
   // Reset state when not connected
   useEffect(() => {
@@ -25,32 +77,12 @@ function useSMMedia(scene: Scene) {
     }
   }, [isConnected, setIsVideoMuted]);
 
-  const toggleMicrophone = async () => {
-    try {
-      await scene.setMediaDeviceActive({
-        microphone: !isMicrophoneEnabled,
-      });
+  const toggleMicrophone = () => setMicrophoneActive(!isMicrophoneEnabled);
 
-      setIsMicrophoneEnabled(!isMicrophoneEnabled);
-    } catch (error) {
-      // Silently ignore this error. Revisit in QUIC-1744
-    }
-  };
-
-  const toggleCamera = async () => {
-    try {
-      await scene.setMediaDeviceActive({
-        camera: !isCameraEnabled,
-      });
-
-      setIsCameraEnabled(!isCameraEnabled);
-    } catch (error) {
-      // Silently ignore this error. Revisit in QUIC-1744
-    }
-  };
+  const toggleCamera = () => setCameraActive(!isCameraEnabled);
 
   const toggleVideoMuted = () => {
-    setIsVideoMuted(!isVideoMuted);
+    setVideoMuted(!isVideoMuted);
   };
 
   return {

@@ -32,9 +32,9 @@ describe('<Video />', () => {
       });
     });
 
-    it('renders nothing', () => {
+    it('renders a video', () => {
       const { container } = customRender();
-      expect(container).toBeEmptyDOMElement();
+      expect(container.querySelector('video')).toBeInTheDocument();
     });
 
     it('calls useResizeObserver with a onResize function', () => {

@@ -27,18 +27,16 @@ describe('<SMVideo />', () => {
     });
 
     const { container } = customRender();
-
     expect(container.querySelector('video')).toBeInTheDocument();
   });
 
-  it('renders nothing when it is disconnected', () => {
+  it('renders a video when it is disconnected', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
       connectionStatus: ConnectionStatus.DISCONNECTED,
     });
 
     const { container } = customRender();
-
-    expect(container).toBeEmptyDOMElement();
+    expect(container.querySelector('video')).toBeInTheDocument();
   });
 });
