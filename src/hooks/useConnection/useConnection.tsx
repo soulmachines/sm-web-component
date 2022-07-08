@@ -14,9 +14,10 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
-      if (videoRef.current) {
-        await scene.startVideo(videoRef.current);
-      }
+      // if (videoRef.current) {
+      //    scene.startVideo(videoRef.current);
+      //    videoRef.current.muted = false;
+      // }
 
       if (tokenServer) {
         const res = await fetch(tokenServer);

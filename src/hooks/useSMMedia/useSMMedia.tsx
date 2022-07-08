@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
 function useSMMedia(scene: Scene) {
-  const [isVideoMuted, setIsVideoMuted] = useState(scene.videoElement?.muted || false);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
