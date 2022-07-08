@@ -11,7 +11,7 @@ describe('<Widget />', () => {
   const unableToConnectMessage = /Unable to connect/;
   const customRender = () => render(<Widget />);
 
-  describe('When connect for the first time', () => {
+  describe('When connecting for the first time', () => {
     it('does not connect automatically', () => {
       expect(SoulMachinesContext.useSoulMachines().connect).toBeCalledTimes(0);
     });
@@ -26,7 +26,7 @@ describe('<Widget />', () => {
     });
   });
 
-  describe('When conenct in the resume session by using the sm-session-id in session storage', () => {
+  describe('When resuming a session by using the sm-session-id in session storage', () => {
     it('calls connect automatically', () => {
       sessionStorage.setItem(SessionDataKeys.sessionId, 'xxx-xxx-xxx');
       customRender();
