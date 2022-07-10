@@ -1,5 +1,45 @@
 # Change Log
 
+# [1.5.0](https://github.com/soulmachines/sm-web-component/compare/1.4.0...1.5.0) (2022-07-10)
+
+
+### Bug Fixes
+
+* dev release pipeline quic-1884 ([#253](https://github.com/soulmachines/sm-web-component/issues/253)) ([97dc54a](https://github.com/soulmachines/sm-web-component/commit/97dc54a4b080279235b80ed59db0b5cbf81e4b6d))
+* double scroll bars quic-1925 ([#260](https://github.com/soulmachines/sm-web-component/issues/260)) ([fc7202e](https://github.com/soulmachines/sm-web-component/commit/fc7202e4f466e90518462568ae8572703ceb93bf))
+* explicity set styles so it works outside of sm-widget ([#233](https://github.com/soulmachines/sm-web-component/issues/233)) ([68b9236](https://github.com/soulmachines/sm-web-component/commit/68b92367cdb180fdbcec712b76e27b2c0f7b94c0))
+* icon size when html size is not 16px quic-1915 ([#256](https://github.com/soulmachines/sm-web-component/issues/256)) ([e4a3f66](https://github.com/soulmachines/sm-web-component/commit/e4a3f66bc5a10a0106c399bad964e21c6649f07d))
+* large options padding quic-1920 ([#258](https://github.com/soulmachines/sm-web-component/issues/258)) ([56f1c65](https://github.com/soulmachines/sm-web-component/commit/56f1c658583addf147cf22a8183afba9e2683616))
+* recreate package lock ([#232](https://github.com/soulmachines/sm-web-component/issues/232)) ([3e7ef28](https://github.com/soulmachines/sm-web-component/commit/3e7ef28840b978b19fba8ec9a1dc86b3aeaa3ee5))
+* reexport icons ([#234](https://github.com/soulmachines/sm-web-component/issues/234)) ([99e84ac](https://github.com/soulmachines/sm-web-component/commit/99e84acdf26c2ac9beccf109d8255f1dfc0d37a1))
+* release permissions  ([#263](https://github.com/soulmachines/sm-web-component/issues/263)) ([ade5320](https://github.com/soulmachines/sm-web-component/commit/ade5320f9913c64d0e0ccde6e01369796ed32f5d))
+* release pipeline ([069cfbf](https://github.com/soulmachines/sm-web-component/commit/069cfbfce9703b16e6b52aac3e547010e35599ba))
+* render stories in a sm-widget tag to get styles ([#237](https://github.com/soulmachines/sm-web-component/issues/237)) ([020160f](https://github.com/soulmachines/sm-web-component/commit/020160fd5f4910154aa00a0a616ef16328588a9b))
+* reset mute button on disconnect quic-1917 ([#257](https://github.com/soulmachines/sm-web-component/issues/257)) ([e20f082](https://github.com/soulmachines/sm-web-component/commit/e20f082e820f3b40004f26ba26947602b9256764))
+* storybook warning ([#247](https://github.com/soulmachines/sm-web-component/issues/247)) ([3d79d6f](https://github.com/soulmachines/sm-web-component/commit/3d79d6fa73f34f590ec93f2097183b5bd62716b6))
+
+
+### Features
+
+* add outline button theme quic-1830 ([#227](https://github.com/soulmachines/sm-web-component/issues/227)) ([f728125](https://github.com/soulmachines/sm-web-component/commit/f7281252200c6ac387fb69df1268ad42e937234c))
+* add session persistence support to widget QUIC-1829 ([#261](https://github.com/soulmachines/sm-web-component/issues/261)) ([7912585](https://github.com/soulmachines/sm-web-component/commit/7912585e0d2205c033f1ad3029a79e30aa90e7c6))
+* add versioning to snippet quic-1884 ([#252](https://github.com/soulmachines/sm-web-component/issues/252)) ([32c59e6](https://github.com/soulmachines/sm-web-component/commit/32c59e615132b978756ef4a8dd7495a1c0f3412f))
+* allow dp to be muted quic-1845 ([#238](https://github.com/soulmachines/sm-web-component/issues/238)) ([68c3430](https://github.com/soulmachines/sm-web-component/commit/68c34305d841b316baf6c5cce1d2446b4e8407f6))
+* create heading component quic-1867  ([#249](https://github.com/soulmachines/sm-web-component/issues/249)) ([543ea3c](https://github.com/soulmachines/sm-web-component/commit/543ea3c50dbd709bcf3071ea5290eaae7b64f869))
+* create icon button component and style it quic-1748 ([#226](https://github.com/soulmachines/sm-web-component/issues/226)) ([67f2812](https://github.com/soulmachines/sm-web-component/commit/67f28125ac38481ad03badfc8a79fe476ae6eef7)), closes [#227](https://github.com/soulmachines/sm-web-component/issues/227) [#227](https://github.com/soulmachines/sm-web-component/issues/227)
+* create image link card ([#251](https://github.com/soulmachines/sm-web-component/issues/251)) ([27e5bd4](https://github.com/soulmachines/sm-web-component/commit/27e5bd4e752e3eff9e7fae08a497b4b5a1baae77))
+* create link card component quic-1592  ([#248](https://github.com/soulmachines/sm-web-component/issues/248)) ([5564eb8](https://github.com/soulmachines/sm-web-component/commit/5564eb88246239e0ce9d7259d1f018de7a044746))
+* ensure mobile video size is correct quic-1816 ([#228](https://github.com/soulmachines/sm-web-component/issues/228)) ([09a1c94](https://github.com/soulmachines/sm-web-component/commit/09a1c941db3b2dbcedcf688b4d77b4414be1933b))
+* fade in out cards ([#231](https://github.com/soulmachines/sm-web-component/issues/231)) ([ad8ac7a](https://github.com/soulmachines/sm-web-component/commit/ad8ac7a9e3c0923e6b455bc65d631dab92b51788))
+* fix global css quic-1836 ([#229](https://github.com/soulmachines/sm-web-component/issues/229)) ([8c155c9](https://github.com/soulmachines/sm-web-component/commit/8c155c9e70c7ee3008d44873c8f9097a76d29746))
+* image card quic-1593  ([#246](https://github.com/soulmachines/sm-web-component/issues/246)) ([ebf34d8](https://github.com/soulmachines/sm-web-component/commit/ebf34d8599e811a5bb428191fd6a2a732a86350a))
+* log widget version to console quic-1885  ([#254](https://github.com/soulmachines/sm-web-component/issues/254)) ([3ec02b9](https://github.com/soulmachines/sm-web-component/commit/3ec02b9473cbf910c102a7a627dfc796e90c2436))
+* re add outline button quic-1830 ([#230](https://github.com/soulmachines/sm-web-component/issues/230)) ([26f5845](https://github.com/soulmachines/sm-web-component/commit/26f58456f6544ef88b46fd9d53229d6d629e8574))
+* replace buttons with Button component in Notifications quic-1820 ([#235](https://github.com/soulmachines/sm-web-component/issues/235)) ([7e55805](https://github.com/soulmachines/sm-web-component/commit/7e558057db3545aaf2a3d21ec36a1228a80dfdce))
+* replace standard buttons with new icon button quic-1821  ([#236](https://github.com/soulmachines/sm-web-component/issues/236)) ([ce53fcf](https://github.com/soulmachines/sm-web-component/commit/ce53fcf53ea25763d246f2de543fba39e6eaf822))
+* style options card quic-1823 ([#223](https://github.com/soulmachines/sm-web-component/issues/223)) ([d4fc784](https://github.com/soulmachines/sm-web-component/commit/d4fc78413f41872c5af2917d183a56c0aecbb362))
+* update to node 16 quic-1853 ([#244](https://github.com/soulmachines/sm-web-component/issues/244)) ([ba8884f](https://github.com/soulmachines/sm-web-component/commit/ba8884f755c8f4bccb08834dac1e8f90d1e4d2bd))
+
 # [1.4.0](https://github.com/soulmachines/sm-web-component/compare/1.3.1...1.4.0) (2022-06-19)
 
 
