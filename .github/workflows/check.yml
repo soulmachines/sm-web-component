@@ -31,7 +31,6 @@ jobs:
         # Get all tags in latest order and pipe it into a json file { "versions": [ "1.4.0", "1.3.0", "1.2.0" ] }
         run: |
           echo git tag  --sort=-v:refname
-          git tag  --sort=-v:refname | jq -nR '{versions:[inputs]}' > ./dist/widget-versions.json
 
       - name: Run Lint
         run: npm run lint
