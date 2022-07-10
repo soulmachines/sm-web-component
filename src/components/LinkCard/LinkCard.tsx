@@ -11,6 +11,7 @@ export type LinkCardProps = {
 
 export type LinkData = {
   id: string;
+  type: string;
   url: string;
   title: string;
   description?: string;
@@ -29,14 +30,21 @@ export function LinkCard({ content, style }: LinkCardProps) {
         <Heading type="h2">{data.title}</Heading>
         {data.description && <Text>{data.description}</Text>}
         <div className="sm-bg-white sm-sticky sm-bottom-0 sm-w-full sm-pt-5 sm-border-solid sm-border-0 sm-border-t-2 sm-border-gray-50">
-          <a
-            className="sm-text-white sm-no-underline"
-            href={data.url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Button>View Page</Button>
-          </a>
+          {content.type === 'externalLink' && (
+            <a
+              className="sm-text-white sm-no-underline"
+              href={data.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button>View Page</Button>
+            </a>
+          )}
+          {content.type === 'internalLink' && (
+            <a className="sm-text-white sm-no-underline" href={data.url} rel="noreferrer">
+              <Button>View Page</Button>
+            </a>
+          )}
         </div>
       </div>
     </Card>

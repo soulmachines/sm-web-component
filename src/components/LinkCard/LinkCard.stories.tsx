@@ -1,6 +1,6 @@
 import { LinkCard, LinkCardProps } from '.';
 
-const content = {
+const externalLinkContent = {
   id: 'id',
   type: 'externalLink',
   data: {
@@ -15,7 +15,7 @@ export default {
   title: `Components / LinkCard`,
   component: LinkCard,
   argTypes: {
-    content: { control: 'object', defaultValue: content },
+    content: { control: 'object', defaultValue: externalLinkContent },
   },
 };
 
