@@ -20,6 +20,26 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
+        with:
+          # do not persist git credentials because
+          # we want our bot user to manage commits
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.14.2'
+
+      - name: Caching Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Setup Node
         uses: actions/setup-node@v3
