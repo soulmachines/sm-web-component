@@ -27,10 +27,9 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - uses: actions/checkout@v2
+      - name: Create Release File
         # Get all tags in latest order and pipe it into a json file { "versions": [ "1.4.0", "1.3.0", "1.2.0" ] }
-      - run: |
-          echo git tag  --sort=-v:refname
+        run: echo $(git tag  --sort=-v:refname)
 
       - name: Run Lint
         run: npm run lint
