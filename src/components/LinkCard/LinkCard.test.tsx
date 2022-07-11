@@ -14,29 +14,29 @@ describe('<LinkCard />', () => {
   };
 
   it('renders data-sm-content with the card id', () => {
-    const { container } = render(<LinkCard content={mockCard} />);
+    const { container } = render(<LinkCard content={mockCard} isExternal={true} />);
     expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
   });
 
   it('renders card description', () => {
-    const { getByText } = render(<LinkCard content={mockCard} />);
+    const { getByText } = render(<LinkCard content={mockCard} isExternal={true} />);
     expect(getByText('placeholder text')).toBeInTheDocument();
   });
 
   it('renders card image', () => {
-    const { getByRole } = render(<LinkCard content={mockCard} />);
+    const { getByRole } = render(<LinkCard content={mockCard} isExternal={true} />);
     expect(getByRole('img', { name: 'Soul Machines' })).toBeInTheDocument();
   });
 
   it('renders card link anchor with label', async () => {
-    const { getByRole } = render(<LinkCard content={mockCard} />);
+    const { getByRole } = render(<LinkCard content={mockCard} isExternal={true} />);
     const linkButton = getByRole('link', { name: 'View Page' });
     expect(linkButton).toBeInTheDocument();
     expect(linkButton.getAttribute('href')).toEqual('https://www.soulmachines.com');
   });
 
   it('renders card title', () => {
-    const { getByRole } = render(<LinkCard content={mockCard} />);
+    const { getByRole } = render(<LinkCard content={mockCard} isExternal={true} />);
     expect(getByRole('heading', { level: 2, name: 'Soul Machines' })).toBeInTheDocument();
   });
 
@@ -50,7 +50,7 @@ describe('<LinkCard />', () => {
         imageUrl: 'https://placekitten.com/300/300',
       },
     };
-    const { container } = render(<LinkCard content={mockCardNoDescription} />);
+    const { container } = render(<LinkCard content={mockCardNoDescription} isExternal={true} />);
     expect(container.querySelector('p')).not.toBeInTheDocument();
   });
 
@@ -64,7 +64,7 @@ describe('<LinkCard />', () => {
         description: 'placeholder text',
       },
     };
-    const { container } = render(<LinkCard content={mockCardNoImage} />);
+    const { container } = render(<LinkCard content={mockCardNoImage} isExternal={true} />);
     expect(container.querySelector('img')).not.toBeInTheDocument();
   });
 });
