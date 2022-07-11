@@ -18,6 +18,16 @@ describe('<LinkCard />', () => {
     expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
   });
 
+  it('renders target=_blank when card is externalLink', () => {
+    const { container } = render(<LinkCard content={mockCard} isExternal={true} />);
+    expect(container.querySelector('[target="_blank"]')).toBeInTheDocument();
+  });
+
+  it('does not render target=_blank when card is internalLink', () => {
+    const { container } = render(<LinkCard content={mockCard} isExternal={false} />);
+    expect(container.querySelector('[target="_blank"]')).not.toBeInTheDocument();
+  });
+
   it('renders card description', () => {
     const { getByText } = render(<LinkCard content={mockCard} isExternal={true} />);
     expect(getByText('placeholder text')).toBeInTheDocument();
