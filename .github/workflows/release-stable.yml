@@ -21,8 +21,6 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v3
         with:
-          # fetch all tags and history
-          fetch-depth: 0
           # do not persist git credentials because
           # we want our bot user to manage commits
           persist-credentials: false
@@ -79,6 +77,9 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
+        with:
+          # fetch all tags and history
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v3
