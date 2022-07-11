@@ -23,7 +23,8 @@ export function ContentCards() {
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
     image: ImageCard,
-    externalLink: LinkCard,
+    externalLink: (props) => <LinkCard {...props} isExternal={true} />,
+    internalLink: (props) => <LinkCard {...props} isExternal={false} />,
   };
 
   useEffect(() => {

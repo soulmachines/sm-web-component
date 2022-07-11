@@ -6,6 +6,7 @@ import { Heading } from '../Heading';
 
 export type LinkCardProps = {
   content: ContentCard;
+  isExternal: boolean;
   style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 
@@ -17,8 +18,15 @@ export type LinkData = {
   imageUrl?: string;
 };
 
-export function LinkCard({ content, style }: LinkCardProps) {
+export function LinkCard({ content, isExternal, style }: LinkCardProps) {
   const data = content.data as unknown as LinkData;
+  const conditionalAttributes: Record<string, string> = {};
+
+  if (isExternal) {
+    conditionalAttributes['target'] = '_blank';
+    conditionalAttributes['rel'] = 'noreferrer';
+  }
+
   return (
     <Card style={style}>
       <div
@@ -29,12 +37,7 @@ export function LinkCard({ content, style }: LinkCardProps) {
         <Heading type="h2">{data.title}</Heading>
         {data.description && <Text>{data.description}</Text>}
         <div className="sm-bg-white sm-sticky sm-bottom-0 sm-w-full sm-pt-5 sm-border-solid sm-border-0 sm-border-t-2 sm-border-gray-50">
-          <a
-            className="sm-text-white sm-no-underline"
-            href={data.url}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="sm-text-white sm-no-underline" href={data.url} {...conditionalAttributes}>
             <Button>View Page</Button>
           </a>
         </div>
@@ -42,3 +45,7 @@ export function LinkCard({ content, style }: LinkCardProps) {
     </Card>
   );
 }
+
+LinkCard.defaultProps = {
+  isExternal: true,
+};
