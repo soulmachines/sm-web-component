@@ -45,3 +45,7 @@ export function LinkCard({ content, isExternal, style }: LinkCardProps) {
     </Card>
   );
 }
+
+LinkCard.defaultProps = {
+  isExternal: true,
+};
