@@ -27,6 +27,7 @@ describe('<LinkCard />', () => {
   it('does not render target=_blank when card is internalLink', () => {
     const { container } = render(<LinkCard content={mockCard} isExternal={false} />);
     expect(container.querySelector('[target="_blank"]')).not.toBeInTheDocument();
+    expect(container.querySelector('[rel="noreferrer"]')).not.toBeInTheDocument();
   });
 
   it('renders card description', () => {
