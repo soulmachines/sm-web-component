@@ -16,7 +16,7 @@ jobs:
         run: |
           versions=$(git tag  --sort=-v:refname)
           echo "::set-output name=tag::${versions}"
-          echo ${{git tag  --sort=-v:refname}}
+          echo versions
 
       - name: Setup Node
         uses: actions/setup-node@v3
