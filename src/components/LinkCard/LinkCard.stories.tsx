@@ -16,7 +16,10 @@ export default {
   component: LinkCard,
   argTypes: {
     content: { control: 'object', defaultValue: externalLinkContent },
+    isExternal: { control: 'boolean', defaultValue: true },
   },
 };
 
-export const Basic = ({ content }: LinkCardProps) => <LinkCard content={content} />;
+export const Basic = ({ content, isExternal }: LinkCardProps) => (
+  <LinkCard content={content} isExternal={isExternal} />
+);
