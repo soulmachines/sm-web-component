@@ -10,15 +10,6 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set Versions
-        id: RELEASE_VERSIONS
-        run: |
-          versions=$(git tag  --sort=-v:refname)
-          echo "::set-output name=tag::${versions}"
-          echo $versions
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -35,10 +26,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
-
-      - name: Create Release File
-        # Get all tags in latest order and pipe it into a json file { "versions": [ "1.4.0", "1.3.0", "1.2.0" ] }
-        run: echo ${{steps.RELEASE_VERSION.outputs.tag }} | jq -nR '{versions:[inputs]}' > ./dist/widget-versions.json
 
       - name: Run Lint
         run: npm run lint
