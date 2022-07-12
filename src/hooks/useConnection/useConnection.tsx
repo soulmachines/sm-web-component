@@ -17,9 +17,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
       const autoPlay = await canAutoPlay.audio();
-      const audioPlayable = autoPlay.result;
 
-      setCanAutoPlayAudio(audioPlayable);
+      setCanAutoPlayAudio(autoPlay.result);
 
       if (tokenServer) {
         const res = await fetch(tokenServer);
