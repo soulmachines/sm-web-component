@@ -1,13 +1,12 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
-import canAutoPlay from 'can-autoplay';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
   const [canAutoPlayAudio, setCanAutoPlayAudio] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement>();
 
   const connect = useCallback(async () => {
     try {
@@ -27,8 +26,14 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
-      const autoPlay = await canAutoPlay.audio();
+      const autoPlay = await scene.startVideo();
+      console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>autoPlay`, autoPlay);
+
       setCanAutoPlayAudio(autoPlay.result);
+
+      if (autoPlay.error) {
+        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>> autoPlay.error`, autoPlay.error);
+      }
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
@@ -44,6 +49,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const disconnect = () => {
     cleanupSessionStorage();
     scene.disconnect();
+    //cleanup video source
+    videoRef.current?.setAttribute('src', '');
     setConnectionStatus(ConnectionStatus.DISCONNECTED);
   };
 
@@ -58,6 +65,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
   scene.onDisconnectedEvent.addListener(() => {
     cleanupSessionStorage();
+    //cleanup video source
+    videoRef.current?.setAttribute('src', '');
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 
