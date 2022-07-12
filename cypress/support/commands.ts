@@ -11,7 +11,7 @@ Cypress.on('window:before:load', () => {
   Cypress.cy.state('jQuery', Cypress.$);
 });
 
-Cypress.Commands.add('launchScene', (timeout = 50000) => {
+Cypress.Commands.add('launchScene', (timeout = 60000) => {
   cy.get('[data-sm-cy=connectButton]').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
   cy.get('title').contains('Loading...', { timeout }).should('not.exist');
