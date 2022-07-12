@@ -78,8 +78,6 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
     setVideoMuted(!isVideoMuted);
   };
 
-  console.log('????', { isVideoMuted });
-  console.log('????', { canAutoPlayAudio });
   return {
     isMicrophoneEnabled,
     isCameraEnabled,
