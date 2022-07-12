@@ -16,10 +16,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       setConnectionError(null);
       setConnectionStatus(ConnectionStatus.CONNECTING);
 
-      const autoPlay = await canAutoPlay.audio();
-
-      setCanAutoPlayAudio(autoPlay.result);
-
       if (tokenServer) {
         const res = await fetch(tokenServer);
         const { url, jwt } = await res.json();
@@ -30,6 +26,9 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       }
 
       await scene.connect(connectOptions);
+
+      const autoPlay = await canAutoPlay.audio();
+      setCanAutoPlayAudio(autoPlay.result);
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
