@@ -92,7 +92,7 @@ describe('<ContentCards />', () => {
     });
 
     it('renders an image alt text when the card type is image', () => {
-      const { getByText } = customRender([
+      const { getByAltText } = customRender([
         {
           id: 'id',
           type: 'image',
@@ -103,7 +103,7 @@ describe('<ContentCards />', () => {
         },
       ]);
 
-      expect(getByText('mock alt text')).toBeInTheDocument();
+      expect(getByAltText('mock alt text')).toBeInTheDocument();
     });
   });
 });
