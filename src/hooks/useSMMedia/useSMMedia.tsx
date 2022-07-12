@@ -64,11 +64,11 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
       const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
       if (cameraSaved) setCameraActive(true);
       if (microphoneSaved) setMicrophoneActive(true);
-      if (videoMuted && canAutoPlayAudio) {
+      if (videoMuted) {
         setVideoMuted(true);
       }
     }
-  }, [isConnected, canAutoPlayAudio, setCameraActive, setMicrophoneActive, setVideoMuted]);
+  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
 
   const toggleMicrophone = () => setMicrophoneActive(!isMicrophoneEnabled);
 
