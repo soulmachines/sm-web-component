@@ -1,4 +1,11 @@
 describe('scene', () => {
+  beforeEach(() => {
+    // Clear session storage between each test
+    cy.window().then((win) => {
+      win.sessionStorage.clear();
+    });
+  });
+
   before(() => {
     cy.visit('/');
   });
