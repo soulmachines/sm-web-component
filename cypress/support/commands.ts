@@ -11,11 +11,11 @@ Cypress.on('window:before:load', () => {
   Cypress.cy.state('jQuery', Cypress.$);
 });
 
-Cypress.Commands.add('launchScene', (timeout = 60000) => {
+Cypress.Commands.add('launchScene', (timeout = 50000) => {
   cy.get('[data-sm-cy=connectButton]').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
   cy.get('title').contains('Loading...', { timeout }).should('not.exist');
-  cy.get('title').contains('Close video').should('exist');
+  cy.get('title').contains('Close video', { timeout }).should('exist');
 });
 
 Cypress.Commands.add('disconnectScene', () => {
