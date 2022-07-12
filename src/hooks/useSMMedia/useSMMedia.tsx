@@ -2,11 +2,17 @@ import { Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useEffect, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
-function useSMMedia(scene: Scene) {
-  const [isVideoMuted, setIsVideoMuted] = useState(false);
+function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
+  const [isVideoMuted, setIsVideoMuted] = useState(!canAutoPlayAudio);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
+
+  useEffect(() => {
+    if (!isConnected) {
+      setIsVideoMuted(!canAutoPlayAudio);
+    }
+  }, [canAutoPlayAudio, isConnected]);
 
   const setMicrophoneActive = useCallback(
     async (enabled: boolean) => {
@@ -45,12 +51,6 @@ function useSMMedia(scene: Scene) {
     sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
   }, []);
 
-  useEffect(() => {
-    if (scene.videoElement) {
-      setIsVideoMuted(scene.videoElement.muted);
-    }
-  }, [scene.videoElement, scene.videoElement?.muted]);
-
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
    This could be WebRTC lib related issue, will be revisit later after upgrading WebRTC in video host.
@@ -64,18 +64,11 @@ function useSMMedia(scene: Scene) {
       const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
       if (cameraSaved) setCameraActive(true);
       if (microphoneSaved) setMicrophoneActive(true);
-      if (videoMuted) {
+      if (videoMuted && canAutoPlayAudio) {
         setVideoMuted(true);
       }
     }
-  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
-
-  // Reset state when not connected
-  useEffect(() => {
-    if (!isConnected) {
-      setIsVideoMuted(false);
-    }
-  }, [isConnected, setIsVideoMuted]);
+  }, [isConnected, canAutoPlayAudio, setCameraActive, setMicrophoneActive, setVideoMuted]);
 
   const toggleMicrophone = () => setMicrophoneActive(!isMicrophoneEnabled);
 
@@ -85,6 +78,8 @@ function useSMMedia(scene: Scene) {
     setVideoMuted(!isVideoMuted);
   };
 
+  console.log('????', { isVideoMuted });
+  console.log('????', { canAutoPlayAudio });
   return {
     isMicrophoneEnabled,
     isCameraEnabled,

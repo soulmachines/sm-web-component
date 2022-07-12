@@ -5,6 +5,7 @@ import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
+  const [canAutoPlayAudio, setCanAutoPlayAudio] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -18,12 +19,14 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       const autoPlay = await canAutoPlay.audio();
       const audioPlayable = autoPlay.result;
 
-      if (videoRef.current && scene.videoElement) {
-        // Sync both video elements to ensure states are correct
-        // We use scene.videoElement to determine mute icon state
-        scene.videoElement.muted = !audioPlayable;
-        videoRef.current.muted = !audioPlayable;
-      }
+      setCanAutoPlayAudio(audioPlayable);
+
+      // if (videoRef.current && scene.videoElement) {
+      //   // Sync both video elements to ensure states are correct
+      //   // We use scene.videoElement to determine mute icon state
+      //   scene.videoElement.muted = !audioPlayable;
+      //   videoRef.current.muted = !audioPlayable;
+      // }
 
       if (tokenServer) {
         const res = await fetch(tokenServer);
@@ -70,6 +73,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   return {
     connectionStatus,
     connectionError,
+    canAutoPlayAudio,
     connect,
     disconnect,
     videoRef,
