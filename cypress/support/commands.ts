@@ -8,11 +8,10 @@ Cypress.on('window:before:load', () => {
    *  over window.$
    *  https://github.com/cypress-io/cypress/blob/7.0-release/packages/driver/src/cy/jquery.js#L12
    */
-  // @ts-ignore
   Cypress.cy.state('jQuery', Cypress.$);
 });
 
-Cypress.Commands.add('launchScene', (timeout: number = 40000) => {
+Cypress.Commands.add('launchScene', (timeout = 50000) => {
   cy.get('[data-sm-cy=connectButton]').should('be.visible').click();
   cy.get('title').contains('Loading...').should('exist');
   cy.get('title').contains('Loading...', { timeout }).should('not.exist');
