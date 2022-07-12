@@ -21,6 +21,7 @@ module.exports = {
       },
       maxHeight: {
         contentCard: '34.25rem',
+        87: '21.75rem',
       },
       height: {
         18: '4.5rem',
