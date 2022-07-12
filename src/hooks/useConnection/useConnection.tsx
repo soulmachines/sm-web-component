@@ -21,13 +21,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setCanAutoPlayAudio(audioPlayable);
 
-      // if (videoRef.current && scene.videoElement) {
-      //   // Sync both video elements to ensure states are correct
-      //   // We use scene.videoElement to determine mute icon state
-      //   scene.videoElement.muted = !audioPlayable;
-      //   videoRef.current.muted = !audioPlayable;
-      // }
-
       if (tokenServer) {
         const res = await fetch(tokenServer);
         const { url, jwt } = await res.json();

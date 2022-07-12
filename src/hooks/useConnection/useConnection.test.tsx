@@ -147,6 +147,12 @@ describe('useConnection()', () => {
         mockFetch.mockReturnValue(mockedFetchResponse);
       });
 
+      it('sets canAutoPlayAudio to true', async () => {
+        const { result } = customRender();
+        await result.current.connect();
+        expect(result.current.canAutoPlayAudio).toEqual(true);
+      });
+
       it('calls scene.connect once with an object containing the token server creds', async () => {
         const { result } = customRender();
         await result.current.connect();
@@ -208,12 +214,33 @@ describe('useConnection()', () => {
       });
     });
 
-    describe('when startVideo errors', () => {
+    describe('when canAutoPlay audio returns false', () => {
+      beforeEach(() => {
+        jest
+          .spyOn(canAutoPlay, 'audio')
+          .mockResolvedValueOnce({ result: false, error: new Error() });
+      });
+
+      it('sets canAutoPlayAudio to false', async () => {
+        const { result } = customRender();
+        await result.current.connect();
+        expect(result.current.canAutoPlayAudio).toEqual(false);
+      });
+    });
+
+    describe('when canAutoPlay audio errors', () => {
       const error = new Error('Unable to play');
 
       beforeEach(() => {
         mockFetch.mockReturnValue(mockedFetchResponse);
         jest.spyOn(canAutoPlay, 'audio').mockRejectedValueOnce(error);
+      });
+
+      it('sets canAutoPlayAudio to false', async () => {
+        const { result } = customRender();
+
+        await result.current.connect();
+        expect(result.current.canAutoPlayAudio).toEqual(false);
       });
 
       it('updates connectionError with the error', async () => {
