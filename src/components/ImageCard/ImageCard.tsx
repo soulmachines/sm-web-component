@@ -20,14 +20,18 @@ export function ImageCard({ content, style }: ImageCardProps) {
   }
 
   return (
-    <Card isDismissible={true} flush={true} style={style}>
-      <div
-        data-sm-content={content.id}
-        style={{ backgroundImage: `url(${data.url})` }}
-        className="sm-w-full sm-h-36 sm-bg-cover sm-bg-center md:sm-h-56"
-      >
-        <span className="sm-sr-only">{data?.alt}</span>
-      </div>
-    </Card>
+    <div className="sm-flex sm-justify-center">
+      <Card isDismissible={true} flush={true} style={style}>
+        <img
+          data-sm-content={content.id}
+          src={data.url}
+          alt={data.alt}
+          className="sm-mx-auto sm-object-contain sm-max-w-full sm-h-full sm-max-h-87"
+        />
+      </Card>
+    </div>
   );
 }
+ImageCard.defaultProps = {
+  alt: '',
+};
