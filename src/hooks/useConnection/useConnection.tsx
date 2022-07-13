@@ -52,8 +52,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     cleanupSessionStorage();
     scene.disconnect();
     //cleanup video source
-    //videoRef.current?.setAttribute('src', '');
-    //videoRef?.current.srcObject = null;
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
@@ -72,7 +70,9 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   scene.onDisconnectedEvent.addListener(() => {
     cleanupSessionStorage();
     //cleanup video source
-    videoRef.current?.setAttribute('src', '');
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 
