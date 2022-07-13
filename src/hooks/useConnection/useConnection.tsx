@@ -52,11 +52,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
   const disconnect = () => {
     cleanupSessionStorage();
+    cleanupVideoSrc();
     scene.disconnect();
-    //cleanup video source
-    if (videoRef.current) {
-      videoRef.current.srcObject = null;
-    }
     setConnectionStatus(ConnectionStatus.DISCONNECTED);
   };
 
@@ -69,12 +66,15 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     sessionStorage.removeItem(SessionDataKeys.videoMuted);
   };
 
+  // Restarting a sesion where the previous src is present causes a black video in some browsers
+  const cleanupVideoSrc = () => {
+    if (!videoRef.current) return;
+    videoRef.current.srcObject = null;
+  };
+
   scene.onDisconnectedEvent.addListener(() => {
     cleanupSessionStorage();
-    //cleanup video source
-    if (videoRef.current) {
-      videoRef.current.srcObject = null;
-    }
+    cleanupVideoSrc();
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 

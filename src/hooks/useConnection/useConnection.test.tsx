@@ -23,9 +23,10 @@ const mockScene = {
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
 }));
+const reactVideoEl = document.createElement('video');
 jest.mock('preact/hooks', () => ({
   ...jest.requireActual('preact/hooks'),
-  useRef: () => ({ current: document.createElement('video') }),
+  useRef: () => ({ current: reactVideoEl }),
 }));
 
 describe('useConnection()', () => {
@@ -52,30 +53,42 @@ describe('useConnection()', () => {
     expect(result.current.connectionError).toEqual(null);
   });
 
-  it('calls scene.disconnect when disconnect is called', () => {
-    const { result } = customRender();
-    result.current.disconnect();
-    expect(mockScene.disconnect).toBeCalledTimes(1);
-  });
+  describe('when disconnect is called', () => {
+    it('calls scene.disconnect', () => {
+      const { result } = customRender();
+      result.current.disconnect();
+      expect(mockScene.disconnect).toBeCalledTimes(1);
+    });
 
-  it('clears session storage data when disconnect is called', () => {
-    const { result } = customRender();
+    it('updates video srcObject to null', async () => {
+      const { result } = customRender();
+      const mockStream = 'mock stream' as unknown as MediaSource;
+      reactVideoEl.srcObject = mockStream;
 
-    sessionStorage.setItem(SessionDataKeys.sessionId, 'mock-value');
-    sessionStorage.setItem(SessionDataKeys.apiKey, 'mock-value');
-    sessionStorage.setItem(SessionDataKeys.server, 'mock-value');
-    sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
-    sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
-    sessionStorage.setItem(SessionDataKeys.videoMuted, 'true');
+      result.current.disconnect();
 
-    result.current.disconnect();
+      expect(reactVideoEl.srcObject).toBeNull();
+    });
 
-    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toBeNull();
+    it('clears session storage data', () => {
+      const { result } = customRender();
+
+      sessionStorage.setItem(SessionDataKeys.sessionId, 'mock-value');
+      sessionStorage.setItem(SessionDataKeys.apiKey, 'mock-value');
+      sessionStorage.setItem(SessionDataKeys.server, 'mock-value');
+      sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
+      sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
+      sessionStorage.setItem(SessionDataKeys.videoMuted, 'true');
+
+      result.current.disconnect();
+
+      expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toBeNull();
+    });
   });
 
   describe('when request is pending', () => {
