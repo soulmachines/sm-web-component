@@ -31,13 +31,13 @@ export function VideoControls() {
           onClick={toggleMicrophone}
           name={microphoneIcon}
           title={microphoneText}
-          theme={Theme.danger}
+          theme={isMicrophoneEnabled ? Theme.default : Theme.danger}
         />
         <IconButton
           onClick={toggleCamera}
           name={cameraIcon}
           title={cameraText}
-          theme={Theme.danger}
+          theme={isCameraEnabled ? Theme.default : Theme.danger}
         />
       </div>
     </div>
