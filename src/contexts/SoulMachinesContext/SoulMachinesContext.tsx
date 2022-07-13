@@ -53,7 +53,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   };
 
   const useConnectionData = useConnection(scene, tokenServer);
-  const useMediaData = useSMMedia(scene);
+  const useMediaData = useSMMedia(scene, useConnectionData.canAutoPlayAudio);
 
   return (
     <SoulMachinesContext.Provider

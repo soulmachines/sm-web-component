@@ -17,7 +17,8 @@ jest.mock('@soulmachines/smwebsdk', () => ({
 }));
 
 describe('useSMMedia()', () => {
-  const customRender = (scene = mockScene) => renderHook(() => useSMMedia(scene));
+  const customRender = (scene = mockScene, canAutoPlay = true) =>
+    renderHook(() => useSMMedia(scene, canAutoPlay));
 
   it('returns a toggleMicrophone function', () => {
     const { result } = customRender();
@@ -49,17 +50,6 @@ describe('useSMMedia()', () => {
     expect(mockSetMediaDeviceActive).not.toHaveBeenCalled();
   });
 
-  describe('when scene is disconnected', () => {
-    beforeEach(() => {
-      mockIsConnected.mockReturnValue(false);
-    });
-
-    it('defaults to false when the video element is not present', () => {
-      const { result } = customRender();
-      expect(result.current.isVideoMuted).toEqual(false);
-    });
-  });
-
   describe('when scene is connected', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
@@ -78,20 +68,14 @@ describe('useSMMedia()', () => {
       expect(result.current.isCameraEnabled).toEqual(false);
     });
 
-    describe('isVideoMuted state', () => {
-      it('uses the videoElements muted state if present', () => {
-        const scene = {
-          ...mockScene,
-          videoElement: { muted: true },
-        } as unknown as Scene;
-        const { result } = customRender(scene);
-        expect(result.current.isVideoMuted).toEqual(true);
-      });
+    it('sets isVideoMuted to true when canAutoPlayAudio is false', () => {
+      const { result } = customRender(mockScene, false);
+      expect(result.current.isVideoMuted).toEqual(true);
+    });
 
-      it('defaults to false when the video element is not present', () => {
-        const { result } = customRender();
-        expect(result.current.isVideoMuted).toEqual(false);
-      });
+    it('sets isVideoMuted to false when canAutoPlayAudio is true', () => {
+      const { result } = customRender(mockScene, true);
+      expect(result.current.isVideoMuted).toEqual(false);
     });
 
     describe('when toggleVideoMuted is called', () => {
