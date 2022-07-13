@@ -3,13 +3,13 @@ import { Card } from '../Card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-type MarkdownCardProps = {
+export type MarkdownCardProps = {
   content: ContentCard;
   //  Styles are passed through from react spring
   style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 
-type MarkdownData = {
+export type MarkdownData = {
   text: string;
 };
 
