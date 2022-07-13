@@ -1,11 +1,11 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
 import 'preact/hooks';
-import canAutoPlay from 'can-autoplay';
 import { useConnection } from '.';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 let triggerDisconnectEvent: () => void;
+const mockPlay = jest.fn(() => Promise.resolve(true));
 const mockScene = {
   startVideo: jest.fn(),
   connect: jest.fn(),
@@ -16,8 +16,10 @@ const mockScene = {
     },
   },
   call: () => null,
+  videoElement: {
+    play: mockPlay,
+  },
 } as unknown as Scene;
-jest.mock('can-autoplay');
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
 }));
@@ -29,7 +31,7 @@ jest.mock('preact/hooks', () => ({
 describe('useConnection()', () => {
   const tokenServer = 'mock token server';
   const mockFetch = jest.fn();
-  const customRender = () => renderHook(() => useConnection(mockScene, tokenServer));
+  const customRender = (scene = mockScene) => renderHook(() => useConnection(scene, tokenServer));
 
   beforeEach(() => {
     window.fetch = mockFetch;
@@ -214,11 +216,10 @@ describe('useConnection()', () => {
       });
     });
 
-    describe('when canAutoPlay audio returns false', () => {
+    describe('when video.play() errors', () => {
       beforeEach(() => {
-        jest
-          .spyOn(canAutoPlay, 'audio')
-          .mockResolvedValueOnce({ result: false, error: new Error() });
+        mockFetch.mockReturnValue(mockedFetchResponse);
+        mockPlay?.mockRejectedValue('User interaction required');
       });
 
       it('sets canAutoPlayAudio to false', async () => {
@@ -228,33 +229,19 @@ describe('useConnection()', () => {
       });
     });
 
-    describe('when canAutoPlay audio errors', () => {
-      const error = new Error('Unable to play');
-
+    describe('when video is undefined', () => {
       beforeEach(() => {
         mockFetch.mockReturnValue(mockedFetchResponse);
-        jest.spyOn(canAutoPlay, 'audio').mockRejectedValueOnce(error);
       });
 
       it('sets canAutoPlayAudio to false', async () => {
-        const { result } = customRender();
+        const { result } = customRender({
+          ...mockScene,
+          videoElement: undefined,
+        } as unknown as Scene);
 
         await result.current.connect();
         expect(result.current.canAutoPlayAudio).toEqual(false);
-      });
-
-      it('updates connectionError with the error', async () => {
-        const { result } = customRender();
-
-        await result.current.connect();
-        expect(result.current.connectionError).toEqual(error);
-      });
-
-      it('updates connection status to errored', async () => {
-        const { result } = customRender();
-        await result.current.connect();
-
-        expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
       });
     });
 
