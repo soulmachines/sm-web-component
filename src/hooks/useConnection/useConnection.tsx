@@ -26,16 +26,18 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
-      const autoPlay = await scene.startVideo();
-      console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>autoPlay`, autoPlay);
-
-      setCanAutoPlayAudio(autoPlay.result);
-
-      if (autoPlay.error) {
-        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>> autoPlay.error`, autoPlay.error);
-      }
-
       setConnectionStatus(ConnectionStatus.CONNECTED);
+
+      const playResult = scene.videoElement?.play();
+      if (playResult !== undefined) {
+        playResult
+          .then(() => {
+            setCanAutoPlayAudio(true);
+          })
+          .catch(() => {
+            setCanAutoPlayAudio(false);
+          });
+      }
     } catch (error: unknown) {
       if (error instanceof Error) {
         setConnectionError(error);
@@ -50,7 +52,11 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     cleanupSessionStorage();
     scene.disconnect();
     //cleanup video source
-    videoRef.current?.setAttribute('src', '');
+    //videoRef.current?.setAttribute('src', '');
+    //videoRef?.current.srcObject = null;
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
     setConnectionStatus(ConnectionStatus.DISCONNECTED);
   };
 
