@@ -58,11 +58,8 @@ describe('scene', () => {
       clearStorageVisitPage();
 
       cy.launchScene();
-      cy.reload();
-    });
 
-    it('renders a loader', () => {
-      cy.get('title').contains('Loading...').should('exist');
+      cy.reloadPageAndWaitUntilConnected();
     });
 
     it('does not render a connect button', () => {
@@ -84,10 +81,7 @@ describe('scene', () => {
 
   describe('autoconnecting when camera and mic have been turned on', () => {
     before(() => {
-      cy.window().then((win) => {
-        // Clear session storage to start fresh
-        win.sessionStorage.clear();
-      });
+      clearStorageVisitPage();
 
       cy.launchScene();
 
@@ -99,7 +93,15 @@ describe('scene', () => {
       cy.get('title').contains('Disable camera').should('exist');
       cy.get('title').contains('Disable microphone').should('exist');
 
-      cy.reload();
+      cy.reloadPageAndWaitUntilConnected();
+    });
+
+    it('does not render a connect button', () => {
+      cy.get('[data-sm-cy=connectButton]').should('not.exist');
+    });
+
+    it('does not render a profile picture', () => {
+      cy.get('[data-sm-cy=profileImage]').should('not.exist');
     });
 
     it('renders a disable camera button', () => {
