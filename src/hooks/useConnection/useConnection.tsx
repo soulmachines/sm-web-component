@@ -6,7 +6,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
   const [canAutoPlayAudio, setCanAutoPlayAudio] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
-  const videoRef = useRef<HTMLVideoElement>();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const connect = useCallback(async () => {
     try {
@@ -28,16 +28,12 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
 
-      const playResult = scene.videoElement?.play();
-      if (playResult !== undefined) {
-        playResult
-          .then(() => {
-            setCanAutoPlayAudio(true);
-          })
-          .catch(() => {
-            setCanAutoPlayAudio(false);
-          });
-      }
+      // Check if we can play audio as browsers need an interaction to occur before playing sound
+      // - Safari and IOS are the most restrictive
+      // - When using await syntax it can end up hanging state
+      // - https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide#the_play_method
+      const canPlayPromise = scene.videoElement?.play();
+      canPlayPromise?.then(() => setCanAutoPlayAudio(true)).catch(() => setCanAutoPlayAudio(false));
     } catch (error: unknown) {
       if (error instanceof Error) {
         setConnectionError(error);
