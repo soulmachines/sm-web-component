@@ -62,6 +62,7 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
       const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
       const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
       const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
+
       if (cameraSaved) setCameraActive(true);
       if (microphoneSaved) setMicrophoneActive(true);
       if (videoMuted) {
@@ -69,6 +70,15 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
       }
     }
   }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
+
+  // When not connected reset to initial state
+  // Otherwise when you reconnect it will be in the wrong state
+  useEffect(() => {
+    if (!isConnected) {
+      setMicrophoneActive(false);
+      setCameraActive(false);
+    }
+  }, [isConnected, setCameraActive, setMicrophoneActive]);
 
   const toggleMicrophone = () => setMicrophoneActive(!isMicrophoneEnabled);
 
