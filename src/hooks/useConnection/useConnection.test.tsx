@@ -1,11 +1,11 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { act, renderHook } from '@testing-library/react-hooks';
 import 'preact/hooks';
-import canAutoPlay from 'can-autoplay';
 import { useConnection } from '.';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 let triggerDisconnectEvent: () => void;
+const mockPlay = jest.fn(() => Promise.resolve(true));
 const mockScene = {
   startVideo: jest.fn(),
   connect: jest.fn(),
@@ -16,20 +16,23 @@ const mockScene = {
     },
   },
   call: () => null,
+  videoElement: {
+    play: mockPlay,
+  },
 } as unknown as Scene;
-jest.mock('can-autoplay');
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
 }));
+const reactVideoEl = document.createElement('video');
 jest.mock('preact/hooks', () => ({
   ...jest.requireActual('preact/hooks'),
-  useRef: () => ({ current: document.createElement('video') }),
+  useRef: () => ({ current: reactVideoEl }),
 }));
 
 describe('useConnection()', () => {
   const tokenServer = 'mock token server';
   const mockFetch = jest.fn();
-  const customRender = () => renderHook(() => useConnection(mockScene, tokenServer));
+  const customRender = (scene = mockScene) => renderHook(() => useConnection(scene, tokenServer));
 
   beforeEach(() => {
     window.fetch = mockFetch;
@@ -50,30 +53,42 @@ describe('useConnection()', () => {
     expect(result.current.connectionError).toEqual(null);
   });
 
-  it('calls scene.disconnect when disconnect is called', () => {
-    const { result } = customRender();
-    result.current.disconnect();
-    expect(mockScene.disconnect).toBeCalledTimes(1);
-  });
+  describe('when disconnect is called', () => {
+    it('calls scene.disconnect', () => {
+      const { result } = customRender();
+      result.current.disconnect();
+      expect(mockScene.disconnect).toBeCalledTimes(1);
+    });
 
-  it('clears session storage data when disconnect is called', () => {
-    const { result } = customRender();
+    it('updates video srcObject to null', async () => {
+      const { result } = customRender();
+      const mockStream = 'mock stream' as unknown as MediaSource;
+      reactVideoEl.srcObject = mockStream;
 
-    sessionStorage.setItem(SessionDataKeys.sessionId, 'mock-value');
-    sessionStorage.setItem(SessionDataKeys.apiKey, 'mock-value');
-    sessionStorage.setItem(SessionDataKeys.server, 'mock-value');
-    sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
-    sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
-    sessionStorage.setItem(SessionDataKeys.videoMuted, 'true');
+      result.current.disconnect();
 
-    result.current.disconnect();
+      expect(reactVideoEl.srcObject).toBeNull();
+    });
 
-    expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull();
-    expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toBeNull();
+    it('clears session storage data', () => {
+      const { result } = customRender();
+
+      sessionStorage.setItem(SessionDataKeys.sessionId, 'mock-value');
+      sessionStorage.setItem(SessionDataKeys.apiKey, 'mock-value');
+      sessionStorage.setItem(SessionDataKeys.server, 'mock-value');
+      sessionStorage.setItem(SessionDataKeys.cameraEnabled, 'true');
+      sessionStorage.setItem(SessionDataKeys.microphoneEnabled, 'false');
+      sessionStorage.setItem(SessionDataKeys.videoMuted, 'true');
+
+      result.current.disconnect();
+
+      expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.server)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull();
+      expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toBeNull();
+    });
   });
 
   describe('when request is pending', () => {
@@ -214,11 +229,10 @@ describe('useConnection()', () => {
       });
     });
 
-    describe('when canAutoPlay audio returns false', () => {
+    describe('when video.play() errors', () => {
       beforeEach(() => {
-        jest
-          .spyOn(canAutoPlay, 'audio')
-          .mockResolvedValueOnce({ result: false, error: new Error() });
+        mockFetch.mockReturnValue(mockedFetchResponse);
+        mockPlay?.mockRejectedValue('User interaction required');
       });
 
       it('sets canAutoPlayAudio to false', async () => {
@@ -228,33 +242,19 @@ describe('useConnection()', () => {
       });
     });
 
-    describe('when canAutoPlay audio errors', () => {
-      const error = new Error('Unable to play');
-
+    describe('when video is undefined', () => {
       beforeEach(() => {
         mockFetch.mockReturnValue(mockedFetchResponse);
-        jest.spyOn(canAutoPlay, 'audio').mockRejectedValueOnce(error);
       });
 
       it('sets canAutoPlayAudio to false', async () => {
-        const { result } = customRender();
+        const { result } = customRender({
+          ...mockScene,
+          videoElement: undefined,
+        } as unknown as Scene);
 
         await result.current.connect();
         expect(result.current.canAutoPlayAudio).toEqual(false);
-      });
-
-      it('updates connectionError with the error', async () => {
-        const { result } = customRender();
-
-        await result.current.connect();
-        expect(result.current.connectionError).toEqual(error);
-      });
-
-      it('updates connection status to errored', async () => {
-        const { result } = customRender();
-        await result.current.connect();
-
-        expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
       });
     });
 

@@ -8,11 +8,11 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
 
+  // On connection we'll check to see if we can autoplay the video with sound
+  // This will update when we determine if its possible
   useEffect(() => {
-    if (!isConnected) {
-      setIsVideoMuted(!canAutoPlayAudio);
-    }
-  }, [canAutoPlayAudio, isConnected]);
+    setIsVideoMuted(!canAutoPlayAudio);
+  }, [canAutoPlayAudio]);
 
   const setMicrophoneActive = useCallback(
     async (enabled: boolean) => {

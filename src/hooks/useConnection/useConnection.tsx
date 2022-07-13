@@ -1,6 +1,5 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
-import canAutoPlay from 'can-autoplay';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
@@ -27,8 +26,18 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
-      const autoPlay = await canAutoPlay.audio();
-      setCanAutoPlayAudio(autoPlay.result);
+      // Check if we can play audio as browsers need an interaction to occur before playing sound
+      // - Safari and IOS are the most restrictive
+      // - When using await syntax it can end up hanging state
+      // - https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide#the_play_method
+      const canPlayPromise = scene.videoElement?.play();
+      canPlayPromise
+        ?.then(() => {
+          setCanAutoPlayAudio(true);
+        })
+        .catch(() => {
+          setCanAutoPlayAudio(false);
+        });
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
     } catch (error: unknown) {
@@ -43,6 +52,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
   const disconnect = () => {
     cleanupSessionStorage();
+    cleanupVideoSrc();
     scene.disconnect();
     setConnectionStatus(ConnectionStatus.DISCONNECTED);
   };
@@ -56,8 +66,15 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     sessionStorage.removeItem(SessionDataKeys.videoMuted);
   };
 
+  // Restarting a sesion where the previous src is present causes a black video in some browsers
+  const cleanupVideoSrc = () => {
+    if (!videoRef.current) return;
+    videoRef.current.srcObject = null;
+  };
+
   scene.onDisconnectedEvent.addListener(() => {
     cleanupSessionStorage();
+    cleanupVideoSrc();
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 
