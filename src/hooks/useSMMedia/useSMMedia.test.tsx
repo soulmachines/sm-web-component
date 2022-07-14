@@ -73,6 +73,23 @@ describe('useSMMedia()', () => {
       expect(result.current.isVideoMuted).toEqual(false);
     });
 
+    it('sets isMicrophoneEnabled and isCameraEnabled to false when disconnected', async () => {
+      const { result, rerender } = customRender();
+
+      await result.current.toggleMicrophone();
+      await result.current.toggleCamera();
+
+      expect(result.current.isMicrophoneEnabled).toEqual(true);
+      expect(result.current.isCameraEnabled).toEqual(true);
+
+      mockIsConnected.mockReturnValue(false);
+
+      rerender();
+
+      expect(result.current.isMicrophoneEnabled).toEqual(false);
+      expect(result.current.isCameraEnabled).toEqual(false);
+    });
+
     describe('when toggleVideoMuted is called', () => {
       it('sets isVideoMuted to the opposite value', async () => {
         const { result } = customRender();
