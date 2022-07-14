@@ -14,6 +14,8 @@ export type LiProps = {
   children: string;
   ordered: boolean;
   index: number;
+  checked: boolean | null;
+  className: string | null;
 };
 
 export type AProps = {
@@ -21,6 +23,10 @@ export type AProps = {
   children: string;
   title: string;
   target?: string;
+};
+
+export type OlProps = {
+  children: string;
 };
 
 export type MarkdownData = {
@@ -47,33 +53,43 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({ type = 'h1', children }: HeadingProps) => (
-              <Heading type={type} children={children} />
+            h1: ({ type = 'h1', children, text_class = 'sm-text-blue-800' }: HeadingProps) => (
+              <Heading type={type} children={children} text_class={text_class} />
             ),
-            h2: ({ type = 'h2', children }: HeadingProps) => (
-              <Heading type={type} children={children} />
+            h2: ({ type = 'h2', children, text_class = 'sm-text-blue-700' }: HeadingProps) => (
+              <Heading type={type} children={children} text_class={text_class} />
             ),
-            h3: ({ type = 'h3', children }: HeadingProps) => (
-              <Heading type={type} children={children} />
+            h3: ({ type = 'h3', children, text_class = 'sm-text-blue-600' }: HeadingProps) => (
+              <Heading type={type} children={children} text_class={text_class} />
             ),
-            h4: ({ type = 'h4', children }: HeadingProps) => (
-              <Heading type={type} children={children} />
+            h4: ({ type = 'h4', children, text_class = 'sm-text-blue-500' }: HeadingProps) => (
+              <Heading type={type} children={children} text_class={text_class} />
             ),
-            h5: ({ type = 'h5', children }: HeadingProps) => (
-              <Heading type={type} children={children} />
+            h5: ({ type = 'h5', children, text_class = 'sm-text-blue-400' }: HeadingProps) => (
+              <Heading type={type} children={children} text_class={text_class} />
             ),
-            h6: ({ type = 'h6', children }: HeadingProps) => (
-              <Heading type={type} children={children} />
+            h6: ({ type = 'h6', children, text_class = 'sm-text-blue-300' }: HeadingProps) => (
+              <Heading type={type} children={children} text_class={text_class} />
             ),
-            li: ({ children, ordered, index }: LiProps) => {
+            li: ({ children, ordered, index, checked, className }: LiProps) => {
+              console.log(checked);
               if (ordered) {
                 return (
-                  <li>
+                  <li className="sm-text-purple-500">
                     {index + 1}. {children}
                   </li>
                 );
-              }
-              return <li>- {children}</li>;
+              } else if (className === 'task-list-item') {
+                return <li>{children}</li>;
+              } 
+                return <li>- {children}</li>;
+              
+            },
+            ol: ({ children }: OlProps) => {
+              return <ol className="sm-ml-4">{children}</ol>;
+            },
+            ul: ({ children }: OlProps) => {
+              return <ul className="sm-ml-4">{children}</ul>;
             },
             a: ({ href, children, title, target }: AProps) => {
               if (!target) {
