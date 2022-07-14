@@ -75,15 +75,14 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               console.log(checked);
               if (ordered) {
                 return (
-                  <li className="sm-text-purple-500">
+                  <li>
                     {index + 1}. {children}
                   </li>
                 );
               } else if (className === 'task-list-item') {
                 return <li>{children}</li>;
-              } 
-                return <li>- {children}</li>;
-              
+              }
+              return <li>- {children}</li>;
             },
             ol: ({ children }: OlProps) => {
               return <ol className="sm-ml-4">{children}</ol>;
