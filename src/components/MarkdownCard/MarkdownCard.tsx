@@ -20,6 +20,7 @@ export type AProps = {
   href: string;
   children: string;
   title: string;
+  target?: string;
 };
 
 export type MarkdownData = {
@@ -46,8 +47,22 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: () => <Heading type="h1" children="" />,
+            h1: ({ type = 'h1', children }: HeadingProps) => (
+              <Heading type={type} children={children} />
+            ),
             h2: ({ type = 'h2', children }: HeadingProps) => (
+              <Heading type={type} children={children} />
+            ),
+            h3: ({ type = 'h3', children }: HeadingProps) => (
+              <Heading type={type} children={children} />
+            ),
+            h4: ({ type = 'h4', children }: HeadingProps) => (
+              <Heading type={type} children={children} />
+            ),
+            h5: ({ type = 'h5', children }: HeadingProps) => (
+              <Heading type={type} children={children} />
+            ),
+            h6: ({ type = 'h6', children }: HeadingProps) => (
               <Heading type={type} children={children} />
             ),
             li: ({ children, ordered, index }: LiProps) => {
@@ -57,13 +72,23 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
                     {index + 1}. {children}
                   </li>
                 );
-              } 
-                return <li>- {children}</li>;
-              
+              }
+              return <li>- {children}</li>;
             },
-            a: ({ href, children, title }: AProps) => {
+            a: ({ href, children, title, target }: AProps) => {
+              if (!target) {
+                const currentDomain = window.location.hostname;
+                const destinationDomain = new URL(href).hostname;
+                if (!(currentDomain === destinationDomain)) target = '_blank';
+              }
+
               return (
-                <a className="sm-text-blue sm-underline" href={href} title={title}>
+                <a
+                  className="sm-text-blue-400 sm-underline"
+                  href={href}
+                  title={title}
+                  target={target}
+                >
                   {children}
                 </a>
               );
