@@ -84,7 +84,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
 
               return (
                 <a
-                  className="sm-text-blue-400 sm-underline"
+                  className="sm-text-blue-400 active:sm-text-red-500 visited:sm-text-pink-500 sm-underline"
                   href={href}
                   title={title}
                   target={target}
@@ -93,6 +93,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
                 </a>
               );
             },
+            hr: () => <hr className="sm-w-11/12 sm-bg-gray-400" />,
           }}
         >
           {markdown}

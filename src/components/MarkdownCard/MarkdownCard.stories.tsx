@@ -4,7 +4,7 @@ const content = {
   id: 'id',
   type: 'markdown',
   data: {
-    text: '# H1\r\n## H2\r\n### H3\r\n#### H4\r\n##### H5\r\n###### H6\r\n 1. Most interesting\r\n 2. Less interesting\r\n 3. Least Interesting\r\n\r\n**bold**\r\n- item 1\r\n- item 2\r\n\r\n[External Link](https://www.google.com)\r\n\r\n[Internal Link](http://localhost:3000)\r\n\r\n*emphasis*\r\n\r\n---\r\nHorizontal Rule\r\n---',
+    text: '# H1\r\n## H2\r\n### H3\r\n#### H4\r\n##### H5\r\n###### H6\r\n 1. Most interesting\r\n 2. Less interesting\r\n 3. Least Interesting\r\n\r\n**bold**\r\n- item 1\r\n- item 2\r\n\r\n[External Link](https://www.google.com)\r\n\r\n[Internal Link](http://localhost:3000)\r\n\r\n*emphasis*\r\n\r\n---\r\nHorizontal Rule\r\n\r\n---\r\n\r\ntext',
   },
 };
 
