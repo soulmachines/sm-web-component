@@ -12,12 +12,12 @@ describe('<Icon />', () => {
     expect(getByTitle('Custom title')).toBeInTheDocument();
   });
 
-  it('defaults the width and height to 1.25rem (20px)', () => {
+  it('defaults the width and height to 20px', () => {
     const { container } = render(<Icon name="profile" />);
     const svg = container.querySelector('svg');
 
-    expect(svg).toHaveAttribute('width', '1.25rem');
-    expect(svg).toHaveAttribute('height', '1.25rem');
+    expect(svg).toHaveAttribute('width', '20px');
+    expect(svg).toHaveAttribute('height', '20px');
   });
 
   it('uses the size prop for the width and height value', () => {

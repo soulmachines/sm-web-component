@@ -24,5 +24,5 @@ export function Icon({ size, name, title }: IconProps) {
   );
 }
 Icon.defaultProps = {
-  size: '1.25rem',
+  size: '20px',
 };
