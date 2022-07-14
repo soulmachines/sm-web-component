@@ -45,16 +45,6 @@ describe('useSMMedia()', () => {
     expect(result.current.isCameraEnabled).toEqual(false);
   });
 
-  it('does calls setMediaDeviceActive with false for camera and mic', () => {
-    customRender();
-    expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
-      microphone: false,
-    });
-    expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
-      camera: false,
-    });
-  });
-
   describe('when scene is connected', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
@@ -81,6 +71,23 @@ describe('useSMMedia()', () => {
     it('sets isVideoMuted to false when canAutoPlayAudio is true', () => {
       const { result } = customRender(mockScene, true);
       expect(result.current.isVideoMuted).toEqual(false);
+    });
+
+    it('sets isMicrophoneEnabled and isCameraEnabled to false when disconnected', async () => {
+      const { result, rerender } = customRender();
+
+      await result.current.toggleMicrophone();
+      await result.current.toggleCamera();
+
+      expect(result.current.isMicrophoneEnabled).toEqual(true);
+      expect(result.current.isCameraEnabled).toEqual(true);
+
+      mockIsConnected.mockReturnValue(false);
+
+      rerender();
+
+      expect(result.current.isMicrophoneEnabled).toEqual(false);
+      expect(result.current.isCameraEnabled).toEqual(false);
     });
 
     describe('when toggleVideoMuted is called', () => {

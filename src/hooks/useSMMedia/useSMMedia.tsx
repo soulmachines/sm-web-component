@@ -75,10 +75,10 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
   // Otherwise when you reconnect it will be in the wrong state
   useEffect(() => {
     if (!isConnected) {
-      setMicrophoneActive(false);
-      setCameraActive(false);
+      setIsMicrophoneEnabled(false);
+      setIsCameraEnabled(false);
     }
-  }, [isConnected, setCameraActive, setMicrophoneActive]);
+  }, [isConnected]);
 
   const toggleMicrophone = () => setMicrophoneActive(!isMicrophoneEnabled);
 
