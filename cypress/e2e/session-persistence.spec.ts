@@ -17,6 +17,10 @@ describe('scene', () => {
       cy.launchScene();
     });
 
+    it('renders a mute video button', () => {
+      cy.get('title').contains('Mute video').should('exist');
+    });
+
     it('renders a enable microphone button', () => {
       cy.get('title').contains('Enable microphone').should('exist');
     });
@@ -42,6 +46,10 @@ describe('scene', () => {
 
       cy.disconnectScene();
       cy.launchScene();
+    });
+
+    it('renders a mute video button', () => {
+      cy.get('title').contains('Mute video').should('exist');
     });
 
     it('renders a disable microphone button', () => {
@@ -70,6 +78,10 @@ describe('scene', () => {
       cy.get('[data-sm-cy=profileImage]').should('not.exist');
     });
 
+    it('renders a mute video button', () => {
+      cy.get('title').contains('Mute video').should('exist');
+    });
+
     it('renders a enable camera button', () => {
       cy.get('title').contains('Enable camera').should('exist');
     });
@@ -79,7 +91,7 @@ describe('scene', () => {
     });
   });
 
-  describe('autoconnecting when camera and mic have been turned on', () => {
+  describe('autoconnecting when camera, mic and mute have been clicked', () => {
     before(() => {
       clearStorageVisitPage();
 
@@ -87,11 +99,13 @@ describe('scene', () => {
 
       cy.get('title').contains('Enable camera').click({ force: true });
       cy.get('title').contains('Enable microphone').click({ force: true });
+      cy.get('title').contains('Mute video').click({ force: true });
 
       // Browser needs a slight delay to save data in session storage
       // Wait for UI to update before refreshing the page
       cy.get('title').contains('Disable camera').should('exist');
       cy.get('title').contains('Disable microphone').should('exist');
+      cy.get('title').contains('Unmute video').should('exist');
 
       cy.reloadPageAndWaitUntilConnected();
     });
@@ -102,6 +116,10 @@ describe('scene', () => {
 
     it('does not render a profile picture', () => {
       cy.get('[data-sm-cy=profileImage]').should('not.exist');
+    });
+
+    it('renders a unmute video button', () => {
+      cy.get('title').contains('Unmute video').should('exist');
     });
 
     it('renders a disable camera button', () => {
