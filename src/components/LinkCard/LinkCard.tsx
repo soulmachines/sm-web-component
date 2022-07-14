@@ -3,6 +3,7 @@ import { Card } from '../Card';
 import { Text } from '../Text';
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { Heading } from '../Heading';
+import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 
 export type LinkCardProps = {
   content: ContentCard;
@@ -19,6 +20,7 @@ export type LinkData = {
 };
 
 export function LinkCard({ content, isExternal, style }: LinkCardProps) {
+  const { sendTextMessage } = useSoulMachines();
   const data = content.data as unknown as LinkData;
   const conditionalAttributes: Record<string, string> = {};
 
@@ -37,8 +39,15 @@ export function LinkCard({ content, isExternal, style }: LinkCardProps) {
         <Heading type="h2">{data.title}</Heading>
         {data.description && <Text>{data.description}</Text>}
         <div className="sm-bg-white sm-sticky sm-bottom-0 sm-w-full sm-pt-5 sm-border-solid sm-border-0 sm-border-t-2 sm-border-gray-50">
-          <a className="sm-text-white sm-no-underline" href={data.url} {...conditionalAttributes}>
-            <Button>View Page</Button>
+          <a className="sm-text-white sm-no-underline">
+            <Button
+              onClick={() => {
+                sendTextMessage('view page');
+                window.location.assign(data.url);
+              }}
+            >
+              View Page
+            </Button>
           </a>
         </div>
       </div>
