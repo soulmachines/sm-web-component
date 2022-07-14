@@ -13,7 +13,8 @@
     "build-storybook": "build-storybook",
     "test": "jest --watch",
     "test:ci": "jest",
-    "generate": "plop --plopfile generators/index.js"
+    "generate": "plop --plopfile generators/index.js",
+    "ngrok": "ngrok http https://localhost:5000 --hostname tanya.ngrok.io --host-header rewrite"
   },
   "dependencies": {
     "@bedrock-layout/use-resize-observer": "^1.2.2",

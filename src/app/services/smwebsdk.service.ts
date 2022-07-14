@@ -82,6 +82,27 @@ export class SMWebSDKService {
   private onConnected(sessionId: string) {
     (this.scene.session() as Session).setLogging(false);
     this.connected = true;
+
+    const conversationVariables = {
+      url: JSON.stringify(window.location),
+      cookies: document.cookie,
+    };
+    this.persona.conversationSend('PAGE_LOADED', conversationVariables, {});
+    console.log('>> PAGE_LOADED', conversationVariables);
+
+    // watch for navigation speech markers
+    this.scene.onSpeechMarkerEvents[personaId].addListener((p, e) => this.onSpeechMarker(p, e));
+  }
+
+  public onSpeechMarker(persona, event) {
+    console.log({ event });
+    const markerType = event.arguments[0];
+
+    // allow DP to navigate for user
+    if (markerType === 'navigate') {
+      const targetUrl = event.arguments[1];
+      window.location.assign(targetUrl);
+    }
   }
 
   public disconnect() {

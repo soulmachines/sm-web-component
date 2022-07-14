@@ -12,7 +12,7 @@ import {
   ViewEncapsulation,
   HostBinding,
 } from '@angular/core';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 import { ResizeObserver } from '@juggle/resize-observer';
 import {
   SMWebSDKService,
@@ -81,6 +81,8 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     return convertToBoolString(this._debug);
   }
 
+  public videoState: { audio?: boolean; video?: boolean } = {};
+
   // outputs, exposed as publicly consumable events
   @Output()
   public connected = new EventEmitter();
@@ -147,14 +149,15 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public connect() {
-    this.log('connect');
+    this.log('>> connect');
 
     const connectOptions: ConnectOptions = {};
 
     this.webSDKService
       .connect(connectOptions, this.tokenServer)
       .pipe(
-        tap(() => this.onConnectionSuccess()),
+        switchMap(() => this.webSDKService.scene.startVideo()),
+        tap((res) => this.onConnectionSuccess(res)),
         catchError((e) => {
           this.onConnectionError(e);
           return of(false);
@@ -165,10 +168,10 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     // Having this here, rather than in onConnectionSuccess fixes a bug in some Safari devices
     // Play needs to be called in the same browser thread as the users click.
     // Otherwise you'll get a black video with a user interaction required error
-    this.webSDKService.scene
+    /*this.webSDKService.scene
       .startVideo()
       .then(() => (this.videoRef.nativeElement.muted = false))
-      .catch((error) => this.log('startVideo failed:', error));
+      .catch((error) => this.log('startVideo failed:', error));*/
   }
 
   public disconnect() {
@@ -187,6 +190,7 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   public setMicrophoneEnabled(enabled: boolean) {
+    this.videoRef.nativeElement.muted = !enabled;
     return this.executeCommand(
       () => this.webSDKService.scene.setMediaDeviceActive({ microphone: enabled }),
       'setMicrophoneEnabled ',
@@ -252,13 +256,14 @@ export class VideoComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  private onConnectionSuccess() {
-    this.log(`session connected.`);
+  private onConnectionSuccess(videoState) {
+    this.log(`session connected:`, videoState);
 
     this.resizeVideoStream();
     this.webSDKService.registerEventCallbacks(this.sceneCallbacks);
     this.webSDKService.scene.startRecognize();
     this.isConnected = true;
+    this.videoState = videoState;
     this.connected.emit();
   }
 
