@@ -26,6 +26,9 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         data-sm-content={content.id}
         className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto"
       >
+        {/*
+        Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
+        @ts-ignore */}
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.text}</ReactMarkdown>
       </div>
     </Card>
