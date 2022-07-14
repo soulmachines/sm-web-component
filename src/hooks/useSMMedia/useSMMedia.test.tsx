@@ -45,16 +45,6 @@ describe('useSMMedia()', () => {
     expect(result.current.isCameraEnabled).toEqual(false);
   });
 
-  it('does calls setMediaDeviceActive with false for camera and mic', () => {
-    customRender();
-    expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
-      microphone: false,
-    });
-    expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
-      camera: false,
-    });
-  });
-
   describe('when scene is connected', () => {
     beforeEach(() => {
       mockIsConnected.mockReturnValue(true);
