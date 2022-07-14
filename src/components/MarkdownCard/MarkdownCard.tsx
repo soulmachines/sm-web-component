@@ -2,11 +2,24 @@ import { ContentCard } from '@soulmachines/smwebsdk';
 import { Card } from '../Card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Heading, HeadingProps } from '../Heading';
 
 export type MarkdownCardProps = {
   content: ContentCard;
   //  Styles are passed through from react spring
   style?: Record<string, 'string | CSSProperties | undefined'>;
+};
+
+export type LiProps = {
+  children: string;
+  ordered: boolean;
+  index: number;
+};
+
+export type AProps = {
+  href: string;
+  children: string;
+  title: string;
 };
 
 export type MarkdownData = {
@@ -19,6 +32,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
   if (!data.text) {
     return null;
   }
+  const markdown = data.text;
 
   return (
     <Card style={style}>
@@ -29,7 +43,35 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         {/*
         Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
         @ts-ignore */}
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{data.text}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            h1: () => <Heading type="h1" children="" />,
+            h2: ({ type = 'h2', children }: HeadingProps) => (
+              <Heading type={type} children={children} />
+            ),
+            li: ({ children, ordered, index }: LiProps) => {
+              if (ordered) {
+                return (
+                  <li>
+                    {index + 1}. {children}
+                  </li>
+                );
+              } 
+                return <li>- {children}</li>;
+              
+            },
+            a: ({ href, children, title }: AProps) => {
+              return (
+                <a className="sm-text-blue sm-underline" href={href} title={title}>
+                  {children}
+                </a>
+              );
+            },
+          }}
+        >
+          {markdown}
+        </ReactMarkdown>
       </div>
     </Card>
   );

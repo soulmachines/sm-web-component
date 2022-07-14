@@ -1,13 +1,20 @@
 import { MarkdownCard, MarkdownCardProps } from '.';
-// import * as fs from 'fs';
 
 const content = {
   id: 'id',
   type: 'markdown',
   data: {
-    text: '## An Interesting List\r\n 1. Most interesting\r\n 2. Less interesting\r\n 3. Least Interesting\r\n\r\n**bold**\r\n- item 1\r\n- item 2\r\n\r\n[Link test with google link](www.google.com)',
+    text: '## An Interesting List\r\n 1. Most interesting\r\n 2. Less interesting\r\n 3. Least Interesting\r\n\r\n**bold**\r\n- item 1\r\n- item 2\r\n\r\n[Link test with google link](https://www.google.com)',
   },
 };
+
+// const exhaustiveContent = {
+//   id: 'id',
+//   type: 'markdown',
+//   data: {
+//     text: ''
+//   },
+// };
 
 export default {
   title: `Components / MarkdownCard`,
