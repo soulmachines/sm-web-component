@@ -1,4 +1,4 @@
-import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
+import { ConnectOptions, Persona, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
@@ -40,6 +40,17 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
         });
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
+      const persona = new Persona(scene, 1);
+      const sendTextMessage = (text: string) => {
+        try {
+          persona.conversationSend(text, {}, {});
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      sendTextMessage(`userNavigatingPage:${window.location.href}`);
+      console.log(`>>>>>>>>>>>>>>>>>>>>>>userNavigatingPage:${window.location.href}`);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setConnectionError(error);
