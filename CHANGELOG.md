@@ -1,5 +1,24 @@
 # Change Log
 
+# [1.6.0](https://github.com/soulmachines/sm-web-component/compare/1.5.0...1.6.0) (2022-07-17)
+
+
+### Bug Fixes
+
+* camera and mic should be red when turned on ([#271](https://github.com/soulmachines/sm-web-component/issues/271)) ([2e843fa](https://github.com/soulmachines/sm-web-component/commit/2e843faa86363b1a1fafc2ba42b3eabcef882a74))
+* microphone and camera indication incorrect when starting new session after session end QUIC-1935 ([#274](https://github.com/soulmachines/sm-web-component/issues/274)) ([3137223](https://github.com/soulmachines/sm-web-component/commit/313722311e1ba4e3e56461e75080a26d3ba47ab7))
+* reset permissions when it is not connected  quic-1935 ([#272](https://github.com/soulmachines/sm-web-component/issues/272)) ([7392d69](https://github.com/soulmachines/sm-web-component/commit/7392d6949dabc44e1510826791c13a081136d260))
+* snippet rendering issue in local dev ([#276](https://github.com/soulmachines/sm-web-component/issues/276)) ([9ab816d](https://github.com/soulmachines/sm-web-component/commit/9ab816d5e6cfd22ac3a43a7bf8da7152db8d95a1))
+* use px for icon size quic-1930 ([#273](https://github.com/soulmachines/sm-web-component/issues/273)) ([7ec5fee](https://github.com/soulmachines/sm-web-component/commit/7ec5fee79332ad56907172c7d539d8b94fb1cbcd))
+
+
+### Features
+
+* always show image in full size quic-1924 ([#268](https://github.com/soulmachines/sm-web-component/issues/268)) ([722681b](https://github.com/soulmachines/sm-web-component/commit/722681b0d64b5e21b7c3afc935abbf51cc23cbae))
+* create logic for internalLink card quic-1941 ([#265](https://github.com/soulmachines/sm-web-component/issues/265)) ([8e1c08e](https://github.com/soulmachines/sm-web-component/commit/8e1c08e295b82a92ad14eb00bdb73fcd5b67eac9))
+* improve can autoplay audio code quic-1944 ([#269](https://github.com/soulmachines/sm-web-component/issues/269)) ([8addf5a](https://github.com/soulmachines/sm-web-component/commit/8addf5af4ab3c25a2b6ff9d05ad4b8583c3ff592)), closes [#270](https://github.com/soulmachines/sm-web-component/issues/270)
+* update disconnect icon to a x quic-1913 ([#266](https://github.com/soulmachines/sm-web-component/issues/266)) ([2a64c20](https://github.com/soulmachines/sm-web-component/commit/2a64c20b0521ab9843996f63aff7ac54a3400293))
+
 # [1.5.0](https://github.com/soulmachines/sm-web-component/compare/1.4.0...1.5.0) (2022-07-10)
 
 
