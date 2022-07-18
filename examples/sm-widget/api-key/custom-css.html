@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Key - Custom CSS</title>
+
+    <style>
+      sm-widget {
+        --color-secondary-100: #fa91cb;
+        --color-secondary-200: #f087c1;
+        --color-secondary-300: #e67db7;
+        --color-secondary-400: #dc73ad;
+        --color-secondary-500: #d269a3;
+        --color-secondary-600: #c85f99;
+        --color-secondary-700: #be558f;
+        --color-secondary-800: #b44b85;
+        --color-secondary-900: #aa417b;
+      }
+    </style>
+  </head>
+  <body>
+    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
+
+    <script type="module" src="/src/web-components/sm-widget"></script>
+  </body>
+</html>
