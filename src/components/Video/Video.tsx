@@ -24,6 +24,7 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
 export function Video({ loadingIndicator, autoConnect }: Props) {
   const { videoRef, scene, connectionStatus, isVideoMuted, connect } = useSoulMachines();
   const videoStream = scene.videoElement?.srcObject;
+  const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const { observe } = useDimensions<HTMLVideoElement>({
     onResize: useMemo(
@@ -38,6 +39,11 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     opacity: isConnected ? '1' : '0',
     delay: isConnected ? 1100 : 0,
     config: config.gentle,
+  });
+
+  const videoWrapperClass = classNames({
+    'sm-w-full sm-h-full sm-overflow-hidden': true,
+    'sm-hidden': !isConnected && !isConnecting,
   });
 
   const videoClass = classNames({
@@ -58,9 +64,8 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   }, [videoRef, videoStream]);
 
   return (
-    <div className="sm-w-full sm-h-full sm-overflow-hidden">
-      {connectionStatus === ConnectionStatus.CONNECTING &&
-        (loadingIndicator || <DefaultLoadingIndicator />)}
+    <div className={videoWrapperClass}>
+      {isConnecting && (loadingIndicator || <DefaultLoadingIndicator />)}
 
       <animated.video
         style={videoAnimation}

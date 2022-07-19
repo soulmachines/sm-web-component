@@ -20,10 +20,17 @@ declare global {
     interface Chainable {
       /**
        * Launch the scene. Verify that it shows the loader and then the video
-       * It waits a longer peroid of time (currently 2 minutes) as the first connection takes time
+       * It waits a longer peroid of time as the first connection takes time
        * @example cy.launchScene()
        */
       launchScene(): Chainable<null>;
+
+      /**
+       * Reload page and wait to autoconnect to load the scene. Verify that it shows the loader and then the video
+       * It waits a longer peroid of time as the first connection takes time
+       * @example cy.reloadPageAndWaitUntilConnected()
+       */
+      reloadPageAndWaitUntilConnected(): Chainable<null>;
 
       /**
        * Disconnect the scene
