@@ -26,7 +26,7 @@ export function ContentCards() {
     image: ImageCard,
     externalLink: (props) => <LinkCard {...props} isExternal={true} />,
     internalLink: (props) => <LinkCard {...props} isExternal={false} />,
-    markdown: (props) => <MarkdownCard {...props} />,
+    markdown: MarkdownCard
   };
 
   useEffect(() => {
