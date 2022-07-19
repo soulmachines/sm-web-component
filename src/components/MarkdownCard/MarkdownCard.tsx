@@ -45,7 +45,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
     <Card style={style}>
       <div
         data-sm-content={content.id}
-        className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto"
+        className="sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto"
       >
         {/*
         Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
@@ -53,23 +53,53 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({ type = 'h1', children, text_class = 'sm-text-blue-800' }: HeadingProps) => (
-              <Heading type={type} children={children} text_class={text_class} />
+            h1: ({
+              type = 'h1',
+              children,
+              size = 'sm-text-2xl',
+              text_class = 'sm-text-blue-800',
+            }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} text_class={text_class} />
             ),
-            h2: ({ type = 'h2', children, text_class = 'sm-text-blue-700' }: HeadingProps) => (
-              <Heading type={type} children={children} text_class={text_class} />
+            h2: ({
+              type = 'h2',
+              children,
+              size = 'sm-text-2xl',
+              text_class = 'sm-text-blue-700',
+            }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} text_class={text_class} />
             ),
-            h3: ({ type = 'h3', children, text_class = 'sm-text-blue-600' }: HeadingProps) => (
-              <Heading type={type} children={children} text_class={text_class} />
+            h3: ({
+              type = 'h3',
+              children,
+              size = 'sm-text-xl',
+              text_class = 'sm-text-blue-600',
+            }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} text_class={text_class} />
             ),
-            h4: ({ type = 'h4', children, text_class = 'sm-text-blue-500' }: HeadingProps) => (
-              <Heading type={type} children={children} text_class={text_class} />
+            h4: ({
+              type = 'h4',
+              children,
+              size = 'sm-text-xl',
+              text_class = 'sm-text-blue-500',
+            }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} text_class={text_class} />
             ),
-            h5: ({ type = 'h5', children, text_class = 'sm-text-blue-400' }: HeadingProps) => (
-              <Heading type={type} children={children} text_class={text_class} />
+            h5: ({
+              type = 'h5',
+              children,
+              size = 'sm-text-lg',
+              text_class = 'sm-text-blue-400',
+            }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} text_class={text_class} />
             ),
-            h6: ({ type = 'h6', children, text_class = 'sm-text-blue-300' }: HeadingProps) => (
-              <Heading type={type} children={children} text_class={text_class} />
+            h6: ({
+              type = 'h6',
+              children,
+              size = 'sm-text-lg',
+              text_class = 'sm-text-blue-300',
+            }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} text_class={text_class} />
             ),
             li: ({ children, ordered, index, checked, className }: LiProps) => {
               console.log(checked);

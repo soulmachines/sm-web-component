@@ -4,23 +4,20 @@ export type HeadingProps = {
   children: string;
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   text_class?: string;
+  size?: string;
 };
 
-const size_converstion = {
-  h1: 'sm-text-2xl',
-  h2: 'sm-text-2xl',
-  h3: 'sm-text-xl',
-  h4: 'sm-text-xl',
-  h5: 'sm-text-lg',
-  h6: 'sm-text-lg',
-};
-
-export function Heading({ type, children, text_class = 'sm-text-neutral-700' }: HeadingProps) {
+export function Heading({
+  type,
+  children,
+  size = 'sm-text-lg',
+  text_class = 'sm-text-neutral-700',
+}: HeadingProps) {
   // TODO jcn add text sizing styling for different headings
   return createElement(
     type,
     {
-      className: `${size_converstion[type]} sm-font-rubik sm-font-medium sm-m-0 ${text_class}`,
+      className: `${size} sm-font-rubik sm-font-medium sm-m-0 ${text_class}`,
     },
     children,
   );
