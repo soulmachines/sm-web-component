@@ -1,7 +1,6 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { Card } from '../Card';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { Heading, HeadingProps } from '../Heading';
 
 export type MarkdownCardProps = {
@@ -51,7 +50,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
         @ts-ignore */}
         <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
+          remarkPlugins={[]}
           components={{
             h1: ({
               type = 'h1',
