@@ -16,25 +16,25 @@ Theme
     Define colors as  255 115 179 instead of rgb(255 115 179); if want this to work https://tailwindcss.com/docs/text-color#changing-the-opacity
     */
 
-    --color-greyscale-100: #eaeaea;
-    --color-greyscale-200: #d3d3d3;
-    --color-greyscale-300: #b2b2b2;
-    --color-greyscale-400: #898989;
-    --color-greyscale-500: #636363;
-    --color-greyscale-600: #535252;
-    --color-greyscale-700: #484847;
-    --color-greyscale-800: #3c3c3c;
-    --color-greyscale-900: #2c2c2b;
+    --color-grayscale-100: #eaeaea;
+    --color-grayscale-200: #d3d3d3;
+    --color-grayscale-300: #b2b2b2;
+    --color-grayscale-400: #898989;
+    --color-grayscale-500: #636363;
+    --color-grayscale-600: #535252;
+    --color-grayscale-700: #484847;
+    --color-grayscale-800: #3c3c3c;
+    --color-grayscale-900: #2c2c2b;
 
-    --color-primary-100: #91fabf;
-    --color-primary-200: #87f0b5;
-    --color-primary-300: #7de6ab;
-    --color-primary-400: #73dca1;
-    --color-primary-500: #69d297;
-    --color-primary-600: #5fc88d;
-    --color-primary-700: #55be83;
-    --color-primary-800: #4bb479;
-    --color-primary-900: #41aa6f;
+    --color-primary-100: #e8ebef;
+    --color-primary-200: #ccd4dd;
+    --color-primary-300: #a5b5c7;
+    --color-primary-400: #6e8cad;
+    --color-primary-500: #34669b;
+    --color-primary-600: #215489;
+    --color-primary-700: #234973;
+    --color-primary-800: #223e5d;
+    --color-primary-900: #1c2d41;
 
     --color-secondary-100: #dfedee;
     --color-secondary-200: #b6dadc;
