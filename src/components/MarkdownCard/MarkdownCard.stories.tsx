@@ -47,6 +47,11 @@ export default {
   argTypes: {
     content: { control: 'object', defaultValue: content },
   },
+  parameters: {
+    docs: {
+      page: <MarkdownCard content={content} />,
+    },
+  },
 };
 
 export const Basic = ({ content }: MarkdownCardProps) => <MarkdownCard content={content} />;

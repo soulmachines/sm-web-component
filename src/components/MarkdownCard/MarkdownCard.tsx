@@ -57,49 +57,49 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               type = 'h1',
               children,
               size = 'sm-text-2xl',
-              text_class = 'sm-text-blue-800',
+              textClass: text_class = 'sm-text-blue-800',
             }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} text_class={text_class} />
+              <Heading type={type} children={children} size={size} textClass={text_class} />
             ),
             h2: ({
               type = 'h2',
               children,
               size = 'sm-text-2xl',
-              text_class = 'sm-text-blue-700',
+              textClass: text_class = 'sm-text-blue-700',
             }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} text_class={text_class} />
+              <Heading type={type} children={children} size={size} textClass={text_class} />
             ),
             h3: ({
               type = 'h3',
               children,
               size = 'sm-text-xl',
-              text_class = 'sm-text-blue-600',
+              textClass: text_class = 'sm-text-blue-600',
             }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} text_class={text_class} />
+              <Heading type={type} children={children} size={size} textClass={text_class} />
             ),
             h4: ({
               type = 'h4',
               children,
               size = 'sm-text-xl',
-              text_class = 'sm-text-blue-500',
+              textClass: text_class = 'sm-text-blue-500',
             }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} text_class={text_class} />
+              <Heading type={type} children={children} size={size} textClass={text_class} />
             ),
             h5: ({
               type = 'h5',
               children,
               size = 'sm-text-lg',
-              text_class = 'sm-text-blue-400',
+              textClass: text_class = 'sm-text-blue-400',
             }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} text_class={text_class} />
+              <Heading type={type} children={children} size={size} textClass={text_class} />
             ),
             h6: ({
               type = 'h6',
               children,
               size = 'sm-text-lg',
-              text_class = 'sm-text-blue-300',
+              textClass: text_class = 'sm-text-blue-300',
             }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} text_class={text_class} />
+              <Heading type={type} children={children} size={size} textClass={text_class} />
             ),
             li: ({ children, ordered, index, checked, className }: LiProps) => {
               console.log(checked);
