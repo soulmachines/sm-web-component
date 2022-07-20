@@ -13,7 +13,7 @@ export type ButtonProps = {
 
 export function Button({ children, theme, onClick }: ButtonProps) {
   const buttonClass = classNames({
-    'sm-cursor-pointer sm-px-4 sm-py-2 sm-font-rubik sm-text-sm sm-tracking-wider sm-transition-colors sm-uppercase sm-font-medium sm-outline disabled:sm-bg-primary-200  disabled:sm-cursor-not-allowed md:sm-text-base':
+    'sm-cursor-pointer sm-px-4 sm-py-2 sm-font-sansSerif sm-text-sm sm-tracking-wider sm-transition-colors sm-uppercase sm-font-medium sm-outline disabled:sm-bg-primary-200  disabled:sm-cursor-not-allowed md:sm-text-base':
       true,
     'sm-text-white sm-rounded-lg sm-bg-primary-600 hover:sm-bg-primary-700 active:sm-bg-primary-800 focus:sm-bg-primary-600 focus:sm-outline-2 focus:sm-outline-primary-200':
       theme === ButtonTheme.default,

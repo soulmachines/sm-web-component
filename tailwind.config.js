@@ -16,7 +16,7 @@ module.exports = {
         xl: 'var(--box-shadow-xl)',
       },
       fontFamily: {
-        rubik: ['Rubik', 'Helvetica', 'sans-serif'],
+        sansSerif: ['var(--font-family-serif)'],
       },
       maxHeight: {
         contentCard: '34.25rem',
