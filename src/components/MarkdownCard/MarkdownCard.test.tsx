@@ -101,4 +101,11 @@ describe('<MarkdownCard />', () => {
     );
     expect(getByRole('link', { name: 'internal link' })).not.toHaveAttribute('target');
   });
+
+  it('renders nothing if nothing received', () => {
+    const markdown = '';
+
+    const { container } = render(<MarkdownCard content={markdownData(markdown)} />);
+    expect(container).toBeEmptyDOMElement();
+  });
 });

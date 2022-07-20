@@ -3,6 +3,7 @@ import { Card } from '../Card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Heading, HeadingProps } from '../Heading';
+import { Text, TextProps } from '../Text';
 
 export type MarkdownCardProps = {
   content: ContentCard;
@@ -35,7 +36,6 @@ export type MarkdownData = {
 
 export function MarkdownCard({ content, style }: MarkdownCardProps) {
   const data = content.data as unknown as MarkdownData;
-  console.log(data.text);
   if (!data.text) {
     return null;
   }
@@ -45,7 +45,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
     <Card style={style}>
       <div
         data-sm-content={content.id}
-        className="sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto"
+        className="sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto sm-text-neutral-700 sm-font-sans sm-font-normal"
       >
         {/*
         Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
@@ -102,7 +102,6 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               <Heading type={type} children={children} size={size} textClass={text_class} />
             ),
             li: ({ children, ordered, index, checked, className }: LiProps) => {
-              console.log(checked);
               if (ordered) {
                 return (
                   <li>
@@ -129,7 +128,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
 
               return (
                 <a
-                  className="sm-text-blue-400 active:sm-text-red-500 visited:sm-text-pink-500 sm-underline"
+                  className="sm-text-blue-400 active:sm-text-red-500 hover:sm-underline focus:underline visited:sm-text-pink-500"
                   href={href}
                   title={title}
                   target={target}
@@ -137,6 +136,9 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
                   {children}
                 </a>
               );
+            },
+            p: ({ children }: TextProps) => {
+              return <Text children={children} size="sm" />;
             },
             hr: () => <hr className="sm-w-11/12 sm-bg-gray-400" />,
           }}
