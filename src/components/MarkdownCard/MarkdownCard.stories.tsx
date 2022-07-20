@@ -37,6 +37,11 @@ Horizontal Rule
 #### Image Example
 
 ![Image Alt Text](https://assets.gocomics.com/uploads/collection_images/collection_image_large_1628638_dilbert-inventions-content-admin-2048x1280_201809101600.jpg)
+
+#### Image with Link
+
+[![Image Alt Text](https://assets.gocomics.com/uploads/collection_images/collection_image_large_1628638_dilbert-inventions-content-admin-2048x1280_201809101600.jpg)](https://www.google.com)
+
 `,
   },
 };
