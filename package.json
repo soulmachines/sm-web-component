@@ -33,6 +33,7 @@
     "react-spring": "^9.4.5"
   },
   "devDependencies": {
+    "@mdx-js/preact": "^2.1.2",
     "@peculiar/webcrypto": "^1.4.0",
     "@preact/preset-vite": "^2.1.5",
     "@semantic-release/changelog": "^6.0.1",
@@ -47,7 +48,7 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@thedutchcoder/postcss-rem-to-px": "0.0.2",
     "@types/can-autoplay": "^3.0.1",
-    "@types/jest": "^27.5.1",
+    "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.182",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.28.0",
@@ -78,7 +79,6 @@
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   },
-  "type": "commonjs",
   "release": {
     "branches": [
       "master"
