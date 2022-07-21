@@ -8,12 +8,6 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
 
-  // On connection we'll check to see if we can autoplay the video with sound
-  // This will update when we determine if its possible
-  useEffect(() => {
-    setIsVideoMuted(!canAutoPlayAudio);
-  }, [canAutoPlayAudio]);
-
   const setMicrophoneActive = useCallback(
     async (enabled: boolean) => {
       try {
@@ -46,10 +40,30 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
     [scene],
   );
 
-  const setVideoMuted = useCallback((enabled: boolean) => {
-    setIsVideoMuted(enabled);
-    sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
-  }, []);
+  const setVideoMuted = useCallback(
+    (enabled: boolean, fromUserAction: boolean) => {
+      setIsVideoMuted(enabled);
+      //known issue in react https://stackoverflow.com/questions/61510160/why-muted-attribute-on-video-tag-is-ignored-in-react
+      //https://github.com/facebook/react/issues/10389
+      //need to set the muted value to scene video directly
+      if (scene.videoElement) {
+        scene.videoElement.muted = enabled;
+      }
+      if (fromUserAction) {
+        sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
+      }
+    },
+    [scene.videoElement],
+  );
+
+  // On connection we'll check to see if we can autoplay the video with sound
+  // This will update when we determine if its possible
+  useEffect(() => {
+    // Check if user mute the audio in previous page
+    const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
+    setVideoMuted(!canAutoPlayAudio || userMutedAudio, false);
+    //setIsVideoMuted(!canAutoPlayAudio || userMutedAudio);
+  }, [canAutoPlayAudio, setVideoMuted]);
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
@@ -61,15 +75,11 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
       //session states
       const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
       const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
-      const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
 
       if (cameraSaved) setCameraActive(true);
       if (microphoneSaved) setMicrophoneActive(true);
-      if (videoMuted) {
-        setVideoMuted(true);
-      }
     }
-  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
+  }, [isConnected, setCameraActive, setMicrophoneActive]);
 
   // When not connected reset to initial state
   // Otherwise when you reconnect it will be in the wrong state
@@ -85,7 +95,7 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
   const toggleCamera = () => setCameraActive(!isCameraEnabled);
 
   const toggleVideoMuted = () => {
-    setVideoMuted(!isVideoMuted);
+    setVideoMuted(!isVideoMuted, true);
   };
 
   return {
