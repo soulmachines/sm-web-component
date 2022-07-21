@@ -1,5 +1,5 @@
 import { MarkdownCard } from '.';
-import { getByRole, render } from '@testing-library/preact';
+import { render } from '@testing-library/preact';
 import { ContentCard } from '@soulmachines/smwebsdk';
 
 describe('<MarkdownCard />', () => {
