@@ -52,12 +52,12 @@ describe('scene', () => {
       cy.get('title').contains('Mute video').should('exist');
     });
 
-    it('renders a disable microphone button', () => {
-      cy.get('title').contains('Disable microphone').should('exist');
+    it('renders a enable microphone button', () => {
+      cy.get('title').contains('Enable microphone').should('exist');
     });
 
-    it('renders a disable camera button', () => {
-      cy.get('title').contains('Disable camera').should('exist');
+    it('renders a enable camera button', () => {
+      cy.get('title').contains('Enable camera').should('exist');
     });
   });
 

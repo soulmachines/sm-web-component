@@ -131,6 +131,8 @@ Run `npm run generate` in your terminal and it will ask you what you'd like the 
 
 It compiles multiple css files for each entry point. This is so that someone can use the `sm-video` component, without inherting the `sm-widget` styles.
 
+Our theme is using css variables with defaults. Users can choose to override our styles with their own.
+
 ### Sizing
 
 By default Tailwind uses `rem` which has some benefits over pixel sizing. Such as scaling up content nicely when the zoom is increased, which is great for accessibility. Unfortunately `rem` sizing is based off the `html` element. Our styles assume the font-size on the `html` element is `16px`. The web component can be embedded on any website and the website may have changed the font size on `html` element to another value(eg: 10px is common). This would make our web component appear at a different size than we expect.
