@@ -40,6 +40,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         apiKey,
         requestedMediaDevices: { microphone: false, camera: false },
         requiredMediaDevices: { microphone: false, camera: false },
+        autoSendPageUrl: true,
       }),
     [apiKey],
   );
