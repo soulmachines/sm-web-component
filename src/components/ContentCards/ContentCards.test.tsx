@@ -105,5 +105,25 @@ describe('<ContentCards />', () => {
 
       expect(getByAltText('mock alt text')).toBeInTheDocument();
     });
+
+    it('renders markdown text when the card type is markdown', () => {
+      const { getByText } = customRender([
+        {
+          id: 'id',
+          type: 'markdown',
+          data: {
+            text: `# Heading 1
+            
+- List item 1
+- List item 2
+`,
+          },
+        },
+      ]);
+
+      expect(getByText('Heading 1')).toBeInTheDocument();
+      expect(getByText('List item 1')).toBeInTheDocument();
+      expect(getByText('List item 2')).toBeInTheDocument();
+    });
   });
 });

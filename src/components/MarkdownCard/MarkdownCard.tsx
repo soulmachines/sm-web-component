@@ -13,10 +13,10 @@ export type MarkdownCardProps = {
 
 export type LiProps = {
   children: string;
-  ordered: boolean;
-  index: number;
-  checked: boolean | null;
-  className: string | null;
+  ordered?: boolean;
+  index?: number;
+  checked?: boolean | null;
+  className?: string | null;
 };
 
 export type AProps = {
@@ -28,10 +28,17 @@ export type AProps = {
 
 export type OlProps = {
   children: string;
+  className: string | null;
 };
 
 export type MarkdownData = {
   text: string;
+};
+
+export type CodeProps = {
+  children: string;
+  inline?: boolean;
+  className?: string;
 };
 
 export function MarkdownCard({ content, style }: MarkdownCardProps) {
@@ -53,85 +60,62 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({
-              type = 'h1',
-              children,
-              size = 'sm-text-2xl',
-              textClass: text_class = 'sm-text-blue-800',
-            }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} textClass={text_class} />
+            h1: ({ type = 'h1', children, size = 'sm-text-2xl' }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} />
             ),
-            h2: ({
-              type = 'h2',
-              children,
-              size = 'sm-text-2xl',
-              textClass: text_class = 'sm-text-blue-700',
-            }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} textClass={text_class} />
+            h2: ({ type = 'h2', children, size = 'sm-text-2xl' }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} />
             ),
-            h3: ({
-              type = 'h3',
-              children,
-              size = 'sm-text-xl',
-              textClass: text_class = 'sm-text-blue-600',
-            }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} textClass={text_class} />
+            h3: ({ type = 'h3', children, size = 'sm-text-xl' }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} />
             ),
-            h4: ({
-              type = 'h4',
-              children,
-              size = 'sm-text-xl',
-              textClass: text_class = 'sm-text-blue-500',
-            }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} textClass={text_class} />
+            h4: ({ type = 'h4', children, size = 'sm-text-xl' }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} />
             ),
-            h5: ({
-              type = 'h5',
-              children,
-              size = 'sm-text-lg',
-              textClass: text_class = 'sm-text-blue-400',
-            }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} textClass={text_class} />
+            h5: ({ type = 'h5', children, size = 'sm-text-lg' }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} />
             ),
-            h6: ({
-              type = 'h6',
-              children,
-              size = 'sm-text-lg',
-              textClass: text_class = 'sm-text-blue-300',
-            }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} textClass={text_class} />
+            h6: ({ type = 'h6', children, size = 'sm-text-lg' }: HeadingProps) => (
+              <Heading type={type} children={children} size={size} />
             ),
             li: ({ children, ordered, index, checked, className }: LiProps) => {
-              if (ordered) {
-                return (
-                  <li>
-                    {index + 1}. {children}
-                  </li>
-                );
-              } else if (className === 'task-list-item') {
-                return <li>{children}</li>;
-              }
-              return <li>- {children}</li>;
+              return <li>{children}</li>;
             },
             ol: ({ children }: OlProps) => {
-              return <ol className="sm-ml-4">{children}</ol>;
+              return <ol className="sm-ml-4 sm-list-decimal">{children}</ol>;
             },
-            ul: ({ children }: OlProps) => {
-              return <ul className="sm-ml-4">{children}</ul>;
+            ul: ({ children, className }: OlProps) => {
+              if (className === 'task-list-item') {
+                return <ul className="sm-ml-4 sm-list-none">{children}</ul>;
+              }
+              return <ul className="sm-ml-4 sm-list-disc">{children}</ul>;
             },
             a: ({ href, children, title, target }: AProps) => {
+              let isExternal: boolean = false;
               if (!target) {
                 const currentDomain = window.location.hostname;
                 const destinationDomain = new URL(href).hostname;
-                if (!(currentDomain === destinationDomain)) target = '_blank';
+                if (!(currentDomain === destinationDomain)) {
+                  isExternal = true;
+                }
               }
+              const conditionalAttributes: Record<string, string> = {};
+
+              if (isExternal) {
+                conditionalAttributes['target'] = '_blank';
+                conditionalAttributes['rel'] = 'noopener noreferrer';
+              }
+
+              // Handle possible vulnerability when opening new window
+              var newWnd = window.open();
+              if (newWnd) newWnd.opener = null;
 
               return (
                 <a
                   className="sm-text-blue-400 active:sm-text-red-500 hover:sm-underline focus:underline visited:sm-text-pink-500"
                   href={href}
                   title={title}
-                  target={target}
+                  {...conditionalAttributes}
                 >
                   {children}
                 </a>
