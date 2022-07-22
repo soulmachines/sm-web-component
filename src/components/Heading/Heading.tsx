@@ -8,7 +8,6 @@ export type HeadingProps = {
 };
 
 export function Heading({ type, children, size = 'lg' }: HeadingProps) {
-  // TODO jcn add text sizing styling for different headings
   const sizeClass = classNames({
     'sm-text-2xs md:sm-text-xs': size === 'xs',
     'sm-text-xs md:sm-text-sm': size === 'sm',
