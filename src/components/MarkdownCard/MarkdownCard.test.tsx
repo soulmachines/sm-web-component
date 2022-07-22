@@ -81,7 +81,6 @@ describe('<MarkdownCard />', () => {
     const markdown = `[external link](https://www.google.com)
 `;
     const { getByRole } = render(<MarkdownCard content={markdownData(markdown)} />);
-    const element = getByRole('link', { name: 'external link' });
     expect(getByRole('link', { name: 'external link' })).toHaveAttribute(
       'href',
       'https://www.google.com',

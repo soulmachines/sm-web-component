@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Heading, HeadingProps } from '../Heading';
 import { Text, TextProps } from '../Text';
+import classNames from 'classnames';
 
 export type MarkdownCardProps = {
   content: ContentCard;
@@ -40,6 +41,9 @@ export type CodeProps = {
   inline?: boolean;
   className?: string;
 };
+export type GenericProps = {
+  node: object;
+};
 
 export function MarkdownCard({ content, style }: MarkdownCardProps) {
   const data = content.data as unknown as MarkdownData;
@@ -60,22 +64,22 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            h1: ({ type = 'h1', children, size = 'sm-text-2xl' }: HeadingProps) => (
+            h1: ({ type = 'h1', children, size = '2xl' }: HeadingProps) => (
               <Heading type={type} children={children} size={size} />
             ),
-            h2: ({ type = 'h2', children, size = 'sm-text-2xl' }: HeadingProps) => (
+            h2: ({ type = 'h2', children, size = '2xl' }: HeadingProps) => (
               <Heading type={type} children={children} size={size} />
             ),
-            h3: ({ type = 'h3', children, size = 'sm-text-xl' }: HeadingProps) => (
+            h3: ({ type = 'h3', children, size = 'lg' }: HeadingProps) => (
               <Heading type={type} children={children} size={size} />
             ),
-            h4: ({ type = 'h4', children, size = 'sm-text-xl' }: HeadingProps) => (
+            h4: ({ type = 'h4', children, size = 'lg' }: HeadingProps) => (
               <Heading type={type} children={children} size={size} />
             ),
-            h5: ({ type = 'h5', children, size = 'sm-text-lg' }: HeadingProps) => (
+            h5: ({ type = 'h5', children, size = 'md' }: HeadingProps) => (
               <Heading type={type} children={children} size={size} />
             ),
-            h6: ({ type = 'h6', children, size = 'sm-text-lg' }: HeadingProps) => (
+            h6: ({ type = 'h6', children, size = 'md' }: HeadingProps) => (
               <Heading type={type} children={children} size={size} />
             ),
             li: ({ children, ordered, index, checked, className }: LiProps) => {
@@ -125,6 +129,21 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               return <Text children={children} size="sm" />;
             },
             hr: () => <hr className="sm-w-11/12 sm-bg-gray-400" />,
+            table: ({ node, ...props }: GenericProps) => {
+              return (
+                <table
+                  className="sm-table-auto md:sm-table-fixed sm-w-full sm-border-spacing-0"
+                  {...props}
+                />
+              );
+            },
+            tr: ({ node, ...props }: GenericProps) => {
+              return <tr className="even:sm-bg-gray-200" {...props} />;
+            },
+            thead: ({ node, ...props }: GenericProps) => {
+              return <thead className="sm-bg-blue-300 sm-text-left" {...props} />;
+            },
+            pre: ({ ...props }) => <pre className="sm-bg-gray-300 sm-rounded-sm" {...props} />,
           }}
         >
           {markdown}
