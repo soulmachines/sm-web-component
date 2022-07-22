@@ -126,7 +126,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               );
             },
             p: ({ children }: TextProps) => {
-              return <Text children={children} size="sm" />;
+              return <Text children={children} size="md" />;
             },
             hr: () => <hr className="sm-w-11/12 sm-bg-gray-400" />,
             table: ({ node, ...props }: GenericProps) => {
