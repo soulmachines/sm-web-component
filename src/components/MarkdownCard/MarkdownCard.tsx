@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Heading, HeadingProps } from '../Heading';
 import { Text, TextProps } from '../Text';
-import classNames from 'classnames';
 
 export type MarkdownCardProps = {
   content: ContentCard;
@@ -82,7 +81,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
             h6: ({ type = 'h6', children, size = 'md' }: HeadingProps) => (
               <Heading type={type} children={children} size={size} />
             ),
-            li: ({ children, ordered, index, checked, className }: LiProps) => {
+            li: ({ children }: LiProps) => {
               return <li>{children}</li>;
             },
             ol: ({ children }: OlProps) => {
@@ -95,7 +94,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               return <ul className="sm-ml-4 sm-list-disc">{children}</ul>;
             },
             a: ({ href, children, title, target }: AProps) => {
-              let isExternal: boolean = false;
+              let isExternal = false;
               if (!target) {
                 const currentDomain = window.location.hostname;
                 const destinationDomain = new URL(href).hostname;
@@ -111,7 +110,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               }
 
               // Handle possible vulnerability when opening new window
-              var newWnd = window.open();
+              const newWnd = window.open();
               if (newWnd) newWnd.opener = null;
 
               return (

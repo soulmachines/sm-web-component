@@ -30,10 +30,10 @@ describe('<MarkdownCard />', () => {
     for (let hlevel = 1; hlevel < 7; hlevel++) {
       console.log(hlevel);
       const { container } = render(
-        <MarkdownCard content={markdownData('#'.repeat(hlevel) + ' Heading')} />,
+        <MarkdownCard content={markdownData(`${'#'.repeat(hlevel)} Heading`)} />,
       );
 
-      expect(container.querySelector('h' + hlevel)).toBeInTheDocument();
+      expect(container.querySelector(`h${hlevel}`)).toBeInTheDocument();
     }
   });
 
