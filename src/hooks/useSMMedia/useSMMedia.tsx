@@ -1,5 +1,5 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { useCallback, useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
 function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
@@ -7,6 +7,7 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const setMicrophoneActive = useCallback(
     async (enabled: boolean) => {
@@ -42,6 +43,9 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
 
   const setVideoMuted = useCallback((enabled: boolean, fromUserAction: boolean) => {
     setIsVideoMuted(enabled);
+    if (videoRef.current) {
+      videoRef.current.muted = enabled;
+    }
     if (fromUserAction) {
       sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
     }
