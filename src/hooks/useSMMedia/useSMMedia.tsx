@@ -48,15 +48,21 @@ function useSMMedia({
     [scene],
   );
 
-  const setVideoMuted = useCallback((enabled: boolean, fromUserAction: boolean) => {
-    setIsVideoMuted(enabled);
-    if (videoRef.current) {
-      videoRef.current.muted = enabled;
-    }
-    if (fromUserAction) {
-      sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
-    }
-  }, []);
+  const setVideoMuted = useCallback(
+    ({ enabled, saveSetting }: { enabled: boolean; saveSetting: boolean }) => {
+      setIsVideoMuted(enabled);
+
+      if (videoRef.current) {
+        videoRef.current.muted = enabled;
+      }
+
+      // Only save if the user indicated the change
+      if (saveSetting) {
+        sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
+      }
+    },
+    [videoRef],
+  );
 
   // On connection we'll check to see if we can autoplay the video with sound
   // This will update when we determine if its possible
@@ -64,7 +70,7 @@ function useSMMedia({
     if (isConnected) {
       // Check if user mute the audio in previous page
       const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
-      setVideoMuted(!canAutoPlayAudio || userMutedAudio, false);
+      setVideoMuted({ enabled: !canAutoPlayAudio || userMutedAudio, saveSetting: false });
     }
   }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
@@ -98,7 +104,7 @@ function useSMMedia({
   const toggleCamera = () => setCameraActive(!isCameraEnabled);
 
   const toggleVideoMuted = () => {
-    setVideoMuted(!isVideoMuted, true);
+    setVideoMuted({ enabled: !isVideoMuted, saveSetting: true });
   };
 
   return {
