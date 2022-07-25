@@ -2,7 +2,10 @@ import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { fireEvent, render } from '@testing-library/preact';
 import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
+import { useSMMedia } from '../../hooks/useSMMedia';
 
+const mockCanAutoPlayAudio = true;
+const mockVideoRef = { current: 'mock' };
 const mockConnect = jest.fn();
 const mockScene = {
   scene: 'mock',
@@ -18,7 +21,11 @@ jest.mock('@soulmachines/smwebsdk', () => ({
   Persona: jest.fn(() => mockPersona),
 }));
 jest.mock('../../hooks/useConnection', () => ({
-  useConnection: jest.fn(() => ({ connect: mockConnect })),
+  useConnection: jest.fn(() => ({
+    connect: mockConnect,
+    canAutoPlayAudio: mockCanAutoPlayAudio,
+    videoRef: mockVideoRef,
+  })),
 }));
 jest.mock('../../hooks/useSMMedia');
 
@@ -46,6 +53,11 @@ describe('<SoulMachinesProvider />', () => {
   it('calls useConnect with scene and the token server', () => {
     customRender();
     expect(useConnection).toHaveBeenCalledWith(mockScene, tokenServer);
+  });
+
+  it('calls useSMMedia with the scene, canAutoPlayVideo and the videoRef', () => {
+    customRender();
+    expect(useSMMedia).toHaveBeenCalledWith(mockScene, mockCanAutoPlayAudio, mockVideoRef);
   });
 
   describe('creating a scene', () => {
