@@ -30,7 +30,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       // - Safari and IOS are the most restrictive
       // - When using await syntax it can end up hanging state
       // - https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide#the_play_method
-      const canPlayPromise = scene.videoElement?.play();
+      const canPlayPromise = videoRef.current?.play();
       canPlayPromise
         ?.then(() => {
           setCanAutoPlayAudio(true);

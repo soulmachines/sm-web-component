@@ -40,21 +40,12 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
     [scene],
   );
 
-  const setVideoMuted = useCallback(
-    (enabled: boolean, fromUserAction: boolean) => {
-      setIsVideoMuted(enabled);
-      //known issue in react https://stackoverflow.com/questions/61510160/why-muted-attribute-on-video-tag-is-ignored-in-react
-      //https://github.com/facebook/react/issues/10389
-      //need to set the muted value to scene video directly
-      if (scene.videoElement) {
-        scene.videoElement.muted = enabled;
-      }
-      if (fromUserAction) {
-        sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
-      }
-    },
-    [scene.videoElement],
-  );
+  const setVideoMuted = useCallback((enabled: boolean, fromUserAction: boolean) => {
+    setIsVideoMuted(enabled);
+    if (fromUserAction) {
+      sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
+    }
+  }, []);
 
   // On connection we'll check to see if we can autoplay the video with sound
   // This will update when we determine if its possible
@@ -62,7 +53,6 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
     // Check if user mute the audio in previous page
     const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
     setVideoMuted(!canAutoPlayAudio || userMutedAudio, false);
-    //setIsVideoMuted(!canAutoPlayAudio || userMutedAudio);
   }, [canAutoPlayAudio, setVideoMuted]);
 
   /*
