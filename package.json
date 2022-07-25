@@ -5,8 +5,11 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build && npm run build-snippet",
+    "build:debug": "tsc && vite build && npm run build-snippet:debug",
     "build:cypress": "npm run build && npm run copy-cypress-pages",
+    "build:cypress:debug": "npm run build:debug && npm run copy-cypress-pages",
     "build-snippet": "node ./scripts/build-snippet.js && uglifyjs dist/widget-snippet.js --output dist/widget-snippet.min.js  --compress --mangle --toplevel ",
+    "build-snippet:debug": "node ./scripts/build-snippet.js && cp ./dist/widget-snippet.js ./dist/widget-snippet.min.js",
     "copy-cypress-pages": "copyfiles -f ./examples/snippet/* ./dist",
     "serve-snippet": "sirv dist -p 5050",
     "prettier": "prettier --check .",
