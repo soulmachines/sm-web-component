@@ -1,5 +1,5 @@
 import { JSX } from 'preact';
-import { useEffect, useMemo } from 'preact/hooks';
+import { useCallback, useEffect, useMemo } from 'preact/hooks';
 import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
 import debounce from 'lodash/debounce';
@@ -35,6 +35,19 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       [scene],
     ),
   });
+
+  const onVisibilityChange = useCallback(() => {
+    if (videoRef.current) {
+      if (document.visibilityState !== 'visible') {
+        videoRef.current.pause();
+        console.log(`>> pause`);
+      } else {
+        videoRef.current.play();
+        console.log(`>> play`);
+      }
+    }
+  }, [videoRef]);
+
   const videoAnimation = useSpring({
     opacity: isConnected ? '1' : '0',
     delay: isConnected ? 1100 : 0,
@@ -62,6 +75,15 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       videoRef.current.srcObject = videoStream;
     }
   }, [videoRef, videoStream]);
+
+  useEffect(() => {
+    if (isConnected) {
+      document.addEventListener('visibilitychange', onVisibilityChange);
+    }
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, [isConnected, onVisibilityChange]);
 
   return (
     <div className={videoWrapperClass}>
