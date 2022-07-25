@@ -26,11 +26,16 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
+      // Ensure we are checking autoplay with an unmuted video
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+      }
+
       // Check if we can play audio as browsers need an interaction to occur before playing sound
       // - Safari and IOS are the most restrictive
       // - When using await syntax it can end up hanging state
       // - https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide#the_play_method
-      const canPlayPromise = scene.videoElement?.play();
+      const canPlayPromise = videoRef.current?.play();
       canPlayPromise
         ?.then(() => {
           setCanAutoPlayAudio(true);

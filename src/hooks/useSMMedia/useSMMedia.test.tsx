@@ -1,5 +1,6 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
+import { MutableRef } from 'preact/hooks';
 import { useSMMedia } from '.';
 import { SessionDataKeys } from '../../enums';
 
@@ -17,8 +18,11 @@ jest.mock('@soulmachines/smwebsdk', () => ({
 }));
 
 describe('useSMMedia()', () => {
-  const customRender = (scene = mockScene, canAutoPlay = true) =>
-    renderHook(() => useSMMedia(scene, canAutoPlay));
+  const mockVideoRef = {
+    current: { muted: true, mock: 124 },
+  } as unknown as MutableRef<HTMLVideoElement | null>;
+  const customRender = (scene = mockScene, canAutoPlayAudio = true, videoRef = mockVideoRef) =>
+    renderHook(() => useSMMedia({ scene, canAutoPlayAudio, videoRef }));
 
   it('returns a toggleMicrophone function', () => {
     const { result } = customRender();
@@ -90,7 +94,21 @@ describe('useSMMedia()', () => {
       expect(result.current.isCameraEnabled).toEqual(false);
     });
 
+    it('does not save the mute status in storage', () => {
+      expect(Object.keys(sessionStorage)).toEqual([]);
+    });
+
     describe('when toggleVideoMuted is called', () => {
+      it('sets changes the video muted status to the opposite value', async () => {
+        const { result } = customRender();
+
+        expect(mockVideoRef.current?.muted).toEqual(false);
+
+        await result.current.toggleVideoMuted();
+
+        expect(mockVideoRef.current?.muted).toEqual(true);
+      });
+
       it('sets isVideoMuted to the opposite value', async () => {
         const { result } = customRender();
 
@@ -99,6 +117,14 @@ describe('useSMMedia()', () => {
         await result.current.toggleVideoMuted();
 
         expect(result.current.isVideoMuted).toEqual(true);
+      });
+
+      it('saves the mute status in storage', async () => {
+        const { result } = customRender();
+
+        await result.current.toggleVideoMuted();
+
+        expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toEqual('true');
       });
     });
 
