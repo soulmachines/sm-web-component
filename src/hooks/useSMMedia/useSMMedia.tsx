@@ -1,13 +1,16 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { MutableRef, useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
-function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
+function useSMMedia(
+  scene: Scene,
+  canAutoPlayAudio: boolean,
+  videoRef: MutableRef<HTMLVideoElement | null>,
+) {
   const [isVideoMuted, setIsVideoMuted] = useState(!canAutoPlayAudio);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const setMicrophoneActive = useCallback(
     async (enabled: boolean) => {
@@ -54,10 +57,12 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
   // On connection we'll check to see if we can autoplay the video with sound
   // This will update when we determine if its possible
   useEffect(() => {
-    // Check if user mute the audio in previous page
-    const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
-    setVideoMuted(!canAutoPlayAudio || userMutedAudio, false);
-  }, [canAutoPlayAudio, setVideoMuted]);
+    if (isConnected) {
+      // Check if user mute the audio in previous page
+      const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
+      setVideoMuted(!canAutoPlayAudio || userMutedAudio, false);
+    }
+  }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.

@@ -26,6 +26,10 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+      }
+
       // Check if we can play audio as browsers need an interaction to occur before playing sound
       // - Safari and IOS are the most restrictive
       // - When using await syntax it can end up hanging state
