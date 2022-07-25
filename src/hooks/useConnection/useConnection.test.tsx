@@ -162,12 +162,6 @@ describe('useConnection()', () => {
         mockFetch.mockReturnValue(mockedFetchResponse);
       });
 
-      it('sets canAutoPlayAudio to true', async () => {
-        const { result } = customRender();
-        await result.current.connect();
-        expect(result.current.canAutoPlayAudio).toEqual(true);
-      });
-
       it('calls scene.connect once with an object containing the token server creds', async () => {
         const { result } = customRender();
         await result.current.connect();
