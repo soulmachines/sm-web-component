@@ -70,7 +70,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     cleanupVideoSrc();
     scene.disconnect();
     setConnectionStatus(ConnectionStatus.DISCONNECTED);
-    document.removeEventListener('visibilitychange', onVisibilitychange);
   };
 
   const cleanupSessionStorage = () => {
@@ -86,6 +85,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const cleanupVideoSrc = () => {
     if (!videoRef.current) return;
     videoRef.current.srcObject = null;
+    document.removeEventListener('visibilitychange', onVisibilitychange);
   };
 
   scene.onDisconnectedEvent.addListener(() => {
