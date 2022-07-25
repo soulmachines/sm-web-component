@@ -57,7 +57,11 @@ describe('<SoulMachinesProvider />', () => {
 
   it('calls useSMMedia with the scene, canAutoPlayVideo and the videoRef', () => {
     customRender();
-    expect(useSMMedia).toHaveBeenCalledWith(mockScene, mockCanAutoPlayAudio, mockVideoRef);
+    expect(useSMMedia).toHaveBeenCalledWith({
+      scene: mockScene,
+      canAutoPlayAudio: mockCanAutoPlayAudio,
+      videoRef: mockVideoRef,
+    });
   });
 
   describe('creating a scene', () => {

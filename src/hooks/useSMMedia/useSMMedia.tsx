@@ -1,12 +1,16 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { MutableRef, useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
-function useSMMedia(
-  scene: Scene,
-  canAutoPlayAudio: boolean,
-  videoRef: MutableRef<HTMLVideoElement | null>,
-) {
+function useSMMedia({
+  scene,
+  canAutoPlayAudio,
+  videoRef,
+}: {
+  scene: Scene;
+  canAutoPlayAudio: boolean;
+  videoRef: MutableRef<HTMLVideoElement | null>;
+}) {
   const [isVideoMuted, setIsVideoMuted] = useState(!canAutoPlayAudio);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());

@@ -1,5 +1,6 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
+import { MutableRef } from 'preact/hooks';
 import { useSMMedia } from '.';
 import { SessionDataKeys } from '../../enums';
 
@@ -17,8 +18,9 @@ jest.mock('@soulmachines/smwebsdk', () => ({
 }));
 
 describe('useSMMedia()', () => {
-  const customRender = (scene = mockScene, canAutoPlay = true) =>
-    renderHook(() => useSMMedia(scene, canAutoPlay));
+  const mockVideoRef = {} as unknown as MutableRef<HTMLVideoElement | null>;
+  const customRender = (scene = mockScene, canAutoPlayAudio = true, videoRef = mockVideoRef) =>
+    renderHook(() => useSMMedia({ scene, canAutoPlayAudio, videoRef }));
 
   it('returns a toggleMicrophone function', () => {
     const { result } = customRender();
