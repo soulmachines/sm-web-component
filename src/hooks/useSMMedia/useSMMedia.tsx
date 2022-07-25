@@ -49,16 +49,16 @@ function useSMMedia({
   );
 
   const setVideoMuted = useCallback(
-    ({ enabled, saveSetting }: { enabled: boolean; saveSetting: boolean }) => {
-      setIsVideoMuted(enabled);
+    ({ mute, saveSetting }: { mute: boolean; saveSetting: boolean }) => {
+      setIsVideoMuted(mute);
 
       if (videoRef.current) {
-        videoRef.current.muted = enabled;
+        videoRef.current.muted = mute;
       }
 
       // Only save if the user indicated the change
       if (saveSetting) {
-        sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
+        sessionStorage.setItem(SessionDataKeys.videoMuted, mute.toString());
       }
     },
     [videoRef],
@@ -70,7 +70,8 @@ function useSMMedia({
     if (isConnected) {
       // Check if user mute the audio in previous page
       const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
-      setVideoMuted({ enabled: !canAutoPlayAudio || userMutedAudio, saveSetting: false });
+
+      setVideoMuted({ mute: !canAutoPlayAudio || userMutedAudio, saveSetting: false });
     }
   }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
@@ -104,7 +105,7 @@ function useSMMedia({
   const toggleCamera = () => setCameraActive(!isCameraEnabled);
 
   const toggleVideoMuted = () => {
-    setVideoMuted({ enabled: !isVideoMuted, saveSetting: true });
+    setVideoMuted({ mute: !isVideoMuted, saveSetting: true });
   };
 
   return {
