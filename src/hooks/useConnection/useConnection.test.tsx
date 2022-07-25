@@ -6,6 +6,7 @@ import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 let triggerDisconnectEvent: () => void;
 const mockPlay = jest.fn(() => Promise.resolve(true));
+const mockMediaSrc = {} as unknown as MediaSource;
 const mockScene = {
   startVideo: jest.fn(),
   connect: jest.fn(),
@@ -16,14 +17,15 @@ const mockScene = {
     },
   },
   call: () => null,
-  videoElement: {
-    play: mockPlay,
-  },
 } as unknown as Scene;
 jest.mock('@soulmachines/smwebsdk', () => ({
   Scene: jest.fn(() => mockScene),
 }));
-const reactVideoEl = document.createElement('video');
+const reactVideoEl = {
+  muted: true,
+  play: mockPlay,
+  srcObject: mockMediaSrc,
+};
 jest.mock('preact/hooks', () => ({
   ...jest.requireActual('preact/hooks'),
   useRef: () => ({ current: reactVideoEl }),
@@ -160,6 +162,17 @@ describe('useConnection()', () => {
     describe('when the calls are successful', () => {
       beforeEach(() => {
         mockFetch.mockReturnValue(mockedFetchResponse);
+      });
+
+      it('sets video muted to false', () => {
+        customRender();
+        expect(reactVideoEl.muted).toEqual(false);
+      });
+
+      it('sets canAutoPlayAudio to true', async () => {
+        const { result } = customRender();
+        await result.current.connect();
+        expect(result.current.canAutoPlayAudio).toEqual(true);
       });
 
       it('calls scene.connect once with an object containing the token server creds', async () => {

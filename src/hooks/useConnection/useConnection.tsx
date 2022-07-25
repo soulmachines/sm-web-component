@@ -26,6 +26,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
+      // Ensure we are checking autoplay with an unmuted video
       if (videoRef.current) {
         videoRef.current.muted = false;
       }
