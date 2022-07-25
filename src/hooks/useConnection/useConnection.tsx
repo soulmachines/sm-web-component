@@ -9,6 +9,12 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const connect = useCallback(async () => {
+    const setVideoMuted = (setVideoMuted: boolean) => {
+      if (videoRef.current) {
+        videoRef.current.muted = setVideoMuted;
+      }
+    };
+
     try {
       const connectOptions: ConnectOptions = {};
 
@@ -26,6 +32,9 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
 
       await scene.connect(connectOptions);
 
+      // Ensure we are trying to autoplay a video with sound
+      setVideoMuted(false);
+
       // Check if we can play audio as browsers need an interaction to occur before playing sound
       // - Safari and IOS are the most restrictive
       // - When using await syntax it can end up hanging state
@@ -36,6 +45,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
           setCanAutoPlayAudio(true);
         })
         .catch(() => {
+          //  Ensure video is reset to muted if autoplay fails
+          setVideoMuted(true);
           setCanAutoPlayAudio(false);
         });
 
