@@ -8,6 +8,16 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const onVisibilitychange = () => {
+    if (videoRef.current) {
+      if (document.visibilityState !== 'visible') {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+    }
+  };
+
   const connect = useCallback(async () => {
     try {
       const connectOptions: ConnectOptions = {};
@@ -44,6 +54,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
         });
 
       setConnectionStatus(ConnectionStatus.CONNECTED);
+      document.addEventListener('visibilitychange', onVisibilitychange);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setConnectionError(error);
@@ -59,6 +70,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     cleanupVideoSrc();
     scene.disconnect();
     setConnectionStatus(ConnectionStatus.DISCONNECTED);
+    document.removeEventListener('visibilitychange', onVisibilitychange);
   };
 
   const cleanupSessionStorage = () => {
