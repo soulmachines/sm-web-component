@@ -100,7 +100,7 @@ Start Dev Server with Live Reload:
 Build and Server Code Snippet (Prerequisite for Cypress):
 
 - `npm run build:example` to compile the scripts and build the snippet
-- `npm run serve` to start a server and serve the snippet code
+- `npm run serve` to start a server and serve the dist folder
 
 Run Cypress Test:
 
