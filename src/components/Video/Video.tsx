@@ -40,10 +40,8 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     if (videoRef.current) {
       if (document.visibilityState !== 'visible') {
         videoRef.current.pause();
-        console.log(`>> pause`);
       } else {
         videoRef.current.play();
-        console.log(`>> play`);
       }
     }
   }, [videoRef]);
