@@ -2,7 +2,7 @@ import { OptionsCard } from '.';
 import { SMProviderDecorator } from '../../../.storybook/decorators/SMProviderDecorator';
 
 export default {
-  title: `Components / OptionsCard`,
+  title: `App Components / OptionsCard`,
   component: OptionsCard,
   decorators: [SMProviderDecorator],
 };
