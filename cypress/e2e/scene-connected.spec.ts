@@ -35,20 +35,18 @@ describe('scene', () => {
       cy.get('title').contains('Unmute video').should('exist');
     });
 
-    it('renders a disconnect scene button', () => {
-      cy.disconnectScene();
-    });
-
     it('pauses the video when the tab loses focus and plays it when it gets focus', () => {
       setVisibilityState('hidden');
       cy.document().trigger('visibilitychange');
-      // get video, then wait 10,000 to see if value changes to true
-      cy.get('video').its('0.paused', { timeout: 10000 }).should('equal', true);
+      cy.get('video').its('0.paused').should('equal', true);
 
       setVisibilityState('visible');
       cy.document().trigger('visibilitychange');
-      // get video, then wait 10,000 to see if value changes to false
-      cy.get('video').its('0.paused', { timeout: 10000 }).should('equal', false);
+      cy.get('video').its('0.paused').should('equal', false);
+    });
+
+    it('renders a disconnect scene button', () => {
+      cy.disconnectScene();
     });
   });
 
