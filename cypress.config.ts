@@ -2,7 +2,6 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   retries: 2,
-  video: false,
   projectId: 'uabajg',
   defaultCommandTimeout: 5000,
   e2e: {
