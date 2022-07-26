@@ -4,7 +4,7 @@ export default defineConfig({
   retries: 2,
   video: false,
   projectId: 'uabajg',
-  defaultCommandTimeout: 10000,
+  defaultCommandTimeout: 5000,
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

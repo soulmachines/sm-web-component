@@ -42,11 +42,13 @@ describe('scene', () => {
     it('pauses the video when the tab loses focus and plays it when it gets focus', () => {
       setVisibilityState('hidden');
       cy.document().trigger('visibilitychange');
-      cy.get('video').its('0.paused').should('equal', true);
+      // get video, then wait 10,000 to see if value changes to true
+      cy.get('video').its('0.paused', { timeout: 10000 }).should('equal', true);
 
       setVisibilityState('visible');
       cy.document().trigger('visibilitychange');
-      cy.get('video').its('0.paused').should('equal', false);
+      // get video, then wait 10,000 to see if value changes to false
+      cy.get('video').its('0.paused', { timeout: 10000 }).should('equal', false);
     });
   });
 
