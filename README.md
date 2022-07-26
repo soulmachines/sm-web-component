@@ -93,13 +93,22 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 
 ### Local development
 
-- `npm run start` to run the dev server with live reload
-- `npm run serve-snippet` to start a server and serve the snippet code
-- `npm run storybook` to start storybook
+Start Dev Server with Live Reload:
+
+- `npm run start`
+
+Build and Server Code Snippet (Prerequisite for Cypress):
+
 - `npm run build` to compile the scripts and build the snippet
-- `npm run build:cypress` to compile the code and copy across the cypress test pages
-- `npm run build-snippet` to compile snippet script
-- `npm run copy-cypress-pages` to copy cypress test pages into dist folder
+- `npm run serve-snippet` to start a server and serve the snippet code
+
+Run Cypress Test:
+
+- `npm run cypress:open` to open cypress browser
+
+#### Storybook
+
+- `npm run storybook` to start storybook
 
 ### Linting
 

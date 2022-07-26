@@ -25,7 +25,7 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-      - run: npm run build:cypress
+      - run: npm run build
         env:
           # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
           VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
