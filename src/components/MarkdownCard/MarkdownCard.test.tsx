@@ -3,15 +3,15 @@ import { render } from '@testing-library/preact';
 import { ContentCard } from '@soulmachines/smwebsdk';
 
 describe('<MarkdownCard />', () => {
-  function markdownData(markdown: string): ContentCard {
-    return {
-      id: 'mockId',
-      type: 'markdown',
-      data: {
-        text: markdown,
-      },
-    };
-  }
+  // function markdownData(markdown: string): ContentCard {
+  //   return {
+  //     id: 'mockId',
+  //     type: 'markdown',
+  //     data: {
+  //       text: markdown,
+  //     },
+  //   };
+  // }
 
   const mockCard: ContentCard = {
     id: 'mockId',
