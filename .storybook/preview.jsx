@@ -2,6 +2,11 @@ import React from 'react';
 import '../src/web-components/sm-widget/sm-widget.css';
 
 export const parameters = {
+  options: {
+    storySort: {
+      order: ['Components', 'App Components'],
+    },
+  },
   backgrounds: {
     default: 'grey',
     values: [

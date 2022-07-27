@@ -1,7 +1,7 @@
 import { SMVideo, SMVideoProps } from './SMVideo';
 
 export default {
-  title: 'Components / SMVideo',
+  title: 'Web Components / SMVideo',
   component: SMVideo,
 };
 

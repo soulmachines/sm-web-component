@@ -1,7 +1,7 @@
 import { SMWidget, SMWidgetProps } from './SMWidget';
 
 export default {
-  title: 'Components / SMWidget',
+  title: 'Web Components / SMWidget',
   component: SMWidget,
 };
 const element = document.createElement('div');

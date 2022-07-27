@@ -12,7 +12,7 @@ const content = {
 };
 
 export default {
-  title: `Components / LinkCard`,
+  title: `App Components / LinkCard`,
   component: LinkCard,
   argTypes: {
     content: { control: 'object', defaultValue: content },
