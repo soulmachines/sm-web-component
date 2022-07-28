@@ -93,13 +93,22 @@ To connect to a custom token server add the full endpoint to `VITE_TOKEN_SERVER=
 
 ### Local development
 
-- `npm run start` to run the dev server with live reload
-- `npm run serve-snippet` to start a server and serve the snippet code
+Start Dev Server with Live Reload:
+
+- `npm run start`
+
+Build and Server Code Snippet (Prerequisite for Cypress):
+
+- `npm run build:example` to compile the scripts and build the snippet
+- `npm run serve` to start a server and serve the dist folder
+
+Run Cypress Test:
+
+- `npm run cypress:open` to open cypress browser
+
+#### Storybook
+
 - `npm run storybook` to start storybook
-- `npm run build` to compile the scripts and build the snippet
-- `npm run build:cypress` to compile the code and copy across the cypress test pages
-- `npm run build-snippet` to compile snippet script
-- `npm run copy-cypress-pages` to copy cypress test pages into dist folder
 
 ### Linting
 
@@ -202,12 +211,12 @@ The supported config options are:
    - calls the template generation plugin we are using. The template is called `snippet.js.template`.
    - it takes the template, populating the filenames using the data from the manifest file. It outputs `widget-snippet.js` into the `dist` folder.
    - when the node env is production, it will preprend the asset urls with the CDN name
-3. You run the above file by typing `npm run build-snippet`
+3. You run the above file by typing `npm run build:snippet`
 4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as `widget-snippet.min.js`.
 
 ### Running the snippet locally
 
-Run `npm run serve-snippet`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
+Run `npm run serve`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
 
 ## Deployment
 

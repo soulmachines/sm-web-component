@@ -25,7 +25,7 @@ jobs:
         with:
           # Disable running of tests within install job
           runTests: false
-      - run: npm run build:cypress
+      - run: npm run build:example
         env:
           # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
           VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
@@ -71,7 +71,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
           browser: chrome
-          start: npm run serve-snippet
+          start: npm run serve
           wait-on: 'http://localhost:5050/'
           config-file: cypress.config.ts
           spec: cypress/e2e/*.ts
@@ -112,7 +112,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
           browser: edge
-          start: npm run serve-snippet
+          start: npm run serve
           wait-on: 'http://localhost:5050/'
           config-file: cypress.config.ts
           spec: cypress/e2e/*.ts
