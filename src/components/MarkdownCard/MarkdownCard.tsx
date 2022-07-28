@@ -128,7 +128,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               return <Text children={children} size="md" />;
             },
             hr: () => <hr className="sm-w-11/12 sm-bg-gray-400" />,
-            table: ({ node, ...props }: GenericProps) => {
+            table: ({ ...props }: GenericProps) => {
               return (
                 <table
                   className="sm-table-auto md:sm-table-fixed sm-w-full sm-border-spacing-0"
