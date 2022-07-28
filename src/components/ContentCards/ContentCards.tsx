@@ -5,6 +5,7 @@ import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ImageCard } from '../ImageCard';
 import { LinkCard } from '../LinkCard';
+import { MarkdownCard } from '../MarkdownCard';
 import { OptionsCard } from '../OptionsCard';
 
 export type CardComponent = {
@@ -25,6 +26,7 @@ export function ContentCards() {
     image: ImageCard,
     externalLink: (props) => <LinkCard {...props} isExternal={true} />,
     internalLink: (props) => <LinkCard {...props} isExternal={false} />,
+    markdown: MarkdownCard,
   };
 
   useEffect(() => {

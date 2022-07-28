@@ -4,6 +4,7 @@ describe('content cards', () => {
     imageCard: '46',
     externalLink: '48',
     internalLink: '48c',
+    markdownCard: '49',
   };
 
   before(() => {
@@ -37,5 +38,19 @@ describe('content cards', () => {
     cy.get('[data-sm-content=internalLink]', { timeout: 6000 }).should('exist');
     cy.get('button').contains('svg', 'Hide card').click();
     cy.get('[data-sm-content=internalLink]').should('not.exist');
+  });
+
+  it('renders a Markdown Card and hides the card once the close button is clicked', () => {
+    cy.sendTextMessage(corpusCommands.markdownCard);
+    cy.get('[data-sm-content=markdown]', { timeout: 6000 }).should('exist');
+    cy.get('button').contains('svg', 'Hide card').click();
+    cy.get('[data-sm-content=markdown]').should('not.exist');
+  });
+
+  it('renders a Markdown Card correctly', () => {
+    cy.sendTextMessage(corpusCommands.markdownCard);
+    cy.get('h1').contains('Structured Text').should('exist');
+    cy.get('h2').contains('Subheadings').should('exist');
+    cy.get('p').contains('Each subheading may have its own subheadings.').should('exist');
   });
 });
