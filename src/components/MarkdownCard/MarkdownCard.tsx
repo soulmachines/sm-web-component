@@ -136,10 +136,10 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
                 />
               );
             },
-            tr: ({ node, ...props }: GenericProps) => {
+            tr: ({ ...props }: GenericProps) => {
               return <tr className="even:sm-bg-gray-200" {...props} />;
             },
-            thead: ({ node, ...props }: GenericProps) => {
+            thead: ({ ...props }: GenericProps) => {
               return <thead className="sm-bg-blue-300 sm-text-left" {...props} />;
             },
             pre: ({ ...props }) => <pre className="sm-bg-gray-300 sm-rounded-sm" {...props} />,
