@@ -1,7 +1,6 @@
 import React from 'react';
 // eslint-disable
-// @ts-ignore
-function ReactMarkdown({ children }) {
+function ReactMarkdown(children: JSX.Element) {
   return <>{children}</>;
 }
 

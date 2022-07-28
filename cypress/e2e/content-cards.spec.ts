@@ -46,4 +46,12 @@ describe('content cards', () => {
     cy.get('button').contains('svg', 'Hide card').click();
     cy.get('[data-sm-content=markdown]').should('not.exist');
   });
+
+  it('renders a Markdown Card correctly', () => {
+    cy.sendTextMessage(corpusCommands.markdownCard);
+    cy.get('h1').contains('Structured Text').should('exist');
+    cy.get('h2').contains('Subheadings').should('exist');
+    // Could do this with the other heading levels it renders
+    cy.get('p').contains('Each subheading may have its own subheadings.').should('exist');
+  });
 });

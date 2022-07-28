@@ -1,7 +1,6 @@
 import React from 'react';
 // eslint-disable
-// @ts-ignore
-function remarkGfm({ children }) {
+function remarkGfm(children: JSX.Element) {
   return <>{children}</>;
 }
 

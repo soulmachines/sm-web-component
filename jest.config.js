@@ -26,8 +26,6 @@ module.exports = {
     '^react-dom/test-utils$': 'preact/test-utils',
     '^react-dom$': 'preact/compat',
     '^react/jsx-runtime$': 'preact/jsx-runtime',
-    'react-markdown': '<rootDir>/__mocks__/react-markdown.tsx',
-    'remark-gfm': '<rootDir>/__mocks__/remark-gfm.tsx',
   },
 
   globals: {
