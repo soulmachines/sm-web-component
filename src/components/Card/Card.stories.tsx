@@ -2,7 +2,7 @@ import { Card, CardProps } from '.';
 import { Button } from '../Button';
 
 export default {
-  title: `Components / Card`,
+  title: `App Components / Card`,
   component: Card,
   args: {
     isDismissible: true,

@@ -1,4 +1,10 @@
 describe('scene', () => {
+  const setVisibilityState = (state: string) => {
+    cy.document().then((document) => {
+      cy.stub(document, 'visibilityState').value(state);
+    });
+  };
+
   before(() => {
     cy.visit('/');
   });
@@ -27,6 +33,16 @@ describe('scene', () => {
       cy.get('title').contains('Mute video').should('exist').click({ force: true });
       cy.get('title').contains('Mute video').should('not.exist');
       cy.get('title').contains('Unmute video').should('exist');
+    });
+
+    it('pauses the video when the tab loses focus and plays it when it gets focus', () => {
+      setVisibilityState('hidden');
+      cy.document().trigger('visibilitychange');
+      cy.get('video').its('0.paused').should('equal', true);
+
+      setVisibilityState('visible');
+      cy.document().trigger('visibilitychange');
+      cy.get('video').its('0.paused').should('equal', false);
     });
 
     it('renders a disconnect scene button', () => {

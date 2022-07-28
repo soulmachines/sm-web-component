@@ -3,7 +3,7 @@ import { SMProviderDecorator } from '../../../.storybook/decorators/SMProviderDe
 import { WidgetProps } from './Widget';
 
 export default {
-  title: `Components / Widget`,
+  title: `App Components / Widget`,
   component: Widget,
   decorators: [SMProviderDecorator],
 };

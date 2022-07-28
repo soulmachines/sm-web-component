@@ -1,18 +1,20 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { useCallback, useEffect, useState } from 'preact/hooks';
+import { MutableRef, useCallback, useEffect, useState } from 'preact/hooks';
 import { SessionDataKeys } from '../../enums';
 
-function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
+function useSMMedia({
+  scene,
+  canAutoPlayAudio,
+  videoRef,
+}: {
+  scene: Scene;
+  canAutoPlayAudio: boolean;
+  videoRef: MutableRef<HTMLVideoElement | null>;
+}) {
   const [isVideoMuted, setIsVideoMuted] = useState(!canAutoPlayAudio);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();
-
-  // On connection we'll check to see if we can autoplay the video with sound
-  // This will update when we determine if its possible
-  useEffect(() => {
-    setIsVideoMuted(!canAutoPlayAudio);
-  }, [canAutoPlayAudio]);
 
   const setMicrophoneActive = useCallback(
     async (enabled: boolean) => {
@@ -46,10 +48,32 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
     [scene],
   );
 
-  const setVideoMuted = useCallback((enabled: boolean) => {
-    setIsVideoMuted(enabled);
-    sessionStorage.setItem(SessionDataKeys.videoMuted, enabled.toString());
-  }, []);
+  const setVideoMuted = useCallback(
+    ({ mute, saveSetting }: { mute: boolean; saveSetting: boolean }) => {
+      setIsVideoMuted(mute);
+
+      if (videoRef.current) {
+        videoRef.current.muted = mute;
+      }
+
+      // Only save if the user indicated the change
+      if (saveSetting) {
+        sessionStorage.setItem(SessionDataKeys.videoMuted, mute.toString());
+      }
+    },
+    [videoRef],
+  );
+
+  // On connection we'll check to see if we can autoplay the video with sound
+  // This will update when we determine if its possible
+  useEffect(() => {
+    if (isConnected) {
+      // Check if user mute the audio in previous page
+      const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
+
+      setVideoMuted({ mute: !canAutoPlayAudio || userMutedAudio, saveSetting: false });
+    }
+  }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
@@ -61,15 +85,11 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
       //session states
       const cameraSaved = sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true';
       const microphoneSaved = sessionStorage.getItem(SessionDataKeys.microphoneEnabled) === 'true';
-      const videoMuted = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
 
       if (cameraSaved) setCameraActive(true);
       if (microphoneSaved) setMicrophoneActive(true);
-      if (videoMuted) {
-        setVideoMuted(true);
-      }
     }
-  }, [isConnected, setCameraActive, setMicrophoneActive, setVideoMuted]);
+  }, [isConnected, setCameraActive, setMicrophoneActive]);
 
   // When not connected reset to initial state
   // Otherwise when you reconnect it will be in the wrong state
@@ -85,7 +105,7 @@ function useSMMedia(scene: Scene, canAutoPlayAudio: boolean) {
   const toggleCamera = () => setCameraActive(!isCameraEnabled);
 
   const toggleVideoMuted = () => {
-    setVideoMuted(!isVideoMuted);
+    setVideoMuted({ mute: !isVideoMuted, saveSetting: true });
   };
 
   return {
