@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Key - Custom CSS</title>
-
+  </head>
+  <body>
     <style>
       sm-widget {
         --color-primary-100: #9ec788;
@@ -30,8 +31,6 @@
         --font-family-primary: 'Times, "Times New Roman", Georgia, serif';
       }
     </style>
-  </head>
-  <body>
     <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
 
     <script type="module" src="/src/web-components/sm-widget"></script>
