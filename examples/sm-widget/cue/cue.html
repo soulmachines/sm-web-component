@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #nzmap {
+        width: 300px;
+      }
+      #nzkiwi {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 300px;
+      }
+    </style>
+    <script type="module" src="/src/web-components/sm-widget"></script>
+    <title>CUE</title>
+  </head>
+  <body>
+    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
+
+    <div class="content">
+      <img
+        id="nzmap"
+        data-sm-content="nzmap"
+        src="https://www.andrewdc.co.nz/wp-content/uploads/2019/04/NZ-Te-Reo-Maori-Map-Satellite-web.png"
+        alt="nzmap"
+      />
+      <img
+        id="nzkiwi"
+        data-sm-content="nzkiwi"
+        src="https://www.pngitem.com/pimgs/m/724-7249512_kiwi-bird-png-png-download-kiwi-bird-transparent.png"
+        alt="nzkiwi"
+      />
+    </div>
+  </body>
+</html>
