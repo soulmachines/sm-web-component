@@ -109,10 +109,6 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
                 conditionalAttributes['rel'] = 'noopener noreferrer';
               }
 
-              // Handle possible vulnerability when opening new window
-              const newWnd = window.open();
-              if (newWnd) newWnd.opener = null;
-
               return (
                 <a
                   className="sm-text-blue-400 active:sm-text-red-500 hover:sm-underline focus:underline visited:sm-text-pink-500"
