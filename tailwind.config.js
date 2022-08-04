@@ -102,6 +102,16 @@ module.exports = {
           900: 'var(--color-error-900)',
         },
       },
+      animation: {
+        grow: 'grow 1.2s ease-in-out infinite',
+      },
+      keyframes: {
+        grow: {
+          '0%': { transform: 'scaleY(.3)' },
+          '50%': { transform: 'scaleY(1)' },
+          '100%': { transform: 'scaleY(.3)' },
+        },
+      },
     },
   },
   plugins: [
