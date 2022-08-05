@@ -4,34 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+      html,
       body {
-        overflow: auto;
-      }
-      .content {
-        width: 50vw;
-        height: 100vh;
+        min-height: 100%;
+        height: auto;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        padding: 0;
+        margin: 0;
       }
       .box {
-        width: 10vw;
-        height: 10vw;
-        flex-grow: 0;
-        flex-shrink: 0;
-        border: 1px solid black;
+        width: 100vw;
+        height: 100vh;
+        position: relative;
       }
       #red {
-        background-color: red;
+        background-color: #ff6b73;
       }
       #yellow {
-        background-color: yellow;
+        background-color: #ffd152;
       }
       #blue {
-        background-color: blue;
+        background-color: #4edae1;
       }
       #green {
-        background-color: green;
+        background-color: #9adb35;
       }
       #nzmap {
         display: block;
@@ -40,6 +37,10 @@
       #nzkiwi {
         display: block;
         width: 300px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
       }
     </style>
     <script type="module" src="/src/web-components/sm-widget"></script>
@@ -48,17 +49,16 @@
   <body>
     <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
 
-    <div class="content">
-      <div class="box" id="red" data-sm-content="red"></div>
-      <div class="box" id="yellow" data-sm-content="yellow"></div>
-      <div class="box" id="blue" data-sm-content="blue"></div>
-      <div class="box" id="green" data-sm-content="green"></div>
+    <div class="box" id="red" data-sm-content="red">
       <img
         id="nzmap"
         data-sm-content="nzmap"
         src="https://www.andrewdc.co.nz/wp-content/uploads/2019/04/NZ-Te-Reo-Maori-Map-Satellite-web.png"
         alt="nzmap"
       />
+    </div>
+    <div class="box" id="yellow" data-sm-content="yellow"></div>
+    <div class="box" id="blue" data-sm-content="blue">
       <img
         id="nzkiwi"
         data-sm-content="nzkiwi"
@@ -66,5 +66,6 @@
         alt="nzkiwi"
       />
     </div>
+    <div class="box" id="green" data-sm-content="green"></div>
   </body>
 </html>
