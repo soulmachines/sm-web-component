@@ -29,6 +29,9 @@ export function VideoControls() {
 
       <div className="sm-flex sm-flex-col sm-gap-y-2">
         <div>
+          {/*
+            // TODO: pass through conversation status
+          */}
           <ConversationStatus status="userSpeaking" />
         </div>
         <div className="sm-flex sm-justify-between">
