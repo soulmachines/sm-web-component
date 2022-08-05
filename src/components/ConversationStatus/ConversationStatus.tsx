@@ -3,40 +3,42 @@ import { LoadingIndicator } from '../LoadingIndicator';
 import SpeadingDotsAnimation from './components/SpreadingDots';
 import WaveFormAnimation from './components/WaveForm';
 
-export enum ListeningStatusTypes {
+export enum ConversationStatusTypes {
   dpSpeaking = 'dpSpeaking',
   dpIdle = 'dpIdle',
   userSpeaking = 'userSpeaking',
   dpProcessing = 'dpProcessing',
 }
 
-export type ListeningStatusProps = {
-  status: keyof typeof ListeningStatusTypes;
+export type ConversationStatusProps = {
+  status: keyof typeof ConversationStatusTypes;
 };
 
-export function ListeningStatus({ status }: ListeningStatusProps) {
+export function ConversationStatus({ status }: ConversationStatusProps) {
   const wapperClassNames = classNames({
     'sm-flex sm-justify-center sm-items-center sm-transition-all sm-w-[42px] sm-h-[42px] sm-rounded-full sm-gap-x-1':
       true,
-    'sm-bg-grayscale-900': status === ListeningStatusTypes.dpSpeaking,
-    'sm-bg-white sm-animate-spread': status === ListeningStatusTypes.dpIdle,
-    'sm-bg-secondary-400': status === ListeningStatusTypes.userSpeaking,
-    'sm-bg-white': status === ListeningStatusTypes.dpProcessing,
+    'sm-bg-grayscale-900': status === ConversationStatusTypes.dpSpeaking,
+    'sm-bg-white sm-animate-spread': status === ConversationStatusTypes.dpIdle,
+    'sm-bg-primary-500': status === ConversationStatusTypes.userSpeaking,
+    'sm-bg-white': status === ConversationStatusTypes.dpProcessing,
   });
 
   return (
     <div className={wapperClassNames}>
-      {status === ListeningStatusTypes.dpSpeaking && (
+      {status === ConversationStatusTypes.dpSpeaking && (
         <WaveFormAnimation title="Digital Person Speaking" />
       )}
 
-      {status === ListeningStatusTypes.dpIdle && (
+      {status === ConversationStatusTypes.dpIdle && (
         <SpeadingDotsAnimation title="Digital Person Waiting" />
       )}
 
-      {status === ListeningStatusTypes.userSpeaking && <WaveFormAnimation title="User Speaking" />}
+      {status === ConversationStatusTypes.userSpeaking && (
+        <WaveFormAnimation title="User Speaking" />
+      )}
 
-      {status === ListeningStatusTypes.dpProcessing && (
+      {status === ConversationStatusTypes.dpProcessing && (
         <LoadingIndicator title="Digital Person Processing" />
       )}
     </div>
