@@ -37,7 +37,7 @@ export function ListeningStatus({ status }: ListeningStatusProps) {
       {status === ListeningStatusTypes.userSpeaking && <WaveFormAnimation title="User Speaking" />}
 
       {status === ListeningStatusTypes.dpProcessing && (
-        <LoadingIndicator title="Digital Person Processing"></LoadingIndicator>
+        <LoadingIndicator title="Digital Person Processing" />
       )}
     </div>
   );
