@@ -1,4 +1,5 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
+import { ConversationStatus } from '../ConversationStatus';
 import { IconButton, Theme } from '../IconButton';
 
 export function VideoControls() {
@@ -26,19 +27,24 @@ export function VideoControls() {
         <IconButton onClick={disconnect} name="close" title="Close video" />
       </div>
 
-      <div className="sm-flex sm-justify-between">
-        <IconButton
-          onClick={toggleMicrophone}
-          name={microphoneIcon}
-          title={microphoneText}
-          theme={isMicrophoneEnabled ? Theme.default : Theme.danger}
-        />
-        <IconButton
-          onClick={toggleCamera}
-          name={cameraIcon}
-          title={cameraText}
-          theme={isCameraEnabled ? Theme.default : Theme.danger}
-        />
+      <div className="sm-flex sm-flex-col sm-gap-y-2">
+        <div>
+          <ConversationStatus status="userSpeaking" />
+        </div>
+        <div className="sm-flex sm-justify-between">
+          <IconButton
+            onClick={toggleMicrophone}
+            name={microphoneIcon}
+            title={microphoneText}
+            theme={isMicrophoneEnabled ? Theme.default : Theme.danger}
+          />
+          <IconButton
+            onClick={toggleCamera}
+            name={cameraIcon}
+            title={cameraText}
+            theme={isCameraEnabled ? Theme.default : Theme.danger}
+          />
+        </div>
       </div>
     </div>
   );
