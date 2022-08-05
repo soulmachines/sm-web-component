@@ -4,13 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+      body {
+        overflow: auto;
+      }
+      .content {
+        width: 50vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .box {
+        width: 10vw;
+        height: 10vw;
+        flex-grow: 0;
+        flex-shrink: 0;
+        border: 1px solid black;
+      }
+      #red {
+        background-color: red;
+      }
+      #yellow {
+        background-color: yellow;
+      }
+      #blue {
+        background-color: blue;
+      }
+      #green {
+        background-color: green;
+      }
       #nzmap {
+        display: block;
         width: 300px;
       }
       #nzkiwi {
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        display: block;
         width: 300px;
       }
     </style>
@@ -21,6 +49,10 @@
     <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
 
     <div class="content">
+      <div class="box" id="red" data-sm-content="red"></div>
+      <div class="box" id="yellow" data-sm-content="yellow"></div>
+      <div class="box" id="blue" data-sm-content="blue"></div>
+      <div class="box" id="green" data-sm-content="green"></div>
       <img
         id="nzmap"
         data-sm-content="nzmap"
