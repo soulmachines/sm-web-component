@@ -104,7 +104,7 @@ module.exports = {
       },
       animation: {
         grow: 'grow 1.2s ease-in-out infinite',
-        spread: 'spread 0.8s ease-in-out infinite',
+        spread: 'spread 1.6s ease-in-out infinite',
       },
       keyframes: {
         grow: {
