@@ -16,14 +16,14 @@ describe('<ConversationStatus />', () => {
     });
   });
 
-  describe('when status is conversationIdle', () => {
+  describe('when status is idle', () => {
     it('renders a digital person waiting animation', () => {
-      const { queryByText } = render(<ConversationStatus status="conversationIdle" />);
+      const { queryByText } = render(<ConversationStatus status="idle" />);
       expect(queryByText('Digital Person Waiting')).toBeInTheDocument();
     });
 
     it('does not render the other animations', () => {
-      const { queryByText } = render(<ConversationStatus status="conversationIdle" />);
+      const { queryByText } = render(<ConversationStatus status="idle" />);
       expect(queryByText('Digital Person Speaking')).not.toBeInTheDocument();
       expect(queryByText('User Speaking')).not.toBeInTheDocument();
       expect(queryByText('Digital Person Processing')).not.toBeInTheDocument();

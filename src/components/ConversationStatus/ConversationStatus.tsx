@@ -5,7 +5,7 @@ import WaveFormAnimation from './components/WaveForm';
 
 export enum ConversationStatusTypes {
   dpSpeaking = 'dpSpeaking',
-  conversationIdle = 'conversationIdle',
+  idle = 'idle',
   userSpeaking = 'userSpeaking',
   dpProcessing = 'dpProcessing',
 }
@@ -19,7 +19,7 @@ export function ConversationStatus({ status }: ConversationStatusProps) {
     'sm-flex sm-justify-center sm-items-center sm-transition-all sm-w-[42px] sm-h-[42px] sm-rounded-full sm-gap-x-1':
       true,
     'sm-bg-grayscale-900': status === ConversationStatusTypes.dpSpeaking,
-    'sm-bg-white sm-animate-spread': status === ConversationStatusTypes.conversationIdle,
+    'sm-bg-white sm-animate-spread': status === ConversationStatusTypes.idle,
     'sm-bg-primary-500': status === ConversationStatusTypes.userSpeaking,
     'sm-bg-white': status === ConversationStatusTypes.dpProcessing,
   });
@@ -30,7 +30,7 @@ export function ConversationStatus({ status }: ConversationStatusProps) {
         <WaveFormAnimation title="Digital Person Speaking" />
       )}
 
-      {status === ConversationStatusTypes.conversationIdle && (
+      {status === ConversationStatusTypes.idle && (
         <SpeadingDotsAnimation title="Digital Person Waiting" />
       )}
 

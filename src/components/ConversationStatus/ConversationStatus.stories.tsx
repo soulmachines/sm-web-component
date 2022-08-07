@@ -6,8 +6,8 @@ export default {
   argTypes: {
     status: {
       control: 'select',
-      options: ['dpSpeaking', 'conversationIdle', 'userSpeaking', 'dpProcessing'],
-      defaultValue: 'conversationIdle',
+      options: ['dpSpeaking', 'idle', 'userSpeaking', 'dpProcessing'],
+      defaultValue: 'idle',
     },
   },
 };
