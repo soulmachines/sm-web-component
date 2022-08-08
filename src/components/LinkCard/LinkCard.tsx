@@ -6,7 +6,7 @@ import { Heading } from '../Heading';
 
 export type LinkCardProps = {
   content: ContentCard;
-  isExternal: boolean;
+  isExternal?: boolean;
   style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 

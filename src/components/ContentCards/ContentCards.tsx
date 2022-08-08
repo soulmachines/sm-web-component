@@ -1,10 +1,10 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { Fragment, JSX } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ImageCard } from '../ImageCard';
-import { LinkCard } from '../LinkCard';
+import { LinkCard, LinkCardProps } from '../LinkCard';
 import { MarkdownCard } from '../MarkdownCard';
 import { OptionsCard } from '../OptionsCard';
 
@@ -20,12 +20,24 @@ export function ContentCards() {
     enter: { opacity: 1, transform: 'translateY(0px)' },
     config: config.gentle,
   });
+  const ExternalLinkCard = useMemo(
+    () => (props: LinkCardProps) => {
+      return <LinkCard {...props} isExternal={true} />;
+    },
+    [],
+  );
+  const InternalLinkCard = useMemo(
+    () => (props: LinkCardProps) => {
+      return <LinkCard {...props} isExternal={false} />;
+    },
+    [],
+  );
 
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
     image: ImageCard,
-    externalLink: (props) => <LinkCard {...props} isExternal={true} />,
-    internalLink: (props) => <LinkCard {...props} isExternal={false} />,
+    externalLink: ExternalLinkCard,
+    internalLink: InternalLinkCard,
     markdown: MarkdownCard,
   };
 
