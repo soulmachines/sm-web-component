@@ -4,10 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Key - Custom Positioning</title>
+    <style>
+      sm-widget {
+        --disconnected-position-y-axis: 20%;
+        --connected-position-y-axis: 20%;
+      }
+    </style>
   </head>
   <body>
-    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
+    <ul>
+      <li><button onclick="reposition('bottomRight')">Bottom right</button></li>
+      <li><button onclick="reposition('bottomLeft')">Bottom left</button></li>
+    </ul>
+
+    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>" position="bottomRight"></sm-widget>
 
     <script type="module" src="/src/web-components/sm-widget"></script>
+
+    <script>
+      const widget = document.querySelector('sm-widget');
+
+      function reposition(position) {
+        widget.setAttribute('position', position);
+      }
+    </script>
   </body>
 </html>

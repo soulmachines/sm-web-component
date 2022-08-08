@@ -14,15 +14,26 @@ import { useEffect } from 'preact/hooks';
 export type WidgetProps = {
   greeting?: string;
   profilePicture?: string;
+  position?: string;
   loadingIndicator?: JSX.Element;
 };
 
-export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetProps) {
+export function Widget({ profilePicture, greeting, loadingIndicator, position }: WidgetProps) {
   const { connectionStatus, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isDisconnected =
     connectionStatus !== ConnectionStatus.CONNECTED &&
     connectionStatus !== ConnectionStatus.CONNECTING;
+  const wrapperClass = classNames({
+    'sm-fixed sm-bottom-0 sm-p-2 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5': true,
+    'sm-right-0': position === 'bottomRight',
+    'sm-left-0': position === 'bottomLeft',
+  });
+
+  const notificationVideoWrapper = classNames({
+    'sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5': true,
+    'sm-flex-row-reverse': position === 'bottomLeft',
+  });
 
   // Connect directly if it's resume session
   useEffect(() => {
@@ -51,13 +62,13 @@ export function Widget({ profilePicture, greeting, loadingIndicator }: WidgetPro
   });
 
   return (
-    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-p-2 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ">
-      <div className="sm-flex sm-flex-col sm-items-end sm-gap-y-2 sm-h-full sm-justify-end md:sm-gap-y-5">
+    <div className={wrapperClass}>
+      <div className="sm-flex sm-flex-col sm-gap-y-2 sm-h-full sm-justify-end md:sm-gap-y-5">
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
           <ContentCards />
         </div>
 
-        <div className="sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5">
+        <div className={notificationVideoWrapper}>
           {isDisconnected && (
             <div className="sm-max-w-xs">
               <Notifications greeting={greeting} />

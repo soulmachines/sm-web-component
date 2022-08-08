@@ -3,5 +3,5 @@ import { SMWidget } from './SMWidget';
 import './sm-widget.css';
 
 define('sm-widget', () => SMWidget, {
-  attributes: ['api-key', 'token-server', 'greeting', 'profile-picture'],
+  attributes: ['api-key', 'token-server', 'greeting', 'profile-picture', 'position'],
 });
