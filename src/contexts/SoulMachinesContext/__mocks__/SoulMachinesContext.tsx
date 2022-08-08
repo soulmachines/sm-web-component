@@ -1,34 +1,16 @@
-import { ContentCard, Persona, Scene } from '@soulmachines/smwebsdk';
+import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { ConnectionStatus } from '../../../enums';
+
+jest.mock('@soulmachines/smwebsdk');
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
 }
 
-const persona = {
-  conversationSend: jest.fn(),
-} as unknown as Persona;
-
-let onCardChangedCallback: (data: ContentCard[]) => void;
-const scene = {
-  isConnected: jest.fn(),
-  isMicrophoneActive: jest.fn(() => false),
-  isCameraActive: jest.fn(() => false),
-  videoElement: {
-    srcObject: 'mock video src',
-  },
-  conversation: {
-    onCardChanged: {
-      addListener: (cb: () => void) => {
-        onCardChangedCallback = cb;
-      },
-      call: jest.fn((data: ContentCard[]) => {
-        onCardChangedCallback(data);
-      }),
-    },
-  },
-} as unknown as Scene;
+const personID = 1;
+const scene = new Scene();
+const persona = new Persona(scene, personID);
 
 const mockUseSoulMachines = {
   connect: jest.fn(),

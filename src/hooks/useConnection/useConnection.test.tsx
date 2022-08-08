@@ -4,23 +4,9 @@ import 'preact/hooks';
 import { useConnection } from '.';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
-let triggerDisconnectEvent: () => void;
 const mockPlay = jest.fn(() => Promise.resolve(true));
 const mockMediaSrc = {} as unknown as MediaSource;
-const mockScene = {
-  startVideo: jest.fn(),
-  connect: jest.fn(),
-  disconnect: jest.fn(),
-  onDisconnectedEvent: {
-    addListener: (fn: () => void) => {
-      triggerDisconnectEvent = fn;
-    },
-  },
-  call: () => null,
-} as unknown as Scene;
-jest.mock('@soulmachines/smwebsdk', () => ({
-  Scene: jest.fn(() => mockScene),
-}));
+jest.mock('@soulmachines/smwebsdk');
 const reactVideoEl = {
   muted: true,
   play: mockPlay,
@@ -32,6 +18,7 @@ jest.mock('preact/hooks', () => ({
 }));
 
 describe('useConnection()', () => {
+  const mockScene = new Scene();
   const tokenServer = 'mock token server';
   const mockFetch = jest.fn();
   const customRender = (scene = mockScene) => renderHook(() => useConnection(scene, tokenServer));
@@ -126,7 +113,7 @@ describe('useConnection()', () => {
 
         act(() => {
           testUtils.result.current.connect();
-          triggerDisconnectEvent();
+          mockScene.onDisconnectedEvent.call();
         });
 
         return testUtils;
@@ -223,7 +210,7 @@ describe('useConnection()', () => {
           await testUtils.result.current.connect();
 
           act(() => {
-            triggerDisconnectEvent();
+            mockScene.onDisconnectedEvent.call();
           });
 
           return testUtils;

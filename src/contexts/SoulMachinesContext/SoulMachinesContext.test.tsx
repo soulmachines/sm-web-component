@@ -7,19 +7,8 @@ import { useSMMedia } from '../../hooks/useSMMedia';
 const mockCanAutoPlayAudio = true;
 const mockVideoRef = { current: 'mock' };
 const mockConnect = jest.fn();
-const mockScene = {
-  scene: 'mock',
-  conversation: {
-    autoClearCards: jest.fn(),
-  },
-};
-const mockPersona = {
-  conversationSend: jest.fn(),
-};
-jest.mock('@soulmachines/smwebsdk', () => ({
-  Scene: jest.fn(() => mockScene),
-  Persona: jest.fn(() => mockPersona),
-}));
+
+jest.mock('@soulmachines/smwebsdk');
 jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({
     connect: mockConnect,
@@ -30,6 +19,8 @@ jest.mock('../../hooks/useConnection', () => ({
 jest.mock('../../hooks/useSMMedia');
 
 describe('<SoulMachinesProvider />', () => {
+  const mockScene = new Scene();
+  const mockPersona = new Persona(mockScene, 1);
   const apiKey = 'mock api key';
   const tokenServer = 'mock token server';
 
