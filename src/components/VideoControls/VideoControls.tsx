@@ -8,6 +8,7 @@ export function VideoControls() {
     isMicrophoneEnabled,
     isCameraEnabled,
     isVideoMuted,
+    conversationStatus,
     toggleMicrophone,
     toggleCamera,
     toggleVideoMuted,
@@ -29,10 +30,7 @@ export function VideoControls() {
 
       <div className="sm-flex sm-flex-col sm-gap-y-2">
         <div>
-          {/*
-            // TODO: pass through conversation status
-          */}
-          <ConversationStatus status="userSpeaking" />
+          <ConversationStatus status={conversationStatus} />
         </div>
         <div className="sm-flex sm-justify-between">
           <IconButton
