@@ -4,20 +4,10 @@ import { MutableRef } from 'preact/hooks';
 import { useSMMedia } from '.';
 import { SessionDataKeys } from '../../enums';
 
-const mockIsConnected = jest.fn(() => false);
-const mockSetMediaDeviceActive = jest.fn();
-const mockScene = {
-  isConnected: mockIsConnected,
-  setMediaDeviceActive: mockSetMediaDeviceActive,
-  isMicrophoneActive: jest.fn(() => false),
-  isCameraActive: jest.fn(() => false),
-  videoElement: undefined,
-} as unknown as Scene;
-jest.mock('@soulmachines/smwebsdk', () => ({
-  Scene: jest.fn(() => mockScene),
-}));
+jest.mock('@soulmachines/smwebsdk');
 
 describe('useSMMedia()', () => {
+  const mockScene = new Scene();
   const mockVideoRef = {
     current: { muted: true, mock: 124 },
   } as unknown as MutableRef<HTMLVideoElement | null>;
@@ -51,7 +41,7 @@ describe('useSMMedia()', () => {
 
   describe('when scene is connected', () => {
     beforeEach(() => {
-      mockIsConnected.mockReturnValue(true);
+      mockScene.isConnected = () => true;
       sessionStorage.removeItem(SessionDataKeys.videoMuted);
       sessionStorage.removeItem(SessionDataKeys.cameraEnabled);
       sessionStorage.removeItem(SessionDataKeys.microphoneEnabled);
@@ -86,7 +76,7 @@ describe('useSMMedia()', () => {
       expect(result.current.isMicrophoneEnabled).toEqual(true);
       expect(result.current.isCameraEnabled).toEqual(true);
 
-      mockIsConnected.mockReturnValue(false);
+      mockScene.isConnected = () => false;
 
       rerender();
 
@@ -143,13 +133,13 @@ describe('useSMMedia()', () => {
         const { result } = customRender();
 
         await result.current.toggleCamera();
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: true });
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ camera: true });
 
         await result.current.toggleCamera();
 
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
 
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -168,13 +158,13 @@ describe('useSMMedia()', () => {
         const { result } = customRender();
 
         await result.current.toggleMicrophone();
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: true });
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ microphone: true });
 
         await result.current.toggleMicrophone();
 
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
 
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(2);
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -187,10 +177,10 @@ describe('useSMMedia()', () => {
 
       it('calls setMediaDeviceActive with camera and microphone values when it is true in session storage', () => {
         customRender();
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledWith({
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({
           camera: sessionStorage.getItem(SessionDataKeys.cameraEnabled) === 'true',
         });
-        expect(mockSetMediaDeviceActive).toHaveBeenCalledTimes(1);
+        expect(mockScene.setMediaDeviceActive).toHaveBeenCalledTimes(1);
       });
 
       it('sets the video muted state to the saved muted state in session storage', () => {
