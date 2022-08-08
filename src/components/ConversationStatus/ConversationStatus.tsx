@@ -1,14 +1,8 @@
 import classNames from 'classnames';
+import { ConversationStatusTypes } from '../../enums';
 import { LoadingIndicator } from '../LoadingIndicator';
 import SpeadingDotsAnimation from './components/SpreadingDots';
 import WaveFormAnimation from './components/WaveForm';
-
-export enum ConversationStatusTypes {
-  dpSpeaking = 'dpSpeaking',
-  idle = 'idle',
-  userSpeaking = 'userSpeaking',
-  dpProcessing = 'dpProcessing',
-}
 
 export type ConversationStatusProps = {
   status: keyof typeof ConversationStatusTypes;

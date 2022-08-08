@@ -1,6 +1,6 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { useEffect, useState } from 'preact/hooks';
-import { ConversationStatusTypes } from '../../components/ConversationStatus';
+import { ConversationStatusTypes } from '../../enums';
 
 function useConversationStatus(scene: Scene) {
   const [conversationStatus, setConversationStatus] = useState(ConversationStatusTypes.idle);

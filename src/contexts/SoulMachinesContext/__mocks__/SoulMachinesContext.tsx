@@ -1,6 +1,6 @@
 import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
-import { ConversationStatusTypes } from '../../../components/ConversationStatus';
+import { ConversationStatusTypes } from '../../../enums';
 import { ConnectionStatus } from '../../../enums';
 
 jest.mock('@soulmachines/smwebsdk');

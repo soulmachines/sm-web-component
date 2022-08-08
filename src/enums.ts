@@ -19,3 +19,11 @@ export enum SessionDataKeys {
   microphoneEnabled = 'sm-microphone-enabled',
   videoMuted = 'sm-video-muted',
 }
+
+// TODO: can we get this from the SDK
+export enum ConversationStatusTypes {
+  dpSpeaking = 'dpSpeaking',
+  idle = 'idle',
+  userSpeaking = 'userSpeaking',
+  dpProcessing = 'dpProcessing',
+}

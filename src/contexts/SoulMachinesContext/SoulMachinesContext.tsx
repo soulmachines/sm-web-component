@@ -5,7 +5,7 @@ import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationStatus } from '../../hooks/useConversationStatus';
-import { ConversationStatusTypes } from '../../components/ConversationStatus';
+import { ConversationStatusTypes } from '../../enums';
 
 type Context = {
   scene: Scene;

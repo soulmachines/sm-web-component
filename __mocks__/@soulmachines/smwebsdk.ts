@@ -1,5 +1,5 @@
 import { ContentCard, Persona as SDKPersona, Scene as SDKScene } from '@soulmachines/smwebsdk';
-import { ConversationStatusTypes } from '../../src/components/ConversationStatus';
+import { ConversationStatusTypes } from '../../src/enums';
 
 let onCardChangedCallback: (data: ContentCard[]) => void;
 let triggerDisconnectEvent: () => void;
