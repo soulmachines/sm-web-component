@@ -1,5 +1,24 @@
 # Change Log
 
+# [1.7.0](https://github.com/soulmachines/sm-web-component/compare/1.6.0...1.7.0) (2022-08-08)
+
+
+### Bug Fixes
+
+* handle new window bug that creates extra blank windows. ([#290](https://github.com/soulmachines/sm-web-component/issues/290)) ([e3e49bf](https://github.com/soulmachines/sm-web-component/commit/e3e49bf6df2822b06688b0729769ca06d772666d))
+* local demo of css var ([#289](https://github.com/soulmachines/sm-web-component/issues/289)) ([1ec22b2](https://github.com/soulmachines/sm-web-component/commit/1ec22b2bc6e7551faceea060e7c3bf2b6dca6361))
+* mute just makes audio quieter QUIC-1956 ([#280](https://github.com/soulmachines/sm-web-component/issues/280)) ([2c41fdd](https://github.com/soulmachines/sm-web-component/commit/2c41fdd9431e1189c7ace5cc3a28b5367d2cc31b))
+
+
+### Features
+
+* add CUE example QUIC-1950 ([#291](https://github.com/soulmachines/sm-web-component/issues/291)) ([2eed86f](https://github.com/soulmachines/sm-web-component/commit/2eed86fce8a327a56fb1cb59ee38dec718f97789))
+* add markdown card QUIC-1590 ([#279](https://github.com/soulmachines/sm-web-component/issues/279)) ([4778907](https://github.com/soulmachines/sm-web-component/commit/4778907cf9275b288328a433ed72a1106c41cac2))
+* add visibilitychange handler QUIC-1982 ([#285](https://github.com/soulmachines/sm-web-component/issues/285)) ([0f61b7c](https://github.com/soulmachines/sm-web-component/commit/0f61b7cc6718528e85c7c4e00b867a236c319bda))
+* css variable theming for color, shadows and font quic-1980 ([#282](https://github.com/soulmachines/sm-web-component/issues/282)) ([ab4717f](https://github.com/soulmachines/sm-web-component/commit/ab4717fbeaddbd3047556d0dae067e2f5484a3c0))
+* hide link description on small screens  quic-1921 ([#288](https://github.com/soulmachines/sm-web-component/issues/288)) ([7549d3f](https://github.com/soulmachines/sm-web-component/commit/7549d3fbf767030d0b49ae4c561d075a34a23138))
+* Send current page url to NLP engine when session connected or navigated to a new page QUIC-2019 ([#281](https://github.com/soulmachines/sm-web-component/issues/281)) ([d755f45](https://github.com/soulmachines/sm-web-component/commit/d755f456de8d17bc594c931d1883e857fe71702a))
+
 # [1.6.0](https://github.com/soulmachines/sm-web-component/compare/1.5.0...1.6.0) (2022-07-17)
 
 
