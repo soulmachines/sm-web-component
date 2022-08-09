@@ -18,21 +18,24 @@ export type WidgetProps = {
   loadingIndicator?: JSX.Element;
 };
 
-export function Widget({ profilePicture, greeting, loadingIndicator, position }: WidgetProps) {
+export function Widget({
+  profilePicture,
+  greeting,
+  loadingIndicator,
+  position = widgetPosition.BOTTOM_RIGHT,
+}: WidgetProps) {
   const { connectionStatus, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isDisconnected =
     connectionStatus !== ConnectionStatus.CONNECTED &&
     connectionStatus !== ConnectionStatus.CONNECTING;
-  const wrapperClass = classNames({
-    'sm-fixed sm-bottom-0 sm-p-2 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5': true,
+  const wrapperPositionClass = classNames({
     'sm-right-0': position === widgetPosition.BOTTOM_RIGHT,
     'sm-left-0': position === widgetPosition.BOTTOM_LEFT,
   });
 
-  const notificationVideoWrapper = classNames({
-    'sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5': true,
-    'sm-flex-row-reverse': position === widgetPosition.BOTTOM_RIGHT,
+  const notificationVideoOrderClass = classNames({
+    'sm-flex-row-reverse': position === widgetPosition.BOTTOM_LEFT,
   });
 
   // Connect directly if it's resume session
@@ -62,13 +65,17 @@ export function Widget({ profilePicture, greeting, loadingIndicator, position }:
   });
 
   return (
-    <div className={wrapperClass}>
+    <div
+      className={`sm-fixed sm-bottom-0 sm-p-2 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ${wrapperPositionClass}`}
+    >
       <div className="sm-flex sm-flex-col sm-gap-y-2 sm-h-full sm-justify-end md:sm-gap-y-5">
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
           <ContentCards />
         </div>
 
-        <div className={notificationVideoWrapper}>
+        <div
+          className={`sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5 ${notificationVideoOrderClass}`}
+        >
           {isDisconnected && (
             <div className="sm-max-w-xs">
               <Notifications greeting={greeting} />
