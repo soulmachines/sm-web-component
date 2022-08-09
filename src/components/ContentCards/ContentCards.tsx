@@ -1,6 +1,6 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { Fragment, JSX } from 'preact';
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ImageCard } from '../ImageCard';
@@ -12,6 +12,9 @@ export type CardComponent = {
   content: ContentCard;
 };
 
+const ExternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={true} />;
+const InternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={false} />;
+
 export function ContentCards() {
   const { scene } = useSoulMachines();
   const [cards, setCards] = useState<ContentCard[]>([]);
@@ -20,18 +23,6 @@ export function ContentCards() {
     enter: { opacity: 1, transform: 'translateY(0px)' },
     config: config.gentle,
   });
-  const ExternalLinkCard = useMemo(
-    () => (props: LinkCardProps) => {
-      return <LinkCard {...props} isExternal={true} />;
-    },
-    [],
-  );
-  const InternalLinkCard = useMemo(
-    () => (props: LinkCardProps) => {
-      return <LinkCard {...props} isExternal={false} />;
-    },
-    [],
-  );
 
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
