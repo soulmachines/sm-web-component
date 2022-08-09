@@ -3,7 +3,7 @@ import { useSpring, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
-import { ConnectionStatus, SessionDataKeys } from '../../enums';
+import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
 import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
@@ -14,7 +14,7 @@ import { useEffect } from 'preact/hooks';
 export type WidgetProps = {
   greeting?: string;
   profilePicture?: string;
-  position?: string;
+  position?: widgetPosition;
   loadingIndicator?: JSX.Element;
 };
 
@@ -26,13 +26,13 @@ export function Widget({ profilePicture, greeting, loadingIndicator, position }:
     connectionStatus !== ConnectionStatus.CONNECTING;
   const wrapperClass = classNames({
     'sm-fixed sm-bottom-0 sm-p-2 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5': true,
-    'sm-right-0': position === 'bottomRight',
-    'sm-left-0': position === 'bottomLeft',
+    'sm-right-0': position === widgetPosition.BOTTOM_RIGHT,
+    'sm-left-0': position === widgetPosition.BOTTOM_LEFT,
   });
 
   const notificationVideoWrapper = classNames({
     'sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5': true,
-    'sm-flex-row-reverse': position === 'bottomLeft',
+    'sm-flex-row-reverse': position === widgetPosition.BOTTOM_RIGHT,
   });
 
   // Connect directly if it's resume session

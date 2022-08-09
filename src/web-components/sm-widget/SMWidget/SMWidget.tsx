@@ -2,6 +2,7 @@ import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
 import { Widget } from '../../../components/Widget';
 import { BindPublicSmEvents } from '../../../components/BindPublicSmEvents';
+import { widgetPosition } from '../../../enums';
 
 export type SMWidgetProps = {
   apiKey?: string;
@@ -9,7 +10,7 @@ export type SMWidgetProps = {
   connectingIndicator?: JSX.Element;
   greeting?: string;
   profilePicture?: string;
-  position?: string;
+  position?: widgetPosition;
   parent: HTMLElement;
 };
 
