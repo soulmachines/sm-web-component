@@ -4,13 +4,16 @@ import { useEffect, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ImageCard } from '../ImageCard';
-import { LinkCard } from '../LinkCard';
+import { LinkCard, LinkCardProps } from '../LinkCard';
 import { MarkdownCard } from '../MarkdownCard';
 import { OptionsCard } from '../OptionsCard';
 
 export type CardComponent = {
   content: ContentCard;
 };
+
+const ExternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={true} />;
+const InternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={false} />;
 
 export function ContentCards() {
   const { scene } = useSoulMachines();
@@ -24,8 +27,8 @@ export function ContentCards() {
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
     image: ImageCard,
-    externalLink: (props) => <LinkCard {...props} isExternal={true} />,
-    internalLink: (props) => <LinkCard {...props} isExternal={false} />,
+    externalLink: ExternalLinkCard,
+    internalLink: InternalLinkCard,
     markdown: MarkdownCard,
   };
 

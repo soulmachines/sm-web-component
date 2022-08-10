@@ -11,6 +11,10 @@ export default defineConfig(({ mode }) => {
   const version = env.VERSION || new Date().getTime();
 
   return {
+    esbuild: {
+      // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
+      logOverride: { 'this-is-undefined-in-esm': 'silent' },
+    },
     plugins: [preact(), createHtmlPlugin({ template: path.resolve(__dirname, 'index.html') })],
     server: {
       open: '/index.html',
