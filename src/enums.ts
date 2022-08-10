@@ -21,7 +21,7 @@ export enum SessionDataKeys {
 }
 
 // TODO: can we get this from the SDK
-export enum ConversationStatusTypes {
+export enum ConversationStateTypes {
   dpSpeaking = 'dpSpeaking',
   idle = 'idle',
   userSpeaking = 'userSpeaking',

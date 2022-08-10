@@ -1,9 +1,9 @@
 import { ContentCard, Persona as SDKPersona, Scene as SDKScene } from '@soulmachines/smwebsdk';
-import { ConversationStatusTypes } from '../../src/enums';
+import { ConversationStateTypes } from '../../src/enums';
 
 let onCardChangedCallback: (data: ContentCard[]) => void;
 let triggerDisconnectEvent: () => void;
-let onConversationStatusChangedCallback: (data: ConversationStatusTypes) => void;
+let onConversationStateChangedCallback: (data: ConversationStateTypes) => void;
 
 const persona = {
   conversationSend: jest.fn(),
@@ -30,12 +30,12 @@ const scene = {
     srcObject: 'mock video src',
   },
   conversation: {
-    onConversationStatusChanged: {
+    onConversationStateChanged: {
       addListener: (cb: () => void) => {
-        onConversationStatusChangedCallback = cb;
+        onConversationStateChangedCallback = cb;
       },
-      call: jest.fn((data: ConversationStatusTypes) => {
-        onConversationStatusChangedCallback(data);
+      call: jest.fn((data: ConversationStateTypes) => {
+        onConversationStateChangedCallback(data);
       }),
     },
     onCardChanged: {

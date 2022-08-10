@@ -1,6 +1,6 @@
 import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
-import { ConversationStatusTypes } from '../../../enums';
+import { ConversationStateTypes } from '../../../enums';
 import { ConnectionStatus } from '../../../enums';
 
 jest.mock('@soulmachines/smwebsdk');
@@ -24,7 +24,7 @@ const mockUseSoulMachines = {
   isVideoMuted: false,
   scene,
   persona,
-  conversationStatus: ConversationStatusTypes.idle,
+  conversationState: ConversationStateTypes.idle,
   videoRef: jest.fn(),
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),

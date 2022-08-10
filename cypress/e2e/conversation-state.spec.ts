@@ -1,7 +1,7 @@
 import { corpusCommands } from './content-cards.spec';
 
 // TODO: verify tests run once sdk implements it
-describe('conversation status', () => {
+describe('conversation state', () => {
   before(() => {
     cy.visit('/');
     cy.launchScene();

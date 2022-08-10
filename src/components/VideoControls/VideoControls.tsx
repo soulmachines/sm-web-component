@@ -1,5 +1,5 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { ConversationStatus } from '../ConversationStatus';
+import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../IconButton';
 
 export function VideoControls() {
@@ -8,7 +8,7 @@ export function VideoControls() {
     isMicrophoneEnabled,
     isCameraEnabled,
     isVideoMuted,
-    conversationStatus,
+    conversationState,
     toggleMicrophone,
     toggleCamera,
     toggleVideoMuted,
@@ -30,7 +30,7 @@ export function VideoControls() {
 
       <div className="sm-flex sm-flex-col sm-gap-y-2">
         <div>
-          <ConversationStatus status={conversationStatus} />
+          <ConversationState status={conversationState} />
         </div>
         <div className="sm-flex sm-justify-between">
           <IconButton
