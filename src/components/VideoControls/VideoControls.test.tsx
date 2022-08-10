@@ -7,7 +7,7 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 describe('<VideoControls />', () => {
   const customRender = () => render(<VideoControls />);
 
-  it('renders a conversation status', () => {
+  it('renders the conversation state indicator', () => {
     const { getByText } = customRender();
     expect(getByText('Digital Person Waiting')).toBeInTheDocument();
   });

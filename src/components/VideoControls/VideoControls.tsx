@@ -30,7 +30,7 @@ export function VideoControls() {
 
       <div className="sm-flex sm-flex-col sm-gap-y-2">
         <div>
-          <ConversationState status={conversationState} />
+          <ConversationState state={conversationState} />
         </div>
         <div className="sm-flex sm-justify-between">
           <IconButton
