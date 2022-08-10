@@ -5,34 +5,32 @@ import SpeadingDotsAnimation from './components/SpreadingDots';
 import WaveFormAnimation from './components/WaveForm';
 
 export type ConversationStateProps = {
-  status: keyof typeof ConversationStateTypes;
+  state: keyof typeof ConversationStateTypes;
 };
 
-export function ConversationState({ status }: ConversationStateProps) {
+export function ConversationState({ state }: ConversationStateProps) {
   const wapperClassNames = classNames({
     'sm-flex sm-justify-center sm-items-center sm-transition-all sm-w-[42px] sm-h-[42px] sm-rounded-full sm-gap-x-1':
       true,
-    'sm-bg-grayscale-900': status === ConversationStateTypes.dpSpeaking,
-    'sm-bg-white sm-animate-spread': status === ConversationStateTypes.idle,
-    'sm-bg-primary-500': status === ConversationStateTypes.userSpeaking,
-    'sm-bg-white': status === ConversationStateTypes.dpProcessing,
+    'sm-bg-grayscale-900': state === ConversationStateTypes.dpSpeaking,
+    'sm-bg-white sm-animate-spread': state === ConversationStateTypes.idle,
+    'sm-bg-primary-500': state === ConversationStateTypes.userSpeaking,
+    'sm-bg-white': state === ConversationStateTypes.dpProcessing,
   });
 
   return (
     <div className={wapperClassNames}>
-      {status === ConversationStateTypes.dpSpeaking && (
+      {state === ConversationStateTypes.dpSpeaking && (
         <WaveFormAnimation title="Digital Person Speaking" />
       )}
 
-      {status === ConversationStateTypes.idle && (
+      {state === ConversationStateTypes.idle && (
         <SpeadingDotsAnimation title="Digital Person Waiting" />
       )}
 
-      {status === ConversationStateTypes.userSpeaking && (
-        <WaveFormAnimation title="User Speaking" />
-      )}
+      {state === ConversationStateTypes.userSpeaking && <WaveFormAnimation title="User Speaking" />}
 
-      {status === ConversationStateTypes.dpProcessing && (
+      {state === ConversationStateTypes.dpProcessing && (
         <LoadingIndicator title="Digital Person Processing" />
       )}
     </div>
