@@ -8,8 +8,8 @@ function useConversationState(scene: Scene) {
   useEffect(() => {
     // TODO: remove once function exists
     // @ts-ignore
-    scene.conversation.onConversationStateChanged.addListener((status: ConversationStateTypes) => {
-      setConversationState(status);
+    scene.conversation.onConversationStateUpdated.addListener((state: ConversationStateTypes) => {
+      setConversationState(state);
     });
   }, [scene]);
 

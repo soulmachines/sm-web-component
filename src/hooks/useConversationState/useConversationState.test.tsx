@@ -13,12 +13,12 @@ describe('useConversationState()', () => {
     expect(result.current.conversationState).toEqual(ConversationStateTypes.idle);
   });
 
-  describe('when onConversationStateChanged fires', () => {
+  describe('when onConversationStateUpdated fires', () => {
     it('updates the status to the status received from the event', () => {
       const { result, rerender } = renderHook(() => useConversationState(scene));
       // TODO: remove once function exists
       // @ts-ignore
-      scene.conversation.onConversationStateChanged.call(ConversationStateTypes.dpSpeaking);
+      scene.conversation.onConversationStateUpdated.call(ConversationStateTypes.dpSpeaking);
 
       rerender();
 

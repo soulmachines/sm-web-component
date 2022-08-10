@@ -3,7 +3,7 @@ import { ConversationStateTypes } from '../../src/enums';
 
 let onCardChangedCallback: (data: ContentCard[]) => void;
 let triggerDisconnectEvent: () => void;
-let onConversationStateChangedCallback: (data: ConversationStateTypes) => void;
+let onConversationStateUpdatedCallback: (data: ConversationStateTypes) => void;
 
 const persona = {
   conversationSend: jest.fn(),
@@ -30,12 +30,12 @@ const scene = {
     srcObject: 'mock video src',
   },
   conversation: {
-    onConversationStateChanged: {
+    onConversationStateUpdated: {
       addListener: (cb: () => void) => {
-        onConversationStateChangedCallback = cb;
+        onConversationStateUpdatedCallback = cb;
       },
       call: jest.fn((data: ConversationStateTypes) => {
-        onConversationStateChangedCallback(data);
+        onConversationStateUpdatedCallback(data);
       }),
     },
     onCardChanged: {
