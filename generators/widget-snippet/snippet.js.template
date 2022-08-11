@@ -21,6 +21,10 @@ function configureSMWidget(config) {
     el.setAttribute('greeting', config.smGreeting);
   }
 
+  if (config.smPosition) {
+    el.setAttribute('position', config.smPosition);
+  }
+
   document.body.appendChild(el);
 }
 

@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { ConnectionStatus, SessionDataKeys } from '../../enums';
+import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -9,7 +9,44 @@ describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
   const unableToConnectMessage = /Unable to connect/;
-  const customRender = () => render(<Widget />);
+  const customRender = ({ position }: { position?: widgetPosition } = {}) =>
+    render(<Widget position={position} />);
+
+  describe('positioning', () => {
+    describe('rendering in the bottom right corner', () => {
+      it('renders a sm-right-0 class', () => {
+        const { container } = customRender();
+        expect(container.querySelector('.sm-right-0')).toBeInTheDocument();
+      });
+
+      it('does not render a sm-left-0 class', () => {
+        const { container } = customRender();
+        expect(container.querySelector('.sm-left-0')).not.toBeInTheDocument();
+      });
+
+      it('does not render a sm-flex-row-reverse class', () => {
+        const { container } = customRender();
+        expect(container.querySelector('.sm-flex-row-reverse')).not.toBeInTheDocument();
+      });
+    });
+
+    describe('rendering in the bottom left corner', () => {
+      it('renders a sm-left-0 class', () => {
+        const { container } = customRender({ position: widgetPosition.BOTTOM_LEFT });
+        expect(container.querySelector('.sm-left-0')).toBeInTheDocument();
+      });
+
+      it('does renders a sm-flex-row-reverse class', () => {
+        const { container } = customRender({ position: widgetPosition.BOTTOM_LEFT });
+        expect(container.querySelector('.sm-flex-row-reverse')).toBeInTheDocument();
+      });
+
+      it('does not render a sm-right-0 class', () => {
+        const { container } = customRender({ position: widgetPosition.BOTTOM_LEFT });
+        expect(container.querySelector('.sm-right-0')).not.toBeInTheDocument();
+      });
+    });
+  });
 
   describe('When connecting for the first time', () => {
     it('does not connect automatically', () => {

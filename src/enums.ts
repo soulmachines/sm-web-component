@@ -6,6 +6,11 @@ export enum ConnectionStatus {
   ERRORED = 'ERRORED',
 }
 
+export enum widgetPosition {
+  BOTTOM_LEFT = 'bottomLeft',
+  BOTTOM_RIGHT = 'bottomRight',
+}
+
 export enum SessionDataKeys {
   sessionId = 'sm-session-id',
   apiKey = 'sm-api-key',
