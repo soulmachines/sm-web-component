@@ -16,8 +16,6 @@ describe('useConversationState()', () => {
   describe('when onConversationStateUpdated fires', () => {
     it('updates the state to the state received from the event', () => {
       const { result, rerender } = renderHook(() => useConversationState(scene));
-      // TODO: remove once function exists
-      // @ts-ignore
       scene.conversation.onConversationStateUpdated.call(ConversationStateTypes.dpSpeaking);
 
       rerender();
