@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ConversationStateTypes } from '../../enums';
+import { ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { LoadingIndicator } from '../LoadingIndicator';
 import SpeadingDotsAnimation from './components/SpreadingDots';
 import WaveFormAnimation from './components/WaveForm';

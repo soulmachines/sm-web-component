@@ -1,7 +1,6 @@
-import { Scene } from '@soulmachines/smwebsdk';
+import { Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
 import { useConversationState } from '.';
-import { ConversationStateTypes } from '../../enums';
 
 jest.mock('@soulmachines/smwebsdk');
 

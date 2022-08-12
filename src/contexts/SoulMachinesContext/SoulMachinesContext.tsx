@@ -1,11 +1,10 @@
 import { createContext, ComponentChildren } from 'preact';
-import { Persona, Scene } from '@soulmachines/smwebsdk';
+import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
-import { ConversationStateTypes } from '../../enums';
 
 type Context = {
   scene: Scene;
