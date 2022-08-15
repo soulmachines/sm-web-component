@@ -28,7 +28,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16.14.2'
+          node-version: '16.15.1'
 
       - name: Caching Dependencies
         uses: actions/cache@v3
@@ -44,7 +44,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16.14.2'
+          node-version: '16.15.1'
 
       - name: Caching Dependencies
         uses: actions/cache@v3
@@ -84,7 +84,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16.14.2'
+          node-version: '16.15.1'
 
       - name: Caching Dependencies
         uses: actions/cache@v3
