@@ -275,14 +275,25 @@ Sometimes it's helpful to link to your local smwebsdk repo when debugging an iss
 3. In a seperate terminal navigate to the sm web component folder
 4. Link to your local websdk by running `npm link "@soulmachines/smwebsdk"`
 5. Open `vite.config.ts` and add optimizeDeps to the config. This is needed as vite does some special caching locally
-   ```
-   export default defineConfig({
-     optimizeDeps: {
-       exclude: ['@soulmachines/smwebsdk'],
-     },
-     ....
-   ```
+
+```
+export default defineConfig(({ mode }) => {
+  ...
+  return {
+    optimizeDeps: {
+      exclude: ['@soulmachines/smwebsdk'],
+    },
+    ...
+  }
+  ...
+}
+```
+
 6. Run `npm run start` and it should be using your local websdk
+
+#### Debugging
+
+If you get an error that looks like `[vite] Internal server error: Failed to resolve import "xxx" from "yyy". Does the file exist?`, check that the websdk and web-component are using the same node version. This is because both projects are using nvm and nvm will look in the nvm node version node_modules folder and not find the package. For example if the websdk is using 16.15.1 and the web component is using 16.4.2, it won't find websdk packages as it will look in `.nvm/versions/node/v16.14.2/lib/node_modules/@soulmachines/smwebsdk/..`.
 
 ### Unlinking
 
