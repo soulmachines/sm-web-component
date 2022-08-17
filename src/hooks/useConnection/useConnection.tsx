@@ -35,6 +35,9 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
       // - Safari and IOS are the most restrictive
       // - When using await syntax it can end up hanging state
       // - https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide#the_play_method
+      // - Also note that since reload, page back, and page forward are not interactions with the domain
+      //   canPlayPromise will always return an error and force the DP to be muted (See
+      //   https://developer.chrome.com/blog/autoplay/)
       const canPlayPromise = videoRef.current?.play();
       canPlayPromise
         ?.then(() => {
