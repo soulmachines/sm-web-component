@@ -19,9 +19,6 @@ describe('conversation state', () => {
       cy.get('span').contains('User Speaking').should('exist');
       cy.get('span').contains('User Speaking').should('not.exist');
 
-      cy.get('title').contains('Digital Person Processing').should('exist');
-      cy.get('title').contains('Digital Person Processing').should('not.exist');
-
       cy.get('span').contains('Digital Person Speaking').should('exist');
       cy.get('span').contains('Digital Person Speaking').should('not.exist');
 
