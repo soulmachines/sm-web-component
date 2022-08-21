@@ -1,5 +1,20 @@
 # Change Log
 
+# [1.8.0](https://github.com/soulmachines/sm-web-component/compare/1.7.0...1.8.0) (2022-08-21)
+
+
+### Bug Fixes
+
+* stop link content cards from reappearing  quic-1988 ([#294](https://github.com/soulmachines/sm-web-component/issues/294)) ([e96b207](https://github.com/soulmachines/sm-web-component/commit/e96b2075e25035b13b834901823412c5746fe37d))
+
+
+### Features
+
+* add runtime host example ([#297](https://github.com/soulmachines/sm-web-component/issues/297)) ([41a3890](https://github.com/soulmachines/sm-web-component/commit/41a38903be8818eb39f01d9f123bc9326d7bf278))
+* allow widget to be positioned bottom left or bottom right quic-1991 ([#295](https://github.com/soulmachines/sm-web-component/issues/295)) ([37f8c53](https://github.com/soulmachines/sm-web-component/commit/37f8c53c98419e3240c6cc68bad0b800d04e3c4f))
+* bump node version to fix npm link issue quic-2038 ([#296](https://github.com/soulmachines/sm-web-component/issues/296)) ([c52421d](https://github.com/soulmachines/sm-web-component/commit/c52421d367921cf4606eacc1912916b6eb85a02e))
+* display conversation state quic-1989  ([#293](https://github.com/soulmachines/sm-web-component/issues/293)) ([b0639b9](https://github.com/soulmachines/sm-web-component/commit/b0639b9d1918c24e815924824be45bdb09b84edb))
+
 # [1.7.0](https://github.com/soulmachines/sm-web-component/compare/1.6.0...1.7.0) (2022-08-08)
 
 
