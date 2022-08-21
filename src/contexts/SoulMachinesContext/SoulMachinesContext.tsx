@@ -1,9 +1,10 @@
 import { createContext, ComponentChildren } from 'preact';
-import { Persona, Scene } from '@soulmachines/smwebsdk';
+import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
+import { useConversationState } from '../../hooks/useConversationState';
 
 type Context = {
   scene: Scene;
@@ -17,6 +18,7 @@ type Context = {
   isMicrophoneEnabled: boolean;
   isCameraEnabled: boolean;
   isVideoMuted: boolean;
+  conversationState: ConversationStateTypes;
   toggleMicrophone: () => void;
   toggleCamera: () => void;
   toggleVideoMuted: () => void;
@@ -55,6 +57,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     }
   };
 
+  const useConversationStateData = useConversationState(scene);
   const useConnectionData = useConnection(scene, tokenServer);
   const useMediaData = useSMMedia({
     scene,
@@ -70,6 +73,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         sendTextMessage,
         ...useConnectionData,
         ...useMediaData,
+        ...useConversationStateData,
       }}
     >
       {children}

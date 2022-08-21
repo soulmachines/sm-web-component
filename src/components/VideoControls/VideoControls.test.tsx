@@ -7,6 +7,11 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 describe('<VideoControls />', () => {
   const customRender = () => render(<VideoControls />);
 
+  it('renders the conversation state indicator', () => {
+    const { getByText } = customRender();
+    expect(getByText('Digital Person Waiting')).toBeInTheDocument();
+  });
+
   it('calls disconnect when the disconnect button is clicked', async () => {
     const { getByTitle } = customRender();
     const button = getByTitle('Close video');

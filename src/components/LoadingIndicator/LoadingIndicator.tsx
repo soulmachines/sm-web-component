@@ -1,4 +1,4 @@
-export function LoadingIndicator() {
+export function LoadingIndicator({ title }: { title: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,8 +8,8 @@ export function LoadingIndicator() {
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 100 100"
     >
-      <title>Loading...</title>
-      <rect width="0.938em" height="0.938em" x="42.5" y="22.5" rx="7.5" ry="7.5">
+      <title>{title}</title>
+      <rect width="0.738em" height="0.738em" x="42.5" y="22.5" rx="7.5" ry="7.5">
         <animate
           attributeName="opacity"
           begin="-0.8s"
@@ -20,8 +20,8 @@ export function LoadingIndicator() {
         />
       </rect>
       <rect
-        width="0.938em"
-        height="0.938em"
+        width="0.738em"
+        height="0.738em"
         x="42.5"
         y="22.5"
         rx="7.5"
@@ -38,8 +38,8 @@ export function LoadingIndicator() {
         />
       </rect>
       <rect
-        width="0.938em"
-        height="0.938em"
+        width="0.738em"
+        height="0.738em"
         x="42.5"
         y="22.5"
         rx="7.5"
@@ -56,8 +56,8 @@ export function LoadingIndicator() {
         />
       </rect>
       <rect
-        width="0.938em"
-        height="0.938em"
+        width="0.738em"
+        height="0.738em"
         x="42.5"
         y="22.5"
         rx="7.5"
@@ -74,8 +74,8 @@ export function LoadingIndicator() {
         />
       </rect>
       <rect
-        width="0.938em"
-        height="0.938em"
+        width="0.738em"
+        height="0.738em"
         x="42.5"
         y="22.5"
         rx="7.5"
@@ -94,3 +94,6 @@ export function LoadingIndicator() {
     </svg>
   );
 }
+LoadingIndicator.defaultProps = {
+  title: 'Loading...',
+};

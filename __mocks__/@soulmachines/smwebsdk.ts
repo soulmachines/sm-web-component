@@ -1,7 +1,16 @@
 import { ContentCard, Persona as SDKPersona, Scene as SDKScene } from '@soulmachines/smwebsdk';
 
+//copy ConversationStateTypes from smwebsdk here to avoid loop reference
+enum ConversationStateTypes {
+  dpSpeaking = 'dpSpeaking',
+  userSpeaking = 'userSpeaking',
+  dpProcessing = 'dpProcessing',
+  idle = 'idle',
+}
 let onCardChangedCallback: (data: ContentCard[]) => void;
 let triggerDisconnectEvent: () => void;
+
+let onConversationStateUpdatedCallback: (data: ConversationStateTypes) => void;
 
 const persona = {
   conversationSend: jest.fn(),
@@ -28,6 +37,14 @@ const scene = {
     srcObject: 'mock video src',
   },
   conversation: {
+    onConversationStateUpdated: {
+      addListener: (cb: () => void) => {
+        onConversationStateUpdatedCallback = cb;
+      },
+      call: jest.fn((data: ConversationStateTypes) => {
+        onConversationStateUpdatedCallback(data);
+      }),
+    },
     onCardChanged: {
       addListener: (cb: () => void) => {
         onCardChangedCallback = cb;
@@ -42,4 +59,4 @@ const scene = {
 const Scene = jest.fn(() => scene);
 const Persona = jest.fn(() => persona);
 
-export { Scene, Persona };
+export { Scene, Persona, ConversationStateTypes };
