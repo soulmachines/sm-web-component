@@ -24,7 +24,7 @@ export function SMWidget({
   parent,
 }: SMWidgetProps) {
   return (
-    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} widget={true}>
       <BindPublicSmEvents element={parent} />
       <Widget
         greeting={greeting}

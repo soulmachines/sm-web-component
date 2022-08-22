@@ -31,9 +31,15 @@ type SoulMachinesProviderProps = {
   apiKey?: string;
   tokenServer?: string;
   children: ComponentChildren;
+  widget?: boolean;
 };
 
-function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
+function SoulMachinesProvider({
+  children,
+  apiKey,
+  tokenServer,
+  widget,
+}: SoulMachinesProviderProps) {
   const personaId = 1;
   const scene = useMemo(
     () =>
@@ -45,6 +51,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         sendMetadata: {
           pageUrl: true,
         },
+        widgetMode: widget ?? false,
       }),
     [apiKey],
   );
