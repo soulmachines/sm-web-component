@@ -52,9 +52,9 @@ Copy the `.env.template` file and rename it to `.env`.
 
 ### Using the correct node version
 
-Most of the team uses (nvm)[https://github.com/nvm-sh/nvm], which allows you to switch node versions quickly. You can see what node version to use by looking at our `.nvmrc` file.
+Most of the team uses [nvm](https://github.com/nvm-sh/nvm), which allows you to switch node versions quickly. You can see what node version to use by looking at our `.nvmrc` file.
 
-You can setup your terminal to switch node versions automatically based on the node version. The docs have (illustrate)[https://github.com/nvm-sh/nvm#deeper-shell-integration]how to do it. If you don't want to setup automatic switching and you use `nvm`, you can type `nvm use` and it will switch to the correct node version. You'll see the automatic node switching working when you navigate into the folder. A message will appear "Now using node v16.14.2 (npm v8.5.0)". If you see something like this "You need to run "nvm install 16.14.2" to install it before using it." you'll need to run the command to install the node version.
+You can setup your terminal to switch node versions automatically based on the node version. The docs have [illustrate](https://github.com/nvm-sh/nvm#deeper-shell-integration)how to do it. If you don't want to setup automatic switching and you use `nvm`, you can type `nvm use` and it will switch to the correct node version. You'll see the automatic node switching working when you navigate into the folder. A message will appear "Now using node v16.14.2 (npm v8.5.0)". If you see something like this "You need to run "nvm install 16.14.2" to install it before using it." you'll need to run the command to install the node version.
 
 ### Connecting via an API Key
 
@@ -69,7 +69,7 @@ When working locally you'll need an api key to connect to a digital person.
 
 **Steps**
 
-- Visit the (create api key page)[https://studio-dev.soulmachines.cloud/api-keys/create] in studio
+- Visit the [create api key page](https://studio-dev.soulmachines.cloud/api-keys/create) in studio
 - Give your key a memorable name, eg: Web Component Local Development
 - Pick "web" for the scope
 - Select your project
@@ -123,12 +123,12 @@ Run Cypress Test:
 
 **Helpful links**
 
-- (Common mistakes)[https://kentcdodds.com/blog/common-mistakes-with-react-testing-library]
-- (Learning)[https://testing-library.com/docs/learning]
+- [Common mistakes](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
+- [Learning](https://testing-library.com/docs/learning)
 
 ### Cypress
 
-It's best to use a (selector)[https://docs.cypress.io/guides/references/best-practices#Selecting-Elements] that is not brittle. You can use data attributes to select elements. These may need to be setup for the component. Look at the `<Text />` as an example. We use a data attribute that looks like `data-sm-cy="yourSelector"`. This allows you to write selectors in your test like `cy.get('[data-sm-cy=yourSelector]').click()`. A nice side effect of this is that consumers of the web component can also target these selectors in CSS if they wish.
+It's best to use a [selector](https://docs.cypress.io/guides/references/best-practices#Selecting-Elements) that is not brittle. You can use data attributes to select elements. These may need to be setup for the component. Look at the `<Text />` as an example. We use a data attribute that looks like `data-sm-cy="yourSelector"`. This allows you to write selectors in your test like `cy.get('[data-sm-cy=yourSelector]').click()`. A nice side effect of this is that consumers of the web component can also target these selectors in CSS if they wish.
 
 ### Generating Components
 
@@ -136,7 +136,7 @@ Run `npm run generate` in your terminal and it will ask you what you'd like the 
 
 ## Styling
 
-(Tailwind)[https://tailwindcss.com/] is setup and used to style the web components. All tailwind styles are under a `sm-` prefix, to avoid naming collisions.
+[Tailwind](https://tailwindcss.com/) is setup and used to style the web components. All tailwind styles are under a `sm-` prefix, to avoid naming collisions.
 
 It compiles multiple css files for each entry point. This is so that someone can use the `sm-video` component, without inherting the `sm-widget` styles.
 
@@ -150,11 +150,11 @@ Tailwind currently only supports `rem`. To work around this i've added a postcss
 
 ### CSS Reset
 
-Tailwind includes a (global css reset)[https://tailwindcss.com/docs/preflight]. We've disabled this as it will collide with the users website and potentially change the rendering of their UI. Tailwind does not support scoping it. To get around this we've copied across the css reset and prefixed it with `sm-widget`. This way we get the reset styles but it is scoped to our code.
+Tailwind includes a [global css reset](https://tailwindcss.com/docs/preflight). We've disabled this as it will collide with the users website and potentially change the rendering of their UI. Tailwind does not support scoping it. To get around this we've copied across the css reset and prefixed it with `sm-widget`. This way we get the reset styles but it is scoped to our code.
 
 ### Local development
 
-Setup your (editor)[https://tailwindcss.com/docs/editor-setup] with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview. By default it will only work when you are within `class=""` or `className=""`. We are using a npm library called `classNames` to conditionally apply classes. To get autocomplete working within this object you'll need to open your `settings.json` vscode file and add the below snippet.
+Setup your [editor](https://tailwindcss.com/docs/editor-setup) with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview. By default it will only work when you are within `class=""` or `className=""`. We are using a npm library called `classNames` to conditionally apply classes. To get autocomplete working within this object you'll need to open your `settings.json` vscode file and add the below snippet.
 
 ```
 "tailwindCSS.experimental.classRegex": [
@@ -224,8 +224,8 @@ We deploy the bundles via github actions. The bundles are automatically deployed
 
 Helpful urls:
 
-- (Dev snippet)[https://static.soulmachines.com/dev/widget-snippet.min.js`]
-- (Production snippet)[https://static.soulmachines.com/widget-snippet.min.js`]
+- [Dev snippet](https://static.soulmachines.com/dev/widget-snippet.min.js`)
+- [Production snippet](https://static.soulmachines.com/widget-snippet.min.js`)
 
 ### Versioning
 
