@@ -1,6 +1,6 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { Fragment, JSX } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ImageCard } from '../ImageCard';
@@ -16,8 +16,32 @@ const ExternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExtern
 const InternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={false} />;
 
 export function ContentCards() {
-  const { scene } = useSoulMachines();
+  const { scene, customCard } = useSoulMachines();
   const [cards, setCards] = useState<ContentCard[]>([]);
+  const CustomImageCard = useMemo(
+    () => (props: LinkCardProps) => {
+      useEffect(() => {
+        window.dispatchEvent(new Event('SMCardShown'));
+      }, []);
+
+      return (
+        <div>
+          {customCard.props.children.map((child: any) => {
+            if (child.type === 'img') {
+              // @ts-ignore
+              return <img src={props.content.data.url} />;
+            } else {
+              {
+                return child;
+              }
+            }
+          })}
+        </div>
+      );
+    },
+    [],
+  );
+
   const transitions = useTransition(cards, {
     from: { opacity: 0, transform: 'translateY(20px)' },
     enter: { opacity: 1, transform: 'translateY(0px)' },
@@ -26,7 +50,7 @@ export function ContentCards() {
 
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCard,
-    image: ImageCard,
+    image: CustomImageCard,
     externalLink: ExternalLinkCard,
     internalLink: InternalLinkCard,
     markdown: MarkdownCard,

@@ -7,6 +7,7 @@ import { widgetPosition } from '../../../enums';
 export type SMWidgetProps = {
   apiKey?: string;
   tokenServer?: string;
+  customCard?: JSX.Element;
   connectingIndicator?: JSX.Element;
   greeting?: string;
   profilePicture?: string;
@@ -22,9 +23,10 @@ export function SMWidget({
   profilePicture,
   position,
   parent,
+  customCard,
 }: SMWidgetProps) {
   return (
-    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} customCard={customCard}>
       <BindPublicSmEvents element={parent} />
       <Widget
         greeting={greeting}

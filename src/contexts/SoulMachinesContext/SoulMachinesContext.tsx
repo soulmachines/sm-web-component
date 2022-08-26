@@ -10,6 +10,7 @@ type Context = {
   persona: Persona;
   connectionStatus: ConnectionStatus;
   connectionError: Error | null;
+  customCard: JSX.Element;
   connect: () => void;
   disconnect: () => void;
   sendTextMessage: (text: string) => void;
@@ -29,9 +30,15 @@ type SoulMachinesProviderProps = {
   apiKey?: string;
   tokenServer?: string;
   children: ComponentChildren;
+  customCard: JSX.Element;
 };
 
-function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
+function SoulMachinesProvider({
+  children,
+  apiKey,
+  tokenServer,
+  customCard,
+}: SoulMachinesProviderProps) {
   const personaId = 1;
   const scene = useMemo(
     () =>
@@ -68,6 +75,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         scene,
         persona,
         sendTextMessage,
+        customCard,
         ...useConnectionData,
         ...useMediaData,
       }}

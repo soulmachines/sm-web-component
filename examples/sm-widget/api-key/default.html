@@ -6,8 +6,31 @@
     <title>API Key - Default</title>
   </head>
   <body>
-    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
+    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>">
+      <div slot="custom-card">
+        <h1>Custom card</h1>
+        <!-- placeholder for where image is rendered -->
+        <img src="" alt="" />
+        <!-- button that we'll tie our third party code to -->
+        <button id="trigger" style="pointer-events: auto">Click me</button>
+      </div>
+    </sm-widget>
 
     <script type="module" src="/src/web-components/sm-widget"></script>
+
+    <script>
+      // custom event listener
+      window.addEventListener('SMCardShown', (event) => {
+        setTimeout(() => {
+          const button = document.getElementById('trigger');
+
+          const doSomething = () => {
+            alert('BOOOM');
+          };
+
+          button.addEventListener('click', doSomething);
+        }, 0);
+      });
+    </script>
   </body>
 </html>
