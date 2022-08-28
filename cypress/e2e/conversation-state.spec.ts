@@ -1,4 +1,4 @@
-import { corpusCommands } from './content-cards.spec';
+import corpusCommands from '../support/corpusCommands';
 
 describe('conversation state', () => {
   before(() => {
