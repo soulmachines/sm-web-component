@@ -4,7 +4,7 @@ import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
 import debounce from 'lodash/debounce';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
+import { Spinner } from '../Spinner';
 import { ConnectionStatus } from '../../enums';
 import { Scene } from '@soulmachines/smwebsdk';
 import classNames from 'classnames';
@@ -85,7 +85,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
 
   return (
     <div className={videoWrapperClass}>
-      {isConnecting && (loadingIndicator || <DefaultLoadingIndicator />)}
+      {isConnecting && (loadingIndicator || <Spinner />)}
 
       <animated.video
         style={videoAnimation}

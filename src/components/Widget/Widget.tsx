@@ -6,7 +6,7 @@ import { VideoControls } from '../VideoControls';
 import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
 import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
-import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
+import { Spinner as DefaultLoadingIndicator } from '../Spinner';
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ConversationStateTypes } from '@soulmachines/smwebsdk';
-import { LoadingIndicator } from '../LoadingIndicator';
+import { Spinner } from '../Spinner';
 import SpeadingDotsAnimation from './components/SpreadingDots';
 import WaveFormAnimation from './components/WaveForm';
 
@@ -31,7 +31,7 @@ export function ConversationState({ state }: ConversationStateProps) {
       {state === ConversationStateTypes.userSpeaking && <WaveFormAnimation title="User Speaking" />}
 
       {state === ConversationStateTypes.dpProcessing && (
-        <LoadingIndicator title="Digital Person Processing" />
+        <Spinner title="Digital Person Processing" />
       )}
     </div>
   );

@@ -1,14 +1,14 @@
 import { render } from '@testing-library/preact';
-import { LoadingIndicator } from '.';
+import { Spinner } from '.';
 
-describe('<LoadingIndicator />', () => {
+describe('<Spinner />', () => {
   it('renders a loading title', () => {
-    const { getByTitle } = render(<LoadingIndicator />);
+    const { getByTitle } = render(<Spinner />);
     expect(getByTitle('Loading...')).toBeInTheDocument();
   });
 
   it('renders a customized title', () => {
-    const { getByTitle } = render(<LoadingIndicator title="Digital Person Thinking" />);
+    const { getByTitle } = render(<Spinner title="Digital Person Thinking" />);
     expect(getByTitle('Digital Person Thinking')).toBeInTheDocument();
   });
 });

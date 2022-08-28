@@ -1,4 +1,4 @@
-export function LoadingIndicator({ title }: { title: string }) {
+export function Spinner({ title }: { title: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -94,6 +94,6 @@ export function LoadingIndicator({ title }: { title: string }) {
     </svg>
   );
 }
-LoadingIndicator.defaultProps = {
+Spinner.defaultProps = {
   title: 'Loading...',
 };
