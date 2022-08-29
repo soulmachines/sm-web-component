@@ -4,14 +4,14 @@ export default {
   title: `Components / LoadingIndicator`,
   component: LoadingIndicator,
   argTypes: {
-    progress: {
+    progressTo: {
       control: 'select',
-      options: ['zero', 'oneQuarter', 'twoQuarter', 'threeQuarter', 'fourQuarter'],
+      options: ['zero', 'twentyFive', 'fifty', 'seventyFive', 'oneHundred'],
       defaultValue: 'zero',
     },
   },
 };
 
-export const Basic = ({ progress }: LoadingIndicatorProps) => (
-  <LoadingIndicator progress={progress} />
+export const Basic = ({ progressTo }: LoadingIndicatorProps) => (
+  <LoadingIndicator progressTo={progressTo} />
 );
