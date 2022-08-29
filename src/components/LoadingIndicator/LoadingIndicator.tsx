@@ -35,8 +35,21 @@ export function LoadingIndicator({ progressTo }: LoadingIndicatorProps) {
     'after:sm-animate-countFrom75To100': progressTo === LoadingIndicatorProgress.fourQuarter,
   });
 
+  const progress: Record<string, number> = {
+    [LoadingIndicatorProgress.twentyFive]: 25,
+    [LoadingIndicatorProgress.fifty]: 50,
+    [LoadingIndicatorProgress.seventyFive]: 75,
+    [LoadingIndicatorProgress.fourQuarter]: 100,
+  };
+
   return (
-    <div className={wrapprClassNames}>
+    <div
+      className={wrapprClassNames}
+      role="progressbar"
+      aria-label="Loading..."
+      aria-busy={progressTo !== LoadingIndicatorProgress.fourQuarter}
+      aria-valuenow={progress[progressTo]}
+    >
       <div className="sm-bg-white sm-rounded-3xl sm-border-grayscale-200 sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
         <div className={progressBarClassNames}></div>
       </div>
