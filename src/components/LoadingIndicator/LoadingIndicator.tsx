@@ -22,13 +22,17 @@ export function LoadingIndicator({ progress }: LoadingIndicatorProps) {
   const progressBarClassNames = classNames({
     'sm-bg-primary-500 sm-h-full sm-w-0': true,
     'sm-animate-fillTo25': progress === LoadingIndicatorProgress.oneQuarter,
-    'sm-animate-fillTo50From25': progress === LoadingIndicatorProgress.twoQuarter,
+    'sm-animate-fillFrom25To50': progress === LoadingIndicatorProgress.twoQuarter,
+    'sm-animate-fillFrom50To75': progress === LoadingIndicatorProgress.threeQuarter,
+    'sm-animate-fillFrom75To100': progress === LoadingIndicatorProgress.fourQuarter,
   });
 
   const countClassNames = classNames({
     'after:sm-content-[counter(count)]': true,
     'after:sm-animate-countTo25': progress === LoadingIndicatorProgress.oneQuarter,
-    'after:sm-animate-countTo50From25': progress === LoadingIndicatorProgress.twoQuarter,
+    'after:sm-animate-countFrom25To50': progress === LoadingIndicatorProgress.twoQuarter,
+    'after:sm-animate-countFrom50To75': progress === LoadingIndicatorProgress.threeQuarter,
+    'after:sm-animate-countFrom75To100': progress === LoadingIndicatorProgress.fourQuarter,
   });
 
   return (
