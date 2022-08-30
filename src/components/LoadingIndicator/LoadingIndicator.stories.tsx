@@ -6,8 +6,8 @@ export default {
   argTypes: {
     progressTo: {
       control: 'select',
-      options: ['zero', 'twentyFive', 'fifty', 'seventyFive', 'oneHundred'],
-      defaultValue: 'zero',
+      options: ['idle', 'thirtyThree', 'sixtySix', 'oneHundred'],
+      defaultValue: 'idle',
     },
   },
 };
