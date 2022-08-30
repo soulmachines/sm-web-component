@@ -52,10 +52,10 @@ export function LoadingIndicator({ progress }: LoadingIndicatorProps) {
       aria-valuenow={ariaProgress[progress]}
     >
       <div className="sm-bg-white sm-rounded-3xl sm-border-grayscale-200 sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
-        <div className={progressBarClassNames}></div>
+        <div className={progressBarClassNames} />
       </div>
 
-      <div className={countClassNames}></div>
+      <div className={countClassNames} />
     </div>
   );
 }

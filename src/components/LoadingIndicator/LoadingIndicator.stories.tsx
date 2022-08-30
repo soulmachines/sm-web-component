@@ -44,7 +44,7 @@ export const Example = () => {
   return (
     <div>
       <button onClick={startAnimation}>Start</button>
-      <LoadingIndicator progressTo={progressState} />
+      <LoadingIndicator progress={progressState} />
     </div>
   );
 };
