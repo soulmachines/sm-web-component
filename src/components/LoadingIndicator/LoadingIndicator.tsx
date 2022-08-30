@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 
-// TODO: Name still not right (mix of load to and end states)
 export enum ProgressStage {
   idle = 'idle',
   step1 = 'step1',
