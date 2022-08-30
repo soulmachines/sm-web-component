@@ -68,10 +68,11 @@ describe('useSMMedia()', () => {
     });
 
     it('sets isMicrophoneEnabled and isCameraEnabled to false when disconnected', async () => {
-      const { result, rerender } = customRender();
+      const { result, rerender, waitForNextUpdate } = customRender();
 
       await result.current.toggleMicrophone();
       await result.current.toggleCamera();
+      await waitForNextUpdate();
 
       expect(result.current.isMicrophoneEnabled).toEqual(true);
       expect(result.current.isCameraEnabled).toEqual(true);
@@ -90,29 +91,32 @@ describe('useSMMedia()', () => {
 
     describe('when toggleVideoMuted is called', () => {
       it('sets changes the video muted status to the opposite value', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         expect(mockVideoRef.current?.muted).toEqual(false);
 
         await result.current.toggleVideoMuted();
+        await waitForNextUpdate();
 
         expect(mockVideoRef.current?.muted).toEqual(true);
       });
 
       it('sets isVideoMuted to the opposite value', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         expect(result.current.isVideoMuted).toEqual(false);
 
         await result.current.toggleVideoMuted();
+        await waitForNextUpdate();
 
         expect(result.current.isVideoMuted).toEqual(true);
       });
 
       it('saves the mute status in storage', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         await result.current.toggleVideoMuted();
+        await waitForNextUpdate();
 
         expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toEqual('true');
       });
@@ -120,22 +124,26 @@ describe('useSMMedia()', () => {
 
     describe('when toggleCamera is called', () => {
       it('sets isCameraEnabled to the opposite value', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         expect(result.current.isCameraEnabled).toEqual(false);
 
         await result.current.toggleCamera();
+        await waitForNextUpdate();
 
         expect(result.current.isCameraEnabled).toEqual(true);
       });
 
       it('calls setMediaDeviceActive with camera and the opposite boolean value', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         await result.current.toggleCamera();
+        await waitForNextUpdate();
+
         expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ camera: true });
 
         await result.current.toggleCamera();
+        await waitForNextUpdate();
 
         expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ camera: false });
 
@@ -145,22 +153,26 @@ describe('useSMMedia()', () => {
 
     describe('when toggleMicrophone is called', () => {
       it('sets isMicrophoneEnabled to the opposite value', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         expect(result.current.isMicrophoneEnabled).toEqual(false);
 
         await result.current.toggleMicrophone();
+        await waitForNextUpdate();
 
         expect(result.current.isMicrophoneEnabled).toEqual(true);
       });
 
       it('calls setMediaDeviceActive with microphone and the opposite boolean value', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         await result.current.toggleMicrophone();
+        await waitForNextUpdate();
+
         expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ microphone: true });
 
         await result.current.toggleMicrophone();
+        await waitForNextUpdate();
 
         expect(mockScene.setMediaDeviceActive).toHaveBeenCalledWith({ microphone: false });
 
