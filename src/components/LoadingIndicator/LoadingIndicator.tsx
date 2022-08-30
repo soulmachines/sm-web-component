@@ -1,11 +1,12 @@
 import classNames from 'classnames';
 
+// TODO: Name still not right (mix of load to and end states)
 export enum LoadingIndicatorProgress {
   idle = 'idle',
   thirtyThree = 'thirtyThree',
   sixtySix = 'sixtySix',
   oneHundred = 'oneHundred',
-  complete = 'complete',
+  completed = 'completed',
 }
 
 export type LoadingIndicatorProps = {
@@ -14,16 +15,18 @@ export type LoadingIndicatorProps = {
 
 export function LoadingIndicator({ progressTo }: LoadingIndicatorProps) {
   const wrapprClassNames = classNames({
-    'sm-transition-all sm-font-primary sm-flex sm-items-center sm-justify-center sm-text-[10em] sm-relative sm-w-full sm-h-full':
+    'sm-transition-all sm-duration-300 sm-font-primary sm-flex sm-items-center sm-justify-center sm-text-[10em] sm-relative sm-w-full sm-h-full':
       true,
     'sm-translate-y-8 sm-opacity-60': progressTo === LoadingIndicatorProgress.idle,
   });
 
   const progressBarClassNames = classNames({
-    'sm-bg-primary-500 sm-h-full sm-w-0': true,
+    'sm-bg-primary-500 sm-h-full': true,
+    'sm-w-0': progressTo === LoadingIndicatorProgress.idle,
     'sm-animate-fillTo33': progressTo === LoadingIndicatorProgress.thirtyThree,
     'sm-animate-fillFrom33To66': progressTo === LoadingIndicatorProgress.sixtySix,
     'sm-animate-fillFrom66To100': progressTo === LoadingIndicatorProgress.oneHundred,
+    'sm-w-full': progressTo === LoadingIndicatorProgress.completed,
   });
 
   const countClassNames = classNames({
@@ -31,12 +34,14 @@ export function LoadingIndicator({ progressTo }: LoadingIndicatorProps) {
     'after:sm-animate-countTo33': progressTo === LoadingIndicatorProgress.thirtyThree,
     'after:sm-animate-countFrom33To66': progressTo === LoadingIndicatorProgress.sixtySix,
     'after:sm-animate-countFrom66To100': progressTo === LoadingIndicatorProgress.oneHundred,
+    'after:sm-content-["100"]': progressTo === LoadingIndicatorProgress.completed,
   });
 
   const progress: Record<string, number> = {
-    [LoadingIndicatorProgress.thirtyThree]: 33,
-    [LoadingIndicatorProgress.sixtySix]: 66,
-    [LoadingIndicatorProgress.oneHundred]: 100,
+    [LoadingIndicatorProgress.thirtyThree]: 0,
+    [LoadingIndicatorProgress.sixtySix]: 33,
+    [LoadingIndicatorProgress.oneHundred]: 66,
+    [LoadingIndicatorProgress.completed]: 100,
   };
 
   return (
@@ -44,7 +49,7 @@ export function LoadingIndicator({ progressTo }: LoadingIndicatorProps) {
       className={wrapprClassNames}
       role="progressbar"
       aria-label="Loading..."
-      aria-busy={progressTo !== LoadingIndicatorProgress.complete}
+      aria-busy={progressTo !== LoadingIndicatorProgress.completed}
       aria-valuenow={progress[progressTo]}
     >
       <div className="sm-bg-white sm-rounded-3xl sm-border-grayscale-200 sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
