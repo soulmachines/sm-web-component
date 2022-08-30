@@ -157,8 +157,10 @@ describe('useConnection()', () => {
       });
 
       it('sets canAutoPlayAudio to true', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
         await result.current.connect();
+        await waitForNextUpdate();
+
         expect(result.current.canAutoPlayAudio).toEqual(true);
       });
 
@@ -180,15 +182,17 @@ describe('useConnection()', () => {
       });
 
       it('updates the connection status to connected', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
         await result.current.connect();
+        await waitForNextUpdate();
 
         expect(result.current.connectionStatus).toEqual(ConnectionStatus.CONNECTED);
       });
 
       it('updates connectionError to null', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
         await result.current.connect();
+        await waitForNextUpdate();
 
         expect(result.current.connectionError).toEqual(null);
       });
@@ -208,6 +212,7 @@ describe('useConnection()', () => {
         const customRender = async () => {
           const testUtils = renderHook(() => useConnection(mockScene, tokenServer));
           await testUtils.result.current.connect();
+          await testUtils.waitForNextUpdate();
 
           act(() => {
             mockScene.onDisconnectedEvent.call();
@@ -260,15 +265,19 @@ describe('useConnection()', () => {
       });
 
       it('updates connectionError with the error', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
 
         await result.current.connect();
+        await waitForNextUpdate();
+
         expect(result.current.connectionError).toEqual(error);
       });
 
       it('updates connection status to errored', async () => {
-        const { result } = customRender();
+        const { result, waitForNextUpdate } = customRender();
+
         await result.current.connect();
+        await waitForNextUpdate();
 
         expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
       });
