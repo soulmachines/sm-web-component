@@ -5,7 +5,7 @@ export default {
   title: `Components / LoadingIndicator`,
   component: LoadingIndicator,
   argTypes: {
-    progressTo: {
+    progress: {
       control: 'select',
       options: ['idle', 'step1', 'step2', 'step3', 'completed'],
       defaultValue: 'idle',
@@ -13,8 +13,8 @@ export default {
   },
 };
 
-export const Basic = ({ progressTo }: LoadingIndicatorProps) => (
-  <LoadingIndicator progressTo={progressTo} />
+export const Basic = ({ progress }: LoadingIndicatorProps) => (
+  <LoadingIndicator progress={progress} />
 );
 
 export const Example = () => {
