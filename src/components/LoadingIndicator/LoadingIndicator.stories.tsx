@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import { LoadingIndicator, LoadingIndicatorProps, LoadingIndicatorProgress } from '.';
+import { LoadingIndicator, LoadingIndicatorProps, ProgressStage } from '.';
 
 export default {
   title: `Components / LoadingIndicator`,
@@ -7,7 +7,7 @@ export default {
   argTypes: {
     progressTo: {
       control: 'select',
-      options: ['idle', 'thirtyThree', 'sixtySix', 'oneHundred', 'completed'],
+      options: ['idle', 'step1', 'step2', 'step3', 'completed'],
       defaultValue: 'idle',
     },
   },
@@ -18,26 +18,26 @@ export const Basic = ({ progressTo }: LoadingIndicatorProps) => (
 );
 
 export const Example = () => {
-  const [progressState, setProgressState] = useState(LoadingIndicatorProgress.idle);
+  const [progressState, setProgressState] = useState(ProgressStage.idle);
 
   const startAnimation = () => {
     // Reset state
-    setProgressState(LoadingIndicatorProgress.idle);
+    setProgressState(ProgressStage.idle);
 
     setTimeout(() => {
-      setProgressState(LoadingIndicatorProgress.thirtyThree);
+      setProgressState(ProgressStage.step1);
     }, 500);
 
     setTimeout(() => {
-      setProgressState(LoadingIndicatorProgress.sixtySix);
+      setProgressState(ProgressStage.step2);
     }, 1000);
 
     setTimeout(() => {
-      setProgressState(LoadingIndicatorProgress.oneHundred);
+      setProgressState(ProgressStage.step3);
     }, 2000);
 
     setTimeout(() => {
-      setProgressState(LoadingIndicatorProgress.completed);
+      setProgressState(ProgressStage.completed);
     }, 3000);
   };
 
