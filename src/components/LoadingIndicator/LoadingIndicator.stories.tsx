@@ -1,50 +1,80 @@
 import { useState } from 'preact/hooks';
-import { LoadingIndicator, LoadingIndicatorProps, ProgressStage } from '.';
+import { LoadingIndicator, LoadingIndicatorProps } from '.';
 
 export default {
   title: `Components / LoadingIndicator`,
   component: LoadingIndicator,
   argTypes: {
-    progress: {
-      control: 'select',
-      options: ['idle', 'step1', 'step2', 'step3', 'completed'],
-      defaultValue: 'idle',
+    stepName: {
+      control: { type: 'text' },
+      defaultValue: 'DownloadingAssets',
+    },
+    currentStep: {
+      control: { type: 'number' },
+      defaultValue: 2,
+    },
+    totalSteps: {
+      control: { type: 'number' },
+      defaultValue: 4,
+    },
+    durationMs: {
+      control: { type: 'number' },
+      defaultValue: 3000,
     },
   },
 };
 
-export const Basic = ({ progress }: LoadingIndicatorProps) => (
-  <LoadingIndicator progress={progress} />
-);
+export const Basic = (props: LoadingIndicatorProps) => <LoadingIndicator {...props} />;
 
 export const Example = () => {
-  const [progressState, setProgressState] = useState(ProgressStage.idle);
+  const defaultState = {
+    stepName: 'Idle',
+    currentStep: 0,
+    totalSteps: 4,
+  };
+  const [progressProps, setProgressProps] = useState(defaultState);
 
   const startAnimation = () => {
     // Reset state
-    setProgressState(ProgressStage.idle);
+    setProgressProps(defaultState);
 
     setTimeout(() => {
-      setProgressState(ProgressStage.step1);
+      setProgressProps({
+        stepName: 'SearchingForDigitalPerson',
+        currentStep: 1,
+        totalSteps: 4,
+      });
     }, 500);
 
     setTimeout(() => {
-      setProgressState(ProgressStage.step2);
+      setProgressProps({
+        stepName: 'DownloadingAssets',
+        currentStep: 2,
+        totalSteps: 4,
+      });
     }, 1000);
 
     setTimeout(() => {
-      setProgressState(ProgressStage.step3);
+      setProgressProps({
+        stepName: 'ConnectingToDigitalPerson',
+        currentStep: 3,
+        totalSteps: 4,
+      });
     }, 2000);
 
     setTimeout(() => {
-      setProgressState(ProgressStage.completed);
-    }, 3000);
+      setProgressProps({
+        stepName: 'Connected',
+        currentStep: 4,
+        totalSteps: 4,
+      });
+    }, 3500);
   };
 
   return (
     <div>
       <button onClick={startAnimation}>Start</button>
-      <LoadingIndicator progress={progressState} />
+      <LoadingIndicator {...progressProps} />
     </div>
   );
 };

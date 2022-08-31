@@ -1,5 +1,3 @@
-const loadingAnimationTime = '15s';
-
 module.exports = {
   content: ['./src/**/**/**.tsx'],
   theme: {
@@ -107,12 +105,6 @@ module.exports = {
       animation: {
         grow: 'grow 1.2s ease-in-out infinite',
         spread: 'spread 1.6s ease-in-out infinite',
-        countTo33: `countTo33 ${loadingAnimationTime} linear forwards`,
-        countFrom33To66: `countfrom33To66 ${loadingAnimationTime} linear forwards`,
-        countFrom66To100: `countFrom66To100 ${loadingAnimationTime} linear forwards`,
-        fillTo33: `fillTo33 ${loadingAnimationTime} linear forwards`,
-        fillFrom33To66: `fillFrom33To66 ${loadingAnimationTime} linear forwards`,
-        fillFrom66To100: `fillFrom66To100 ${loadingAnimationTime} linear forwards`,
       },
       keyframes: {
         grow: {
@@ -124,57 +116,6 @@ module.exports = {
           '0%': { columnGap: '2px' },
           '50%': { columnGap: '4px' },
           '100%': { columnGap: '2px' },
-        },
-        countTo33: {
-          '0%': { counterIncrement: 'count 0' },
-          '10%': { counterIncrement: 'count 3' },
-          '20%': { counterIncrement: 'count 9' },
-          '30%': { counterIncrement: 'count 11' },
-          '40%': { counterIncrement: 'count 14' },
-          '50%': { counterIncrement: 'count 18' },
-          '60%': { counterIncrement: 'count 21' },
-          '70%': { counterIncrement: 'count 24' },
-          '80%': { counterIncrement: 'count 27' },
-          '90%': { counterIncrement: 'count 20' },
-          '100%': { counterIncrement: 'count 33' },
-        },
-        countfrom33To66: {
-          '0%': { counterIncrement: 'count 33' },
-          '10%': { counterIncrement: 'count 36' },
-          '20%': { counterIncrement: 'count 39' },
-          '30%': { counterIncrement: 'count 42' },
-          '40%': { counterIncrement: 'count 45' },
-          '50%': { counterIncrement: 'count 50' },
-          '60%': { counterIncrement: 'count 54' },
-          '70%': { counterIncrement: 'count 57' },
-          '80%': { counterIncrement: 'count 60' },
-          '90%': { counterIncrement: 'count 63' },
-          '100%': { counterIncrement: 'count 66' },
-        },
-        countFrom66To100: {
-          '0%': { counterIncrement: 'count 66' },
-          '10%': { counterIncrement: 'count 70' },
-          '20%': { counterIncrement: 'count 73' },
-          '30%': { counterIncrement: 'count 75' },
-          '40%': { counterIncrement: 'count 79' },
-          '50%': { counterIncrement: 'count 83' },
-          '60%': { counterIncrement: 'count 87' },
-          '70%': { counterIncrement: 'count 91' },
-          '80%': { counterIncrement: 'count 92' },
-          '90%': { counterIncrement: 'count 95' },
-          '100%': { counterIncrement: 'count 100' },
-        },
-        fillTo33: {
-          from: { width: '0' },
-          to: { width: '33%' },
-        },
-        fillFrom33To66: {
-          from: { width: '33%' },
-          to: { width: '66%' },
-        },
-        fillFrom66To100: {
-          from: { width: '66%' },
-          to: { width: '100%' },
         },
       },
     },

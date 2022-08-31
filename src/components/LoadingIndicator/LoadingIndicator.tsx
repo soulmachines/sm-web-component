@@ -1,61 +1,81 @@
+import { useSpring, animated } from 'react-spring';
+import words from 'lodash/words';
 import classNames from 'classnames';
 
-export enum ProgressStage {
-  idle = 'idle',
-  step1 = 'step1',
-  step2 = 'step2',
-  step3 = 'step3',
-  completed = 'completed',
-}
-
 export type LoadingIndicatorProps = {
-  progress: keyof typeof ProgressStage;
+  currentStep: number;
+  totalSteps: number;
+  durationMs?: number;
+  stepName: string;
 };
 
-export function LoadingIndicator({ progress }: LoadingIndicatorProps) {
-  const wrapprClassNames = classNames({
+const calculateProgress = (step: number, totalSteps: number) => {
+  return Math.round((step / totalSteps) * 100);
+};
+export function LoadingIndicator({
+  currentStep,
+  totalSteps,
+  durationMs,
+  stepName,
+}: LoadingIndicatorProps) {
+  const stepAmount = calculateProgress(1, totalSteps);
+  let currentProgress = calculateProgress(currentStep, totalSteps);
+  let animateFrom = currentProgress - stepAmount;
+
+  // Prevent negative number
+  if (animateFrom <= 0) {
+    animateFrom = 0;
+  }
+
+  // Prevent animating above 100
+  if (currentProgress >= 100) {
+    currentProgress = 100;
+  }
+
+  const defaultAnimationConfig = {
+    reset: true,
+    config: {
+      duration: durationMs,
+    },
+  };
+
+  const widthAnimation = useSpring({
+    ...defaultAnimationConfig,
+    to: { width: `${currentProgress}%` },
+    from: { width: `${animateFrom}%` },
+  });
+
+  const { number } = useSpring({
+    ...defaultAnimationConfig,
+    to: { number: currentProgress },
+    from: { number: animateFrom },
+  });
+
+  const wrapperClassNames = classNames({
     'sm-transition-all sm-duration-300 sm-font-primary sm-flex sm-items-center sm-justify-center sm-text-[10em] sm-relative sm-w-full sm-h-full':
       true,
-    'sm-translate-y-8 sm-opacity-60': progress === ProgressStage.idle,
+    'sm-translate-y-8 sm-opacity-60': currentStep === 0,
   });
-
-  const progressBarClassNames = classNames({
-    'sm-bg-primary-500 sm-h-full': true,
-    'sm-w-0': progress === ProgressStage.idle,
-    'sm-animate-fillTo33': progress === ProgressStage.step1,
-    'sm-animate-fillFrom33To66': progress === ProgressStage.step2,
-    'sm-animate-fillFrom66To100': progress === ProgressStage.step3,
-    'sm-w-full': progress === ProgressStage.completed,
-  });
-
-  const countClassNames = classNames({
-    'after:sm-content-[counter(count)] after:sm-text-primary-100': true,
-    'after:sm-animate-countTo33': progress === ProgressStage.step1,
-    'after:sm-animate-countFrom33To66': progress === ProgressStage.step2,
-    'after:sm-animate-countFrom66To100': progress === ProgressStage.step3,
-    'after:sm-content-["100"]': progress === ProgressStage.completed,
-  });
-
-  const ariaProgress: Record<string, number> = {
-    [ProgressStage.step1]: 0,
-    [ProgressStage.step2]: 33,
-    [ProgressStage.step3]: 66,
-    [ProgressStage.completed]: 100,
-  };
 
   return (
     <div
-      className={wrapprClassNames}
-      role="progressbar"
       aria-label="Loading..."
-      aria-busy={progress !== ProgressStage.completed}
-      aria-valuenow={ariaProgress[progress]}
+      role="progressbar"
+      aria-busy={currentStep !== totalSteps}
+      aria-valuenow={currentProgress}
+      className={wrapperClassNames}
     >
+      <span className="sm-sr-only">{words(stepName)}</span>
+
       <div className="sm-bg-white sm-rounded-3xl sm-border-grayscale-200 sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
-        <div className={progressBarClassNames} />
+        <animated.div className="sm-bg-primary-500 sm-h-full" style={widthAnimation} />
       </div>
 
-      <div className={countClassNames} />
+      <animated.div className="sm-text-primary-100">{number.to((x) => x.toFixed(0))}</animated.div>
     </div>
   );
 }
+
+LoadingIndicator.defaultProps = {
+  durationMs: 1500,
+};
