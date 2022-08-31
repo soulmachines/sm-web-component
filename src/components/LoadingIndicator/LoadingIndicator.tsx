@@ -1,5 +1,4 @@
 import { useSpring, animated } from 'react-spring';
-import words from 'lodash/words';
 import classNames from 'classnames';
 
 export type LoadingIndicatorProps = {
@@ -10,7 +9,10 @@ export type LoadingIndicatorProps = {
 };
 
 const calculateProgress = (step: number, totalSteps: number) => {
-  return Math.round((step / totalSteps) * 100);
+  // Handle negative numbers
+  if (step < 0 || totalSteps < 0) return 0;
+
+  return Math.floor((step / totalSteps) * 100);
 };
 export function LoadingIndicator({
   currentStep,
@@ -19,8 +21,8 @@ export function LoadingIndicator({
   stepName,
 }: LoadingIndicatorProps) {
   const stepAmount = calculateProgress(1, totalSteps);
-  let currentProgress = calculateProgress(currentStep, totalSteps);
-  let animateFrom = currentProgress - stepAmount;
+  let animateTo = calculateProgress(currentStep, totalSteps);
+  let animateFrom = animateTo - stepAmount;
 
   // Prevent negative number
   if (animateFrom <= 0) {
@@ -28,8 +30,8 @@ export function LoadingIndicator({
   }
 
   // Prevent animating above 100
-  if (currentProgress >= 100) {
-    currentProgress = 100;
+  if (animateTo >= 100) {
+    animateTo = 100;
   }
 
   const defaultAnimationConfig = {
@@ -41,14 +43,14 @@ export function LoadingIndicator({
 
   const widthAnimation = useSpring({
     ...defaultAnimationConfig,
-    to: { width: `${currentProgress}%` },
     from: { width: `${animateFrom}%` },
+    to: { width: `${animateTo}%` },
   });
 
   const { number } = useSpring({
     ...defaultAnimationConfig,
-    to: { number: currentProgress },
     from: { number: animateFrom },
+    to: { number: animateTo },
   });
 
   const wrapperClassNames = classNames({
@@ -61,11 +63,11 @@ export function LoadingIndicator({
     <div
       aria-label="Loading..."
       role="progressbar"
-      aria-busy={currentStep !== totalSteps}
-      aria-valuenow={currentProgress}
+      aria-busy={currentStep < totalSteps}
+      aria-valuenow={animateTo}
       className={wrapperClassNames}
     >
-      <span className="sm-sr-only">{words(stepName)}</span>
+      <span className="sm-sr-only">{stepName}</span>
 
       <div className="sm-bg-white sm-rounded-3xl sm-border-grayscale-200 sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
         <animated.div className="sm-bg-primary-500 sm-h-full" style={widthAnimation} />
