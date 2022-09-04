@@ -26,9 +26,7 @@ export function Widget({
 }: WidgetProps) {
   const { connectionStatus, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
-  const isNotConnectingOrConnected =
-    connectionStatus !== ConnectionStatus.CONNECTING &&
-    connectionStatus !== ConnectionStatus.CONNECTED;
+  const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
 
   const wrapperPositionClass = classNames({
@@ -56,13 +54,13 @@ export function Widget({
   );
 
   const scaleAnimation = useSpring({
-    transform: !isNotConnectingOrConnected ? 'scale(2)' : 'scale(1)',
+    transform: isConnectingOrConnected ? 'scale(2)' : 'scale(1)',
     config: config.stiff,
   });
 
   // Scales down the above animation back to 1, the normal size
   const scaledDownClass = classNames({
-    'sm-scale-50 sm-origin-bottom-right': !isNotConnectingOrConnected,
+    'sm-scale-50 sm-origin-bottom-right': isConnectingOrConnected,
   });
 
   return (
@@ -77,7 +75,7 @@ export function Widget({
         <div
           className={`sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5 ${notificationVideoOrderClass}`}
         >
-          {isNotConnectingOrConnected && (
+          {!isConnectingOrConnected && (
             <div className="sm-max-w-xs">
               <Notifications greeting={greeting} />
             </div>
@@ -102,7 +100,7 @@ export function Widget({
                 className={classNames({
                   'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
                   'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
-                    !isNotConnectingOrConnected,
+                    isConnectingOrConnected,
                 })}
               >
                 <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
