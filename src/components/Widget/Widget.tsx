@@ -39,7 +39,7 @@ export function Widget({
 
   // Connect directly if it's resume session
   useEffect(() => {
-    if (!isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
+    if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
   }, [connect, isDisconnected]);
