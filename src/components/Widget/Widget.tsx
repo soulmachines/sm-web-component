@@ -26,9 +26,11 @@ export function Widget({
 }: WidgetProps) {
   const { connectionStatus, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
-  const isDisconnected =
-    connectionStatus !== ConnectionStatus.CONNECTED &&
-    connectionStatus !== ConnectionStatus.CONNECTING;
+  const isNotConnectingOrConnected =
+    connectionStatus !== ConnectionStatus.CONNECTING &&
+    connectionStatus !== ConnectionStatus.CONNECTED;
+  const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
+
   const wrapperPositionClass = classNames({
     'sm-right-0': position === widgetPosition.BOTTOM_RIGHT,
     'sm-left-0': position === widgetPosition.BOTTOM_LEFT,
@@ -54,13 +56,13 @@ export function Widget({
   );
 
   const scaleAnimation = useSpring({
-    transform: !isDisconnected ? 'scale(2)' : 'scale(1)',
+    transform: !isNotConnectingOrConnected ? 'scale(2)' : 'scale(1)',
     config: config.stiff,
   });
 
   // Scales down the above animation back to 1, the normal size
   const scaledDownClass = classNames({
-    'sm-scale-50 sm-origin-bottom-right': !isDisconnected,
+    'sm-scale-50 sm-origin-bottom-right': !isNotConnectingOrConnected,
   });
 
   return (
@@ -75,7 +77,7 @@ export function Widget({
         <div
           className={`sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5 ${notificationVideoOrderClass}`}
         >
-          {isDisconnected && (
+          {isNotConnectingOrConnected && (
             <div className="sm-max-w-xs">
               <Notifications greeting={greeting} />
             </div>
@@ -100,7 +102,7 @@ export function Widget({
                 className={classNames({
                   'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
                   'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
-                    !isDisconnected,
+                    !isNotConnectingOrConnected,
                 })}
               >
                 <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
