@@ -26,7 +26,7 @@ export function Widget({
 }: WidgetProps) {
   const { connectionStatus, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
-  const isConnectingOrConnected =
+  const isDisconnected =
     connectionStatus !== ConnectionStatus.CONNECTED &&
     connectionStatus !== ConnectionStatus.CONNECTING;
   const wrapperPositionClass = classNames({
@@ -39,10 +39,10 @@ export function Widget({
 
   // Connect directly if it's resume session
   useEffect(() => {
-    if (isConnectingOrConnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
+    if (!isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-  }, [connect, isConnectingOrConnected]);
+  }, [connect, isDisconnected]);
 
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
@@ -54,13 +54,13 @@ export function Widget({
   );
 
   const scaleAnimation = useSpring({
-    transform: !isConnectingOrConnected ? 'scale(2)' : 'scale(1)',
+    transform: !isDisconnected ? 'scale(2)' : 'scale(1)',
     config: config.stiff,
   });
 
   // Scales down the above animation back to 1, the normal size
   const scaledDownClass = classNames({
-    'sm-scale-50 sm-origin-bottom-right': !isConnectingOrConnected,
+    'sm-scale-50 sm-origin-bottom-right': !isDisconnected,
   });
 
   return (
@@ -75,7 +75,7 @@ export function Widget({
         <div
           className={`sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5 ${notificationVideoOrderClass}`}
         >
-          {isConnectingOrConnected && (
+          {isDisconnected && (
             <div className="sm-max-w-xs">
               <Notifications greeting={greeting} />
             </div>
@@ -86,7 +86,7 @@ export function Widget({
               style={scaleAnimation}
               className="sm-rounded-xl sm-origin-bottom-right sm-shadow-lg sm-bg-secondary-100 sm-pointer-events-auto md:sm-rounded-3xl"
             >
-              {isConnectingOrConnected && (
+              {isDisconnected && (
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
@@ -100,7 +100,7 @@ export function Widget({
                 className={classNames({
                   'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
                   'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
-                    !isConnectingOrConnected,
+                    !isDisconnected,
                 })}
               >
                 <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
