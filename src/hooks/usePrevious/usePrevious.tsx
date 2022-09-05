@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks';
 
 // from: https://usehooks.com/usePrevious/
-function usePrevious(value: string | number) {
+function usePrevious<Type>(value: Type) {
   const ref = useRef(value);
 
   // Only re-run if value changes

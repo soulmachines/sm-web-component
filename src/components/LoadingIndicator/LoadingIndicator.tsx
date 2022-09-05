@@ -1,39 +1,17 @@
 import { useSpring, animated } from 'react-spring';
 import classNames from 'classnames';
+import { usePrevious } from '../../hooks/usePrevious';
 
 export type LoadingIndicatorProps = {
-  currentStep: number;
-  totalSteps: number;
+  progress: number;
   durationMs?: number;
   stepName: string;
 };
 
-const calculateProgress = (step: number, totalSteps: number) => {
-  // Handle negative numbers
-  if (step < 0 || totalSteps < 0) return 0;
-
-  return Math.floor((step / totalSteps) * 100);
-};
-export function LoadingIndicator({
-  currentStep,
-  totalSteps,
-  durationMs,
-  stepName,
-}: LoadingIndicatorProps) {
-  const stepAmount = calculateProgress(1, totalSteps);
-  let animateTo = calculateProgress(currentStep, totalSteps);
-  let animateFrom = animateTo - stepAmount;
-
-  // Prevent negative number
-  if (animateFrom <= 0) {
-    animateFrom = 0;
-  }
-
-  // Prevent animating above 100
-  if (animateTo >= 100) {
-    animateTo = 100;
-  }
-
+export function LoadingIndicator({ progress, durationMs, stepName }: LoadingIndicatorProps) {
+  const previousProgressValue = usePrevious<number>(progress);
+  // Reset previous progress so it does not re run from 100 to 0 on subsequent runs
+  const previousProgress = previousProgressValue === 100 ? 0 : previousProgressValue;
   const defaultAnimationConfig = {
     reset: true,
     config: {
@@ -43,28 +21,28 @@ export function LoadingIndicator({
 
   const widthAnimation = useSpring({
     ...defaultAnimationConfig,
-    from: { width: `${animateFrom}%` },
-    to: { width: `${animateTo}%` },
+    from: { width: `${previousProgress}%` },
+    to: { width: `${progress}%` },
   });
 
   const { number } = useSpring({
     ...defaultAnimationConfig,
-    from: { number: animateFrom },
-    to: { number: animateTo },
+    from: { number: previousProgress },
+    to: { number: progress },
   });
 
   const wrapperClassNames = classNames({
     'sm-transition-all sm-duration-300 sm-font-primary sm-flex sm-items-center sm-justify-center sm-text-[10em] sm-relative sm-w-full sm-h-full':
       true,
-    'sm-translate-y-8 sm-opacity-60': currentStep === 0,
+    'sm-translate-y-8 sm-opacity-60': progress === 0,
   });
 
   return (
     <div
       aria-label="Loading..."
       role="progressbar"
-      aria-busy={currentStep < totalSteps}
-      aria-valuenow={animateTo}
+      aria-busy={progress < 100}
+      aria-valuenow={progress}
       className={wrapperClassNames}
     >
       <span className="sm-sr-only">{stepName}</span>

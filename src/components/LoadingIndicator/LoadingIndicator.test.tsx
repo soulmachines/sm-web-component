@@ -13,7 +13,7 @@ jest.mock('react-spring', () => {
 describe('<LoadingIndicator />', () => {
   const defaultProps = {
     stepName: 'Idle',
-    currentStep: 0,
+    progress: 0,
     totalSteps: 3,
   };
 
@@ -50,7 +50,7 @@ describe('<LoadingIndicator />', () => {
     );
   });
 
-  describe('when in step 0 of 3', () => {
+  describe('when the progress is 0', () => {
     it('has the classes translate y 8 and opacity 60', () => {
       const { getByRole } = render(<LoadingIndicator {...defaultProps} />);
       expect(getByRole('progressbar').className).toContain('sm-translate-y-8 sm-opacity-60');
@@ -100,197 +100,64 @@ describe('<LoadingIndicator />', () => {
     });
   });
 
-  describe('when in step 1 of 3', () => {
-    const props = {
-      stepName: 'mock step 1 name',
-      currentStep: 1,
-      totalSteps: 3,
+  describe('when progress changes', () => {
+    const updatedProps = {
+      stepName: 'mock step',
+      progress: 50,
     };
 
     it('does not the classes translate y 8 and opacity 60', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
+      const { getByRole, rerender } = render(<LoadingIndicator {...defaultProps} />);
+      rerender(<LoadingIndicator {...updatedProps} />);
       expect(getByRole('progressbar').className).not.toContain('sm-translate-y-8 sm-opacity-60');
     });
 
     it('has the attribute aria-busy with the value of true', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
+      const { getByRole, rerender } = render(<LoadingIndicator {...defaultProps} />);
+      rerender(<LoadingIndicator {...updatedProps} />);
       expect(getByRole('progressbar')).toHaveAttribute('aria-busy', 'true');
     });
 
     it('has the attribute aria-valuenow with the value of 33', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-valuenow', '33');
+      const { getByRole, rerender } = render(<LoadingIndicator {...defaultProps} />);
+      rerender(<LoadingIndicator {...updatedProps} />);
+      expect(getByRole('progressbar')).toHaveAttribute('aria-valuenow', '50');
     });
 
     it('renders step name', () => {
-      const { getByText } = render(<LoadingIndicator {...props} />);
-      expect(getByText('mock step 1 name')).toBeInTheDocument();
+      const { getByText, rerender } = render(<LoadingIndicator {...defaultProps} />);
+      rerender(<LoadingIndicator {...updatedProps} />);
+      expect(getByText('mock step')).toBeInTheDocument();
     });
 
-    it('calls useSpring with the from number: 0 and to: 33', () => {
-      render(<LoadingIndicator {...props} />);
+    it('calls useSpring with the from number: 0 and to: 50', () => {
+      const { rerender } = render(<LoadingIndicator {...defaultProps} />);
+      rerender(<LoadingIndicator {...updatedProps} />);
       expect(useSpring).toHaveBeenCalledWith(
         expect.objectContaining({
           from: {
             number: 0,
           },
           to: {
-            number: 33,
+            number: 50,
           },
         }),
       );
     });
 
-    it('calls useSpring with the from width: 0% and to: 33%', () => {
-      render(<LoadingIndicator {...props} />);
+    it('calls useSpring with the from width: 0% and to: 50%', () => {
+      const { rerender } = render(<LoadingIndicator {...defaultProps} />);
+      rerender(<LoadingIndicator {...updatedProps} />);
       expect(useSpring).toHaveBeenCalledWith(
         expect.objectContaining({
           from: {
             width: '0%',
           },
           to: {
-            width: '33%',
+            width: '50%',
           },
         }),
       );
-    });
-  });
-
-  describe('when in step 2 of 3', () => {
-    const props = {
-      stepName: 'mock step 2 name',
-      currentStep: 2,
-      totalSteps: 3,
-    };
-
-    it('has the attribute aria-busy with the value of true', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-busy', 'true');
-    });
-
-    it('has the attribute aria-valuenow with the value of 66', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-valuenow', '66');
-    });
-
-    it('renders step name', () => {
-      const { getByText } = render(<LoadingIndicator {...props} />);
-      expect(getByText('mock step 2 name')).toBeInTheDocument();
-    });
-
-    it('calls useSpring with the from number: 33 and to: 66', () => {
-      render(<LoadingIndicator {...props} />);
-      expect(useSpring).toHaveBeenCalledWith(
-        expect.objectContaining({
-          from: {
-            number: 33,
-          },
-          to: {
-            number: 66,
-          },
-        }),
-      );
-    });
-
-    it('calls useSpring with the from width: 33% and to: 66%', () => {
-      render(<LoadingIndicator {...props} />);
-      expect(useSpring).toHaveBeenCalledWith(
-        expect.objectContaining({
-          from: {
-            width: '33%',
-          },
-          to: {
-            width: '66%',
-          },
-        }),
-      );
-    });
-  });
-
-  describe('when in step 3 of 3', () => {
-    const props = {
-      stepName: 'mock step 3 name',
-      currentStep: 3,
-      totalSteps: 3,
-    };
-
-    it('has the attribute aria-busy with the value of false', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-busy', 'false');
-    });
-
-    it('has the attribute aria-valuenow with the value of 100', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100');
-    });
-
-    it('renders step name', () => {
-      const { getByText } = render(<LoadingIndicator {...props} />);
-      expect(getByText('mock step 3 name')).toBeInTheDocument();
-    });
-
-    it('calls useSpring with the from number: 67 and to: 100', () => {
-      render(<LoadingIndicator {...props} />);
-      expect(useSpring).toHaveBeenCalledWith(
-        expect.objectContaining({
-          from: {
-            number: 67,
-          },
-          to: {
-            number: 100,
-          },
-        }),
-      );
-    });
-
-    it('calls useSpring with the from width: 67% and to: 100%', () => {
-      render(<LoadingIndicator {...props} />);
-      expect(useSpring).toHaveBeenCalledWith(
-        expect.objectContaining({
-          from: {
-            width: '67%',
-          },
-          to: {
-            width: '100%',
-          },
-        }),
-      );
-    });
-  });
-
-  describe('when the current step is larger than the total steps', () => {
-    const props = {
-      ...defaultProps,
-      currentStep: 5,
-      totalSteps: 4,
-    };
-
-    it('has the attribute aria-valuenow with the value of 0', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100');
-    });
-
-    it('has the attribute aria-busy with the value of false', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-busy', 'false');
-    });
-  });
-
-  describe('when the current and total steps are negative numbers', () => {
-    const props = {
-      ...defaultProps,
-      currentStep: -5,
-      totalSteps: -4,
-    };
-
-    it('has the attribute aria-busy with the value of true', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-busy', 'true');
-    });
-
-    it('has the attribute aria-valuenow with the value of 0', () => {
-      const { getByRole } = render(<LoadingIndicator {...props} />);
-      expect(getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0');
     });
   });
 });

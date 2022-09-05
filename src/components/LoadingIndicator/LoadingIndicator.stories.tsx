@@ -9,13 +9,9 @@ export default {
       control: { type: 'text' },
       defaultValue: 'DownloadingAssets',
     },
-    currentStep: {
+    progress: {
       control: { type: 'number' },
-      defaultValue: 2,
-    },
-    totalSteps: {
-      control: { type: 'number' },
-      defaultValue: 4,
+      defaultValue: 25,
     },
     durationMs: {
       control: { type: 'number' },
@@ -29,8 +25,7 @@ export const Basic = (props: LoadingIndicatorProps) => <LoadingIndicator {...pro
 export const Example = () => {
   const defaultState = {
     stepName: 'Idle',
-    currentStep: 0,
-    totalSteps: 4,
+    progress: 0,
   };
   const [progressProps, setProgressProps] = useState(defaultState);
 
@@ -41,32 +36,28 @@ export const Example = () => {
     setTimeout(() => {
       setProgressProps({
         stepName: 'SearchingForDigitalPerson',
-        currentStep: 1,
-        totalSteps: 4,
+        progress: 25,
       });
     }, 500);
 
     setTimeout(() => {
       setProgressProps({
         stepName: 'DownloadingAssets',
-        currentStep: 2,
-        totalSteps: 4,
+        progress: 50,
       });
     }, 1000);
 
     setTimeout(() => {
       setProgressProps({
         stepName: 'ConnectingToDigitalPerson',
-        currentStep: 3,
-        totalSteps: 4,
+        progress: 75,
       });
     }, 2000);
 
     setTimeout(() => {
       setProgressProps({
         stepName: 'Connected',
-        currentStep: 4,
-        totalSteps: 4,
+        progress: 100,
       });
     }, 3500);
   };
@@ -74,7 +65,7 @@ export const Example = () => {
   return (
     <div>
       <button onClick={startAnimation}>Start</button>
-      <LoadingIndicator {...progressProps} />
+      <LoadingIndicator {...progressProps} durationMs={3000} />
     </div>
   );
 };
