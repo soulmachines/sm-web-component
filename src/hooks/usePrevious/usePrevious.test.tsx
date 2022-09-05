@@ -8,7 +8,7 @@ describe('usePrevious()', () => {
   });
 
   it('returns the previous value when the value changes', () => {
-    const { result, rerender } = renderHook((value: string = 'one') => usePrevious(value));
+    const { result, rerender } = renderHook((value = 'one') => usePrevious(value));
     expect(result.current).toEqual('one');
 
     rerender('two');
