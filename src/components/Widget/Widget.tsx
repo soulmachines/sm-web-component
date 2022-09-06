@@ -6,7 +6,7 @@ import { VideoControls } from '../VideoControls';
 import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
 import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
-import { Spinner as DefaultLoadingIndicator } from '../Spinner';
+import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';
@@ -24,7 +24,7 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connect } = useSoulMachines();
+  const { connectionStatus, connectionState, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
@@ -48,7 +48,14 @@ export function Widget({
   const LoadingIndicator = () => (
     <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-600">
       <div className="sm-w-12 sm-h-12 md:sm-w-24 md:sm-h-24 sm-text-base">
-        {loadingIndicator ? loadingIndicator : <DefaultLoadingIndicator />}
+        {loadingIndicator ? (
+          loadingIndicator
+        ) : (
+          <DefaultLoadingIndicator
+            stepName={connectionState.name}
+            progress={connectionState.percentageLoaded}
+          />
+        )}
       </div>
     </div>
   );
