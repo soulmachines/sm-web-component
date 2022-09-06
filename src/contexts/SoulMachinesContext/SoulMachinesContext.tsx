@@ -25,7 +25,11 @@ type Context = {
   isCameraEnabled: boolean;
   isVideoMuted: boolean;
   conversationState: ConversationStateTypes;
-  connectionState: ConnectionStateTypes;
+  // todo: is there an sdk type for this?
+  connectionState: {
+    name: string;
+    percentageLoaded: number;
+  };
   toggleMicrophone: () => void;
   toggleCamera: () => void;
   toggleVideoMuted: () => void;

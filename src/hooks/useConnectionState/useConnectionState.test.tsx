@@ -15,7 +15,7 @@ describe('useConnectionState()', () => {
   describe('when onConnectionStateUpdated fires', () => {
     it('updates the state to the state received from the event', () => {
       const { result, rerender } = renderHook(() => useConnectionState(scene));
-      scene.onConnectionStateUpdated.call(ConnectionStateTypes.DownloadingAssets);
+      scene.connectionState.onConnectionStateUpdated.call(ConnectionStateTypes.DownloadingAssets);
 
       rerender();
 

@@ -5,7 +5,7 @@ function useConnectionState(scene: Scene) {
   const [connectionState, setConnectionState] = useState(ConnectionStateTypes.Disconnected);
 
   useEffect(() => {
-    scene.onConnectionStateUpdated.addListener((state: ConnectionStateTypes) => {
+    scene.connectionState.onConnectionStateUpdated.addListener((state: ConnectionStateTypes) => {
       setConnectionState(state);
     });
   }, [scene]);
