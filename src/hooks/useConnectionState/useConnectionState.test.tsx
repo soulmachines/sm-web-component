@@ -1,4 +1,4 @@
-import { Scene, ConnectionStateTypes } from '@soulmachines/smwebsdk';
+import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
 import { useConnectionState } from '.';
 
