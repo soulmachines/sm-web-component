@@ -10,6 +10,7 @@ import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';
+import { usePrevious } from '../../hooks/usePrevious';
 
 export type WidgetProps = {
   greeting?: string;
@@ -25,6 +26,7 @@ export function Widget({
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
   const { connectionStatus, connectionState, connect } = useSoulMachines();
+  const previousConnectionStateProgress = usePrevious<number>(connectionState.percentageLoaded);
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
@@ -53,7 +55,8 @@ export function Widget({
         ) : (
           <DefaultLoadingIndicator
             stepName={connectionState.name}
-            progress={connectionState.percentageLoaded}
+            progressFrom={previousConnectionStateProgress}
+            progressTo={connectionState.percentageLoaded}
           />
         )}
       </div>
@@ -91,13 +94,13 @@ export function Widget({
           <div className={scaledDownClass}>
             <animated.div
               style={scaleAnimation}
-              className="sm-rounded-xl sm-origin-bottom-right sm-shadow-lg sm-bg-secondary-100 sm-pointer-events-auto md:sm-rounded-3xl"
+              className="sm-rounded-xl sm-origin-bottom-right sm-shadow-lg sm-bg-white sm-pointer-events-auto md:sm-rounded-3xl"
             >
               {isDisconnected && (
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-300 sm-border-2 sm-border-transparent sm-bg-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
+                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-500 sm-border-2 sm-border-transparent sm-bg-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>

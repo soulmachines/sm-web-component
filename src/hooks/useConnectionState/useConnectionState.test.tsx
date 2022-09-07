@@ -19,7 +19,7 @@ describe('useConnectionState()', () => {
 
       rerender();
 
-      expect(result.current.connectionState).toEqual(ConnectionStateTypes.dpSpeaking);
+      expect(result.current.connectionState).toEqual(ConnectionStateTypes.DownloadingAssets);
     });
   });
 });

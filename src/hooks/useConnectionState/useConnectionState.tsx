@@ -1,11 +1,13 @@
-import { Scene, ConnectionStateTypes } from '@soulmachines/smwebsdk';
+import { Scene, ConnectionStateData } from '@soulmachines/smwebsdk';
 import { useEffect, useState } from 'preact/hooks';
 
 function useConnectionState(scene: Scene) {
-  const [connectionState, setConnectionState] = useState(ConnectionStateTypes.Disconnected);
+  const [connectionState, setConnectionState] = useState<ConnectionStateData>(
+    scene.connectionState.getConnectionState(),
+  );
 
   useEffect(() => {
-    scene.connectionState.onConnectionStateUpdated.addListener((state: ConnectionStateTypes) => {
+    scene.connectionState.onConnectionStateUpdated.addListener((state: ConnectionStateData) => {
       setConnectionState(state);
     });
   }, [scene]);

@@ -3,7 +3,7 @@ import {
   Persona,
   Scene,
   ConversationStateTypes,
-  ConnectionStateTypes,
+  ConnectionStateData,
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
@@ -25,11 +25,7 @@ type Context = {
   isCameraEnabled: boolean;
   isVideoMuted: boolean;
   conversationState: ConversationStateTypes;
-  // todo: is there an sdk type for this?
-  connectionState: {
-    name: string;
-    percentageLoaded: number;
-  };
+  connectionState: ConnectionStateData;
   toggleMicrophone: () => void;
   toggleCamera: () => void;
   toggleVideoMuted: () => void;
