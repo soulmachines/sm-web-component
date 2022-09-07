@@ -7,19 +7,24 @@ jest.mock('@soulmachines/smwebsdk');
 describe('useConnectionState()', () => {
   const scene = new Scene();
 
-  it('returns the connection state, defaulted to disconnected', () => {
+  it('returns the connection state defaulted to the first step', () => {
     const { result } = renderHook(() => useConnectionState(scene));
-    expect(result.current.connectionState).toEqual(ConnectionStateTypes.Disconnected);
+    expect(result.current.connectionState).toEqual({
+      name: 'mock name',
+      percentageLoaded: 0,
+      totalSteps: 4,
+    });
   });
 
   describe('when onConnectionStateUpdated fires', () => {
     it('updates the state to the state received from the event', () => {
+      const mockData = {};
       const { result, rerender } = renderHook(() => useConnectionState(scene));
-      scene.connectionState.onConnectionStateUpdated.call(ConnectionStateTypes.DownloadingAssets);
+      scene.connectionState.onConnectionStateUpdated.call(mockData);
 
       rerender();
 
-      expect(result.current.connectionState).toEqual(ConnectionStateTypes.DownloadingAssets);
+      expect(result.current.connectionState).toEqual(mockData);
     });
   });
 });

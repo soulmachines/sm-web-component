@@ -8,7 +8,7 @@ enum ConversationStateTypes {
   idle = 'idle',
 }
 
-enum ConnectionStateTypes {
+export enum ConnectionStateTypes {
   Disconnected = 'Disconnected',
   SearchingForDigitalPerson = 'SearchingForDigitalPerson',
   DownloadingAssets = 'DownloadingAssets',
@@ -46,13 +46,20 @@ const scene = {
   videoElement: {
     srcObject: 'mock video src',
   },
-  onConnectionStateUpdated: {
-    addListener: (cb: () => void) => {
-      onConnectionStateUpdatedCallback = cb;
+  connectionState: {
+    getConnectionState: jest.fn(() => ({
+      name: 'mock name',
+      percentageLoaded: 0,
+      totalSteps: 4,
+    })),
+    onConnectionStateUpdated: {
+      addListener: (cb: () => void) => {
+        onConnectionStateUpdatedCallback = cb;
+      },
+      call: jest.fn((data: ConnectionStateTypes) => {
+        onConnectionStateUpdatedCallback(data);
+      }),
     },
-    call: jest.fn((data: ConnectionStateTypes) => {
-      onConnectionStateUpdatedCallback(data);
-    }),
   },
   conversation: {
     onConversationStateUpdated: {

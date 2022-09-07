@@ -2,18 +2,20 @@ import { useSpring, animated } from 'react-spring';
 import classNames from 'classnames';
 
 export type LoadingIndicatorProps = {
-  progressFrom: number;
-  progressTo: number;
+  totalSteps: number;
+  percentageLoaded: number;
   durationMs: number;
   stepName?: string;
 };
 
 export function LoadingIndicator({
-  progressFrom,
-  progressTo,
+  totalSteps,
+  percentageLoaded,
   durationMs,
   stepName,
 }: LoadingIndicatorProps) {
+  const stepAmount = Math.round(100 / totalSteps);
+  const nextPercentageLoaded = percentageLoaded + stepAmount;
   const defaultAnimationConfig = {
     reset: true,
     config: {
@@ -23,28 +25,28 @@ export function LoadingIndicator({
 
   const widthAnimation = useSpring({
     ...defaultAnimationConfig,
-    from: { width: `${progressFrom}%` },
-    to: { width: `${progressTo}%` },
+    from: { width: `${percentageLoaded}%` },
+    to: { width: `${nextPercentageLoaded}%` },
   });
 
   const { number } = useSpring({
     ...defaultAnimationConfig,
-    from: { number: progressFrom },
-    to: { number: progressTo },
+    from: { number: percentageLoaded },
+    to: { number: nextPercentageLoaded },
   });
 
   const wrapperClassNames = classNames({
     'sm-transition-all sm-duration-300 sm-font-primary sm-flex sm-items-center sm-justify-center sm-text-[10em] sm-relative sm-w-full sm-h-full':
       true,
-    'sm-translate-y-8 sm-opacity-60': progressTo === 0,
+    'sm-translate-y-8 sm-opacity-60': percentageLoaded === 0,
   });
 
   return (
     <div
       aria-label="Loading..."
       role="progressbar"
-      aria-busy={progressTo < 100}
-      aria-valuenow={progressTo}
+      aria-busy={percentageLoaded < 100}
+      aria-valuenow={percentageLoaded}
       className={wrapperClassNames}
     >
       {stepName && <span className="sm-sr-only">{stepName}</span>}

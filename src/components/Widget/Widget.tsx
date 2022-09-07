@@ -10,7 +10,6 @@ import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';
-import { usePrevious } from '../../hooks/usePrevious';
 
 export type WidgetProps = {
   greeting?: string;
@@ -26,7 +25,6 @@ export function Widget({
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
   const { connectionStatus, connectionState, connect } = useSoulMachines();
-  const previousConnectionStateProgress = usePrevious<number>(connectionState.percentageLoaded);
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
@@ -55,8 +53,8 @@ export function Widget({
         ) : (
           <DefaultLoadingIndicator
             stepName={connectionState.name}
-            progressFrom={previousConnectionStateProgress}
-            progressTo={connectionState.percentageLoaded}
+            totalSteps={connectionState.totalSteps}
+            percentageLoaded={connectionState.percentageLoaded}
           />
         )}
       </div>
