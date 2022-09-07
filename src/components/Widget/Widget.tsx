@@ -47,17 +47,15 @@ export function Widget({
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
     <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-600">
-      <div className="sm-w-12 sm-h-12 md:sm-w-24 md:sm-h-24 sm-text-base">
-        {loadingIndicator ? (
-          loadingIndicator
-        ) : (
-          <DefaultLoadingIndicator
-            stepName={connectionState.name}
-            totalSteps={connectionState.totalSteps}
-            percentageLoaded={connectionState.percentageLoaded}
-          />
-        )}
-      </div>
+      {loadingIndicator ? (
+        loadingIndicator
+      ) : (
+        <DefaultLoadingIndicator
+          stepName={connectionState.name}
+          totalSteps={connectionState.totalSteps}
+          percentageLoaded={connectionState.percentageLoaded}
+        />
+      )}
     </div>
   );
 
