@@ -15,7 +15,9 @@ export function LoadingIndicator({
   stepName,
 }: LoadingIndicatorProps) {
   const stepAmount = Math.round(100 / totalSteps);
-  const nextPercentageLoaded = percentageLoaded + stepAmount;
+  const nextAmount = percentageLoaded + stepAmount;
+  // Make sure we don't continue above 100
+  const nextPercentageLoaded = nextAmount < 100 ? nextAmount : 100;
   const defaultAnimationConfig = {
     reset: true,
     config: {
