@@ -25,7 +25,11 @@ sm-video {
   --color-primary-600: #215489;
   --color-primary-700: #234973;
   --color-primary-800: #223e5d;
+
+  --color-primary-lightest: #e8ebef;
+  --color-primary-light: #ccd4dd;
   --color-primary-base: #1e5b98;
+  --color-primary-dark: #234973;
 
   --color-secondary-100: #dfedee;
 

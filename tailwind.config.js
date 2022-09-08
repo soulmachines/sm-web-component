@@ -57,7 +57,10 @@ module.exports = {
           900: 'var(--color-grayscale-900)',
         },
         primary: {
+          lightest: 'var(--color-primary-lightest)',
+          light: 'var(--color-primary-light)',
           base: 'var(--color-primary-base)',
+          dark: 'var(--color-primary-dark)',
           //
           100: 'var(--color-primary-100)',
           200: 'var(--color-primary-200)',
