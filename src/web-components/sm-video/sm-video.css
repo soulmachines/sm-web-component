@@ -21,6 +21,6 @@ sm-video {
 
   --color-secondary-base: #a3bef5;
 
-  --color-tertiary-400: #ed5645;
-  --color-tertiary-500: #bd2920;
+  --color-tertiary-base: #ed5645;
+  --color-tertiary-dark: #bd2920;
 }

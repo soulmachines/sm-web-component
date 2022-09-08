@@ -111,7 +111,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
 
               return (
                 <a
-                  className="sm-text-blue-400 active:sm-text-red-500 hover:sm-underline focus:underline visited:sm-text-pink-500"
+                  className="sm-text-primary-base active:sm-text-primary-dark hover:sm-underline focus:underline visited:sm-text-primary-dark"
                   href={href}
                   title={title}
                   {...conditionalAttributes}
@@ -123,7 +123,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
             p: ({ children }: TextProps) => {
               return <Text children={children} size="md" />;
             },
-            hr: () => <hr className="sm-w-11/12 sm-bg-gray-400" />,
+            hr: () => <hr className="sm-w-11/12 sm-bg-gray-light" />,
             table: ({ ...props }: GenericProps) => {
               return (
                 <table
@@ -133,12 +133,12 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               );
             },
             tr: ({ ...props }: GenericProps) => {
-              return <tr className="even:sm-bg-gray-200" {...props} />;
+              return <tr className="even:sm-bg-gray-light" {...props} />;
             },
             thead: ({ ...props }: GenericProps) => {
-              return <thead className="sm-bg-blue-300 sm-text-left" {...props} />;
+              return <thead className="sm-bg-gray-base sm-text-left" {...props} />;
             },
-            pre: ({ ...props }) => <pre className="sm-bg-gray-300 sm-rounded-sm" {...props} />,
+            pre: ({ ...props }) => <pre className="sm-bg-gray-base sm-rounded-sm" {...props} />,
           }}
         >
           {markdown}

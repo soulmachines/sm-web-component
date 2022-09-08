@@ -23,8 +23,8 @@ sm-widget {
 
   --color-secondary-base: #a3bef5;
 
-  --color-tertiary-400: #ed5645;
-  --color-tertiary-500: #bd2920;
+  --color-tertiary-base: #ed5645;
+  --color-tertiary-dark: #bd2920;
 
   --box-shadow-sm: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04),
     0px 4px 16px rgba(0, 0, 0, 0.06);
