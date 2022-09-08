@@ -45,7 +45,6 @@ The widget is using multiple numeric color scales. A color scale is a group of c
         --color-primary-dark: #234973;
 
         --color-secondary-base: #dfedee;
-        --color-secondary-100: #dfedee;
 
         --color-grayscale-100: #eaeaea;
         --color-grayscale-200: #d3d3d3;

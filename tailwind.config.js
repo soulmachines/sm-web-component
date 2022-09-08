@@ -63,7 +63,6 @@ module.exports = {
           dark: 'var(--color-primary-dark)',
         },
         secondary: {
-          100: 'var(--color-secondary-100)',
           base: 'var(--color-secondary-base)',
         },
         error: {
