@@ -46,12 +46,19 @@ module.exports = {
         max: '9999',
       },
       colors: {
+        gray: {
+          light: 'var(--color-gray-light)',
+          base: 'var(--color-gray-base)',
+          dark: 'var(--color-gray-dark)',
+        },
         grayscale: {
           100: 'var(--color-grayscale-100)',
           200: 'var(--color-grayscale-200)',
           900: 'var(--color-grayscale-900)',
         },
         primary: {
+          base: 'var(--color-primary-base)',
+          //
           100: 'var(--color-primary-100)',
           200: 'var(--color-primary-200)',
           300: 'var(--color-primary-300)',
