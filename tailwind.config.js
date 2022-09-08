@@ -49,12 +49,6 @@ module.exports = {
         gray: {
           light: 'var(--color-gray-light)',
           base: 'var(--color-gray-base)',
-          dark: 'var(--color-gray-dark)',
-        },
-        grayscale: {
-          100: 'var(--color-grayscale-100)',
-          200: 'var(--color-grayscale-200)',
-          900: 'var(--color-grayscale-900)',
         },
         primary: {
           lightest: 'var(--color-primary-lightest)',
@@ -65,9 +59,9 @@ module.exports = {
         secondary: {
           base: 'var(--color-secondary-base)',
         },
-        error: {
-          400: 'var(--color-error-400)',
-          500: 'var(--color-error-500)',
+        tertiary: {
+          base: 'var(--color-tertiary-base)',
+          dark: 'var(--color-tertiary-dark)',
         },
       },
       animation: {

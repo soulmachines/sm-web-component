@@ -34,7 +34,7 @@ Usage
 
 # Palette
 
-The widget is using multiple numeric color scales. A color scale is a group of color shades that listed from light to dark. Where 100 is the lightest color and 900 is the darkest. Our two main scales are primary and secondary.
+The widget is using multiple color scales. A color scale is a group of color shades that listed from lightest to dark. Our two main scales are primary and secondary.
 
 ```
 <style>
@@ -46,12 +46,11 @@ The widget is using multiple numeric color scales. A color scale is a group of c
 
         --color-secondary-base: #dfedee;
 
-        --color-grayscale-100: #eaeaea;
-        --color-grayscale-200: #d3d3d3;
-        --color-grayscale-900: #2c2c2b;
+        --color-gray-light: #eaeaea;
+        --color-gray-base: #d3d3d3;
 
-        --color-error-400: #ed5645;
-        --color-error-500: #bd2920;
+        --color-tertiary-base: #ed5645;
+        --color-tertiary-dark: #bd2920;
     }
 </style>
 ```

@@ -13,10 +13,6 @@ sm-widget {
     Default colors for when user does not provide a css var
     */
 
-  --color-grayscale-100: #eaeaea;
-  --color-grayscale-200: #d3d3d3;
-  --color-grayscale-900: #2c2c2b;
-
   --color-gray-light: #eaeaea;
   --color-gray-base: #d3d3d3;
 
@@ -27,8 +23,8 @@ sm-widget {
 
   --color-secondary-base: #a3bef5;
 
-  --color-error-400: #ed5645;
-  --color-error-500: #bd2920;
+  --color-tertiary-400: #ed5645;
+  --color-tertiary-500: #bd2920;
 
   --box-shadow-sm: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04),
     0px 4px 16px rgba(0, 0, 0, 0.06);
