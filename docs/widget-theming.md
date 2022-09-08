@@ -39,10 +39,11 @@ The widget is using multiple numeric color scales. A color scale is a group of c
 ```
 <style>
     sm-widget {
-        --color-primary-100: #e8ebef;
-        --color-primary-200: #ccd4dd;
-        --color-primary-300: #a5b5c7;
-        --color-primary-400: #6e8cad;
+        --color-primary-lightest: #e8ebef;
+        --color-primary-light: #ccd4dd;
+        --color-primary-base: #1e5b98;
+        --color-primary-dark: #234973;
+
         --color-primary-500: #34669b;
         --color-primary-600: #215489;
 
@@ -77,4 +78,4 @@ Usage
 
 # Debug
 
-If you are curious what style an element uses, you can inspect the element using your browser dev tools. For example if you inspect the connect button, you'll see it has a class `sm-text-primary-300`. This means it uses the primary 300 shade for text. Another example is `sm-bg-secondary-100`, this means its using the secondary 100 color for the background.
+If you are curious what style an element uses, you can inspect the element using your browser dev tools. For example if you inspect the connect button, you'll see it has a class `sm-text-primary-base`. This means it uses the primary base for text color. Another example is `sm-bg-secondary-base`, this means its using the secondary base color for the background color.

@@ -17,10 +17,6 @@ sm-video {
   --color-gray-light: #eaeaea;
   --color-gray-base: #d3d3d3;
 
-  --color-primary-100: #e8ebef;
-  --color-primary-200: #ccd4dd;
-  --color-primary-300: #a5b5c7;
-  --color-primary-400: #6e8cad;
   --color-primary-500: #34669b;
   --color-primary-600: #215489;
 
@@ -30,6 +26,7 @@ sm-video {
   --color-primary-dark: #234973;
 
   --color-secondary-100: #dfedee;
+  --color-secondary-base: #a3bef5;
 
   --color-error-400: #ed5645;
   --color-error-500: #bd2920;
