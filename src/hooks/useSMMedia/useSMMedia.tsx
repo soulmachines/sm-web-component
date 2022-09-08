@@ -26,7 +26,7 @@ function useSMMedia({
         setIsMicrophoneEnabled(enabled);
         sessionStorage.setItem(SessionDataKeys.microphoneEnabled, enabled.toString());
       } catch (error) {
-        // Silently ignore this error. Revisit in QUIC-1744
+        console.error(error);
       }
     },
     [scene],
@@ -42,7 +42,7 @@ function useSMMedia({
         setIsCameraEnabled(enabled);
         sessionStorage.setItem(SessionDataKeys.cameraEnabled, enabled.toString());
       } catch (error) {
-        // Silently ignore this error. Revisit in QUIC-1744
+        console.error(error);
       }
     },
     [scene],
