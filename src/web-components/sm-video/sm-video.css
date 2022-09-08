@@ -11,8 +11,8 @@ sm-video {
     Default colors for when user does not provide a css var
     */
 
-  --color-gray-light: #eaeaea;
-  --color-gray-base: #d3d3d3;
+  --color-gray-lightest: #eaeaea;
+  --color-gray-light: #d3d3d3;
 
   --color-primary-lightest: #e8ebef;
   --color-primary-light: #ccd4dd;

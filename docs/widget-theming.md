@@ -46,8 +46,8 @@ The widget is using multiple color scales. A color scale is a group of color sha
 
         --color-secondary-base: #dfedee;
 
-        --color-gray-light: #eaeaea;
-        --color-gray-base: #d3d3d3;
+        --color-gray-lightest: #eaeaea;
+        --color-gray-light: #d3d3d3;
 
         --color-tertiary-base: #ed5645;
         --color-tertiary-dark: #bd2920;

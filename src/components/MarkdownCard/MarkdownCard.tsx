@@ -123,7 +123,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
             p: ({ children }: TextProps) => {
               return <Text children={children} size="md" />;
             },
-            hr: () => <hr className="sm-w-11/12 sm-bg-gray-light" />,
+            hr: () => <hr className="sm-w-11/12 sm-bg-gray-lightest" />,
             table: ({ ...props }: GenericProps) => {
               return (
                 <table
@@ -133,12 +133,12 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               );
             },
             tr: ({ ...props }: GenericProps) => {
-              return <tr className="even:sm-bg-gray-light" {...props} />;
+              return <tr className="even:sm-bg-gray-lightest" {...props} />;
             },
             thead: ({ ...props }: GenericProps) => {
-              return <thead className="sm-bg-gray-base sm-text-left" {...props} />;
+              return <thead className="sm-bg-gray-light sm-text-left" {...props} />;
             },
-            pre: ({ ...props }) => <pre className="sm-bg-gray-base sm-rounded-sm" {...props} />,
+            pre: ({ ...props }) => <pre className="sm-bg-gray-light sm-rounded-sm" {...props} />,
           }}
         >
           {markdown}

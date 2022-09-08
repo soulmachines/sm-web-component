@@ -41,12 +41,12 @@ export const Basic = () => {
         <p className="sm-text-md">Gray</p>
         <div className="sm-flex">
           <div className="sm-flex sm-flex-col sm-items-center">
-            <div className="sm-bg-gray-light sm-w-10 sm-h-10" />
-            <p className="sm-text-black sm-text-xs">light</p>
+            <div className="sm-bg-gray-lightest sm-w-10 sm-h-10" />
+            <p className="sm-text-black sm-text-xs">lightest</p>
           </div>
           <div className="sm-flex sm-flex-col sm-items-center">
-            <div className="sm-bg-gray-base sm-w-10 sm-h-10" />
-            <p className="sm-text-black sm-text-xs">base</p>
+            <div className="sm-bg-gray-light sm-w-10 sm-h-10" />
+            <p className="sm-text-black sm-text-xs">light</p>
           </div>
         </div>
       </div>

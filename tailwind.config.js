@@ -47,8 +47,8 @@ module.exports = {
       },
       colors: {
         gray: {
+          lightest: 'var(--color-gray-lightest)',
           light: 'var(--color-gray-light)',
-          base: 'var(--color-gray-base)',
         },
         primary: {
           lightest: 'var(--color-primary-lightest)',
