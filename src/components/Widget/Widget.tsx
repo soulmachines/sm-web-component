@@ -46,7 +46,7 @@ export function Widget({
 
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
-    <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-600">
+    <div className="sm-flex sm-h-full sm-items-center sm-justify-center">
       {loadingIndicator ? (
         loadingIndicator
       ) : (

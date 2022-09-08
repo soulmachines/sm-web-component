@@ -14,7 +14,7 @@ export function ConversationState({ state }: ConversationStateProps) {
       true,
     'sm-bg-grayscale-900': state === ConversationStateTypes.dpSpeaking,
     'sm-bg-white sm-animate-spread': state === ConversationStateTypes.idle,
-    'sm-bg-primary-500': state === ConversationStateTypes.userSpeaking,
+    'sm-bg-secondary-base': state === ConversationStateTypes.userSpeaking,
     'sm-bg-white': state === ConversationStateTypes.dpProcessing,
   });
 

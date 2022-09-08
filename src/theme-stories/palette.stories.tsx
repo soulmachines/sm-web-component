@@ -9,18 +9,20 @@ export const Basic = () => {
         <p className="sm-text-md">Primary</p>
         <div className="sm-flex">
           <div className="sm-flex sm-flex-col sm-items-center">
-            <div className="sm-bg-primary-500 sm-w-10 sm-h-10" />
-            <p className="sm-text-grayscale-400 sm-text-xs">500</p>
+            <div className="sm-bg-primary-lightest sm-w-10 sm-h-10" />
+            <p className="sm-text-grayscale-400 sm-text-xs">lightest</p>
           </div>
-
           <div className="sm-flex sm-flex-col sm-items-center">
-            <div className="sm-bg-primary-600 sm-w-10 sm-h-10" />
-            <p className="sm-text-grayscale-400 sm-text-xs">600</p>
+            <div className="sm-bg-primary-light sm-w-10 sm-h-10" />
+            <p className="sm-text-grayscale-400 sm-text-xs">light</p>
           </div>
-
           <div className="sm-flex sm-flex-col sm-items-center">
-            <div className="sm-bg-primary-900 sm-w-10 sm-h-10" />
-            <p className="sm-text-grayscale-400 sm-text-xs">900</p>
+            <div className="sm-bg-primary-base sm-w-10 sm-h-10" />
+            <p className="sm-text-grayscale-400 sm-text-xs">base</p>
+          </div>
+          <div className="sm-flex sm-flex-col sm-items-center">
+            <div className="sm-bg-primary-dark sm-w-10 sm-h-10" />
+            <p className="sm-text-grayscale-400 sm-text-xs">dark</p>
           </div>
         </div>
       </div>

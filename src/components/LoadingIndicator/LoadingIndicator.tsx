@@ -53,7 +53,7 @@ export function LoadingIndicator({
     >
       {stepName && <span className="sm-sr-only">{stepName}</span>}
       <div className="sm-bg-white sm-rounded-3xl sm-border-grayscale-200 sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-2 md:sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
-        <animated.div className="sm-bg-primary-500 sm-h-full" style={widthAnimation} />
+        <animated.div className="sm-bg-primary-base sm-h-full" style={widthAnimation} />
       </div>
 
       <animated.div className="sm-text-primary-lightest">
