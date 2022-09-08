@@ -54,9 +54,6 @@ The widget is using multiple numeric color scales. A color scale is a group of c
         --color-grayscale-200: #d3d3d3;
         --color-grayscale-900: #2c2c2b;
 
-        --color-neutral-600: #455463;
-        --color-neutral-700: #3d4955;
-
         --color-error-400: #ed5645;
         --color-error-500: #bd2920;
     }

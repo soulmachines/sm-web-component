@@ -71,10 +71,6 @@ module.exports = {
         secondary: {
           100: 'var(--color-secondary-100)',
         },
-        neutral: {
-          600: 'var(--color-neutral-600)',
-          700: 'var(--color-neutral-700)',
-        },
         error: {
           400: 'var(--color-error-400)',
           500: 'var(--color-error-500)',

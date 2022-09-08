@@ -71,7 +71,7 @@ export function Widget({
 
   return (
     <div
-      className={`sm-fixed sm-bottom-0 sm-p-2 sm-text-neutral-700 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ${wrapperPositionClass}`}
+      className={`sm-fixed sm-bottom-0 sm-p-2 sm-text-black sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ${wrapperPositionClass}`}
     >
       <div className="sm-flex sm-flex-col sm-gap-y-2 sm-h-full sm-justify-end md:sm-gap-y-5">
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">

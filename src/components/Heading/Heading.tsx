@@ -19,7 +19,7 @@ export function Heading({ type, children, size = 'lg' }: HeadingProps) {
   return createElement(
     type,
     {
-      className: `sm-font-primary sm-font-medium sm-m-0 sm-text-neutral-700 ${sizeClass}`,
+      className: `sm-font-primary sm-font-medium sm-m-0 sm-text-black ${sizeClass}`,
     },
     children,
   );
