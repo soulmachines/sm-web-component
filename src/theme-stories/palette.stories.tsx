@@ -39,16 +39,6 @@ export const Basic = () => {
           </div>
 
           <div className="sm-flex sm-flex-col sm-items-center">
-            <div className="sm-bg-primary-700 sm-w-10 sm-h-10" />
-            <p className="sm-text-grayscale-400 sm-text-xs">700</p>
-          </div>
-
-          <div className="sm-flex sm-flex-col sm-items-center">
-            <div className="sm-bg-primary-800 sm-w-10 sm-h-10" />
-            <p className="sm-text-grayscale-400 sm-text-xs">800</p>
-          </div>
-
-          <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-primary-900 sm-w-10 sm-h-10" />
             <p className="sm-text-grayscale-400 sm-text-xs">900</p>
           </div>

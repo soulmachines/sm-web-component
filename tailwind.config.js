@@ -68,8 +68,6 @@ module.exports = {
           400: 'var(--color-primary-400)',
           500: 'var(--color-primary-500)',
           600: 'var(--color-primary-600)',
-          700: 'var(--color-primary-700)',
-          800: 'var(--color-primary-800)',
         },
         secondary: {
           100: 'var(--color-secondary-100)',
