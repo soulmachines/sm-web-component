@@ -46,7 +46,7 @@ export function Widget({
 
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
-    <div className="sm-flex sm-h-full sm-items-center sm-justify-center">
+    <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-base">
       {loadingIndicator ? (
         loadingIndicator
       ) : (
@@ -96,7 +96,7 @@ export function Widget({
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-2 sm-border-transparent sm-bg-transparent hover:sm-border-secondary-base sm-transition-colors sm-overflow-hidden"
+                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-outline sm-outline-2 sm-outline-transparent sm-bg-transparent hover:sm-outline-secondary-base sm-transition-colors sm-overflow-hidden"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
