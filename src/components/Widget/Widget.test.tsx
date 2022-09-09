@@ -95,8 +95,8 @@ describe('<Widget />', () => {
     });
 
     it('does not render a loading indicator', () => {
-      const { queryByTitle } = customRender();
-      expect(queryByTitle('Loading...')).not.toBeInTheDocument();
+      const { queryByRole } = customRender();
+      expect(queryByRole('progressbar')).not.toBeInTheDocument();
     });
 
     it('does not render a disconnect button', () => {
@@ -127,8 +127,8 @@ describe('<Widget />', () => {
     });
 
     it('renders a loading indicator', () => {
-      const { queryByTitle } = customRender();
-      expect(queryByTitle('Loading...')).toBeInTheDocument();
+      const { queryByRole } = customRender();
+      expect(queryByRole('progressbar')).toBeInTheDocument();
     });
 
     it('does not render a disconnect button', () => {
@@ -176,8 +176,8 @@ describe('<Widget />', () => {
     });
 
     it('does not render a loading indicator', () => {
-      const { queryByTitle } = customRender();
-      expect(queryByTitle('Loading...')).not.toBeInTheDocument();
+      const { queryByRole } = customRender();
+      expect(queryByRole('progressbar')).not.toBeInTheDocument();
     });
 
     it('does not render the default greeting', () => {

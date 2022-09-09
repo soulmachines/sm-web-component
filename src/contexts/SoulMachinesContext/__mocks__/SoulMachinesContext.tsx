@@ -24,6 +24,11 @@ const mockUseSoulMachines = {
   scene,
   persona,
   conversationState: ConversationStateTypes.idle,
+  connectionState: {
+    name: 'mock name',
+    percentageLoaded: 0,
+    totalSteps: 3,
+  },
   videoRef: jest.fn(),
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),

@@ -6,7 +6,7 @@ import { VideoControls } from '../VideoControls';
 import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
 import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
-import { Spinner as DefaultLoadingIndicator } from '../Spinner';
+import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';
@@ -24,7 +24,7 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connect } = useSoulMachines();
+  const { connectionStatus, connectionState, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
@@ -47,9 +47,15 @@ export function Widget({
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
     <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-600">
-      <div className="sm-w-12 sm-h-12 md:sm-w-24 md:sm-h-24 sm-text-base">
-        {loadingIndicator ? loadingIndicator : <DefaultLoadingIndicator />}
-      </div>
+      {loadingIndicator ? (
+        loadingIndicator
+      ) : (
+        <DefaultLoadingIndicator
+          stepName={connectionState.name}
+          totalSteps={connectionState.totalSteps}
+          percentageLoaded={connectionState.percentageLoaded}
+        />
+      )}
     </div>
   );
 
@@ -84,13 +90,13 @@ export function Widget({
           <div className={scaledDownClass}>
             <animated.div
               style={scaleAnimation}
-              className="sm-rounded-xl sm-origin-bottom-right sm-shadow-lg sm-bg-secondary-100 sm-pointer-events-auto md:sm-rounded-3xl"
+              className="sm-rounded-xl sm-origin-bottom-right sm-shadow-lg sm-bg-white sm-pointer-events-auto md:sm-rounded-3xl"
             >
               {isDisconnected && (
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-300 sm-border-2 sm-border-transparent sm-bg-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
+                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-500 sm-border-2 sm-border-transparent sm-bg-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
