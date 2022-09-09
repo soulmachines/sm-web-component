@@ -18,12 +18,13 @@ export type IconButtonProps = {
 
 export function IconButton({ name, size, title, shadow, theme, onClick }: IconButtonProps) {
   const buttonClass = classNames({
-    'sm-border-none sm-cursor-pointer sm-transition-colors': true,
-    'sm-bg-white sm-rounded-full sm-p-3 hover:sm-bg-gray-lightest focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-light':
+    'sm-border-solid sm-border-1 sm-border-gray-lightest sm-cursor-pointer sm-transition-colors':
+      true,
+    'sm-bg-white sm-rounded-full sm-p-3 hover:sm-bg-gray-lightest hover:sm-border-gray-light focus:sm-border-gray-light focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-base':
       theme == Theme.default,
-    'sm-bg-tertiary-base sm-rounded-full sm-p-3 sm-text-white hover:sm-bg-tertiary-dark focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-light':
+    'sm-border-transparent sm-bg-tertiary-base sm-rounded-full sm-p-3 sm-text-white hover:sm-bg-tertiary-dark focus:sm-outline focus:sm-outline-2 focus:sm-outline-primary-light':
       theme == Theme.danger,
-    'sm-shadow': shadow,
+    'sm-shadow-sm': shadow,
   });
   return (
     <button onClick={onClick} className={buttonClass}>
