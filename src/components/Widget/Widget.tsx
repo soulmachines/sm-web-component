@@ -82,7 +82,7 @@ export function Widget({
           className={`sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5 ${notificationVideoOrderClass}`}
         >
           {!isConnectingOrConnected && (
-            <div className="sm-max-w-xs">
+            <div className="sm-max-w-xs sm-z-10">
               <Notifications greeting={greeting} />
             </div>
           )}
