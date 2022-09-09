@@ -41,22 +41,6 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.15.1'
-
-      - name: Caching Dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install Dependencies
-        run: npm ci
-
       - name: Create Release
         id: RELEASE_VERSION
         env:
