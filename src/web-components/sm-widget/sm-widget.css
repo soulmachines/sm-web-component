@@ -33,6 +33,8 @@ sm-widget {
     0px 16px 32px rgba(0, 0, 0, 0.12);
 
   --font-family-primary: 'Rubik', 'Helvetica', 'sans-serif';
+
+  --color-text-main: #000;
 }
 
 /*

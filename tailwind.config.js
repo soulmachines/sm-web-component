@@ -25,6 +25,9 @@ module.exports = {
         base: 'var(--color-tertiary-base)',
         dark: 'var(--color-tertiary-dark)',
       },
+      text: {
+        main: 'var(--color-text-main)',
+      },
     },
     extend: {
       borderRadius: {

@@ -13,7 +13,7 @@ export function Text({ children, size, ...rest }: TextProps) {
   });
 
   return (
-    <p className={`sm-text-black sm-font-primary sm-font-normal sm-m-0 ${sizeClass}`} {...rest}>
+    <p className={`sm-text-text-main sm-font-primary sm-font-normal sm-m-0 ${sizeClass}`} {...rest}>
       {children}
     </p>
   );
