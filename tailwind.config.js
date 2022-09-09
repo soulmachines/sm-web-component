@@ -4,6 +4,28 @@ module.exports = {
     screens: {
       md: { raw: '(min-width: 768px) and (min-height: 450px)' },
     },
+    colors: {
+      transparent: 'transparent',
+      white: '#FFF',
+      black: '#000',
+      gray: {
+        lightest: 'var(--color-gray-lightest)',
+        light: 'var(--color-gray-light)',
+      },
+      primary: {
+        lightest: 'var(--color-primary-lightest)',
+        light: 'var(--color-primary-light)',
+        base: 'var(--color-primary-base)',
+        dark: 'var(--color-primary-dark)',
+      },
+      secondary: {
+        base: 'var(--color-secondary-base)',
+      },
+      tertiary: {
+        base: 'var(--color-tertiary-base)',
+        dark: 'var(--color-tertiary-dark)',
+      },
+    },
     extend: {
       borderRadius: {
         inherit: 'inherit',
@@ -44,25 +66,6 @@ module.exports = {
       },
       zIndex: {
         max: '9999',
-      },
-      colors: {
-        gray: {
-          lightest: 'var(--color-gray-lightest)',
-          light: 'var(--color-gray-light)',
-        },
-        primary: {
-          lightest: 'var(--color-primary-lightest)',
-          light: 'var(--color-primary-light)',
-          base: 'var(--color-primary-base)',
-          dark: 'var(--color-primary-dark)',
-        },
-        secondary: {
-          base: 'var(--color-secondary-base)',
-        },
-        tertiary: {
-          base: 'var(--color-tertiary-base)',
-          dark: 'var(--color-tertiary-dark)',
-        },
       },
       animation: {
         grow: 'grow 1.2s ease-in-out infinite',
