@@ -105,7 +105,7 @@ export function Widget({
               <div
                 className={classNames({
                   'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
-                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-solid sm-border-secondary-base':
+                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-solid sm-border-gray-lightest':
                     isConnectingOrConnected,
                 })}
               >
