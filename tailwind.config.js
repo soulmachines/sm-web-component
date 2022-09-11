@@ -9,24 +9,24 @@ module.exports = {
       white: '#FFF',
       black: '#000',
       gray: {
-        lightest: 'var(--color-gray-lightest)',
-        light: 'var(--color-gray-light)',
+        lightest: 'var(--sm-color-gray-lightest)',
+        light: 'var(--sm-color-gray-light)',
       },
       primary: {
-        lightest: 'var(--color-primary-lightest)',
-        light: 'var(--color-primary-light)',
-        base: 'var(--color-primary-base)',
-        dark: 'var(--color-primary-dark)',
+        lightest: 'var(--sm-color-primary-lightest)',
+        light: 'var(--sm-color-primary-light)',
+        base: 'var(--sm-color-primary-base)',
+        dark: 'var(--sm-color-primary-dark)',
       },
       secondary: {
-        base: 'var(--color-secondary-base)',
+        base: 'var(--sm-color-secondary-base)',
       },
       tertiary: {
-        base: 'var(--color-tertiary-base)',
-        dark: 'var(--color-tertiary-dark)',
+        base: 'var(--sm-color-tertiary-base)',
+        dark: 'var(--sm-color-tertiary-dark)',
       },
       text: {
-        main: 'var(--color-text-main)',
+        main: 'var(--sm-color-text-main)',
       },
     },
     extend: {
@@ -35,13 +35,13 @@ module.exports = {
         sm: '0.25rem',
       },
       boxShadow: {
-        sm: 'var(--box-shadow-sm)',
-        md: 'var(--box-shadow-md)',
-        lg: 'var(--box-shadow-lg)',
-        xl: 'var(--box-shadow-xl)',
+        sm: 'var(--sm-box-shadow-sm)',
+        md: 'var(--sm-box-shadow-md)',
+        lg: 'var(--sm-box-shadow-lg)',
+        xl: 'var(--sm-box-shadow-xl)',
       },
       fontFamily: {
-        primary: ['var(--font-family-primary)'],
+        primary: ['var(--sm-font-family-primary)'],
       },
       maxHeight: {
         contentCard: '34.25rem',

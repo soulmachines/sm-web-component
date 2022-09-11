@@ -13,28 +13,28 @@ sm-widget {
     Default colors for when user does not provide a css var
     */
 
-  --color-gray-lightest: #eaeaea;
-  --color-gray-light: #d3d3d3;
+  --sm-color-gray-lightest: #eaeaea;
+  --sm-color-gray-light: #d3d3d3;
 
-  --color-primary-lightest: #e8ebef;
-  --color-primary-light: #97b7d7;
-  --color-primary-base: #1e5b98;
-  --color-primary-dark: #234973;
+  --sm-color-primary-lightest: #e8ebef;
+  --sm-color-primary-light: #97b7d7;
+  --sm-color-primary-base: #1e5b98;
+  --sm-color-primary-dark: #234973;
 
-  --color-secondary-base: #a3bef5;
+  --sm-color-secondary-base: #a3bef5;
 
-  --color-tertiary-base: #ed5645;
-  --color-tertiary-dark: #bd2920;
+  --sm-color-tertiary-base: #ed5645;
+  --sm-color-tertiary-dark: #bd2920;
 
-  --box-shadow-sm: 0px 2px 20px rgba(0, 0, 0, 0.04), 0px 2px 12px rgba(0, 0, 0, 0.04);
-  --box-shadow-md: 0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1);
-  --box-shadow-lg: 0px 4px 12px rgba(0, 0, 0, 0.06), 0px 12px 28px rgba(0, 0, 0, 0.12);
-  --box-shadow-xl: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.12),
+  --sm-box-shadow-sm: 0px 2px 20px rgba(0, 0, 0, 0.04), 0px 2px 12px rgba(0, 0, 0, 0.04);
+  --sm-box-shadow-md: 0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1);
+  --sm-box-shadow-lg: 0px 4px 12px rgba(0, 0, 0, 0.06), 0px 12px 28px rgba(0, 0, 0, 0.12);
+  --sm-box-shadow-xl: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.12),
     0px 16px 32px rgba(0, 0, 0, 0.12);
 
-  --font-family-primary: 'Rubik', 'Helvetica', 'sans-serif';
+  --sm-font-family-primary: 'Rubik', 'Helvetica', 'sans-serif';
 
-  --color-text-main: #000;
+  --sm-color-text-main: #000;
 }
 
 /*

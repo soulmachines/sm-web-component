@@ -11,18 +11,18 @@ sm-video {
     Default colors for when user does not provide a css var
     */
 
-  --color-gray-lightest: #eaeaea;
-  --color-gray-light: #d3d3d3;
+  --sm-color-gray-lightest: #eaeaea;
+  --sm-color-gray-light: #d3d3d3;
 
-  --color-primary-lightest: #e8ebef;
-  --color-primary-light: #ccd4dd;
-  --color-primary-base: #1e5b98;
-  --color-primary-dark: #234973;
+  --sm-color-primary-lightest: #e8ebef;
+  --sm-color-primary-light: #ccd4dd;
+  --sm-color-primary-base: #1e5b98;
+  --sm-color-primary-dark: #234973;
 
-  --color-secondary-base: #a3bef5;
+  --sm-color-secondary-base: #a3bef5;
 
-  --color-tertiary-base: #ed5645;
-  --color-tertiary-dark: #bd2920;
+  --sm-color-tertiary-base: #ed5645;
+  --sm-color-tertiary-dark: #bd2920;
 
-  --color-text-main: #000;
+  --sm-color-text-main: #000;
 }

@@ -27,7 +27,7 @@ Usage
 ```
 <style>
     sm-widget {
-    --font-family-primary: 'Times, "Times New Roman", Georgia, serif';
+    --sm-font-family-primary: 'Times, "Times New Roman", Georgia, serif';
     }
 </style>
 ```
@@ -39,18 +39,18 @@ The widget is using multiple color scales. A color scale is a group of color sha
 ```
 <style>
     sm-widget {
-        --color-primary-lightest: #e8ebef;
-        --color-primary-light: #ccd4dd;
-        --color-primary-base: #1e5b98;
-        --color-primary-dark: #234973;
+        --sm-color-primary-lightest: #e8ebef;
+        --sm-color-primary-light: #ccd4dd;
+        --sm-color-primary-base: #1e5b98;
+        --sm-color-primary-dark: #234973;
 
-        --color-secondary-base: #dfedee;
+        --sm-color-secondary-base: #dfedee;
 
-        --color-gray-lightest: #eaeaea;
-        --color-gray-light: #d3d3d3;
+        --sm-color-gray-lightest: #eaeaea;
+        --sm-color-gray-light: #d3d3d3;
 
-        --color-tertiary-base: #ed5645;
-        --color-tertiary-dark: #bd2920;
+        --sm-color-tertiary-base: #ed5645;
+        --sm-color-tertiary-dark: #bd2920;
     }
 </style>
 ```
@@ -64,10 +64,10 @@ Usage
 ```
   <style>
       sm-widget {
-        --box-shadow-sm: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04), 0px 4px 16px rgba(0, 0, 0, 0.06);
-        --box-shadow-md: 0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1);
-        --box-shadow-lg: 0px 4px 12px rgba(0, 0, 0, 0.06), 0px 12px 28px rgba(0, 0, 0, 0.12);
-        --box-shadow-xl: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.12), 0px 16px 32px rgba(0, 0, 0, 0.12);
+        --sm-box-shadow-sm: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 2px 8px rgba(0, 0, 0, 0.04), 0px 4px 16px rgba(0, 0, 0, 0.06);
+        --sm-box-shadow-md: 0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1);
+        --sm-box-shadow-lg: 0px 4px 12px rgba(0, 0, 0, 0.06), 0px 12px 28px rgba(0, 0, 0, 0.12);
+        --sm-box-shadow-xl: 0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.12), 0px 16px 32px rgba(0, 0, 0, 0.12);
       }
     </style>
 ```
