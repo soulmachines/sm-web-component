@@ -6,8 +6,8 @@ module.exports = {
     },
     colors: {
       transparent: 'transparent',
-      white: '#FFF',
       black: '#000',
+      white: '#FFF',
       gray: {
         lightest: 'var(--sm-color-gray-lightest)',
         light: 'var(--sm-color-gray-light)',
@@ -17,6 +17,7 @@ module.exports = {
         light: 'var(--sm-color-primary-light)',
         base: 'var(--sm-color-primary-base)',
         dark: 'var(--sm-color-primary-dark)',
+        text: '#000',
       },
       secondary: {
         base: 'var(--sm-color-secondary-base)',
@@ -24,9 +25,6 @@ module.exports = {
       tertiary: {
         base: 'var(--sm-color-tertiary-base)',
         dark: 'var(--sm-color-tertiary-dark)',
-      },
-      text: {
-        main: 'black',
       },
     },
     extend: {

@@ -10,19 +10,19 @@ export const Basic = () => {
         <div className="sm-flex">
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-primary-lightest sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">lightest</p>
+            <p className="sm-text-primary-text sm-text-xs">lightest</p>
           </div>
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-primary-light sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">light</p>
+            <p className="sm-text-primary-text sm-text-xs">light</p>
           </div>
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-primary-base sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">base</p>
+            <p className="sm-text-primary-text sm-text-xs">base</p>
           </div>
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-primary-dark sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">dark</p>
+            <p className="sm-text-primary-text sm-text-xs">dark</p>
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@ export const Basic = () => {
         <div className="sm-flex">
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-secondary-base sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">base</p>
+            <p className="sm-text-primary-text sm-text-xs">base</p>
           </div>
         </div>
       </div>
@@ -42,11 +42,11 @@ export const Basic = () => {
         <div className="sm-flex">
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-gray-lightest sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">lightest</p>
+            <p className="sm-text-primary-text sm-text-xs">lightest</p>
           </div>
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-gray-light sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">light</p>
+            <p className="sm-text-primary-text sm-text-xs">light</p>
           </div>
         </div>
       </div>
@@ -56,12 +56,12 @@ export const Basic = () => {
         <div className="sm-flex">
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-tertiary-base sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">base</p>
+            <p className="sm-text-primary-text sm-text-xs">base</p>
           </div>
 
           <div className="sm-flex sm-flex-col sm-items-center">
             <div className="sm-bg-tertiary-dark sm-w-10 sm-h-10" />
-            <p className="sm-text-text-main sm-text-xs">dark</p>
+            <p className="sm-text-primary-text sm-text-xs">dark</p>
           </div>
         </div>
       </div>
