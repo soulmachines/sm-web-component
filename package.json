@@ -41,7 +41,7 @@
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
-    "@storybook/builder-vite": "^0.2.2",
+    "@storybook/builder-vite": "^0.1.39",
     "@storybook/preact": "^6.5.10",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/preact": "^3.2.2",
