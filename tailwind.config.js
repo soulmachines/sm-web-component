@@ -30,6 +30,9 @@ module.exports = {
       },
     },
     extend: {
+      borderWidth: {
+        1: '1px',
+      },
       borderRadius: {
         inherit: 'inherit',
         sm: '0.25rem',
