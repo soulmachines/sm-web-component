@@ -26,7 +26,7 @@ module.exports = {
         dark: 'var(--sm-color-tertiary-dark)',
       },
       text: {
-        main: 'var(--sm-color-text-main)',
+        main: 'black',
       },
     },
     extend: {
