@@ -14,7 +14,7 @@ export function Text({ children, size, ...rest }: TextProps) {
 
   return (
     <p
-      className={`sm-text-neutral-700 sm-font-primary sm-font-normal sm-m-0 ${sizeClass}`}
+      className={`sm-text-primary-text sm-font-primary sm-font-normal sm-m-0 ${sizeClass}`}
       {...rest}
     >
       {children}

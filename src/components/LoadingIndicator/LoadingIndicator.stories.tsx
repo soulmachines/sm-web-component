@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks';
 import { LoadingIndicator, LoadingIndicatorProps } from '.';
+import { Button } from '../Button';
 
 export default {
   title: `Components / LoadingIndicator`,
@@ -73,7 +74,7 @@ export const Example = () => {
 
   return (
     <div>
-      <button onClick={startAnimation}>Start</button>
+      <Button onClick={startAnimation}>Start Animation</Button>
       <LoadingIndicator {...progressProps} durationMs={3000} />
     </div>
   );

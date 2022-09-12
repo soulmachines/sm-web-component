@@ -52,10 +52,13 @@ export function LoadingIndicator({
       className={wrapperClassNames}
     >
       {stepName && <span className="sm-sr-only">{stepName}</span>}
-      <div className="sm-bg-white sm-rounded-3xl sm-border-grayscale-200 sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-2 md:sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
-        <animated.div className="sm-bg-primary-500 sm-h-full" style={widthAnimation} />
+      <div className="sm-bg-white sm-rounded-3xl sm-border-gray-light sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">
+        <animated.div className="sm-bg-primary-base sm-h-full" style={widthAnimation} />
       </div>
-      <animated.div className="sm-text-primary-100">{number.to((x) => x.toFixed(0))}</animated.div>
+
+      <animated.div className="sm-text-primary-lightest">
+        {number.to((x) => x.toFixed(0))}
+      </animated.div>
     </div>
   );
 }
