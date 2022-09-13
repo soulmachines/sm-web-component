@@ -1,9 +1,10 @@
 import { render } from '@testing-library/preact';
+import { vi } from 'vitest';
 import { SMWidget } from '.';
 import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
 import { ConnectionStatus } from '../../../enums';
 
-jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
+vi.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMWidget />', () => {
   const mockParent = document.createElement('div');
@@ -11,7 +12,7 @@ describe('<SMWidget />', () => {
     render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} parent={mockParent} />);
 
   it('renders a loading indicator when connecting', () => {
-    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+    vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
       connectionStatus: ConnectionStatus.CONNECTING,
     });
@@ -21,7 +22,7 @@ describe('<SMWidget />', () => {
   });
 
   it('renders a video when connected', () => {
-    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+    vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
       connectionStatus: ConnectionStatus.CONNECTED,
     });
@@ -31,7 +32,7 @@ describe('<SMWidget />', () => {
   });
 
   it('renders a greeting when it is disconnected', () => {
-    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+    vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
       connectionStatus: ConnectionStatus.DISCONNECTED,
     });

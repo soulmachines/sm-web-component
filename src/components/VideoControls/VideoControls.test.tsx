@@ -1,8 +1,9 @@
 import { fireEvent, render } from '@testing-library/preact';
+import { vi } from 'vitest';
 import { VideoControls } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 
-jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
+vi.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<VideoControls />', () => {
   const customRender = () => render(<VideoControls />);
@@ -45,7 +46,7 @@ describe('<VideoControls />', () => {
 
   describe('when microphone is disabled', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isMicrophoneEnabled: false,
       });
@@ -62,7 +63,7 @@ describe('<VideoControls />', () => {
 
   describe('when microphone is enabled', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isMicrophoneEnabled: true,
       });
@@ -79,7 +80,7 @@ describe('<VideoControls />', () => {
 
   describe('when camera is disabled', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isCameraEnabled: false,
       });
@@ -96,7 +97,7 @@ describe('<VideoControls />', () => {
 
   describe('when camera is enabled', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isCameraEnabled: true,
       });
@@ -113,7 +114,7 @@ describe('<VideoControls />', () => {
 
   describe('when video is muted', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isVideoMuted: true,
       });
@@ -130,7 +131,7 @@ describe('<VideoControls />', () => {
 
   describe('when video is unmuted', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isVideoMuted: false,
       });

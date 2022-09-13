@@ -1,5 +1,7 @@
-const useDimensions = jest.fn(() => ({
-  observe: jest.fn(),
+import { vi } from 'vitest';
+
+const useDimensions = vi.fn(() => ({
+  observe: vi.fn(),
 }));
 
 export default useDimensions;

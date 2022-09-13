@@ -1,16 +1,17 @@
 import { render } from '@testing-library/preact';
+import { vi } from 'vitest';
 import { SMVideo } from '.';
 import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
 import { ConnectionStatus } from '../../../enums';
 
-jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
+vi.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMVideo />', () => {
   const customRender = () =>
     render(<SMVideo autoConnect="true" apiKey="123" connecting-indicator={<p>Loading...</p>} />);
 
   it('renders a loading indicator when connecting', () => {
-    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+    vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
       connectionStatus: ConnectionStatus.CONNECTING,
     });
@@ -21,7 +22,7 @@ describe('<SMVideo />', () => {
   });
 
   it('renders a video when connected', () => {
-    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+    vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
       connectionStatus: ConnectionStatus.CONNECTED,
     });
@@ -31,7 +32,7 @@ describe('<SMVideo />', () => {
   });
 
   it('renders a video when it is disconnected', () => {
-    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+    vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
       connectionStatus: ConnectionStatus.DISCONNECTED,
     });

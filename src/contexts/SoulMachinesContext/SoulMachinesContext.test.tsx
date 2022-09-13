@@ -1,22 +1,23 @@
 import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { fireEvent, render } from '@testing-library/preact';
+import { vi } from 'vitest';
 import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
 import { useSMMedia } from '../../hooks/useSMMedia';
 
 const mockCanAutoPlayAudio = true;
 const mockVideoRef = { current: 'mock' };
-const mockConnect = jest.fn();
+const mockConnect = vi.fn();
 
-jest.mock('@soulmachines/smwebsdk');
-jest.mock('../../hooks/useConnection', () => ({
-  useConnection: jest.fn(() => ({
+vi.mock('@soulmachines/smwebsdk');
+vi.mock('../../hooks/useConnection', () => ({
+  useConnection: vi.fn(() => ({
     connect: mockConnect,
     canAutoPlayAudio: mockCanAutoPlayAudio,
     videoRef: mockVideoRef,
   })),
 }));
-jest.mock('../../hooks/useSMMedia');
+vi.mock('../../hooks/useSMMedia');
 
 describe('<SoulMachinesProvider />', () => {
   const mockScene = new Scene();

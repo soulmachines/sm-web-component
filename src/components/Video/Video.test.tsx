@@ -1,13 +1,14 @@
 import { render } from '@testing-library/preact';
 import useDimensions from 'react-cool-dimensions';
+import { vi } from 'vitest';
 import { Video } from '.';
 import { updateVideoBounds } from './Video';
 import { Scene } from '@soulmachines/smwebsdk';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 
-jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
-jest.mock('react-cool-dimensions');
+vi.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
+vi.mock('react-cool-dimensions');
 
 describe('<Video />', () => {
   const customRender = (props = { autoConnect: true }) => {
@@ -26,7 +27,7 @@ describe('<Video />', () => {
 
   describe('when it is disconnected', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.DISCONNECTED,
       });
@@ -47,7 +48,7 @@ describe('<Video />', () => {
 
   describe('when it is connecting', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.CONNECTING,
       });
@@ -73,7 +74,7 @@ describe('<Video />', () => {
 
   describe('when it is connected', () => {
     beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.CONNECTED,
       });
@@ -96,7 +97,7 @@ describe('<Video />', () => {
     });
 
     it('sets video muted to true whenn isVideoMuted is true', () => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isVideoMuted: true,
       });
@@ -106,7 +107,7 @@ describe('<Video />', () => {
     });
 
     it('sets video muted to false when isVideoMuted is false', () => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isVideoMuted: false,
       });
@@ -120,7 +121,7 @@ describe('<Video />', () => {
 describe('updateVideoBounds()', () => {
   const width = 111.342;
   const height = 222;
-  const mockScene = { sendVideoBounds: jest.fn() } as unknown as Scene;
+  const mockScene = { sendVideoBounds: vi.fn() } as unknown as Scene;
   const mockMeasurements = { width, height };
 
   it('calls scene.sendVideoBounds with the width/height, multiplying the values by the devicePixelRatio and rounding the number', () => {

@@ -1,12 +1,12 @@
 import { render } from '@testing-library/preact';
 import { useSpring } from 'react-spring';
+import { vi } from 'vitest';
 import { LoadingIndicator } from '.';
 
-jest.mock('react-spring', () => {
-  const originalModule = jest.requireActual('react-spring');
+vi.mock('react-spring', async () => {
   return {
-    ...originalModule,
-    useSpring: jest.fn(() => ({ number: { to: jest.fn(() => 0) } })),
+    ...(await vi.importActual<any>('react-spring')),
+    useSpring: vi.fn(() => ({ number: { to: vi.fn(() => 0) } })),
   };
 });
 

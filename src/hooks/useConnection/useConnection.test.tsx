@@ -1,26 +1,26 @@
 import { Scene } from '@soulmachines/smwebsdk';
+import { vi } from 'vitest';
 import { act, renderHook } from '@testing-library/react-hooks';
-import 'preact/hooks';
 import { useConnection } from '.';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
-const mockPlay = jest.fn(() => Promise.resolve(true));
+const mockPlay = vi.fn(() => Promise.resolve(true));
 const mockMediaSrc = {} as unknown as MediaSource;
-jest.mock('@soulmachines/smwebsdk');
+vi.mock('@soulmachines/smwebsdk');
 const reactVideoEl = {
   muted: true,
   play: mockPlay,
   srcObject: mockMediaSrc,
 };
-jest.mock('preact/hooks', () => ({
-  ...jest.requireActual('preact/hooks'),
+vi.mock('preact/hooks', async () => ({
+  ...(await vi.importActual<any>('preact/hooks')),
   useRef: () => ({ current: reactVideoEl }),
 }));
 
 describe('useConnection()', () => {
   const mockScene = new Scene();
   const tokenServer = 'mock token server';
-  const mockFetch = jest.fn();
+  const mockFetch = vi.fn();
   const customRender = (scene = mockScene) => renderHook(() => useConnection(scene, tokenServer));
 
   beforeEach(() => {

@@ -16,6 +16,24 @@ export default defineConfig(({ mode }) => {
   const version = env.VERSION || new Date().getTime();
 
   return {
+    test: {
+      globals: true,
+      clearMocks: true,
+      environment: 'jsdom',
+      setupFiles: './src/setupTests.ts',
+      // Fixes TypeError: Cannot read properties of undefined (reading '__H')
+      // https://github.com/vitest-dev/vitest/issues/1652#issuecomment-1231966254
+      alias: [
+        {
+          find: 'preact/hooks',
+          replacement: require.resolve('preact/hooks'),
+        },
+        {
+          find: '@testing-library/preact',
+          replacement: require.resolve('@testing-library/preact'),
+        },
+      ],
+    },
     esbuild: {
       // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
       logOverride: { 'this-is-undefined-in-esm': 'silent' },

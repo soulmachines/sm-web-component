@@ -2,8 +2,9 @@ import { render } from '@testing-library/preact';
 import { ContentCards } from '.';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ContentCard } from '@soulmachines/smwebsdk';
+import { vi } from 'vitest';
 
-jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
+vi.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<ContentCards />', () => {
   const { scene } = useSoulMachines();
