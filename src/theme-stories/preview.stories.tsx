@@ -181,7 +181,7 @@ export const Basic = () => {
       </div>
 
       <div className="sm-border-2 sm-border-rose-600">
-        <h1>BASIC COMPONENT</h1>
+        <h1>Elements</h1>
         <Button children={'Button'} />
         <Heading type={'h1'}>{'Heading'}</Heading>
         <Text size={'sm'}>{'Text'}</Text>
