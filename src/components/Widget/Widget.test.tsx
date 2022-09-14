@@ -1,10 +1,9 @@
 import { fireEvent, render } from '@testing-library/preact';
-import { vi } from 'vitest';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
 
-vi.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
+jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<Widget />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
@@ -74,7 +73,7 @@ describe('<Widget />', () => {
 
   describe('when the scene is disconnected', () => {
     beforeEach(() => {
-      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.DISCONNECTED,
       });
@@ -121,7 +120,7 @@ describe('<Widget />', () => {
 
   describe('when the scene is connecting', () => {
     beforeEach(() => {
-      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.CONNECTING,
       });
@@ -160,7 +159,7 @@ describe('<Widget />', () => {
 
   describe('when the scene is connected', () => {
     beforeEach(() => {
-      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.CONNECTED,
       });

@@ -1,10 +1,9 @@
 import { fireEvent, render } from '@testing-library/preact';
-import { vi } from 'vitest';
 import { Notifications } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 
-vi.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
+jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<Notifications />', () => {
   const defaultGreeting = "Got any questions? I'm happy to help.";
@@ -14,7 +13,7 @@ describe('<Notifications />', () => {
 
   describe('when the scene is disconnected', () => {
     beforeEach(() => {
-      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.DISCONNECTED,
       });
@@ -51,7 +50,7 @@ describe('<Notifications />', () => {
 
     describe('when a timeout occurs', () => {
       beforeEach(() => {
-        vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
           ...SoulMachinesContext.useSoulMachines(),
           connectionStatus: ConnectionStatus.TIMED_OUT,
         });
@@ -73,7 +72,7 @@ describe('<Notifications />', () => {
 
   describe('when the scene is connecting', () => {
     beforeEach(() => {
-      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.CONNECTING,
       });
@@ -97,7 +96,7 @@ describe('<Notifications />', () => {
 
   describe('when the scene is connected', () => {
     beforeEach(() => {
-      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.CONNECTED,
       });
@@ -121,7 +120,7 @@ describe('<Notifications />', () => {
 
   describe('when an error occurs', () => {
     beforeEach(() => {
-      vi.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         connectionStatus: ConnectionStatus.ERRORED,
         connectionError: new Error('API Key is invalid'),

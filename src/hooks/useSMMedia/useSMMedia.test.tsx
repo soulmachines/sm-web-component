@@ -1,11 +1,10 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
 import { MutableRef } from 'preact/hooks';
-import { vi } from 'vitest';
 import { useSMMedia } from '.';
 import { SessionDataKeys } from '../../enums';
 
-vi.mock('@soulmachines/smwebsdk');
+jest.mock('@soulmachines/smwebsdk');
 
 describe('useSMMedia()', () => {
   const mockScene = new Scene();

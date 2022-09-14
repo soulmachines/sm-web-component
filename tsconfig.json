@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "preserve",
     "jsxFactory": "h",
-    "jsxFragmentFactory": "preact",
+    "jsxFragmentFactory": "Fragment",
     "types": ["jest", "@testing-library/jest-dom"],
     "paths": {
       "react-markdown": ["./node_modules/preact/compat/"], // Fixes issue with react types
@@ -24,6 +24,5 @@
       "react-dom": ["./node_modules/preact/compat/"]
     }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src"]
 }

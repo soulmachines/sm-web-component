@@ -1,9 +1,8 @@
 import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
-import { vi } from 'vitest';
 import { ConnectionStatus } from '../../../enums';
 
-vi.mock('@soulmachines/smwebsdk');
+jest.mock('@soulmachines/smwebsdk');
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
@@ -14,9 +13,9 @@ const scene = new Scene();
 const persona = new Persona(scene, personID);
 
 const mockUseSoulMachines = {
-  connect: vi.fn(),
-  disconnect: vi.fn(),
-  sendTextMessage: vi.fn(),
+  connect: jest.fn(),
+  disconnect: jest.fn(),
+  sendTextMessage: jest.fn(),
   connectionStatus: ConnectionStatus.DISCONNECTED,
   connectionError: null,
   isMicrophoneEnabled: false,
@@ -30,12 +29,12 @@ const mockUseSoulMachines = {
     percentageLoaded: 0,
     totalSteps: 3,
   },
-  videoRef: vi.fn(),
-  toggleMicrophone: vi.fn(),
-  toggleCamera: vi.fn(),
-  toggleVideoMuted: vi.fn(),
+  videoRef: jest.fn(),
+  toggleMicrophone: jest.fn(),
+  toggleCamera: jest.fn(),
+  toggleVideoMuted: jest.fn(),
 };
 
-const useSoulMachines = vi.fn(() => mockUseSoulMachines);
+const useSoulMachines = jest.fn(() => mockUseSoulMachines);
 
 export { SoulMachinesProvider, useSoulMachines };

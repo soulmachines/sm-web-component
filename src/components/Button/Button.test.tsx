@@ -1,5 +1,4 @@
 import { fireEvent, render } from '@testing-library/preact';
-import { vi } from 'vitest';
 import { Button } from '.';
 
 describe('<Button />', () => {
@@ -9,7 +8,7 @@ describe('<Button />', () => {
   });
 
   it('passes the onClick function to the button', async () => {
-    const mock = vi.fn();
+    const mock = jest.fn();
     const { getByText } = render(<Button onClick={mock}>button</Button>);
     const button = getByText('button');
     await fireEvent.click(button);

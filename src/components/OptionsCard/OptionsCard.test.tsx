@@ -1,9 +1,8 @@
 import { fireEvent, render } from '@testing-library/preact';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { OptionsCard } from '.';
-import { vi } from 'vitest';
 
-vi.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
+jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<OptionsCard />', () => {
   const emptyCard = {

@@ -1,5 +1,4 @@
 import { ContentCard, Persona as SDKPersona, Scene as SDKScene } from '@soulmachines/smwebsdk';
-import { vi } from 'vitest';
 
 //copy ConversationStateTypes from smwebsdk here to avoid loop reference
 enum ConversationStateTypes {
@@ -24,23 +23,23 @@ let onConversationStateUpdatedCallback: (data: ConversationStateTypes) => void;
 let onConnectionStateUpdatedCallback: (data: ConnectionStateTypes) => void;
 
 const persona = {
-  conversationSend: vi.fn(),
+  conversationSend: jest.fn(),
 } as unknown as SDKPersona;
 
 const scene = {
-  startVideo: vi.fn(),
-  connect: vi.fn(),
-  disconnect: vi.fn(),
-  autoClearCards: vi.fn(),
-  isConnected: vi.fn(),
-  isMicrophoneActive: vi.fn(() => false),
-  isCameraActive: vi.fn(() => false),
-  setMediaDeviceActive: vi.fn(),
+  startVideo: jest.fn(),
+  connect: jest.fn(),
+  disconnect: jest.fn(),
+  autoClearCards: jest.fn(),
+  isConnected: jest.fn(),
+  isMicrophoneActive: jest.fn(() => false),
+  isCameraActive: jest.fn(() => false),
+  setMediaDeviceActive: jest.fn(),
   onDisconnectedEvent: {
     addListener: (fn: () => void) => {
       triggerDisconnectEvent = fn;
     },
-    call: vi.fn(() => {
+    call: jest.fn(() => {
       triggerDisconnectEvent();
     }),
   },
@@ -48,7 +47,7 @@ const scene = {
     srcObject: 'mock video src',
   },
   connectionState: {
-    getConnectionState: vi.fn(() => ({
+    getConnectionState: jest.fn(() => ({
       name: 'mock name',
       percentageLoaded: 0,
       totalSteps: 4,
@@ -57,7 +56,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onConnectionStateUpdatedCallback = cb;
       },
-      call: vi.fn((data: ConnectionStateTypes) => {
+      call: jest.fn((data: ConnectionStateTypes) => {
         onConnectionStateUpdatedCallback(data);
       }),
     },
@@ -67,7 +66,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onConversationStateUpdatedCallback = cb;
       },
-      call: vi.fn((data: ConversationStateTypes) => {
+      call: jest.fn((data: ConversationStateTypes) => {
         onConversationStateUpdatedCallback(data);
       }),
     },
@@ -75,14 +74,14 @@ const scene = {
       addListener: (cb: () => void) => {
         onCardChangedCallback = cb;
       },
-      call: vi.fn((data: ContentCard[]) => {
+      call: jest.fn((data: ContentCard[]) => {
         onCardChangedCallback(data);
       }),
     },
   },
 } as unknown as SDKScene;
 
-const Scene = vi.fn(() => scene);
-const Persona = vi.fn(() => persona);
+const Scene = jest.fn(() => scene);
+const Persona = jest.fn(() => persona);
 
 export { Scene, Persona, ConversationStateTypes };

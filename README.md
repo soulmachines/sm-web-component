@@ -42,7 +42,7 @@ graph TD
 - [Eslint](https://eslint.org/) for finding and fixing code issues
 - [Prettier](https://prettier.io/) for code formatting
 - [Storybook](https://storybook.js.org/) for building and previewing components
-- [Vitest](https://vitest.dev/) for the test runner
+- [Jest](https://jestjs.io/) for the test runner
 - [Testing Tools](https://testing-library.com/) for testing utils
 - [Plop](https://plopjs.com/) for generating files and folders
 
