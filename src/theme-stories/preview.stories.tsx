@@ -1,3 +1,5 @@
+import { ConversationStateTypes } from '@soulmachines/smwebsdk/lib-esm/enums/ConversationStateTypes';
+import { SMProviderDecorator } from '../../.storybook/decorators/SMProviderDecorator';
 import paths from '../components/Icon/paths';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
@@ -11,8 +13,6 @@ import { Notifications } from '../components/Notifications/Notifications';
 import { OptionsCard } from '../components/OptionsCard/OptionsCard';
 import { Text } from '../components/Text/Text';
 import { Widget } from '../components/Widget';
-import { SMProviderDecorator } from '../../.storybook/decorators/SMProviderDecorator';
-import { ConversationStateTypes } from '@soulmachines/smwebsdk/lib-esm/enums/ConversationStateTypes';
 import { markdownContent } from '../components/MarkdownCard/MarkdownCard.stories';
 import { imageCardContent } from '../components/ImageCard/ImageCard.stories';
 import { optionsCardContent } from '../components/OptionsCard/OptionsCard.stories';
@@ -45,7 +45,6 @@ const colorVariables: Record<string, string> = {
 const fontVariables: Record<string, string> = {
   '--sm-font-family-primary': 'Rubik',
 };
-//, //'Helvetica', 'sans-serif'"
 
 const updateCssVariables = (event: Event) => {
   document
@@ -150,6 +149,7 @@ const IconContainer = () => {
     </div>
   );
 };
+
 const CardContainer = () => {
   return (
     <div className="sm-max-w-xl">
@@ -178,6 +178,7 @@ const StatesContainer = () => {
     </div>
   );
 };
+
 export const Basic = () => {
   return (
     <>
