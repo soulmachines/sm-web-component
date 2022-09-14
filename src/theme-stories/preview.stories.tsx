@@ -33,7 +33,7 @@ const cssVariables: Record<string, string> = {
   ' --sm-color-secondary-base': '#a3bef5',
 
   '--sm-color-tertiary-base': '#ed5645',
-  ' --sm-color-tertiary-dark': '#bd2920',
+  '--sm-color-tertiary-dark': '#bd2920',
 
   '--sm-box-shadow-sm': '0px 2px 20px rgba(0, 0, 0, 0.04), 0px 2px 12px rgba(0, 0, 0, 0.04)',
   '--sm-box-shadow-md': '0px 2px 10px rgba(0, 0, 0, 0.04), 0px 6px 24px rgba(0, 0, 0, 0.1)',
