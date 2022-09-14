@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
 export type TextProps = {
-  children: string;
+  children: string | string[];
   size: 'sm' | 'md' | 'lg';
 };
 

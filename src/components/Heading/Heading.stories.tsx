@@ -1,6 +1,6 @@
 import { Heading, HeadingProps } from '.';
 
-export const headingOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+export const headingOptions: HeadingProps['type'][] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export default {
   title: `Components / Heading`,

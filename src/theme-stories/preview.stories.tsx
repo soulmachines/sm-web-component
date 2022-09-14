@@ -5,7 +5,7 @@ import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { ConversationState } from '../components/ConversationState';
 import { Heading } from '../components/Heading';
-import { IconButton } from '../components/IconButton/IconButton';
+import { IconButton, Theme } from '../components/IconButton/IconButton';
 import { ImageCard } from '../components/ImageCard/ImageCard';
 import { LinkCard } from '../components/LinkCard/LinkCard';
 import { MarkdownCard } from '../components/MarkdownCard/MarkdownCard';
@@ -129,7 +129,7 @@ const IconContainer = () => {
             size={20}
             title={path}
             shadow={true}
-            theme={'default'}
+            theme={Theme.default}
           />
         );
       })}
@@ -142,7 +142,7 @@ const IconContainer = () => {
             size={20}
             title={path}
             shadow={true}
-            theme={'danger'}
+            theme={Theme.danger}
           />
         );
       })}
