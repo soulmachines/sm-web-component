@@ -1,12 +1,14 @@
 import { Heading, HeadingProps } from '.';
 
+export const headingOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
 export default {
   title: `Components / Heading`,
   component: Heading,
   argTypes: {
     type: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+      options: headingOptions,
       defaultValue: 'h1',
     },
     children: {

@@ -7,7 +7,7 @@ export default {
   decorators: [SMProviderDecorator],
 };
 
-const content = {
+export const imageCardContent = {
   id: 'id',
   type: 'image',
   data: {
@@ -15,4 +15,4 @@ const content = {
   },
 };
 
-export const Basic = () => <ImageCard content={content} />;
+export const Basic = () => <ImageCard content={imageCardContent} />;

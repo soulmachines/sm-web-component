@@ -1,6 +1,6 @@
 import { MarkdownCard, MarkdownCardProps } from '.';
 
-const content = {
+export const markdownContent = {
   id: 'id',
   type: 'markdown',
   data: {
@@ -71,11 +71,11 @@ export default {
   title: `Components / MarkdownCard`,
   component: MarkdownCard,
   argTypes: {
-    content: { control: 'object', defaultValue: content },
+    content: { control: 'object', defaultValue: markdownContent },
   },
   parameters: {
     docs: {
-      page: <MarkdownCard content={content} />,
+      page: <MarkdownCard content={markdownContent} />,
     },
   },
 };

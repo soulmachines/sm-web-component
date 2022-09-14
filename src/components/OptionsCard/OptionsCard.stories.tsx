@@ -7,7 +7,7 @@ export default {
   decorators: [SMProviderDecorator],
 };
 
-const content = {
+export const optionsCardContent = {
   id: 'id',
   type: 'options',
   data: {
@@ -27,4 +27,4 @@ const content = {
   },
 };
 
-export const Basic = () => <OptionsCard content={content} />;
+export const Basic = () => <OptionsCard content={optionsCardContent} />;

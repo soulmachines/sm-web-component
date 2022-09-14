@@ -1,11 +1,12 @@
 import { Text } from '.';
 import { TextProps } from './Text';
 
+export const textOptions = ['sm', 'md', 'lg'];
 export default {
   title: `Components / Text`,
   component: Text,
   argTypes: {
-    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    size: { control: 'select', options: textOptions },
     children: {
       type: { name: 'string' },
       defaultValue: 'Your session has ended. You can reconnect anytime you are ready.',
