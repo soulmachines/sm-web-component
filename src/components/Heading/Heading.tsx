@@ -1,10 +1,13 @@
 import { createElement } from 'preact';
 import classNames from 'classnames';
 
+export const headingTypes = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
+export const headingSizes = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
+
 export type HeadingProps = {
   children: string;
-  type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  type: typeof headingTypes[number];
+  size?: typeof headingSizes[number];
 };
 
 export function Heading({ type, children, size = 'lg' }: HeadingProps) {

@@ -1,6 +1,4 @@
-import { Heading, HeadingProps } from '.';
-
-export const headingOptions: HeadingProps['type'][] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+import { Heading, HeadingProps, headingTypes, headingSizes } from '.';
 
 export default {
   title: `Components / Heading`,
@@ -8,8 +6,13 @@ export default {
   argTypes: {
     type: {
       control: 'select',
-      options: headingOptions,
+      options: headingTypes,
       defaultValue: 'h1',
+    },
+    size: {
+      control: 'select',
+      options: headingSizes,
+      defaultValue: 'lg',
     },
     children: {
       type: { name: 'string' },
@@ -18,6 +21,8 @@ export default {
   },
 };
 
-export const Basic = ({ children, type }: HeadingProps) => (
-  <Heading type={type}>{children}</Heading>
+export const Basic = ({ children, type, size }: HeadingProps) => (
+  <Heading type={type} size={size}>
+    {children}
+  </Heading>
 );
