@@ -3,7 +3,7 @@ import classNames from 'classnames';
 export const textSizes = ['sm', 'md', 'lg'] as const;
 
 export type TextProps = {
-  children: string;
+  children: string | string[];
   size: typeof textSizes[number];
 };
 

@@ -4,21 +4,21 @@ import paths from '../components/Icon/paths';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { ConversationState } from '../components/ConversationState';
-import { Heading } from '../components/Heading';
+import { Heading, headingTypes } from '../components/Heading';
 import { IconButton, Theme } from '../components/IconButton/IconButton';
 import { ImageCard } from '../components/ImageCard/ImageCard';
 import { LinkCard } from '../components/LinkCard/LinkCard';
 import { MarkdownCard } from '../components/MarkdownCard/MarkdownCard';
 import { Notifications } from '../components/Notifications/Notifications';
 import { OptionsCard } from '../components/OptionsCard/OptionsCard';
-import { Text } from '../components/Text/Text';
+import { Text, textSizes } from '../components/Text/Text';
 import { Widget } from '../components/Widget';
-import { markdownContent } from '../components/MarkdownCard/MarkdownCard.stories';
-import { imageCardContent } from '../components/ImageCard/ImageCard.stories';
-import { optionsCardContent } from '../components/OptionsCard/OptionsCard.stories';
-import { linkcardContent } from '../components/LinkCard/LinkCard.stories';
-import { headingOptions } from '../components/Heading/Heading.stories';
-import { textOptions } from '../components/Text/Text.stories';
+import {
+  imageCardContent,
+  linkCardContent,
+  markdownCardContent,
+  optionsCardContent,
+} from '../storybook-content';
 
 export default {
   title: `Theme / Preview`,
@@ -101,14 +101,14 @@ const ElementContainer = () => {
 
       <Button theme="outline" children="outline button" />
       <Button theme="default" children="default button" />
-      {headingOptions.map((heading) => {
-        return <Heading key={heading} type={heading}>{`${heading} Heading`}</Heading>;
+      {headingTypes.map((headingType) => {
+        return <Heading key={headingType} type={headingType}>{`${headingType} Heading`}</Heading>;
       })}
 
-      {textOptions.map((size) => {
+      {textSizes.map((textSize) => {
         return (
-          <Text size={size} key={size}>
-            This is text element: size {size}
+          <Text size={textSize} key={textSize}>
+            This is text element: size {textSize}
           </Text>
         );
       })}
@@ -162,8 +162,8 @@ const CardContainer = () => {
       </Card>
       <OptionsCard content={optionsCardContent} />
       <ImageCard content={imageCardContent} />
-      <LinkCard content={linkcardContent} isExternal={true} />
-      <MarkdownCard content={markdownContent} />
+      <LinkCard content={linkCardContent} isExternal={true} />
+      <MarkdownCard content={markdownCardContent} />
     </div>
   );
 };
