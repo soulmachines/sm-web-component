@@ -4,7 +4,7 @@ import paths from '../components/Icon/paths';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { ConversationState } from '../components/ConversationState';
-import { Heading, headingTypes, headingSizes } from '../components/Heading';
+import { Heading, headingSizes } from '../components/Heading';
 import { IconButton, Theme } from '../components/IconButton/IconButton';
 import { ImageCard } from '../components/ImageCard/ImageCard';
 import { LinkCard } from '../components/LinkCard/LinkCard';
