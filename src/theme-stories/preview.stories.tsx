@@ -56,9 +56,19 @@ const updateCssVariables = (event: Event) => {
 };
 
 const CssSelectorContainer = () => {
+  const copyCssVariables = () => {
+    const variableInputs = Array.from(document.querySelectorAll<HTMLInputElement>('[id^="--sm-"'));
+    const cssVariables = variableInputs.map((input) => `${input.id}: "${input.value}";`);
+    navigator.clipboard.writeText(cssVariables.join('\r\n'));
+  };
+
   return (
     <div className="border-2 sm-bg-gray-lightest sm-max-w-xl">
-      <Heading type="h2">Css Selector</Heading>
+      <div className="sm-flex sm-justify-between">
+        <Heading type="h2">Css Selector</Heading>
+        <IconButton name="copy" title="Copy CSS" onClick={copyCssVariables} />
+      </div>
+
       {Object.keys(colorVariables).map((variable) => {
         return (
           <div key={variable} className="sm-p1">
