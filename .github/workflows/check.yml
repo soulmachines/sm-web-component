@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16.15.1'
+          node-version-file: '.nvmrc'
 
       - name: Caching Dependencies
         uses: actions/cache@v3
@@ -42,7 +42,7 @@ jobs:
       - name: Verify no T.O.D.O. are present in files
         run: |
           match_total=`grep -niIR "todo" . --exclude-dir={.git,node_modules,docs,docs-build,dist,.storybook,storybook-static} --exclude=check.yml | wc -l`
-          if [[ `echo ${match_total} | wc -l` -gt 0 ]]; then
+          if [[ ${match_total} -gt 0 ]]; then
             grep -niIR "todo" . --exclude-dir={.git,node_modules,docs,docs-build,dist,.storybook,storybook-static} --exclude=check.yml
             exit 1
           fi
