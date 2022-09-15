@@ -2,7 +2,7 @@ import { LinkCard, LinkCardProps } from '.';
 import { linkCardContent } from '../../storybook-content';
 
 export default {
-  title: `App Components / LinkCard`,
+  title: `Content Cards / LinkCard`,
   component: LinkCard,
   argTypes: {
     content: { control: 'object', defaultValue: linkCardContent },

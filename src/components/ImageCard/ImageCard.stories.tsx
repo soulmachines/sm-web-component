@@ -3,7 +3,7 @@ import { SMProviderDecorator } from '../../../.storybook/decorators/SMProviderDe
 import { imageCardContent } from '../../storybook-content';
 
 export default {
-  title: `App Components / ImageCard`,
+  title: `Content Cards / ImageCard`,
   component: ImageCard,
   decorators: [SMProviderDecorator],
 };
