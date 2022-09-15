@@ -41,8 +41,4 @@ jobs:
 
       - name: Verify no T.O.D.O. are present in files
         run: |
-          match_total=`grep -niIR "todo" . --exclude-dir={.git,node_modules,docs,docs-build,dist,.storybook,storybook-static} --exclude=check.yml | wc -l`
-          if [[ ${match_total} -gt 0 ]]; then
-            grep -niIR "todo" . --exclude-dir={.git,node_modules,docs,docs-build,dist,.storybook,storybook-static} --exclude=check.yml
-            exit 1
-          fi
+          grep -niIR "todo" . --exclude-dir={.git,node_modules,docs,docs-build,dist,.storybook,storybook-static} --exclude={check.yml} && exit 1
