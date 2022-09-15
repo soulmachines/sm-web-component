@@ -12,7 +12,7 @@ export type HeadingProps = {
 
 export function Heading({ type, children, size = 'lg' }: HeadingProps) {
   const sizeClass = classNames({
-    'sm-text-2xs md:sm-text-xs': size === 'xs',
+    'sm-text-xs md:sm-text-xs': size === 'xs',
     'sm-text-xs md:sm-text-sm': size === 'sm',
     'sm-text-sm md:sm-text-base': size === 'md',
     'sm-text-base md:sm-text-lg': size === 'lg',

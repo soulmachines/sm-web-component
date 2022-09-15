@@ -55,6 +55,25 @@ const updateCssVariables = (event: Event) => {
     );
 };
 
+const PreviewSection = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: JSX.Element | JSX.Element[];
+}) => {
+  return (
+    <div className="sm-max-w-xl sm-my-10 ">
+      <div className="sm-mb-4">
+        <Heading type="h2">{title}</Heading>
+      </div>
+      <div className="sm-flex sm-flex-col sm-gap-y-2">{children}</div>
+    </div>
+  );
+};
+
+const Divider = () => <hr className="sm-border-gray-lightest" />;
+
 const CssSelectorContainer = () => {
   const copyCssVariables = () => {
     const variableInputs = Array.from(document.querySelectorAll<HTMLInputElement>('[id^="--sm-"'));
@@ -63,15 +82,10 @@ const CssSelectorContainer = () => {
   };
 
   return (
-    <div className="border-2 sm-bg-gray-lightest sm-max-w-xl">
-      <div className="sm-flex sm-justify-between">
-        <Heading type="h2">Css Selector</Heading>
-        <IconButton name="copy" title="Copy CSS" onClick={copyCssVariables} />
-      </div>
-
+    <>
       {Object.keys(colorVariables).map((variable) => {
         return (
-          <div key={variable} className="sm-p1">
+          <div key={variable} className="sm-p1 sm-font-primary sm-text-sm">
             <label for={variable} className="sm-pr-1">
               {variable}
             </label>
@@ -87,7 +101,7 @@ const CssSelectorContainer = () => {
 
       {Object.keys(fontVariables).map((variable) => {
         return (
-          <div key={variable} className="sm-p1">
+          <div key={variable} className="sm-p1 sm-font-primary sm-text-sm">
             <label for={variable} className="sm-pr-1">
               {variable}
             </label>
@@ -100,27 +114,21 @@ const CssSelectorContainer = () => {
           </div>
         );
       })}
-    </div>
+
+      <div>
+        <IconButton name="copy" title="Copy CSS" onClick={copyCssVariables} />
+      </div>
+    </>
   );
 };
 
 const ElementContainer = () => {
   return (
-    <div className="sm-max-w-xl">
-      <Heading type="h2">Elements</Heading>
-
-      <Button theme="outline" children="outline button" />
-      <Button theme="default" children="default button" />
-
-      {headingTypes.map((headingType) => {
-        return (
-          <Heading
-            key={headingType}
-            type={headingType}
-          >{`Heading semantic type: ${headingType} `}</Heading>
-        );
-      })}
-
+    <>
+      <div className="sm-flex sm-gap-x-2">
+        <Button theme="outline" children="outline button" />
+        <Button theme="default" children="default button" />
+      </div>
       {headingSizes.map((headingSize) => {
         return (
           <Heading
@@ -139,54 +147,56 @@ const ElementContainer = () => {
         );
       })}
       <Notifications />
-    </div>
+    </>
   );
 };
 
 const IconContainer = () => {
   return (
-    <div className="sm-max-w-xl">
-      <Heading type="h2">Icon Buttons</Heading>
-      {availableIcons.map((path) => {
-        return (
-          <IconButton
-            key={path}
-            name={path}
-            size={20}
-            title={path}
-            shadow={true}
-            theme={Theme.default}
-          />
-        );
-      })}
-
-      {availableIcons.map((path) => {
-        return (
-          <IconButton
-            key={path}
-            name={path}
-            size={20}
-            title={path}
-            shadow={true}
-            theme={Theme.danger}
-          />
-        );
-      })}
-    </div>
+    <>
+      <div className="sm-flex sm-gap-x-2">
+        {availableIcons.map((path) => {
+          return (
+            <IconButton
+              key={path}
+              name={path}
+              size={20}
+              title={path}
+              shadow={true}
+              theme={Theme.default}
+            />
+          );
+        })}
+      </div>
+      <div className="sm-flex sm-gap-x-2">
+        {availableIcons.map((path) => {
+          return (
+            <IconButton
+              key={path}
+              name={path}
+              size={20}
+              title={path}
+              shadow={true}
+              theme={Theme.danger}
+            />
+          );
+        })}
+      </div>
+    </>
   );
 };
 
 const CardContainer = () => {
   return (
-    <div className="sm-max-w-xl">
-      <Heading type="h2">Content Cards</Heading>
+    <div className="sm-flex sm-flex-wrap sm-gap-10">
+      <OptionsCard content={optionsCardContent} />
       <Card isDismissible={true} flush={false}>
         <div>
-          <p>This is a dismissible content card.</p>
+          <Text>This is a dismissible content card.</Text>
           <Button>Button</Button>
         </div>
       </Card>
-      <OptionsCard content={optionsCardContent} />
+
       <ImageCard content={imageCardContent} />
       <LinkCard content={linkCardContent} isExternal={true} />
       <MarkdownCard content={markdownCardContent} />
@@ -196,23 +206,41 @@ const CardContainer = () => {
 
 const StatesContainer = () => {
   return (
-    <div>
-      <Heading type="h2">Conversation States</Heading>
-      {Object.values(ConversationStateTypes).map((state) => {
-        return <ConversationState key={state} state={state} />;
-      })}
-    </div>
+    <>
+      <div className="sm-flex sm-gap-x-2">
+        {Object.values(ConversationStateTypes).map((state) => {
+          return <ConversationState key={state} state={state} />;
+        })}
+      </div>
+    </>
   );
 };
 
 export const Basic = () => {
   return (
     <>
-      <CssSelectorContainer />
-      <ElementContainer />
-      <IconContainer />
-      <StatesContainer />
-      <CardContainer />
+      <Heading type="h1" size="2xl">
+        Theme Preview
+      </Heading>
+      <PreviewSection title="Variables">
+        <CssSelectorContainer />
+      </PreviewSection>
+      <Divider />
+      <PreviewSection title="Elements">
+        <ElementContainer />
+      </PreviewSection>
+      <Divider />
+      <PreviewSection title="Icon Buttons">
+        <IconContainer />
+      </PreviewSection>
+      <Divider />
+      <PreviewSection title="Conversation States">
+        <StatesContainer />
+      </PreviewSection>
+      <Divider />
+      <PreviewSection title="Content Cards">
+        <CardContainer />
+      </PreviewSection>
       <Widget
         greeting={'A custom greeting message'}
         profilePicture={'https://assets.cdn.soulmachines.cloud/AvatarCoverImages/image-sam-l.jpg'}
