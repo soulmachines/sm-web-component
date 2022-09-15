@@ -4,7 +4,6 @@ on:
     branches:
       - release-stable
   workflow_dispatch:
-  pull_request: #TODO remove
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
