@@ -4,7 +4,7 @@ import paths from '../components/Icon/paths';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { ConversationState } from '../components/ConversationState';
-import { Heading, headingTypes } from '../components/Heading';
+import { Heading, headingTypes, headingSizes } from '../components/Heading';
 import { IconButton, Theme } from '../components/IconButton/IconButton';
 import { ImageCard } from '../components/ImageCard/ImageCard';
 import { LinkCard } from '../components/LinkCard/LinkCard';
@@ -58,7 +58,7 @@ const updateCssVariables = (event: Event) => {
 const CssSelectorContainer = () => {
   return (
     <div className="border-2 sm-bg-gray-lightest sm-max-w-xl">
-      <Heading type="h1">Css Selector</Heading>
+      <Heading type="h2">Css Selector</Heading>
       {Object.keys(colorVariables).map((variable) => {
         return (
           <div key={variable} className="sm-p1">
@@ -97,12 +97,28 @@ const CssSelectorContainer = () => {
 const ElementContainer = () => {
   return (
     <div className="sm-max-w-xl">
-      <Heading type="h1">Elements</Heading>
+      <Heading type="h2">Elements</Heading>
 
       <Button theme="outline" children="outline button" />
       <Button theme="default" children="default button" />
+
       {headingTypes.map((headingType) => {
-        return <Heading key={headingType} type={headingType}>{`${headingType} Heading`}</Heading>;
+        return (
+          <Heading
+            key={headingType}
+            type={headingType}
+          >{`Heading semantic type: ${headingType} `}</Heading>
+        );
+      })}
+
+      {headingSizes.map((headingSize) => {
+        return (
+          <Heading
+            key={headingSize}
+            type="h1"
+            size={headingSize}
+          >{`Heading size: ${headingSize}`}</Heading>
+        );
       })}
 
       {textSizes.map((textSize) => {
@@ -120,7 +136,7 @@ const ElementContainer = () => {
 const IconContainer = () => {
   return (
     <div className="sm-max-w-xl">
-      <Heading type="h1">Icon Buttons</Heading>
+      <Heading type="h2">Icon Buttons</Heading>
       {availableIcons.map((path) => {
         return (
           <IconButton
@@ -153,7 +169,7 @@ const IconContainer = () => {
 const CardContainer = () => {
   return (
     <div className="sm-max-w-xl">
-      <Heading type="h1">Content Cards</Heading>
+      <Heading type="h2">Content Cards</Heading>
       <Card isDismissible={true} flush={false}>
         <div>
           <p>This is a dismissible content card.</p>
@@ -171,7 +187,7 @@ const CardContainer = () => {
 const StatesContainer = () => {
   return (
     <div>
-      <Heading type="h1">Conversation States</Heading>
+      <Heading type="h2">Conversation States</Heading>
       {Object.values(ConversationStateTypes).map((state) => {
         return <ConversationState key={state} state={state} />;
       })}
