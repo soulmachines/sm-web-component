@@ -85,12 +85,13 @@ const CssSelectorContainer = () => {
     <>
       {Object.keys(colorVariables).map((variable) => {
         return (
-          <div key={variable} className="sm-p1 sm-font-primary sm-text-sm">
+          <div key={variable} className="sm-p1 sm-font-primary sm-text-sm sm-flex sm-items-center">
             <label for={variable} className="sm-pr-1">
               {variable}
             </label>
             <input
               type="color"
+              className="sm-border-none"
               id={variable}
               value={colorVariables[variable]}
               onChange={(e: Event) => updateCssVariables(e)}
