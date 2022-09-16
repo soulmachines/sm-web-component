@@ -2,8 +2,6 @@ import { Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
 import { useConversationState } from '.';
 
-jest.mock('@soulmachines/smwebsdk');
-
 describe('useConversationState()', () => {
   const scene = new Scene();
 

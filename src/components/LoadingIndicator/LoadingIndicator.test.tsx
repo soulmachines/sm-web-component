@@ -2,14 +2,6 @@ import { render } from '@testing-library/preact';
 import { useSpring } from 'react-spring';
 import { LoadingIndicator } from '.';
 
-jest.mock('react-spring', () => {
-  const originalModule = jest.requireActual('react-spring');
-  return {
-    ...originalModule,
-    useSpring: jest.fn(() => ({ number: { to: jest.fn(() => 0) } })),
-  };
-});
-
 describe('<LoadingIndicator />', () => {
   const defaultProps = {
     stepName: 'Idle',

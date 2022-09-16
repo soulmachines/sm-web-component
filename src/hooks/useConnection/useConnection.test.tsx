@@ -6,7 +6,6 @@ import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 const mockPlay = jest.fn(() => Promise.resolve(true));
 const mockMediaSrc = {} as unknown as MediaSource;
-jest.mock('@soulmachines/smwebsdk');
 const reactVideoEl = {
   muted: true,
   play: mockPlay,

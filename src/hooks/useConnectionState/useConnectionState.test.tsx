@@ -2,8 +2,6 @@ import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/react-hooks';
 import { useConnectionState } from '.';
 
-jest.mock('@soulmachines/smwebsdk');
-
 describe('useConnectionState()', () => {
   const scene = new Scene();
 
