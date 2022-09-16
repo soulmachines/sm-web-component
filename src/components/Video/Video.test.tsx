@@ -7,7 +7,6 @@ import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
-jest.mock('react-cool-dimensions');
 
 describe('<Video />', () => {
   const customRender = (props = { autoConnect: true }) => {
