@@ -17,7 +17,7 @@
     "prettier:fix": "prettier --write .",
     "lint": "eslint src/",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook -o docs-build",
     "generate": "plop --plopfile generators/index.js",
     "prepare": "husky install"
   },
