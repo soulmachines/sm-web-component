@@ -1,5 +1,23 @@
 # Change Log
 
+# [1.9.0](https://github.com/soulmachines/sm-web-component/compare/1.8.0...1.9.0) (2022-09-18)
+
+
+### Bug Fixes
+
+* fallback to a color set on widget not the sites body color quic-2097 ([#307](https://github.com/soulmachines/sm-web-component/issues/307)) ([178f734](https://github.com/soulmachines/sm-web-component/commit/178f734916abeb56b8119c9c03024198564cacaf))
+* port and localhost url quic-2088 ([#305](https://github.com/soulmachines/sm-web-component/issues/305)) ([61f1979](https://github.com/soulmachines/sm-web-component/commit/61f197930dcb0e5765bb78c8257e44fe7c8b9815))
+* print out error message in console when setMediaDeviceActive fails QUIC-2070 ([#308](https://github.com/soulmachines/sm-web-component/issues/308)) ([bba5596](https://github.com/soulmachines/sm-web-component/commit/bba55963512e6d58d442a2692d9f97eee0d70876))
+
+
+### Features
+
+* create loading indictor component quic-2079 ([#303](https://github.com/soulmachines/sm-web-component/issues/303)) ([3300d18](https://github.com/soulmachines/sm-web-component/commit/3300d18acf85e964285b48e9264ee1c13151ab8d))
+* jump to larger size during connecting quic-2080 ([#304](https://github.com/soulmachines/sm-web-component/issues/304)) ([7ea1450](https://github.com/soulmachines/sm-web-component/commit/7ea14507c16aedc89d2034d64540cda30ef0b895))
+* live preview with color change in storybook QUIC-2069 ([#313](https://github.com/soulmachines/sm-web-component/issues/313)) ([a3b991f](https://github.com/soulmachines/sm-web-component/commit/a3b991f8aa51773ed3413b9768fde55c3000bca2)), closes [#314](https://github.com/soulmachines/sm-web-component/issues/314)
+* refactor colors quic-2064 ([#310](https://github.com/soulmachines/sm-web-component/issues/310)) ([9a90d81](https://github.com/soulmachines/sm-web-component/commit/9a90d8132bfc6c4e54e069ef0c439fcfa4e1d512))
+* wire up sdk connection state with loading indicator component quic-2078 ([#306](https://github.com/soulmachines/sm-web-component/issues/306)) ([c03f1bc](https://github.com/soulmachines/sm-web-component/commit/c03f1bc7a97d6bded28c5938e5f3c7d3148fed8f))
+
 # [1.8.0](https://github.com/soulmachines/sm-web-component/compare/1.7.0...1.8.0) (2022-08-21)
 
 
