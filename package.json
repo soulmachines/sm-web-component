@@ -1,7 +1,7 @@
 {
   "name": "@soulmachines/web-components",
   "private": true,
-  "version": "1.9.0",
+  "version": "1.9.1",
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build && npm run build:snippet",

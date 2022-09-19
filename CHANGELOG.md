@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.9.1](https://github.com/soulmachines/sm-web-component/compare/1.9.0...1.9.1) (2022-09-19)
+
+
+### Bug Fixes
+
+* downgrade vite to fix website compatibility issues QUIC-2070  ([#309](https://github.com/soulmachines/sm-web-component/issues/309)) ([df914b8](https://github.com/soulmachines/sm-web-component/commit/df914b89bc7eaea3ecf97c52827c9b37699bbb66))
+
 # [1.9.0](https://github.com/soulmachines/sm-web-component/compare/1.8.0...1.9.0) (2022-09-18)
 
 
