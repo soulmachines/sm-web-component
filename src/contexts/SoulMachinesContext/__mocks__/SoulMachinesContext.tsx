@@ -2,8 +2,6 @@ import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { ConnectionStatus } from '../../../enums';
 
-jest.mock('@soulmachines/smwebsdk');
-
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
 }

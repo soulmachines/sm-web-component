@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16.15.1'
+          node-version-file: '.nvmrc'
 
       - name: Caching Dependencies
         uses: actions/cache@v3
@@ -38,3 +38,7 @@ jobs:
 
       - name: Build Package
         run: npm run build
+
+      - name: Verify no T.O.D.O. are present in files
+        run: |
+          ! grep -niIR "todo" . --exclude-dir={.git,node_modules,docs,docs-build,dist,.storybook,storybook-static} --exclude=check.yml

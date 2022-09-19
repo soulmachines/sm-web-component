@@ -55,7 +55,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
     <Card style={style}>
       <div
         data-sm-content={content.id}
-        className="sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto sm-text-neutral-700 sm-font-normal sm-font-primary"
+        className="sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-max-h-contentCard sm-overflow-y-auto sm-text-primary-text sm-font-normal sm-font-primary"
       >
         {/*
         Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
@@ -111,7 +111,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
 
               return (
                 <a
-                  className="sm-text-blue-400 active:sm-text-red-500 hover:sm-underline focus:underline visited:sm-text-pink-500"
+                  className="sm-text-primary-base active:sm-text-primary-dark hover:sm-underline focus:underline visited:sm-text-primary-dark"
                   href={href}
                   title={title}
                   {...conditionalAttributes}
@@ -123,7 +123,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
             p: ({ children }: TextProps) => {
               return <Text children={children} size="md" />;
             },
-            hr: () => <hr className="sm-w-11/12 sm-bg-gray-400" />,
+            hr: () => <hr className="sm-w-11/12 sm-bg-gray-lightest" />,
             table: ({ ...props }: GenericProps) => {
               return (
                 <table
@@ -133,12 +133,12 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
               );
             },
             tr: ({ ...props }: GenericProps) => {
-              return <tr className="even:sm-bg-gray-200" {...props} />;
+              return <tr className="even:sm-bg-gray-lightest" {...props} />;
             },
             thead: ({ ...props }: GenericProps) => {
-              return <thead className="sm-bg-blue-300 sm-text-left" {...props} />;
+              return <thead className="sm-bg-gray-light sm-text-left" {...props} />;
             },
-            pre: ({ ...props }) => <pre className="sm-bg-gray-300 sm-rounded-sm" {...props} />,
+            pre: ({ ...props }) => <pre className="sm-bg-gray-light sm-rounded-sm" {...props} />,
           }}
         >
           {markdown}

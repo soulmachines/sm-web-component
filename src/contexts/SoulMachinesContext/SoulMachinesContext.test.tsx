@@ -8,7 +8,6 @@ const mockCanAutoPlayAudio = true;
 const mockVideoRef = { current: 'mock' };
 const mockConnect = jest.fn();
 
-jest.mock('@soulmachines/smwebsdk');
 jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({
     connect: mockConnect,

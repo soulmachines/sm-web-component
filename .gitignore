@@ -5,3 +5,5 @@ dist
 cypress/videos
 cypress/screenshots
 .eslintcache
+docs-build
+storybook-static

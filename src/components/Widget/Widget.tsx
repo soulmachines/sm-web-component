@@ -46,7 +46,7 @@ export function Widget({
 
   // Pass through a wrapped loader with some custom styles
   const LoadingIndicator = () => (
-    <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-600">
+    <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-base">
       {loadingIndicator ? (
         loadingIndicator
       ) : (
@@ -71,7 +71,7 @@ export function Widget({
 
   return (
     <div
-      className={`sm-fixed sm-bottom-0 sm-p-2 sm-text-neutral-700 sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ${wrapperPositionClass}`}
+      className={`sm-fixed sm-bottom-0 sm-p-2 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ${wrapperPositionClass}`}
     >
       <div className="sm-flex sm-flex-col sm-gap-y-2 sm-h-full sm-justify-end md:sm-gap-y-5">
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
@@ -82,7 +82,7 @@ export function Widget({
           className={`sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5 ${notificationVideoOrderClass}`}
         >
           {!isConnectingOrConnected && (
-            <div className="sm-max-w-xs">
+            <div className="sm-max-w-xs sm-z-10">
               <Notifications greeting={greeting} />
             </div>
           )}
@@ -96,7 +96,7 @@ export function Widget({
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-500 sm-border-2 sm-border-transparent sm-bg-transparent hover:sm-border-primary-400 sm-transition-colors sm-overflow-hidden"
+                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-outline sm-outline-2 sm-outline-transparent sm-bg-transparent hover:sm-outline-secondary-base sm-transition-colors sm-overflow-hidden"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
@@ -105,7 +105,7 @@ export function Widget({
               <div
                 className={classNames({
                   'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
-                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-primary-400':
+                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-solid sm-border-gray-lightest':
                     isConnectingOrConnected,
                 })}
               >
