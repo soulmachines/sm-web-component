@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 
+export const textSizes = ['sm', 'md', 'lg'] as const;
+
 export type TextProps = {
-  children: string;
-  size: 'sm' | 'md' | 'lg';
+  children: string | string[];
+  size: typeof textSizes[number];
 };
 
 export function Text({ children, size, ...rest }: TextProps) {
@@ -14,7 +16,7 @@ export function Text({ children, size, ...rest }: TextProps) {
 
   return (
     <p
-      className={`sm-text-neutral-700 sm-font-primary sm-font-normal sm-m-0 ${sizeClass}`}
+      className={`sm-text-primary-text sm-font-primary sm-font-normal sm-m-0 ${sizeClass}`}
       {...rest}
     >
       {children}

@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks';
 import { LoadingIndicator, LoadingIndicatorProps } from '.';
+import { Button } from '../Button';
 
 export default {
   title: `Components / LoadingIndicator`,
@@ -9,9 +10,13 @@ export default {
       control: { type: 'text' },
       defaultValue: 'DownloadingAssets',
     },
-    progress: {
+    percentageLoaded: {
       control: { type: 'number' },
-      defaultValue: 25,
+      defaultValue: 0,
+    },
+    totalSteps: {
+      control: { type: 'number' },
+      defaultValue: 4,
     },
     durationMs: {
       control: { type: 'number' },
@@ -25,7 +30,8 @@ export const Basic = (props: LoadingIndicatorProps) => <LoadingIndicator {...pro
 export const Example = () => {
   const defaultState = {
     stepName: 'Idle',
-    progress: 0,
+    percentageLoaded: 0,
+    totalSteps: 3,
   };
   const [progressProps, setProgressProps] = useState(defaultState);
 
@@ -35,36 +41,40 @@ export const Example = () => {
 
     setTimeout(() => {
       setProgressProps({
+        ...defaultState,
         stepName: 'SearchingForDigitalPerson',
-        progress: 25,
+        percentageLoaded: 25,
       });
     }, 500);
 
     setTimeout(() => {
       setProgressProps({
+        ...defaultState,
         stepName: 'DownloadingAssets',
-        progress: 50,
+        percentageLoaded: 50,
       });
     }, 1000);
 
     setTimeout(() => {
       setProgressProps({
+        ...defaultState,
         stepName: 'ConnectingToDigitalPerson',
-        progress: 75,
+        percentageLoaded: 75,
       });
     }, 2000);
 
     setTimeout(() => {
       setProgressProps({
+        ...defaultState,
         stepName: 'Connected',
-        progress: 100,
+        percentageLoaded: 100,
       });
     }, 3500);
   };
 
   return (
     <div>
-      <button onClick={startAnimation}>Start</button>
+      <Button onClick={startAnimation}>Start Animation</Button>
       <LoadingIndicator {...progressProps} durationMs={3000} />
     </div>
   );

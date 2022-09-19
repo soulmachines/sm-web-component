@@ -7,10 +7,20 @@ enum ConversationStateTypes {
   dpProcessing = 'dpProcessing',
   idle = 'idle',
 }
+
+export enum ConnectionStateTypes {
+  Disconnected = 'Disconnected',
+  SearchingForDigitalPerson = 'SearchingForDigitalPerson',
+  DownloadingAssets = 'DownloadingAssets',
+  ConnectingToDigitalPerson = 'ConnectingToDigitalPerson',
+  Connected = 'Connected',
+}
+
 let onCardChangedCallback: (data: ContentCard[]) => void;
 let triggerDisconnectEvent: () => void;
 
 let onConversationStateUpdatedCallback: (data: ConversationStateTypes) => void;
+let onConnectionStateUpdatedCallback: (data: ConnectionStateTypes) => void;
 
 const persona = {
   conversationSend: jest.fn(),
@@ -35,6 +45,21 @@ const scene = {
   },
   videoElement: {
     srcObject: 'mock video src',
+  },
+  connectionState: {
+    getConnectionState: jest.fn(() => ({
+      name: 'mock name',
+      percentageLoaded: 0,
+      totalSteps: 4,
+    })),
+    onConnectionStateUpdated: {
+      addListener: (cb: () => void) => {
+        onConnectionStateUpdatedCallback = cb;
+      },
+      call: jest.fn((data: ConnectionStateTypes) => {
+        onConnectionStateUpdatedCallback(data);
+      }),
+    },
   },
   conversation: {
     onConversationStateUpdated: {

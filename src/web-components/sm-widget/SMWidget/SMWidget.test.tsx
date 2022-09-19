@@ -16,8 +16,8 @@ describe('<SMWidget />', () => {
       connectionStatus: ConnectionStatus.CONNECTING,
     });
 
-    const { getByText } = customRender();
-    expect(getByText('Loading...')).toBeInTheDocument();
+    const { queryByRole } = customRender();
+    expect(queryByRole('progressbar')).toBeInTheDocument();
   });
 
   it('renders a video when connected', () => {

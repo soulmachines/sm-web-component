@@ -2,19 +2,11 @@ import { render } from '@testing-library/preact';
 import { useSpring } from 'react-spring';
 import { LoadingIndicator } from '.';
 
-jest.mock('react-spring', () => {
-  const originalModule = jest.requireActual('react-spring');
-  return {
-    ...originalModule,
-    useSpring: jest.fn(() => ({ number: { to: jest.fn(() => 0) } })),
-  };
-});
-
 describe('<LoadingIndicator />', () => {
   const defaultProps = {
     stepName: 'Idle',
-    progress: 0,
-    totalSteps: 3,
+    percentageLoaded: 0,
+    totalSteps: 4,
   };
 
   it('has the attribute aria-label with the value of Loading...', () => {
@@ -27,12 +19,12 @@ describe('<LoadingIndicator />', () => {
     expect(getByText('0')).toBeInTheDocument();
   });
 
-  it('calls useSpring with the default duration of 1500', () => {
+  it('calls useSpring with the default duration of 10,000ms', () => {
     render(<LoadingIndicator {...defaultProps} />);
     expect(useSpring).toHaveBeenCalledWith(
       expect.objectContaining({
         config: {
-          duration: 1500,
+          duration: 10000,
         },
       }),
     );
@@ -48,6 +40,11 @@ describe('<LoadingIndicator />', () => {
         },
       }),
     );
+  });
+
+  it('has the attribute aria-busy with the value of false when loaded', () => {
+    const { getByRole } = render(<LoadingIndicator {...defaultProps} percentageLoaded={100} />);
+    expect(getByRole('progressbar')).toHaveAttribute('aria-busy', 'false');
   });
 
   describe('when the progress is 0', () => {
@@ -71,12 +68,12 @@ describe('<LoadingIndicator />', () => {
       expect(getByText('Idle')).toBeInTheDocument();
     });
 
-    it('calls useSpring for the counter with the from number: 0 and to: 0', () => {
+    it('calls useSpring for the counter with the from number 0 and the next step amount of 25', () => {
       render(<LoadingIndicator {...defaultProps} />);
       expect(useSpring).toHaveBeenCalledWith(
         expect.objectContaining({
           to: {
-            number: 0,
+            number: 25,
           },
           from: {
             number: 0,
@@ -85,12 +82,12 @@ describe('<LoadingIndicator />', () => {
       );
     });
 
-    it('calls useSpring for the progress bar with the from width: 0% and to: 0%', () => {
+    it('calls useSpring for the progress bar with the from width 0% and the next step amount of 25%', () => {
       render(<LoadingIndicator {...defaultProps} />);
       expect(useSpring).toHaveBeenCalledWith(
         expect.objectContaining({
           to: {
-            width: '0%',
+            width: '25%',
           },
           from: {
             width: '0%',
@@ -103,7 +100,8 @@ describe('<LoadingIndicator />', () => {
   describe('when progress changes', () => {
     const updatedProps = {
       stepName: 'mock step',
-      progress: 50,
+      percentageLoaded: 50,
+      totalSteps: 4,
     };
 
     it('does not the classes translate y 8 and opacity 60', () => {
@@ -118,7 +116,7 @@ describe('<LoadingIndicator />', () => {
       expect(getByRole('progressbar')).toHaveAttribute('aria-busy', 'true');
     });
 
-    it('has the attribute aria-valuenow with the value of 33', () => {
+    it('has the attribute aria-valuenow with the value of 50', () => {
       const { getByRole, rerender } = render(<LoadingIndicator {...defaultProps} />);
       rerender(<LoadingIndicator {...updatedProps} />);
       expect(getByRole('progressbar')).toHaveAttribute('aria-valuenow', '50');
@@ -130,31 +128,31 @@ describe('<LoadingIndicator />', () => {
       expect(getByText('mock step')).toBeInTheDocument();
     });
 
-    it('calls useSpring with the from number: 0 and to: 50', () => {
+    it('calls useSpring with the from number 50 and the next step amount of 75', () => {
       const { rerender } = render(<LoadingIndicator {...defaultProps} />);
       rerender(<LoadingIndicator {...updatedProps} />);
       expect(useSpring).toHaveBeenCalledWith(
         expect.objectContaining({
           from: {
-            number: 0,
+            number: 50,
           },
           to: {
-            number: 50,
+            number: 75,
           },
         }),
       );
     });
 
-    it('calls useSpring with the from width: 0% and to: 50%', () => {
+    it('calls useSpring with the from width 50% and and the next step amount of 75%', () => {
       const { rerender } = render(<LoadingIndicator {...defaultProps} />);
       rerender(<LoadingIndicator {...updatedProps} />);
       expect(useSpring).toHaveBeenCalledWith(
         expect.objectContaining({
           from: {
-            width: '0%',
+            width: '50%',
           },
           to: {
-            width: '50%',
+            width: '75%',
           },
         }),
       );

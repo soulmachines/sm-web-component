@@ -4,8 +4,6 @@ import { MutableRef } from 'preact/hooks';
 import { useSMMedia } from '.';
 import { SessionDataKeys } from '../../enums';
 
-jest.mock('@soulmachines/smwebsdk');
-
 describe('useSMMedia()', () => {
   const mockScene = new Scene();
   const mockVideoRef = {

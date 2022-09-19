@@ -2,8 +2,6 @@ import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { ConnectionStatus } from '../../../enums';
 
-jest.mock('@soulmachines/smwebsdk');
-
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
 }
@@ -24,6 +22,11 @@ const mockUseSoulMachines = {
   scene,
   persona,
   conversationState: ConversationStateTypes.idle,
+  connectionState: {
+    name: 'mock name',
+    percentageLoaded: 0,
+    totalSteps: 3,
+  },
   videoRef: jest.fn(),
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),
