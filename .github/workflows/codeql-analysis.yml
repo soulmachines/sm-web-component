@@ -9,9 +9,13 @@ name: 'CodeQL'
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - 'docs/**'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [master]
+    paths-ignore:
+      - 'docs/**'
   schedule:
     - cron: '17 19 * * 2' # run at 7:19pm every Tuesday
 
@@ -40,6 +44,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
+          config-file: ./.github/codeql/codeql-config.yml
           languages: ${{ matrix.language }}
           queries: security-and-quality
           # If you wish to specify custom queries, you can do so here or in a config file.
