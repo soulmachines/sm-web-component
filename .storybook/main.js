@@ -5,6 +5,7 @@ module.exports = {
   async viteFinal(config) {
     return mergeConfig(config, {
       // customize the Vite config here
+      base: '',
       esbuild: {
         jsxInject: `import { h } from 'preact'`,
       },
