@@ -9,6 +9,7 @@
 - [Registering web components](#registering-web-components)
 - [Widget snippet](#widget-snippet)
 - [Deployment](#deployment)
+- [Storybook](#storybook)
 - [Debugging](#debugging)
 - [Linking to local version of Web SDK](#linking-to-a-local-version-of-the-web-sdk)
 
@@ -217,6 +218,10 @@ The supported config options are:
 ### Running the snippet locally
 
 Run `npm run serve`. This starts a local server, serving the `dist` folder. It also copies across the html files in `examples/snippet` to the `dist` folder. This is so that the html files can reference the built snippet scripts.
+
+## Storybook
+
+We deploy storybook to Github pages and it's viewable publicly. Any content added to storybook can be seen by external people and should be presentable. Stories that are wrapped in `SMProviderDecorator` use an enviroment variable for the API key. During deployment we pass in the API key environment variable using the Github secret `STORYBOOK_API_KEY`. This is just a standard API key thats set to run on `https://soulmachines.github.io/`.
 
 ## Deployment
 
