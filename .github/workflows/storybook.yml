@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - release-stable
-      - quic-2121-add-api-key-storybook-prod # test branch, todo: remove
   workflow_dispatch:
 jobs:
   build-and-deploy:
