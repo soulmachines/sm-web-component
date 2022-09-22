@@ -1,8 +1,9 @@
 import { STORY_CHANGED } from '@storybook/core-events';
 import { AnalyticsBrowser } from '@segment/analytics-next';
 
-//  TODO: use env
-const analytics = AnalyticsBrowser.load({ writeKey: 'APQiesX48IdLcoLjI2B2roKgH8MwGI9c' });
+const analytics = AnalyticsBrowser.load({
+  writeKey: process.env.STORYBOOK_SEGMENT_API_KEY as string,
+});
 
 const sendAnalyticEvent = (api) => {
   const { path } = api.getUrlState();
