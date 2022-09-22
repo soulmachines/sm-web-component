@@ -223,6 +223,8 @@ Run `npm run serve`. This starts a local server, serving the `dist` folder. It a
 
 We deploy storybook to Github pages and it's viewable publicly. Any content added to storybook can be seen by external people and should be presentable. Stories that are wrapped in `SMProviderDecorator` use an enviroment variable for the API key. During deployment we pass in the API key environment variable using the Github secret `STORYBOOK_API_KEY`. This is just a standard API key thats set to run on `https://soulmachines.github.io/`.
 
+We are pushing navigation events to Segment using a custom addon. If you'd like to run this locally, add the env variable `STORYBOOK_SEGMENT_API_KEY`. You can find the value for it in Segment, under the Widget Storybook Local project.
+
 ## Deployment
 
 We deploy the bundles via github actions. The bundles are automatically deployed to the dev folder in the CDN, when code is merged in to master. There is a manual trigger which deploys the code to the production CDN.
