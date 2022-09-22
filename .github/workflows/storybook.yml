@@ -25,7 +25,7 @@ jobs:
           npm run build-storybook
         env:
           VITE__PROJECT_API_KEY: ${{ secrets.STORYBOOK_API_KEY }}
-
+          STORYBOOK_SEGMENT_API_KEY: ${{ secrets.STORYBOOK_SEGMENT_API_KEY }}
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
