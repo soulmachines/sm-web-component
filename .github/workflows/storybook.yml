@@ -2,7 +2,7 @@ name: Build and Deploy Storybook
 on:
   push:
     branches:
-      - master
+      - release-stable
   workflow_dispatch:
 jobs:
   build-and-deploy:
