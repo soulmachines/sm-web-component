@@ -30,5 +30,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
+          BRANCH: gh-pages
           FOLDER: docs # The folder that the build-storybook script generates files.
           CLEAN: true # Automatically remove deleted files from the deploy branch
