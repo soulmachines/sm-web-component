@@ -3,6 +3,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Button } from '../Button';
 import { Card } from '../Card';
 import { Icon } from '../Icon';
+import DOMPurify from 'dompurify';
 
 type OptionsCardProps = {
   content: ContentCard;
@@ -40,7 +41,7 @@ export function OptionsCard({ content, style }: OptionsCardProps) {
               theme="outline"
               onClick={() => sendTextMessage(option?.value || option.label)}
             >
-              {option.label}
+              <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(option.label) }} />
               <Icon name="chevronRight" />
             </Button>
           );

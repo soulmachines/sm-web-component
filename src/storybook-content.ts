@@ -23,7 +23,8 @@ export const optionsCardContent = {
   data: {
     options: [
       {
-        label: 'Auckland',
+        label:
+          '<div style="display:flex;flex-direction: column"><span>Auckland</span><img src="https://www.soulmachines.com/wp-content/uploads/SM_NavBarLogo_DarkGray.png" alt="SoulMachines" width="100"/></div>',
         value: 'auckland',
       },
       {

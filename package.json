@@ -24,6 +24,7 @@
   "dependencies": {
     "@soulmachines/smwebsdk": "15.2.0",
     "classnames": "^2.3.1",
+    "dompurify": "^2.4.0",
     "lodash": "^4.17.21",
     "preact": "^10.10.6",
     "preactement": "^1.8.2",
@@ -49,6 +50,7 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@thedutchcoder/postcss-rem-to-px": "0.0.2",
     "@types/can-autoplay": "^3.0.1",
+    "@types/dompurify": "^2.3.4",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.184",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
