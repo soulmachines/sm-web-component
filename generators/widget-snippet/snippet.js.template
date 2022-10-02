@@ -25,7 +25,12 @@ function configureSMWidget(config) {
     el.setAttribute('position', config.smPosition);
   }
 
-  document.body.appendChild(el);
+  if(config.smContainerId) {
+    document.getElementById(config.smContainerId).appendChild(el);
+  } else {
+    document.body.appendChild(el);
+  }
+
 }
 
 function createCSSLink(fileName) {
