@@ -39,8 +39,6 @@ export function Widget({
     'sm-flex-row-reverse': position === widgetPosition.BOTTOM_LEFT,
   });
 
-  console.log({ layout });
-
   // Connect directly if it's resume session
   useEffect(() => {
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
@@ -72,6 +70,42 @@ export function Widget({
   const scaledDownClass = classNames({
     'sm-scale-50 sm-origin-bottom-right': isConnectingOrConnected,
   });
+
+  if (layout === widgetLayout.Embedded) {
+    return (
+      <div>
+        <div className="sm-text-primary-text sm-h-full sm-w-full ">
+          <div className="sm-rounded-xl sm-origin-bottom-right sm-bg-white sm-pointer-events-auto md:sm-rounded-3xl">
+            {isDisconnected && (
+              <button
+                onClick={connect}
+                data-sm-cy="connectButton"
+                className="sm-w-full sm-h-full sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-outline sm-outline-2 sm-outline-transparent sm-bg-transparent hover:sm-outline-secondary-base sm-transition-colors sm-overflow-hidden"
+              >
+                <ProfileImage src={profilePicture} />
+              </button>
+            )}
+
+            <div
+              className={classNames({
+                'sm-w-full sm-h-full sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu':
+                  true,
+                ' sm-absolute': !isConnectingOrConnected,
+                'sm-border-2 sm-border-solid sm-border-gray-lightest': isConnectingOrConnected,
+              })}
+            >
+              <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
+              {isConnected && <VideoControls />}
+            </div>
+          </div>
+        </div>
+
+        <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
+          <ContentCards />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
