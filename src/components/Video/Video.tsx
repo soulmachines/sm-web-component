@@ -53,7 +53,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   });
 
   const videoWrapperClass = classNames({
-    'sm-w-full sm-h-full sm-overflow-hidden': true,
+    'sm-overflow-hidden': true,
     'sm-hidden': !isConnected && !isConnecting,
   });
 
