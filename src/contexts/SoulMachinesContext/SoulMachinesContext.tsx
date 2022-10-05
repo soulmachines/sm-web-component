@@ -4,6 +4,7 @@ import {
   Scene,
   ConversationStateTypes,
   ConnectionStateData,
+  LogLevel,
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
@@ -29,6 +30,8 @@ type Context = {
   toggleMicrophone: () => void;
   toggleCamera: () => void;
   toggleVideoMuted: () => void;
+  setSessionLog: (enabled: boolean, minLogLevel: LogLevel) => void;
+  setContentAwarenessLog: (enabled: boolean, minLogLevel: LogLevel) => void;
 };
 
 // Create context with default values
@@ -64,6 +67,24 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     }
   };
 
+  const setSessionLog = (enabled: boolean, minLogLevel: LogLevel = 'debug') => {
+    try {
+      scene.setLogging(enabled);
+      scene.setMinLogLevel(minLogLevel);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const setContentAwarenessLog = (enabled: boolean, minLogLevel: LogLevel = 'debug') => {
+    try {
+      scene.contentAwareness?.setLogging(enabled);
+      scene.contentAwareness?.setMinLogLevel(minLogLevel);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const useConversationStateData = useConversationState(scene);
   const useConnectionStateData = useConnectionState(scene);
   const useConnectionData = useConnection(scene, tokenServer);
@@ -79,6 +100,8 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         scene,
         persona,
         sendTextMessage,
+        setSessionLog,
+        setContentAwarenessLog,
         ...useConnectionData,
         ...useMediaData,
         ...useConversationStateData,
