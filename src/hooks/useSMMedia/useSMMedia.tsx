@@ -27,8 +27,8 @@ function useSMMedia({
         sessionStorage.setItem(SessionDataKeys.microphoneEnabled, enabled.toString());
       } catch (error) {
         console.error(error);
-        console.error(
-          'Please check site permissions to ensure microphone issue is not a result of the permissions policy.',
+        console.warn(
+          'Please check site permissions to ensure microphone error is not a result of the permissions policy.',
         );
       }
     },
@@ -46,8 +46,8 @@ function useSMMedia({
         sessionStorage.setItem(SessionDataKeys.cameraEnabled, enabled.toString());
       } catch (error) {
         console.error(error);
-        console.error(
-          'Please check site permissions to ensure the camera issue is not a result of the permissions policy.',
+        console.warn(
+          'Please check site permissions to ensure the camera error is not a result of the permissions policy.',
         );
       }
     },
