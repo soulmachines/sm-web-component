@@ -4,7 +4,6 @@ import {
   Scene,
   ConversationStateTypes,
   ConnectionStateData,
-  LogLevel,
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
@@ -69,8 +68,10 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
   const enableDebugLogging = (enabled: boolean) => {
     try {
       scene.setLogging(enabled);
+      scene.contentAwareness?.setLogging(enabled);
       if (enabled) {
         scene.setMinLogLevel('debug');
+        scene.contentAwareness?.setMinLogLevel('debug');
       }
     } catch (error) {
       console.error(error);
