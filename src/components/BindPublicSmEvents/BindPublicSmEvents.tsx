@@ -35,7 +35,10 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
       });
     };
 
-    if (connectionStatus === ConnectionStatus.CONNECTED) {
+    if (
+      connectionStatus === ConnectionStatus.CONNECTING ||
+      connectionStatus === ConnectionStatus.CONNECTED
+    ) {
       addPublicMethods();
     } else {
       removePublicMethods();
