@@ -16,14 +16,12 @@ type GenericFunction = Function;
 
 export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
   const htmlElement = element as unknown as Record<string, GenericFunction | undefined>;
-  const { connectionStatus, sendTextMessage, setSessionLog, setContentAwarenessLog } =
-    useSoulMachines();
+  const { connectionStatus, sendTextMessage, enableDebugLogging } = useSoulMachines();
 
   useEffect(() => {
     const publicMethods: [string, GenericFunction][] = [
       ['sendTextMessage', sendTextMessage],
-      ['setSessionLog', setSessionLog],
-      ['setContentAwarenessLog', setContentAwarenessLog],
+      ['enableDebugLogging', enableDebugLogging],
     ];
 
     const addPublicMethods = () => {
@@ -42,7 +40,7 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
     } else {
       removePublicMethods();
     }
-  }, [connectionStatus, htmlElement, sendTextMessage, setSessionLog, setContentAwarenessLog]);
+  }, [connectionStatus, htmlElement, sendTextMessage, enableDebugLogging]);
 
   return null;
 }

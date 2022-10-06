@@ -30,8 +30,7 @@ type Context = {
   toggleMicrophone: () => void;
   toggleCamera: () => void;
   toggleVideoMuted: () => void;
-  setSessionLog: (enabled: boolean, minLogLevel: LogLevel) => void;
-  setContentAwarenessLog: (enabled: boolean, minLogLevel: LogLevel) => void;
+  enableDebugLogging: (enabled: boolean) => void;
 };
 
 // Create context with default values
@@ -67,19 +66,12 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     }
   };
 
-  const setSessionLog = (enabled: boolean, minLogLevel: LogLevel = 'debug') => {
+  const enableDebugLogging = (enabled: boolean) => {
     try {
       scene.setLogging(enabled);
-      scene.setMinLogLevel(minLogLevel);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const setContentAwarenessLog = (enabled: boolean, minLogLevel: LogLevel = 'debug') => {
-    try {
-      scene.contentAwareness?.setLogging(enabled);
-      scene.contentAwareness?.setMinLogLevel(minLogLevel);
+      if (enabled) {
+        scene.setMinLogLevel('debug');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -100,8 +92,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         scene,
         persona,
         sendTextMessage,
-        setSessionLog,
-        setContentAwarenessLog,
+        enableDebugLogging,
         ...useConnectionData,
         ...useMediaData,
         ...useConversationStateData,
