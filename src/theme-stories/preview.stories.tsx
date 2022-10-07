@@ -77,7 +77,13 @@ const Divider = () => <hr className="sm-border-gray-lightest" />;
 const CssSelectorContainer = () => {
   const copyCssVariables = () => {
     const variableInputs = Array.from(document.querySelectorAll<HTMLInputElement>('[id^="--sm-"'));
-    const cssVariables = variableInputs.map((input) => `${input.id}: "${input.value}";`);
+    const cssVariables = variableInputs.map((input) => {
+      // Variables in this list will be wrapped in quotes
+      // font-family can work without quotes if its a single word, otherwise it needs quotes eg: 'Courier New', 'Brush Script MT'
+      const addQuotesToValues = ['--sm-font-family-primary'];
+      const value = addQuotesToValues.includes(input.id) ? `"${input.value}"` : input.value;
+      return `${input.id}: ${value};`;
+    });
     navigator.clipboard.writeText(cssVariables.join('\r\n'));
   };
 
