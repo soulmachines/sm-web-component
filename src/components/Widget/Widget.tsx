@@ -9,14 +9,14 @@ import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
 export type WidgetProps = {
   greeting?: string;
   profilePicture?: string;
   position?: widgetPosition;
   loadingIndicator?: JSX.Element;
-  layout?: widgetLayout;
+  mode?: widgetLayout;
 };
 
 export function Widget({
@@ -24,12 +24,21 @@ export function Widget({
   greeting,
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
-  layout = widgetLayout.FIXED,
+  mode = widgetLayout.FIXED,
 }: WidgetProps) {
   const { connectionStatus, connectionState, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
+  const [layout, setLayout] = useState(mode);
+
+  const toggleLayout = () => {
+    if (layout === widgetLayout.FIXED) {
+      setLayout(widgetLayout.FULL_SCREEN);
+    } else {
+      setLayout(widgetLayout.FIXED);
+    }
+  };
 
   const styles = {
     scaleAnimation: useSpring({
@@ -50,14 +59,14 @@ export function Widget({
     containerClass: classNames({
       'sm-fixed sm-bottom-0 sm-p-2 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5':
         layout === widgetLayout.FIXED,
-      'sm-text-primary-text sm-h-full sm-w-full': layout === widgetLayout.Embedded,
+      'sm-text-primary-text sm-h-full sm-w-full': layout !== widgetLayout.FIXED,
     }),
 
     containerPositionClass: classNames({
       'sm-flex sm-flex-col sm-gap-y-2 sm-h-full sm-justify-end md:sm-gap-y-5':
         layout === widgetLayout.FIXED,
       'sm-rounded-xl sm-origin-bottom-right sm-bg-white sm-pointer-events-auto md:sm-rounded-3xl':
-        layout === widgetLayout.Embedded,
+        layout !== widgetLayout.FIXED,
     }),
 
     notificationClass: classNames({
@@ -80,7 +89,7 @@ export function Widget({
       'sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-outline sm-outline-2 sm-outline-transparent sm-bg-transparent hover:sm-outline-secondary-base sm-transition-colors sm-overflow-hidden':
         true,
       'sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 ': layout === widgetLayout.FIXED,
-      'sm-w-full sm-h-full': layout === widgetLayout.Embedded,
+      'sm-w-full sm-h-full': layout !== widgetLayout.FIXED,
     }),
 
     connectingOrConnectedClass: classNames({
@@ -90,15 +99,16 @@ export function Widget({
         isConnectingOrConnected && layout === widgetLayout.FIXED,
 
       'sm-w-full sm-h-full sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu':
-        layout === widgetLayout.Embedded,
-      'sm-absolute': !isConnectingOrConnected && layout === widgetLayout.Embedded,
+        layout !== widgetLayout.FIXED,
+      'sm-absolute': !isConnectingOrConnected && layout !== widgetLayout.FIXED,
       'sm-border-2 sm-border-solid sm-border-gray-lightest':
-        isConnectingOrConnected && layout === widgetLayout.Embedded,
+        isConnectingOrConnected && layout !== widgetLayout.FIXED,
     }),
 
     contentCardsClass: classNames({
       'sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3':
         layout === widgetLayout.FIXED,
+      'sm-fixed sm-bottom-0 sm-right-0 sm-z-max sm-w-1/3 sm-h-1/3': layout !== widgetLayout.FIXED,
     }),
   };
 
@@ -124,16 +134,14 @@ export function Widget({
     </div>
   );
 
-  const greetingElement =
+  const NotificationElement = () =>
     !isConnectingOrConnected && layout === widgetLayout.FIXED ? (
       <div className={styles.greetingClass}>
         <Notifications greeting={greeting} />
       </div>
-    ) : (
-      <></>
-    );
+    ) : null;
 
-  const videoElement = (
+  const VideoElement = () => (
     <>
       {isDisconnected && (
         <button onClick={connect} data-sm-cy="connectButton" className={styles.connectButtonClass}>
@@ -142,23 +150,23 @@ export function Widget({
       )}
       <div className={styles.connectingOrConnectedClass}>
         <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
-        {isConnected && <VideoControls />}
+        {isConnected && <VideoControls toggleFunction={toggleLayout} />}
       </div>
     </>
   );
 
-  const animatedVideoElement =
+  const AnimatedVideoElement = () =>
     layout === widgetLayout.FIXED ? (
       <div className={styles.scaledDownClass}>
         <animated.div style={styles.scaleAnimation} className={styles.scaleAnimationClass}>
-          {videoElement}
+          <VideoElement />
         </animated.div>
       </div>
     ) : (
-      videoElement
+      <VideoElement />
     );
 
-  const contentCardsElement = (
+  const ContentCardsElement = () => (
     <div class={styles.contentCardsClass}>
       <ContentCards />
     </div>
@@ -167,10 +175,10 @@ export function Widget({
   return (
     <div className={`${styles.containerClass} ${styles.widgetPositionClass}`}>
       <div className={styles.containerPositionClass}>
-        {contentCardsElement}
+        <ContentCardsElement />
         <div className={`${styles.notificationClass}`}>
-          {greetingElement}
-          {animatedVideoElement}
+          <NotificationElement />
+          <AnimatedVideoElement />
         </div>
       </div>
     </div>

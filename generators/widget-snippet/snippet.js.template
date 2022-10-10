@@ -26,7 +26,7 @@ function configureSMWidget(config) {
   }
 
   if(config.smContainerId) {
-    el.setAttribute('layout', 'embedded');
+    el.setAttribute('mode', 'embedded');
     document.getElementById(config.smContainerId).appendChild(el);
   } else {
     document.body.appendChild(el);
