@@ -35,6 +35,8 @@ const scene = {
   isMicrophoneActive: jest.fn(() => false),
   isCameraActive: jest.fn(() => false),
   setMediaDeviceActive: jest.fn(),
+  setLogging: jest.fn(),
+  setMinLogLevel: jest.fn(),
   onDisconnectedEvent: {
     addListener: (fn: () => void) => {
       triggerDisconnectEvent = fn;
@@ -60,6 +62,10 @@ const scene = {
         onConnectionStateUpdatedCallback(data);
       }),
     },
+  },
+  contentAwareness: {
+    setLogging: jest.fn(),
+    setMinLogLevel: jest.fn(),
   },
   conversation: {
     onConversationStateUpdated: {

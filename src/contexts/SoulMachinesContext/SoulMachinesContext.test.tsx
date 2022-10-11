@@ -1,4 +1,5 @@
 import { Scene, Persona } from '@soulmachines/smwebsdk';
+import { setLogging } from '@soulmachines/smwebsdk/lib-esm/SmWebSdk';
 import { fireEvent, render } from '@testing-library/preact';
 import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
@@ -18,7 +19,7 @@ jest.mock('../../hooks/useConnection', () => ({
 jest.mock('../../hooks/useSMMedia');
 
 describe('<SoulMachinesProvider />', () => {
-  const mockScene = new Scene();
+  const mockScene = new Scene({});
   const mockPersona = new Persona(mockScene, 1);
   const apiKey = 'mock api key';
   const tokenServer = 'mock token server';
@@ -120,41 +121,43 @@ describe('<SoulMachinesProvider />', () => {
     });
   });
 
-  // describe('enableDebugLogging', () => {
-  //   it('calls scene setLogging and set minimal log level to "debug" with enabled to be true', async () => {
-  //     const EnableLoggingComponent = () => {
-  //       const { enableDebugLogging } = useSoulMachines();
+  describe('enableDebugLogging', () => {
+    it('calls scene setLogging and set minimal log level to "debug" with enabled to be true', async () => {
+      // const sceneLoggingSpy=jest.spyOn(mockScene,'setLogging');
+      // const contentAwarenessLoggingSpy=jest.spyOn(mockScene.contentAwareness,'setLogging');
+      const EnableLoggingComponent = () => {
+        const { enableDebugLogging } = useSoulMachines();
 
-  //       return <button onClick={() => enableDebugLogging(true)}>Enable Logging</button>;
-  //     };
-  //     const { getByText } = render(
-  //       <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
-  //         <EnableLoggingComponent />
-  //       </SoulMachinesProvider>,
-  //     );
-  //     await fireEvent.click(getByText('Enable Logging'));
+        return <button onClick={() => enableDebugLogging(true)}>Enable Logging</button>;
+      };
+      const { getByText } = render(
+        <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+          <EnableLoggingComponent />
+        </SoulMachinesProvider>,
+      );
+      await fireEvent.click(getByText('Enable Logging'));
 
-  //     expect(mockScene.setLogging).toHaveBeenCalledWith(true);
-  //     expect(mockScene.contentAwareness?.setLogging).toHaveBeenCalledWith(true);
-  //     expect(mockScene.setMinLogLevel).toHaveBeenCalledWith('debug');
-  //     expect(mockScene.contentAwareness?.setMinLogLevel).toHaveBeenCalledWith('debug');
-  //   });
+      expect(mockScene.setLogging).toHaveBeenCalledWith(true);
+      expect(mockScene.contentAwareness?.setLogging).toHaveBeenCalledWith(true);
+      expect(mockScene.setMinLogLevel).toHaveBeenCalledWith('debug');
+      expect(mockScene.contentAwareness?.setMinLogLevel).toHaveBeenCalledWith('debug');
+    });
 
-  //   it('calls scene setLogging with enabled to be false', async () => {
-  //     const DisableLoggingComponent = () => {
-  //       const { enableDebugLogging } = useSoulMachines();
+    it('calls scene setLogging with enabled to be false', async () => {
+      const DisableLoggingComponent = () => {
+        const { enableDebugLogging } = useSoulMachines();
 
-  //       return <button onClick={() => enableDebugLogging(false)}>Disable Logging</button>;
-  //     };
-  //     const { getByText } = render(
-  //       <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
-  //         <DisableLoggingComponent />
-  //       </SoulMachinesProvider>,
-  //     );
-  //     await fireEvent.click(getByText('Disable Logging'));
+        return <button onClick={() => enableDebugLogging(false)}>Disable Logging</button>;
+      };
+      const { getByText } = render(
+        <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+          <DisableLoggingComponent />
+        </SoulMachinesProvider>,
+      );
+      await fireEvent.click(getByText('Disable Logging'));
 
-  //     expect(mockScene.setLogging).toHaveBeenCalledWith(false);
-  //     expect(mockScene.contentAwareness?.setLogging).toHaveBeenCalledWith(false);
-  //   });
-  // });
+      expect(mockScene.setLogging).toHaveBeenCalledWith(false);
+      expect(mockScene.contentAwareness?.setLogging).toHaveBeenCalledWith(false);
+    });
+  });
 });
