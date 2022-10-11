@@ -4,6 +4,7 @@ import { ConnectionStatus } from '../../enums';
 
 export interface WebComponentElement extends HTMLElement {
   sendTextMessage?: (message: string) => void;
+  enableDebugLogging?: (enabled: boolean) => void;
 }
 
 export type BindPublicSmEventsProps = {

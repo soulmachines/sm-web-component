@@ -14,17 +14,27 @@ describe('<BindPublicSmEvents />', () => {
     { description: 'errored', statusEnum: ConnectionStatus.ERRORED },
   ].forEach(({ description, statusEnum }) => {
     describe(`when it is ${description}`, () => {
-      it('does not call sendTextMessage', () => {
+      beforeEach(() => {
         jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
           ...SoulMachinesContext.useSoulMachines(),
           connectionStatus: statusEnum,
         });
+      });
 
+      it('does not call sendTextMessage', () => {
         const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
         render(<BindPublicSmEvents element={element} />);
 
         element.sendTextMessage?.('test');
         expect(sendTextMessage).not.toHaveBeenCalled();
+      });
+
+      it('does not call enableDebugLogging', () => {
+        const { enableDebugLogging } = SoulMachinesContext.useSoulMachines();
+        render(<BindPublicSmEvents element={element} />);
+
+        element.enableDebugLogging?.(true);
+        expect(enableDebugLogging).not.toHaveBeenCalled();
       });
     });
   });
@@ -34,17 +44,30 @@ describe('<BindPublicSmEvents />', () => {
     { description: 'connected', statusEnum: ConnectionStatus.CONNECTED },
   ].forEach(({ description, statusEnum }) => {
     describe(`when it is ${description}`, () => {
-      it('calls sendTextMessage with the text when element.sendTextMessage is called', () => {
+      beforeEach(() => {
         jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
           ...SoulMachinesContext.useSoulMachines(),
           connectionStatus: statusEnum,
         });
+      });
 
+      it('calls sendTextMessage with the text when element.sendTextMessage is called', () => {
         const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
         render(<BindPublicSmEvents element={element} />);
 
         element.sendTextMessage?.('test');
         expect(sendTextMessage).toHaveBeenCalledWith('test');
+      });
+
+      it('calls enableDebugLogging when element.enableDebugLogging is called', () => {
+        const { enableDebugLogging } = SoulMachinesContext.useSoulMachines();
+        render(<BindPublicSmEvents element={element} />);
+
+        element.enableDebugLogging?.(true);
+        expect(enableDebugLogging).toHaveBeenCalledWith(true);
+
+        element.enableDebugLogging?.(false);
+        expect(enableDebugLogging).toHaveBeenCalledWith(false);
       });
     });
   });
