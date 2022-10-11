@@ -7,12 +7,13 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<BindPublicSmEvents />', () => {
   const element: WebComponentElement = document.createElement('div');
-
-  [
+  const whenNotConnectingOrConnected = [
     { description: 'disconnected', statusEnum: ConnectionStatus.DISCONNECTED },
     { description: 'timed out', statusEnum: ConnectionStatus.TIMED_OUT },
     { description: 'errored', statusEnum: ConnectionStatus.ERRORED },
-  ].forEach(({ description, statusEnum }) => {
+  ];
+
+  whenNotConnectingOrConnected.forEach(({ description, statusEnum }) => {
     describe(`when it is ${description}`, () => {
       beforeEach(() => {
         jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
@@ -39,10 +40,12 @@ describe('<BindPublicSmEvents />', () => {
     });
   });
 
-  [
+  const whenConnectingOrConnected = [
     { description: 'connecting', statusEnum: ConnectionStatus.CONNECTING },
     { description: 'connected', statusEnum: ConnectionStatus.CONNECTED },
-  ].forEach(({ description, statusEnum }) => {
+  ];
+
+  whenConnectingOrConnected.forEach(({ description, statusEnum }) => {
     describe(`when it is ${description}`, () => {
       beforeEach(() => {
         jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({

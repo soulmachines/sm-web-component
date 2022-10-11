@@ -1,5 +1,4 @@
 import { Scene, Persona } from '@soulmachines/smwebsdk';
-import { setLogging } from '@soulmachines/smwebsdk/lib-esm/SmWebSdk';
 import { fireEvent, render } from '@testing-library/preact';
 import { SoulMachinesProvider, useSoulMachines } from '.';
 import { useConnection } from '../../hooks/useConnection';
