@@ -25,6 +25,7 @@ function configureSMWidget(config) {
     el.setAttribute('position', config.smPosition);
   }
 
+  document.body.appendChild(el);
 }
 
 function createCSSLink(fileName) {
