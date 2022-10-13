@@ -29,6 +29,7 @@ type Context = {
   toggleMicrophone: () => void;
   toggleCamera: () => void;
   toggleVideoMuted: () => void;
+  enableDebugLogging: (enabled: boolean) => void;
 };
 
 // Create context with default values
@@ -64,6 +65,19 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     }
   };
 
+  const enableDebugLogging = (enabled: boolean) => {
+    try {
+      scene.setLogging(enabled);
+      scene.contentAwareness?.setLogging(enabled);
+      if (enabled) {
+        scene.setMinLogLevel('debug');
+        scene.contentAwareness?.setMinLogLevel('debug');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const useConversationStateData = useConversationState(scene);
   const useConnectionStateData = useConnectionState(scene);
   const useConnectionData = useConnection(scene, tokenServer);
@@ -79,6 +93,7 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
         scene,
         persona,
         sendTextMessage,
+        enableDebugLogging,
         ...useConnectionData,
         ...useMediaData,
         ...useConversationStateData,

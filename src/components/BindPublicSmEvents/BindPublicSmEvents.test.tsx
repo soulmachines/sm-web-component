@@ -7,40 +7,71 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<BindPublicSmEvents />', () => {
   const element: WebComponentElement = document.createElement('div');
+  const whenNotConnectingOrConnected = [
+    { description: 'disconnected', statusEnum: ConnectionStatus.DISCONNECTED },
+    { description: 'timed out', statusEnum: ConnectionStatus.TIMED_OUT },
+    { description: 'errored', statusEnum: ConnectionStatus.ERRORED },
+  ];
 
-  describe('when it is not connected', () => {
-    beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
-        ...SoulMachinesContext.useSoulMachines(),
-        connectionStatus: ConnectionStatus.DISCONNECTED,
+  whenNotConnectingOrConnected.forEach(({ description, statusEnum }) => {
+    describe(`when it is ${description}`, () => {
+      beforeEach(() => {
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          connectionStatus: statusEnum,
+        });
       });
-    });
 
-    it('does not call sendTextMessage', () => {
-      const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
-      render(<BindPublicSmEvents element={element} />);
+      it('does not call sendTextMessage', () => {
+        const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
+        render(<BindPublicSmEvents element={element} />);
 
-      element.sendTextMessage?.('test');
+        element.sendTextMessage?.('test');
+        expect(sendTextMessage).not.toHaveBeenCalled();
+      });
 
-      expect(sendTextMessage).not.toHaveBeenCalled();
+      it('does not call enableDebugLogging', () => {
+        const { enableDebugLogging } = SoulMachinesContext.useSoulMachines();
+        render(<BindPublicSmEvents element={element} />);
+
+        element.enableDebugLogging?.(true);
+        expect(enableDebugLogging).not.toHaveBeenCalled();
+      });
     });
   });
 
-  describe('when it is connected', () => {
-    beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
-        ...SoulMachinesContext.useSoulMachines(),
-        connectionStatus: ConnectionStatus.CONNECTED,
+  const whenConnectingOrConnected = [
+    { description: 'connecting', statusEnum: ConnectionStatus.CONNECTING },
+    { description: 'connected', statusEnum: ConnectionStatus.CONNECTED },
+  ];
+
+  whenConnectingOrConnected.forEach(({ description, statusEnum }) => {
+    describe(`when it is ${description}`, () => {
+      beforeEach(() => {
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          connectionStatus: statusEnum,
+        });
       });
-    });
 
-    it('calls sendTextMessage with the text when element.sendTextMessage is called', () => {
-      const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
-      render(<BindPublicSmEvents element={element} />);
+      it('calls sendTextMessage with the text when element.sendTextMessage is called', () => {
+        const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
+        render(<BindPublicSmEvents element={element} />);
 
-      element.sendTextMessage?.('test');
+        element.sendTextMessage?.('test');
+        expect(sendTextMessage).toHaveBeenCalledWith('test');
+      });
 
-      expect(sendTextMessage).toHaveBeenCalledWith('test');
+      it('calls enableDebugLogging when element.enableDebugLogging is called', () => {
+        const { enableDebugLogging } = SoulMachinesContext.useSoulMachines();
+        render(<BindPublicSmEvents element={element} />);
+
+        element.enableDebugLogging?.(true);
+        expect(enableDebugLogging).toHaveBeenCalledWith(true);
+
+        element.enableDebugLogging?.(false);
+        expect(enableDebugLogging).toHaveBeenCalledWith(false);
+      });
     });
   });
 });

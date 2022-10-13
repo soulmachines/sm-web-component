@@ -4,6 +4,7 @@ import { ConnectionStatus } from '../../enums';
 
 export interface WebComponentElement extends HTMLElement {
   sendTextMessage?: (message: string) => void;
+  enableDebugLogging?: (enabled: boolean) => void;
 }
 
 export type BindPublicSmEventsProps = {
@@ -16,10 +17,13 @@ type GenericFunction = Function;
 
 export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
   const htmlElement = element as unknown as Record<string, GenericFunction | undefined>;
-  const { connectionStatus, sendTextMessage } = useSoulMachines();
+  const { connectionStatus, sendTextMessage, enableDebugLogging } = useSoulMachines();
 
   useEffect(() => {
-    const publicMethods: [string, GenericFunction][] = [['sendTextMessage', sendTextMessage]];
+    const publicMethods: [string, GenericFunction][] = [
+      ['sendTextMessage', sendTextMessage],
+      ['enableDebugLogging', enableDebugLogging],
+    ];
 
     const addPublicMethods = () => {
       publicMethods.map(([name, implementation]) => {
@@ -32,12 +36,15 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
       });
     };
 
-    if (connectionStatus === ConnectionStatus.CONNECTED) {
+    if (
+      connectionStatus === ConnectionStatus.CONNECTING ||
+      connectionStatus === ConnectionStatus.CONNECTED
+    ) {
       addPublicMethods();
     } else {
       removePublicMethods();
     }
-  }, [connectionStatus, htmlElement, sendTextMessage]);
+  }, [connectionStatus, htmlElement, sendTextMessage, enableDebugLogging]);
 
   return null;
 }

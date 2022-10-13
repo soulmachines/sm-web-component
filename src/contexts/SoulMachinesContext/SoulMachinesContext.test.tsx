@@ -18,7 +18,7 @@ jest.mock('../../hooks/useConnection', () => ({
 jest.mock('../../hooks/useSMMedia');
 
 describe('<SoulMachinesProvider />', () => {
-  const mockScene = new Scene();
+  const mockScene = new Scene({});
   const mockPersona = new Persona(mockScene, 1);
   const apiKey = 'mock api key';
   const tokenServer = 'mock token server';
@@ -117,6 +117,46 @@ describe('<SoulMachinesProvider />', () => {
       await fireEvent.click(getByText('Trigger send text message'));
 
       expect(mockPersona.conversationSend).toHaveBeenCalledWith('test message', {}, {});
+    });
+  });
+
+  describe('enableDebugLogging', () => {
+    it('calls scene setLogging and set minimal log level to "debug" with enabled to be true', async () => {
+      const EnableLoggingComponent = () => {
+        const { enableDebugLogging } = useSoulMachines();
+        return <button onClick={() => enableDebugLogging(true)}>Enable Logging</button>;
+      };
+
+      const { getByText } = render(
+        <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+          <EnableLoggingComponent />
+        </SoulMachinesProvider>,
+      );
+
+      await fireEvent.click(getByText('Enable Logging'));
+
+      expect(mockScene.setLogging).toHaveBeenCalledWith(true);
+      expect(mockScene.contentAwareness?.setLogging).toHaveBeenCalledWith(true);
+      expect(mockScene.setMinLogLevel).toHaveBeenCalledWith('debug');
+      expect(mockScene.contentAwareness?.setMinLogLevel).toHaveBeenCalledWith('debug');
+    });
+
+    it('calls scene setLogging with enabled to be false', async () => {
+      const DisableLoggingComponent = () => {
+        const { enableDebugLogging } = useSoulMachines();
+        return <button onClick={() => enableDebugLogging(false)}>Disable Logging</button>;
+      };
+
+      const { getByText } = render(
+        <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+          <DisableLoggingComponent />
+        </SoulMachinesProvider>,
+      );
+
+      await fireEvent.click(getByText('Disable Logging'));
+
+      expect(mockScene.setLogging).toHaveBeenCalledWith(false);
+      expect(mockScene.contentAwareness?.setLogging).toHaveBeenCalledWith(false);
     });
   });
 });
