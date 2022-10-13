@@ -1,5 +1,19 @@
 # Change Log
 
+# [1.10.0](https://github.com/soulmachines/sm-web-component/compare/1.9.1...1.10.0) (2022-10-13)
+
+
+### Bug Fixes
+
+* update copied css syntax in storybook preview quic-2191 ([#327](https://github.com/soulmachines/sm-web-component/issues/327)) ([d792ac9](https://github.com/soulmachines/sm-web-component/commit/d792ac9b780c3bcb19aed05cf9381b1bdc51cb9c))
+
+
+### Features
+
+* add api key storybook prod quic-2121 ([#320](https://github.com/soulmachines/sm-web-component/issues/320)) ([b27e931](https://github.com/soulmachines/sm-web-component/commit/b27e9310193bc01a1a7a4bf16d797b2fd18f7a99))
+* add segment to storybook quic-2118  ([#321](https://github.com/soulmachines/sm-web-component/issues/321)) ([ce9329a](https://github.com/soulmachines/sm-web-component/commit/ce9329a6de02284330bd13f0f881ec930e0a6fcf))
+* allow live logging config in widget QUIC-2170 ([#325](https://github.com/soulmachines/sm-web-component/issues/325)) ([221144b](https://github.com/soulmachines/sm-web-component/commit/221144bb3e863ef65172c9900d149a16c8d90eab))
+
 ## [1.9.1](https://github.com/soulmachines/sm-web-component/compare/1.9.0...1.9.1) (2022-09-19)
 
 
