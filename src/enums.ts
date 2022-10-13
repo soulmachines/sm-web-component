@@ -12,8 +12,8 @@ export enum widgetPosition {
 }
 
 export enum widgetLayout {
-  FIXED = 'fixed',
-  FULL_SCREEN = 'fullScreen',
+  FLOAT = 'float',
+  FULL_FRAME = 'fullFrame',
   Embedded = 'embedded',
 }
 

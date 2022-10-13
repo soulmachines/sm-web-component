@@ -2,11 +2,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../IconButton';
 
-export type VideoControlsProps = {
-  toggleFunction?: () => void;
-};
-
-export function VideoControls({ toggleFunction }: VideoControlsProps) {
+export function VideoControls() {
   const {
     disconnect,
     isMicrophoneEnabled,
@@ -29,10 +25,7 @@ export function VideoControls({ toggleFunction }: VideoControlsProps) {
     <div className="sm-p-3 sm-flex sm-flex-col sm-justify-between sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
       <div className="sm-flex sm-justify-between">
         <IconButton onClick={toggleVideoMuted} name={muteIcon} title={muteText} />
-        <div className="sm-flex sm-justify-between">
-          <IconButton onClick={toggleFunction} name="fullscreen" title="Toggle Fullscreen" />
-          <IconButton onClick={disconnect} name="close" title="Close video" />
-        </div>
+        <IconButton onClick={disconnect} name="close" title="Close video" />
       </div>
 
       <div className="sm-flex sm-flex-col sm-gap-y-2">
