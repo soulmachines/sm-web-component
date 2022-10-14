@@ -72,7 +72,7 @@ export function Widget({
   });
 
   if (layout === widgetLayout.FULL_FRAME) {
-    //TODO
+    //add full frame code here
   }
 
   return (
