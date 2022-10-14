@@ -9,14 +9,14 @@ import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
 import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 
 export type WidgetProps = {
   greeting?: string;
   profilePicture?: string;
   position?: widgetPosition;
   loadingIndicator?: JSX.Element;
-  mode?: widgetLayout;
+  layout?: widgetLayout;
 };
 
 export function Widget({
@@ -24,21 +24,12 @@ export function Widget({
   greeting,
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
-  mode = widgetLayout.FLOAT,
+  layout = widgetLayout.FLOAT,
 }: WidgetProps) {
   const { connectionStatus, connectionState, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
-  const [layout, setLayout] = useState(mode);
-
-  const toggleFullFrame = () => {
-    if (layout === widgetLayout.FULL_FRAME) {
-      setLayout(widgetLayout.FULL_FRAME);
-    } else {
-      setLayout(widgetLayout.FLOAT);
-    }
-  };
 
   const wrapperPositionClass = classNames({
     'sm-right-0': position === widgetPosition.BOTTOM_RIGHT,
@@ -81,39 +72,7 @@ export function Widget({
   });
 
   if (layout === widgetLayout.FULL_FRAME) {
-    return (
-      <div>
-        <div className="sm-text-primary-text sm-h-full sm-w-full ">
-          <div className="sm-rounded-xl sm-origin-bottom-right sm-bg-white sm-pointer-events-auto md:sm-rounded-3xl">
-            {isDisconnected && (
-              <button
-                onClick={connect}
-                data-sm-cy="connectButton"
-                className="sm-w-full sm-h-full sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-outline sm-outline-2 sm-outline-transparent sm-bg-transparent hover:sm-outline-secondary-base sm-transition-colors sm-overflow-hidden"
-              >
-                <ProfileImage src={profilePicture} />
-              </button>
-            )}
-
-            <div
-              className={classNames({
-                'sm-w-full sm-h-full sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu':
-                  true,
-                ' sm-absolute': !isConnectingOrConnected,
-                'sm-border-2 sm-border-solid sm-border-gray-lightest': isConnectingOrConnected,
-              })}
-            >
-              <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
-              {isConnected && <VideoControls />}
-            </div>
-          </div>
-        </div>
-
-        <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
-          <ContentCards />
-        </div>
-      </div>
-    );
+    //TODO
   }
 
   return (

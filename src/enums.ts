@@ -14,7 +14,6 @@ export enum widgetPosition {
 export enum widgetLayout {
   FLOAT = 'float',
   FULL_FRAME = 'fullFrame',
-  Embedded = 'embedded',
 }
 
 export enum SessionDataKeys {

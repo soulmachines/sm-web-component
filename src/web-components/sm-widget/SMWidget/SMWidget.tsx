@@ -11,7 +11,7 @@ export type SMWidgetProps = {
   greeting?: string;
   profilePicture?: string;
   position?: widgetPosition;
-  mode?: widgetLayout;
+  layout?: widgetLayout;
   parent: HTMLElement;
 };
 
@@ -23,7 +23,7 @@ export function SMWidget({
   profilePicture,
   position,
   parent,
-  mode,
+  layout,
 }: SMWidgetProps) {
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
@@ -33,7 +33,7 @@ export function SMWidget({
         profilePicture={profilePicture}
         loadingIndicator={connectingIndicator}
         position={position}
-        mode={mode}
+        layout={layout}
       />
     </SoulMachinesProvider>
   );
