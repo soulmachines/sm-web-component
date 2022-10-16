@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ConversationStateTypes } from '@soulmachines/smwebsdk';
-import { Spinner } from '../Spinner';
+import { Spinner } from '../../components/Spinner';
 import SpeadingDotsAnimation from './components/SpreadingDots';
 import WaveFormAnimation from './components/WaveForm';
 

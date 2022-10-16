@@ -1,9 +1,9 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
-import { Card } from '../Card';
+import { Card } from '../../components/Card';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Heading, HeadingProps } from '../Heading';
-import { Text, TextProps } from '../Text';
+import { Heading, HeadingProps } from '../../components/Heading';
+import { Text, TextProps } from '../../components/Text';
 
 export type MarkdownCardProps = {
   content: ContentCard;

@@ -1,5 +1,5 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
-import { Card } from '../Card';
+import { Card } from '../../components/Card';
 
 type ImageCardProps = {
   content: ContentCard;

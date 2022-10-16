@@ -1,6 +1,6 @@
 import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
-import { Video } from '../../../components/Video';
+import { Video } from '../../../appComponents/Video';
 
 export type SMVideoProps = {
   apiKey?: string;

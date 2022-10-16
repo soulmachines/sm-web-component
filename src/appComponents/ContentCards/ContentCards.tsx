@@ -3,10 +3,10 @@ import { Fragment, JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { ImageCard } from '../ImageCard';
-import { LinkCard, LinkCardProps } from '../LinkCard';
-import { MarkdownCard } from '../MarkdownCard';
-import { OptionsCard } from '../OptionsCard';
+import { ImageCard } from '../../contentCards/ImageCard';
+import { LinkCard, LinkCardProps } from '../../contentCards/LinkCard';
+import { MarkdownCard } from '../../contentCards/MarkdownCard';
+import { OptionsCard } from '../../contentCards/OptionsCard';
 
 export type CardComponent = {
   content: ContentCard;

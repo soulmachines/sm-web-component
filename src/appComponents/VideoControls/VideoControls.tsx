@@ -1,6 +1,6 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
-import { IconButton, Theme } from '../IconButton';
+import { IconButton, Theme } from '../../components/IconButton';
 
 export function VideoControls() {
   const {

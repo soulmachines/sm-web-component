@@ -1,8 +1,8 @@
-import { Button } from '../Button';
-import { Card } from '../Card';
-import { Text } from '../Text';
+import { Button } from '../../components/Button';
+import { Card } from '../../components/Card';
+import { Text } from '../../components/Text';
 import { ContentCard } from '@soulmachines/smwebsdk';
-import { Heading } from '../Heading';
+import { Heading } from '../../components/Heading';
 
 export type LinkCardProps = {
   content: ContentCard;
