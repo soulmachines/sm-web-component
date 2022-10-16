@@ -11,6 +11,11 @@ export enum widgetPosition {
   BOTTOM_RIGHT = 'bottomRight',
 }
 
+export enum widgetLayout {
+  FLOAT = 'float',
+  FULL_FRAME = 'fullFrame',
+}
+
 export enum SessionDataKeys {
   sessionId = 'sm-session-id',
   apiKey = 'sm-api-key',

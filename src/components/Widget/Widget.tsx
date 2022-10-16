@@ -3,7 +3,7 @@ import { useSpring, animated, config } from 'react-spring';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
-import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
+import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
 import { Notifications } from '../Notifications';
 import { ProfileImage } from '../ProfileImage';
 import { LoadingIndicator as DefaultLoadingIndicator } from '../LoadingIndicator';
@@ -16,6 +16,7 @@ export type WidgetProps = {
   profilePicture?: string;
   position?: widgetPosition;
   loadingIndicator?: JSX.Element;
+  layout?: widgetLayout;
 };
 
 export function Widget({
@@ -23,6 +24,7 @@ export function Widget({
   greeting,
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
+  layout = widgetLayout.FLOAT,
 }: WidgetProps) {
   const { connectionStatus, connectionState, connect } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
@@ -68,6 +70,10 @@ export function Widget({
   const scaledDownClass = classNames({
     'sm-scale-50 sm-origin-bottom-right': isConnectingOrConnected,
   });
+
+  if (layout === widgetLayout.FULL_FRAME) {
+    //add full frame code here
+  }
 
   return (
     <div
