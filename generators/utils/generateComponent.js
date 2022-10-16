@@ -12,7 +12,7 @@ function generateComponent(type) {
         default: 'Button',
         validate: (value) => {
           if (/.+/.test(value)) {
-            return componentExists(value)
+            return componentExists(value, type)
               ? 'A component or container with this name already exists'
               : true;
           }
