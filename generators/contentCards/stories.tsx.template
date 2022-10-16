@@ -1,0 +1,8 @@
+import { {{ properCase name }} } from '.';
+
+export default {
+  title: `Content Cards / {{ properCase name }}`,
+  component: {{ properCase name }},
+};
+
+export const Basic = () => <{{ properCase name }} />;
