@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
-import { Widget } from '../../../components/Widget';
-import { BindPublicSmEvents } from '../../../components/BindPublicSmEvents';
+import { Widget } from '../../../appComponents/Widget';
+import { BindPublicSmEvents } from '../../../appComponents/BindPublicSmEvents';
 import { widgetLayout, widgetPosition } from '../../../enums';
 
 export type SMWidgetProps = {

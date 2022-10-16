@@ -3,16 +3,16 @@ import { SMProviderDecorator } from '../../.storybook/decorators/SMProviderDecor
 import paths from '../components/Icon/paths';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
-import { ConversationState } from '../components/ConversationState';
+import { ConversationState } from '../appComponents/ConversationState';
 import { Heading, headingSizes } from '../components/Heading';
 import { IconButton, Theme } from '../components/IconButton/IconButton';
-import { ImageCard } from '../components/ImageCard/ImageCard';
-import { LinkCard } from '../components/LinkCard/LinkCard';
-import { MarkdownCard } from '../components/MarkdownCard/MarkdownCard';
+import { ImageCard } from '../contentCards/ImageCard/ImageCard';
+import { LinkCard } from '../contentCards/LinkCard/LinkCard';
+import { MarkdownCard } from '../contentCards/MarkdownCard/MarkdownCard';
 import { Notifications } from '../components/Notifications/Notifications';
-import { OptionsCard } from '../components/OptionsCard/OptionsCard';
+import { OptionsCard } from '../contentCards/OptionsCard/OptionsCard';
 import { Text, textSizes } from '../components/Text/Text';
-import { Widget } from '../components/Widget';
+import { Widget } from '../appComponents/Widget';
 import {
   imageCardContent,
   linkCardContent,
