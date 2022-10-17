@@ -102,7 +102,7 @@ export function Widget({
                 <button
                   onClick={connect}
                   data-sm-cy="connectButton"
-                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-ring sm-ring-2 sm-ring-transparent sm-bg-transparent hover:sm-ring-secondary-base sm-transition-colors sm-overflow-hidden"
+                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-ring sm-ring-transparent sm-bg-transparent hover:sm-ring-secondary-base sm-transition-colors sm-overflow-hidden"
                 >
                   <ProfileImage src={profilePicture} />
                 </button>
