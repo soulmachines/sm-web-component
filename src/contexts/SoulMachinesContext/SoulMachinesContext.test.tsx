@@ -186,7 +186,7 @@ describe('<SoulMachinesProvider />', () => {
       expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
     });
 
-    it('layout will be changed to another if toggleLayout is called', async () => {
+    it('toggles between FLOAT and FULL_FRAME when toggleLayout is called', async () => {
       const { getByText } = render(
         <SoulMachinesProvider
           apiKey={apiKey}
