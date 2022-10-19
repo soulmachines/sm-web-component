@@ -1,6 +1,7 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../../components/IconButton';
+import { widgetLayout } from '../../enums';
 
 export function VideoControls() {
   const {
@@ -12,6 +13,8 @@ export function VideoControls() {
     toggleMicrophone,
     toggleCamera,
     toggleVideoMuted,
+    layout,
+    toggleLayout,
   } = useSoulMachines();
 
   const muteIcon = isVideoMuted ? 'volumeOff' : 'volume';
@@ -29,8 +32,13 @@ export function VideoControls() {
       </div>
 
       <div className="sm-flex sm-flex-col sm-gap-y-2">
-        <div>
+        <div className="sm-flex sm-justify-between">
           <ConversationState state={conversationState} />
+          {layout === widgetLayout.FLOAT ? (
+            <IconButton onClick={toggleLayout} name="maximize" title="Switch to fullframe layout" />
+          ) : (
+            <IconButton onClick={toggleLayout} name="chevronDown" title="Switch to float layout" />
+          )}
         </div>
         <div className="sm-flex sm-justify-between">
           <IconButton
