@@ -89,9 +89,9 @@ describe('<Widget />', () => {
       expect(getByTitle('Digital person')).toBeInTheDocument();
     });
 
-    it('does not render a video', () => {
+    it('renders a video', () => {
       const { container } = customRender();
-      expect(container.querySelector('video')).not.toBeInTheDocument();
+      expect(container.querySelector('video')).toBeInTheDocument();
     });
 
     it('does not render a loading indicator', () => {
@@ -136,9 +136,9 @@ describe('<Widget />', () => {
       expect(queryByTitle('Close video')).not.toBeInTheDocument();
     });
 
-    it('does not render a video', () => {
+    it('renders a video', () => {
       const { container } = customRender();
-      expect(container.querySelector('video')).not.toBeInTheDocument();
+      expect(container.querySelector('video')).toBeInTheDocument();
     });
 
     it('does not render the default greeting', () => {

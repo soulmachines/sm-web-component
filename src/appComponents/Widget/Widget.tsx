@@ -90,11 +90,16 @@ export function Widget({
                     />
                   )}
 
-                  {isConnected && layout === widgetLayout.FLOAT && (
-                    <>
+                  {layout === widgetLayout.FLOAT && (
+                    <div
+                      className={classNames({
+                        'sm-w-full sm-h-full': true,
+                        'sm-invisible': !isConnected,
+                      })}
+                    >
                       <Video autoConnect={false} />
-                      <VideoControls />
-                    </>
+                      {isConnected && <VideoControls />}
+                    </div>
                   )}
                 </div>
               </>
