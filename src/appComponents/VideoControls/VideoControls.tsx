@@ -23,6 +23,9 @@ export function VideoControls() {
   const cameraIcon = isCameraEnabled ? 'camera' : 'cameraOff';
   const microphoneText = isMicrophoneEnabled ? 'Disable microphone' : 'Enable microphone';
   const cameraText = isCameraEnabled ? 'Disable camera' : 'Enable camera';
+  const layoutToggleIcon = layout === widgetLayout.FLOAT ? 'maximize' : 'chevronDown';
+  const layoutToggleTitle =
+    layout === widgetLayout.FLOAT ? 'Switch to fullframe layout' : 'Switch to float layout';
 
   return (
     <div className="sm-p-3 sm-flex sm-flex-col sm-justify-between sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
@@ -34,11 +37,7 @@ export function VideoControls() {
       <div className="sm-flex sm-flex-col sm-gap-y-2">
         <div className="sm-flex sm-justify-between">
           <ConversationState state={conversationState} />
-          {layout === widgetLayout.FLOAT ? (
-            <IconButton onClick={toggleLayout} name="maximize" title="Switch to fullframe layout" />
-          ) : (
-            <IconButton onClick={toggleLayout} name="chevronDown" title="Switch to float layout" />
-          )}
+          <IconButton onClick={toggleLayout} name={layoutToggleIcon} title={layoutToggleTitle} />
         </div>
         <div className="sm-flex sm-justify-between">
           <IconButton

@@ -161,8 +161,13 @@ describe('<VideoControls />', () => {
 
     it('renders a fullframe layout button', () => {
       const { getByTitle } = customRender();
-      expect(getByTitle('Switch to fullframe layout')).toBeTruthy();
+      expect(getByTitle('Switch to fullframe layout')).toBeInTheDocument();
     });
+
+    // it('does not renders a float layout button', () => {
+    //   const { getByTitle } = customRender();
+    //   expect(getByTitle('Switch to float layout')).not.toBeInTheDocument();
+    // });
 
     it('calls toggleLayout when switch to fullframe layout button is clicked', async () => {
       const { getByTitle } = customRender();
@@ -183,8 +188,13 @@ describe('<VideoControls />', () => {
 
     it('renders a float layout button', () => {
       const { getByTitle } = customRender();
-      expect(getByTitle('Switch to float layout')).toBeTruthy();
+      expect(getByTitle('Switch to float layout')).toBeInTheDocument();
     });
+
+    // it('does not renders a fullframe layout button', () => {
+    //   const { getByTitle } = customRender();
+    //   expect(getByTitle('Switch to fullframe layout')).not.toBeInTheDocument();
+    // });
 
     it('calls toggleLayout when switch to float layout button is clicked', async () => {
       const { getByTitle } = customRender();

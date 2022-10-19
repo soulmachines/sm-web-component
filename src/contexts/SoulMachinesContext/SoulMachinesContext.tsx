@@ -40,7 +40,7 @@ const SoulMachinesContext = createContext<Context | undefined>(undefined);
 type SoulMachinesProviderProps = {
   apiKey?: string;
   tokenServer?: string;
-  initLayout?: widgetLayout;
+  initialLayout?: widgetLayout;
   children: ComponentChildren;
 };
 
@@ -48,7 +48,7 @@ function SoulMachinesProvider({
   children,
   apiKey,
   tokenServer,
-  initLayout = widgetLayout.FLOAT,
+  initialLayout = widgetLayout.FLOAT,
 }: SoulMachinesProviderProps) {
   const personaId = 1;
   const scene = useMemo(
@@ -94,14 +94,12 @@ function SoulMachinesProvider({
     canAutoPlayAudio: useConnectionData.canAutoPlayAudio,
     videoRef: useConnectionData.videoRef,
   });
-  const [layout, setLayout] = useState(initLayout);
+  const [layout, setLayout] = useState(initialLayout);
   const toggleLayout = () => {
     if (layout !== widgetLayout.FLOAT) {
       setLayout(widgetLayout.FLOAT);
-      console.warn(`>> change layout to FLOAT`);
     } else {
       setLayout(widgetLayout.FULL_FRAME);
-      console.warn(`>> change layout to FULL_FRAME`);
     }
   };
 

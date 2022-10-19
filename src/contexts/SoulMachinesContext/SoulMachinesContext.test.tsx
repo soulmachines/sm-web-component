@@ -184,6 +184,9 @@ describe('<SoulMachinesProvider />', () => {
 
       await fireEvent.click(element);
       expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
+
+      await fireEvent.click(element);
+      expect(element.getAttribute('name')).toEqual(widgetLayout.FLOAT);
     });
 
     it('toggles between FLOAT and FULL_FRAME when toggleLayout is called', async () => {
@@ -191,7 +194,7 @@ describe('<SoulMachinesProvider />', () => {
         <SoulMachinesProvider
           apiKey={apiKey}
           tokenServer={tokenServer}
-          initLayout={widgetLayout.FULL_FRAME}
+          initialLayout={widgetLayout.FULL_FRAME}
         >
           <TestComponent />
         </SoulMachinesProvider>,
@@ -202,6 +205,9 @@ describe('<SoulMachinesProvider />', () => {
 
       await fireEvent.click(element);
       expect(element.getAttribute('name')).toEqual(widgetLayout.FLOAT);
+
+      await fireEvent.click(element);
+      expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
     });
   });
 });
