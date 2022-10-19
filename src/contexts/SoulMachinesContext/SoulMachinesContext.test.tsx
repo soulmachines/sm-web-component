@@ -1,6 +1,7 @@
 import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { fireEvent, render } from '@testing-library/preact';
 import { SoulMachinesProvider, useSoulMachines } from '.';
+import { widgetLayout } from '../../enums';
 import { useConnection } from '../../hooks/useConnection';
 import { useSMMedia } from '../../hooks/useSMMedia';
 
@@ -157,6 +158,50 @@ describe('<SoulMachinesProvider />', () => {
 
       expect(mockScene.setLogging).toHaveBeenCalledWith(false);
       expect(mockScene.contentAwareness?.setLogging).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('toggleLayout', () => {
+    const TestComponent = () => {
+      const { layout, toggleLayout } = useSoulMachines();
+
+      return (
+        <button onClick={() => toggleLayout()} name={layout}>
+          Trigger toggle layout
+        </button>
+      );
+    };
+
+    it('default layout is FLOAT if not defined', async () => {
+      const { getByText } = render(
+        <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+          <TestComponent />
+        </SoulMachinesProvider>,
+      );
+
+      const element = getByText('Trigger toggle layout');
+      expect(element.getAttribute('name')).toEqual(widgetLayout.FLOAT);
+
+      await fireEvent.click(element);
+      expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
+    });
+
+    it('layout will be changed to another if toggleLayout is called', async () => {
+      const { getByText } = render(
+        <SoulMachinesProvider
+          apiKey={apiKey}
+          tokenServer={tokenServer}
+          initLayout={widgetLayout.FULL_FRAME}
+        >
+          <TestComponent />
+        </SoulMachinesProvider>,
+      );
+
+      const element = getByText('Trigger toggle layout');
+      expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
+
+      await fireEvent.click(element);
+      expect(element.getAttribute('name')).toEqual(widgetLayout.FLOAT);
     });
   });
 });
