@@ -181,7 +181,7 @@ describe('<VideoControls />', () => {
       });
     });
 
-    it('float layout button exists', () => {
+    it('renders a float layout button', () => {
       const { getByTitle } = customRender();
       expect(getByTitle('Switch to float layout')).toBeTruthy();
     });
