@@ -172,7 +172,7 @@ describe('<SoulMachinesProvider />', () => {
       );
     };
 
-    it('default layout is FLOAT if not defined', async () => {
+    it('defaults to FLOAT layout if not defined', async () => {
       const { getByText } = render(
         <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
           <TestComponent />
