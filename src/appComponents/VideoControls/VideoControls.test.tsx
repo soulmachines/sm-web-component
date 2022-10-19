@@ -159,7 +159,7 @@ describe('<VideoControls />', () => {
       });
     });
 
-    it('fullframe layout button exists', () => {
+    it('renders a fullframe layout button', () => {
       const { getByTitle } = customRender();
       expect(getByTitle('Switch to fullframe layout')).toBeTruthy();
     });
