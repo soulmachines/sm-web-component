@@ -26,14 +26,13 @@ export function SMWidget({
   layout,
 }: SMWidgetProps) {
   return (
-    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={layout}>
       <BindPublicSmEvents element={parent} />
       <Widget
         greeting={greeting}
         profilePicture={profilePicture}
         loadingIndicator={connectingIndicator}
         position={position}
-        layout={layout}
       />
     </SoulMachinesProvider>
   );

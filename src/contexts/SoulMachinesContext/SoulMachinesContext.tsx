@@ -5,9 +5,9 @@ import {
   ConversationStateTypes,
   ConnectionStateData,
 } from '@soulmachines/smwebsdk';
-import { MutableRef, useContext, useMemo } from 'preact/hooks';
+import { MutableRef, useContext, useMemo, useState } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
-import { ConnectionStatus } from '../../enums';
+import { ConnectionStatus, widgetLayout } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
@@ -30,6 +30,8 @@ type Context = {
   toggleCamera: () => void;
   toggleVideoMuted: () => void;
   enableDebugLogging: (enabled: boolean) => void;
+  layout: widgetLayout;
+  toggleLayout: () => void;
 };
 
 // Create context with default values
@@ -38,10 +40,16 @@ const SoulMachinesContext = createContext<Context | undefined>(undefined);
 type SoulMachinesProviderProps = {
   apiKey?: string;
   tokenServer?: string;
+  initialLayout?: widgetLayout;
   children: ComponentChildren;
 };
 
-function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesProviderProps) {
+function SoulMachinesProvider({
+  children,
+  apiKey,
+  tokenServer,
+  initialLayout = widgetLayout.FLOAT,
+}: SoulMachinesProviderProps) {
   const personaId = 1;
   const scene = useMemo(
     () =>
@@ -86,12 +94,22 @@ function SoulMachinesProvider({ children, apiKey, tokenServer }: SoulMachinesPro
     canAutoPlayAudio: useConnectionData.canAutoPlayAudio,
     videoRef: useConnectionData.videoRef,
   });
+  const [layout, setLayout] = useState(initialLayout);
+  const toggleLayout = () => {
+    if (layout !== widgetLayout.FLOAT) {
+      setLayout(widgetLayout.FLOAT);
+    } else {
+      setLayout(widgetLayout.FULL_FRAME);
+    }
+  };
 
   return (
     <SoulMachinesContext.Provider
       value={{
         scene,
         persona,
+        layout,
+        toggleLayout,
         sendTextMessage,
         enableDebugLogging,
         ...useConnectionData,

@@ -1,6 +1,6 @@
 import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
-import { ConnectionStatus } from '../../../enums';
+import { ConnectionStatus, widgetLayout } from '../../../enums';
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
@@ -32,6 +32,8 @@ const mockUseSoulMachines = {
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),
   toggleVideoMuted: jest.fn(),
+  layout: widgetLayout.FLOAT,
+  toggleLayout: jest.fn(),
 };
 
 const useSoulMachines = jest.fn(() => mockUseSoulMachines);

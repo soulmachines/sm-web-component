@@ -16,7 +16,6 @@ export type WidgetProps = {
   profilePicture?: string;
   position?: widgetPosition;
   loadingIndicator?: JSX.Element;
-  layout?: widgetLayout;
 };
 
 export function Widget({
@@ -24,9 +23,8 @@ export function Widget({
   greeting,
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
-  layout = widgetLayout.FLOAT,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect } = useSoulMachines();
+  const { connectionStatus, connectionState, connect, layout } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
