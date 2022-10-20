@@ -23,6 +23,7 @@ export const FullFrameVideo = ({
       right: 20,
       top: 20,
       bottom: 20,
+      pointerEvents: 'auto',
     },
     leave: {
       opacity: 0,
