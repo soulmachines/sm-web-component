@@ -66,42 +66,48 @@ export function Widget({
               </div>
             )}
 
-            <FloatingContainerAnimation animate={isConnectingOrConnected}>
-              <>
-                {isDisconnected && (
-                  <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-inherit">
-                    <ConnectButton>
-                      <ProfileImage src={profilePicture} />
-                    </ConnectButton>
-                  </div>
-                )}
-
-                <div
-                  className={classNames({
-                    'sm-relative sm-rounded-inherit': true,
-                    'sm-border-2 sm-border-solid sm-border-gray-lightest sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88':
-                      isConnectingOrConnected,
-                  })}
-                >
-                  {isConnecting && (
-                    <ProgressIndicator
-                      indicator={loadingIndicator}
-                      connectionState={connectionState}
-                    />
+            <div
+              className={classNames({
+                'sm-invisible': layout === widgetLayout.FULL_FRAME,
+              })}
+            >
+              <FloatingContainerAnimation animate={isConnectingOrConnected}>
+                <>
+                  {isDisconnected && (
+                    <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-inherit">
+                      <ConnectButton>
+                        <ProfileImage src={profilePicture} />
+                      </ConnectButton>
+                    </div>
                   )}
 
                   <div
                     className={classNames({
-                      'sm-w-full sm-h-full sm-rounded-inherit sm-overflow-hidden': true,
-                      'sm-invisible': !isConnected,
+                      'sm-relative sm-rounded-inherit': true,
+                      'sm-border-2 sm-border-solid sm-border-gray-lightest sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88':
+                        isConnectingOrConnected,
                     })}
                   >
-                    <Video autoConnect={false} />
-                    {isConnected && <VideoControls />}
+                    {isConnecting && (
+                      <ProgressIndicator
+                        indicator={loadingIndicator}
+                        connectionState={connectionState}
+                      />
+                    )}
+
+                    <div
+                      className={classNames({
+                        'sm-w-full sm-h-full sm-rounded-inherit sm-overflow-hidden': true,
+                        'sm-invisible': !isConnected,
+                      })}
+                    >
+                      <Video autoConnect={false} />
+                      {isConnected && <VideoControls />}
+                    </div>
                   </div>
-                </div>
-              </>
-            </FloatingContainerAnimation>
+                </>
+              </FloatingContainerAnimation>
+            </div>
           </>
         </div>
 

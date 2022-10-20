@@ -24,7 +24,7 @@ export const FloatingContainerAnimation = ({
     <div className={scaledDownClass}>
       <animated.div
         style={scaleAnimation}
-        className={` sm-origin-bottom-right sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto`}
+        className={`sm-origin-bottom-right sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto`}
       >
         {children}
       </animated.div>
