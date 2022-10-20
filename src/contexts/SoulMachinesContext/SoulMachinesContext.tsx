@@ -5,7 +5,7 @@ import {
   ConversationStateTypes,
   ConnectionStateData,
 } from '@soulmachines/smwebsdk';
-import { MutableRef, useContext, useMemo } from 'preact/hooks';
+import { MutableRef, useContext, useMemo, useState } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus, widgetLayout } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
@@ -88,18 +88,28 @@ function SoulMachinesProvider({
 
   const useConversationStateData = useConversationState(scene);
   const useConnectionStateData = useConnectionState(scene);
-  const useConnectionData = useConnection(scene, tokenServer, initialLayout);
+  const useConnectionData = useConnection(scene, tokenServer);
   const useMediaData = useSMMedia({
     scene,
     canAutoPlayAudio: useConnectionData.canAutoPlayAudio,
     videoRef: useConnectionData.videoRef,
   });
+  const [layout, setLayout] = useState(initialLayout);
+  const toggleLayout = () => {
+    if (layout !== widgetLayout.FLOAT) {
+      setLayout(widgetLayout.FLOAT);
+    } else {
+      setLayout(widgetLayout.FULL_FRAME);
+    }
+  };
 
   return (
     <SoulMachinesContext.Provider
       value={{
         scene,
         persona,
+        layout,
+        toggleLayout,
         sendTextMessage,
         enableDebugLogging,
         ...useConnectionData,
