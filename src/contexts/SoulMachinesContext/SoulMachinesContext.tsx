@@ -88,7 +88,10 @@ function SoulMachinesProvider({
 
   const useConversationStateData = useConversationState(scene);
   const useConnectionStateData = useConnectionState(scene);
-  const useConnectionData = useConnection(scene, tokenServer);
+  const { disconnect: disconnectConnection, ...useConnectionData } = useConnection(
+    scene,
+    tokenServer,
+  );
   const useMediaData = useSMMedia({
     scene,
     canAutoPlayAudio: useConnectionData.canAutoPlayAudio,
@@ -103,6 +106,13 @@ function SoulMachinesProvider({
     }
   };
 
+  // Define a new global disconnection function here
+  const disconnect = () => {
+    disconnectConnection();
+    //reset layout
+    setLayout(initialLayout);
+  };
+
   return (
     <SoulMachinesContext.Provider
       value={{
@@ -112,6 +122,7 @@ function SoulMachinesProvider({
         toggleLayout,
         sendTextMessage,
         enableDebugLogging,
+        disconnect,
         ...useConnectionData,
         ...useMediaData,
         ...useConversationStateData,
