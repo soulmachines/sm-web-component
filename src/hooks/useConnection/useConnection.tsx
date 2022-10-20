@@ -1,12 +1,21 @@
 import { ConnectOptions, Scene } from '@soulmachines/smwebsdk';
 import { useCallback, useRef, useState } from 'preact/hooks';
-import { ConnectionStatus, SessionDataKeys } from '../../enums';
+import { ConnectionStatus, SessionDataKeys, widgetLayout } from '../../enums';
 
-function useConnection(scene: Scene, tokenServer: string | undefined) {
+function useConnection(scene: Scene, tokenServer: string | undefined, initialLayout: widgetLayout) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
   const [canAutoPlayAudio, setCanAutoPlayAudio] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
+  const [layout, setLayout] = useState(initialLayout);
+
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const toggleLayout = () => {
+    if (layout !== widgetLayout.FLOAT) {
+      setLayout(widgetLayout.FLOAT);
+    } else {
+      setLayout(widgetLayout.FULL_FRAME);
+    }
+  };
 
   const connect = useCallback(async () => {
     try {
@@ -59,6 +68,7 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   }, [scene, tokenServer]);
 
   const disconnect = () => {
+    setLayout(initialLayout);
     cleanupSessionStorage();
     cleanupVideoSrc();
     scene.disconnect();
@@ -94,6 +104,8 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     disconnect,
     videoRef,
     cleanupSessionStorage,
+    layout,
+    toggleLayout,
   };
 }
 
