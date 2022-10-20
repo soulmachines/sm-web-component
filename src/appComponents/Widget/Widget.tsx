@@ -90,17 +90,15 @@ export function Widget({
                     />
                   )}
 
-                  {layout === widgetLayout.FLOAT && (
-                    <div
-                      className={classNames({
-                        'sm-w-full sm-h-full': true,
-                        'sm-invisible': !isConnected,
-                      })}
-                    >
-                      <Video autoConnect={false} />
-                      {isConnected && <VideoControls />}
-                    </div>
-                  )}
+                  <div
+                    className={classNames({
+                      'sm-w-full sm-h-full sm-rounded-inherit sm-overflow-hidden': true,
+                      'sm-invisible': !isConnected,
+                    })}
+                  >
+                    <Video autoConnect={false} />
+                    {isConnected && <VideoControls />}
+                  </div>
                 </div>
               </>
             </FloatingContainerAnimation>
