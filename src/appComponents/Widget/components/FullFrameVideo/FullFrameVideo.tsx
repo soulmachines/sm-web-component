@@ -24,7 +24,12 @@ export const FullFrameVideo = ({
       top: 20,
       bottom: 20,
     },
-    leave: { opacity: 0, transform: 'scale(0.2)' },
+    leave: {
+      opacity: 0,
+      transform: 'scale(0.2)',
+      // Turn off pointer events so content is clickable thats under the faded out video
+      pointerEvents: 'none',
+    },
     config: config.gentle,
   });
 
