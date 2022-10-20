@@ -64,7 +64,6 @@ function SoulMachinesProvider({
       }),
     [apiKey],
   );
-  console.log(scene.version.webSdk);
   const persona = new Persona(scene, personaId);
   const sendTextMessage = (text: string) => {
     try {
