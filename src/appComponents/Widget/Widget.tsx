@@ -1,17 +1,15 @@
 import { JSX } from 'preact';
+import classNames from 'classnames';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Video } from '../Video';
-import { VideoControls } from '../VideoControls';
 import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
 import { Notifications } from '../../components/Notifications';
 import { ProfileImage } from '../ProfileImage';
-import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';
 import { ConnectButton } from './components/ConnectButton';
-import { FullFrameVideo } from './components/FullFrameVideo';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { FloatingContainerAnimation } from './components/FloatingContainerAnimation';
+import { VideoPlayer } from './components/VideoPlayer';
 
 export type WidgetProps = {
   greeting?: string;
@@ -66,55 +64,40 @@ export function Widget({
               </div>
             )}
 
-            <div
-              className={classNames({
-                'sm-invisible': layout === widgetLayout.FULL_FRAME,
-              })}
-            >
-              <FloatingContainerAnimation animate={isConnectingOrConnected}>
-                <>
-                  {isDisconnected && (
-                    <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-inherit">
-                      <ConnectButton>
-                        <ProfileImage src={profilePicture} />
-                      </ConnectButton>
-                    </div>
-                  )}
-
-                  <div
-                    className={classNames({
-                      'sm-relative sm-rounded-inherit': true,
-                      'sm-border-2 sm-border-solid sm-border-gray-lightest sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88':
-                        isConnectingOrConnected,
-                    })}
-                  >
-                    {isConnecting && (
-                      <ProgressIndicator
-                        indicator={loadingIndicator}
-                        connectionState={connectionState}
-                      />
-                    )}
-
-                    <div
-                      className={classNames({
-                        'sm-w-full sm-h-full sm-rounded-inherit sm-overflow-hidden': true,
-                        'sm-invisible': !isConnected,
-                      })}
-                    >
-                      <Video autoConnect={false} />
-                      {isConnected && <VideoControls />}
-                    </div>
+            <FloatingContainerAnimation animate={isConnectingOrConnected}>
+              <>
+                {isDisconnected && (
+                  <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-inherit">
+                    <ConnectButton>
+                      <ProfileImage src={profilePicture} />
+                    </ConnectButton>
                   </div>
-                </>
-              </FloatingContainerAnimation>
-            </div>
+                )}
+
+                <div
+                  className={classNames({
+                    'sm-relative sm-rounded-inherit': true,
+                    'sm-border-2 sm-border-solid sm-border-gray-lightest sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88':
+                      isConnecting,
+                  })}
+                >
+                  {isConnecting && (
+                    <ProgressIndicator
+                      indicator={loadingIndicator}
+                      connectionState={connectionState}
+                    />
+                  )}
+                </div>
+              </>
+            </FloatingContainerAnimation>
+
+            <VideoPlayer
+              floatingPosition={position}
+              isConnected={isConnected}
+              showFullFrame={isConnected && layout === widgetLayout.FULL_FRAME}
+            />
           </>
         </div>
-
-        <FullFrameVideo
-          floatingPosition={position}
-          transitionIn={isConnected && layout === widgetLayout.FULL_FRAME}
-        />
       </div>
     </div>
   );
