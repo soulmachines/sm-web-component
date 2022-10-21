@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { VideoControls } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
+import { widgetLayout } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -40,6 +41,11 @@ describe('<VideoControls />', () => {
     it('does not call toggleVideoMuted', () => {
       customRender();
       expect(SoulMachinesContext.useSoulMachines().toggleVideoMuted).toBeCalledTimes(0);
+    });
+
+    it('does not call toggleLayout', () => {
+      customRender();
+      expect(SoulMachinesContext.useSoulMachines().toggleLayout).toBeCalledTimes(0);
     });
   });
 
@@ -142,6 +148,60 @@ describe('<VideoControls />', () => {
       await fireEvent.click(muteButton);
 
       expect(SoulMachinesContext.useSoulMachines().toggleVideoMuted).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when layout is float layout', () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        layout: widgetLayout.FLOAT,
+      });
+    });
+
+    it('renders a fullframe layout button', () => {
+      const { getByTitle } = customRender();
+      expect(getByTitle('Switch to fullframe layout')).toBeInTheDocument();
+    });
+
+    it('does not renders a float layout button', () => {
+      const { queryByTitle } = customRender();
+      expect(queryByTitle('Switch to float layout')).not.toBeInTheDocument();
+    });
+
+    it('calls toggleLayout when switch to fullframe layout button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const fullframeButton = getByTitle('Switch to fullframe layout');
+      await fireEvent.click(fullframeButton);
+
+      expect(SoulMachinesContext.useSoulMachines().toggleLayout).toBeCalledTimes(1);
+    });
+  });
+
+  describe('when layout is fullFrame layout', () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+        layout: widgetLayout.FULL_FRAME,
+      });
+    });
+
+    it('renders a float layout button', () => {
+      const { getByTitle } = customRender();
+      expect(getByTitle('Switch to float layout')).toBeInTheDocument();
+    });
+
+    it('does not renders a fullframe layout button', () => {
+      const { queryByTitle } = customRender();
+      expect(queryByTitle('Switch to fullframe layout')).not.toBeInTheDocument();
+    });
+
+    it('calls toggleLayout when switch to float layout button is clicked', async () => {
+      const { getByTitle } = customRender();
+      const floatButton = getByTitle('Switch to float layout');
+      await fireEvent.click(floatButton);
+
+      expect(SoulMachinesContext.useSoulMachines().toggleLayout).toBeCalledTimes(1);
     });
   });
 });
