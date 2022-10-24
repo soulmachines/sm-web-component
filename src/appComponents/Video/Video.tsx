@@ -62,6 +62,8 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     'sm-hidden': !isConnected,
   });
 
+  const showLoader = isConnecting && loadingIndicator;
+
   useEffect(() => {
     if (autoConnect) {
       connect();
@@ -85,7 +87,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
 
   return (
     <div className={videoWrapperClass}>
-      {isConnecting && (loadingIndicator || <Spinner />)}
+      {showLoader && loadingIndicator}
 
       <animated.video
         style={videoAnimation}

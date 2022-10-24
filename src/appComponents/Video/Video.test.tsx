@@ -52,9 +52,9 @@ describe('<Video />', () => {
       });
     });
 
-    it('renders the default svg loading indicator', () => {
-      const { container } = customRender();
-      expect(container.querySelector('svg')).toBeInTheDocument();
+    it('renders no loader when not passed in', () => {
+      const { container } = render(<Video autoConnect={true} />);
+      expect(container.querySelector('svg')).not.toBeInTheDocument();
     });
 
     it('renders a custom loading indicator', () => {

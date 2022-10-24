@@ -7,7 +7,7 @@ jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMVideo />', () => {
   const customRender = () =>
-    render(<SMVideo autoConnect="true" apiKey="123" connecting-indicator={<p>Loading...</p>} />);
+    render(<SMVideo autoConnect="true" apiKey="123" connectingIndicator={<p>Loading...</p>} />);
 
   it('renders a loading indicator when connecting', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
