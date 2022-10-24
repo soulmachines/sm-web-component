@@ -50,7 +50,7 @@ export function Widget({
   }, [connect, isDisconnected]);
 
   return (
-    <div className="sm-fixed sm-bottom-0 sm-p-2 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full md:sm-p-5">
+    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full sm-p-5">
       <div className={layoutStyles}>
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
           <ContentCards />
@@ -64,7 +64,7 @@ export function Widget({
               </div>
             )}
 
-            <FloatingContainerAnimation animate={isConnectingOrConnected}>
+            <FloatingContainerAnimation animate={isConnectingOrConnected} position={position}>
               <>
                 {isDisconnected && (
                   <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-inherit">
