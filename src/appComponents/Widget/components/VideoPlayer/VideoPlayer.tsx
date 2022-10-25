@@ -39,7 +39,7 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
   });
 
   const fullFrameClasses = classNames({
-    'sm-round-shadow-box sm-default-border': true,
+    'sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest': true,
     'sm-origin-bottom-left': floatingPosition === widgetPosition.BOTTOM_LEFT,
     'sm-origin-bottom-right': floatingPosition === widgetPosition.BOTTOM_RIGHT,
   });
@@ -55,7 +55,8 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
     ) : (
       <div
         className={classNames({
-          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-round-shadow-box sm-default-border': true,
+          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest':
+            true,
           // Hide until video loaded, to avoid taking up space
           'sm-hidden': !isConnected,
         })}
