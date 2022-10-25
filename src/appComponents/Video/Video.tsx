@@ -17,6 +17,12 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
   const width = Math.round(size.width * devicePixelRatio);
   const height = Math.round(size.height * devicePixelRatio);
 
+  // Don't request a video stream if value is 0
+  // A resize event can be triggered when animating videos in/out
+  if (width === 0 || height === 0) {
+    return;
+  }
+
   scene.sendVideoBounds(width, height);
 };
 

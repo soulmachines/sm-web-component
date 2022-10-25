@@ -127,4 +127,14 @@ describe('updateVideoBounds()', () => {
     updateVideoBounds(mockScene, mockMeasurements);
     expect(mockScene.sendVideoBounds).toHaveBeenCalledWith(223, 444);
   });
+
+  it('does not call updateVideoBounds if a resize event occurs with a width of 0', () => {
+    updateVideoBounds(mockScene, { ...mockMeasurements, width: 0.2 });
+    expect(mockScene.sendVideoBounds).not.toHaveBeenCalled();
+  });
+
+  it('does not call updateVideoBounds if a resize event occurs with a height of 0', () => {
+    updateVideoBounds(mockScene, { ...mockMeasurements, height: 0 });
+    expect(mockScene.sendVideoBounds).not.toHaveBeenCalled();
+  });
 });
