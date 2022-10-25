@@ -1,12 +1,12 @@
 import { config, useTransition, animated } from 'react-spring';
-import { widgetPosition } from '../../../../enums';
+import { ConnectionStatus, widgetPosition } from '../../../../enums';
 import classNames from 'classnames';
 import { Video } from '../../../Video';
 import { VideoControls } from '../../../VideoControls';
+import { useSoulMachines } from '../../../../contexts/SoulMachinesContext';
 
 export type VideoPlayerProps = {
-  isConnected: boolean;
-  showFullFrame: boolean;
+  renderInFullFrame: boolean;
   floatingPosition: widgetPosition;
 };
 
@@ -21,8 +21,10 @@ const VideoWrapper = ({ children }: { children: JSX.Element }) => (
   </div>
 );
 
-export const VideoPlayer = ({ showFullFrame, floatingPosition, isConnected }: VideoPlayerProps) => {
-  const fullFrameTransition = useTransition(showFullFrame, {
+export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayerProps) => {
+  const { connectionStatus } = useSoulMachines();
+  const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
+  const fullFrameTransition = useTransition(renderInFullFrame, {
     from: {
       opacity: 0,
       transform: 'scale(0.8)',
@@ -57,7 +59,7 @@ export const VideoPlayer = ({ showFullFrame, floatingPosition, isConnected }: Vi
         <VideoWrapper>
           <>
             <Video autoConnect={false} />
-            {isConnected && <VideoControls />}
+            <VideoControls />
           </>
         </VideoWrapper>
       </animated.div>

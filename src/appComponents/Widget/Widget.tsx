@@ -80,8 +80,7 @@ export function Widget({
 
             <VideoPlayer
               floatingPosition={position}
-              isConnected={isConnected}
-              showFullFrame={isConnected && layout === widgetLayout.FULL_FRAME}
+              renderInFullFrame={isConnected && layout === widgetLayout.FULL_FRAME}
             />
           </>
         </div>
