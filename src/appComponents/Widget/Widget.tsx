@@ -10,7 +10,6 @@ import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
 import { VideoPlayer } from './components/VideoPlayer';
-import { Box } from '../../components/Box';
 
 export type WidgetProps = {
   greeting?: string;
