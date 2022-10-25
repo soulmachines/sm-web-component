@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Video } from '../../../Video';
 import { VideoControls } from '../../../VideoControls';
 import { useSoulMachines } from '../../../../contexts/SoulMachinesContext';
-import { Box } from '../../../../components/Box';
 
 export type VideoPlayerProps = {
   renderInFullFrame: boolean;
@@ -40,6 +39,7 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
   });
 
   const fullFrameClasses = classNames({
+    'sm-round-shadow-box sm-default-border': true,
     'sm-origin-bottom-left': floatingPosition === widgetPosition.BOTTOM_LEFT,
     'sm-origin-bottom-right': floatingPosition === widgetPosition.BOTTOM_RIGHT,
   });
@@ -47,27 +47,21 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
   return fullFrameTransition((animatedStyles, item) =>
     item ? (
       <animated.div style={animatedStyles} className={fullFrameClasses}>
-        <Box rounded border>
-          <>
-            <Video autoConnect={false} />
-            <VideoControls />
-          </>
-        </Box>
+        <>
+          <Video autoConnect={false} />
+          <VideoControls />
+        </>
       </animated.div>
     ) : (
       <div
         className={classNames({
-          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88': true,
+          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-round-shadow-box sm-default-border': true,
           // Hide until video loaded, to avoid taking up space
           'sm-hidden': !isConnected,
         })}
       >
-        <Box rounded border>
-          <>
-            <Video autoConnect={false} />
-            {isConnected && <VideoControls />}
-          </>
-        </Box>
+        <Video autoConnect={false} />
+        {isConnected && <VideoControls />}
       </div>
     ),
   );

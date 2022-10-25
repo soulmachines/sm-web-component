@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .sm-round-shadow-box {
+    @apply sm-rounded-xl md:sm-rounded-3xl sm-overflow-hidden sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto;
+  }
+
+  .sm-default-border {
+    @apply sm-border-2 sm-border-solid sm-border-gray-lightest;
+  }
+}
+
 /*
 Theme
 */

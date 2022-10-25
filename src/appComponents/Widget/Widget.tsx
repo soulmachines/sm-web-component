@@ -65,7 +65,7 @@ export function Widget({
             )}
 
             {isDisconnected && (
-              <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto">
+              <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35">
                 <ConnectButton>
                   <ProfileImage src={profilePicture} />
                 </ConnectButton>
