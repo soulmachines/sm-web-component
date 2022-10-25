@@ -10,6 +10,7 @@ import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
 import { VideoPlayer } from './components/VideoPlayer';
+import { Box } from '../../components/Box';
 
 export type WidgetProps = {
   greeting?: string;
@@ -64,19 +65,17 @@ export function Widget({
               </div>
             )}
 
-            <div className="sm-pointer-events-auto">
-              {isDisconnected && (
-                <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white">
-                  <ConnectButton>
-                    <ProfileImage src={profilePicture} />
-                  </ConnectButton>
-                </div>
-              )}
+            {isDisconnected && (
+              <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto">
+                <ConnectButton>
+                  <ProfileImage src={profilePicture} />
+                </ConnectButton>
+              </div>
+            )}
 
-              <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
-                <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
-              </ProgressIndicatorWrapper>
-            </div>
+            <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
+              <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
+            </ProgressIndicatorWrapper>
 
             <VideoPlayer
               floatingPosition={position}
