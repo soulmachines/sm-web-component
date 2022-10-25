@@ -8,7 +8,7 @@ import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';
 import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
-import { FloatingContainerAnimation } from './components/FloatingContainerAnimation';
+import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
 import { VideoPlayer } from './components/VideoPlayer';
 
 export type WidgetProps = {
@@ -64,32 +64,19 @@ export function Widget({
               </div>
             )}
 
-            <FloatingContainerAnimation animate={isConnectingOrConnected} position={position}>
-              <>
-                {isDisconnected && (
-                  <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-inherit">
-                    <ConnectButton>
-                      <ProfileImage src={profilePicture} />
-                    </ConnectButton>
-                  </div>
-                )}
-
-                <div
-                  className={classNames({
-                    'sm-relative sm-rounded-inherit': true,
-                    'sm-border-2 sm-border-solid sm-border-gray-lightest sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88':
-                      isConnecting,
-                  })}
-                >
-                  {isConnecting && (
-                    <ProgressIndicator
-                      indicator={loadingIndicator}
-                      connectionState={connectionState}
-                    />
-                  )}
+            <div className="sm-pointer-events-auto">
+              {isDisconnected && (
+                <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white">
+                  <ConnectButton>
+                    <ProfileImage src={profilePicture} />
+                  </ConnectButton>
                 </div>
-              </>
-            </FloatingContainerAnimation>
+              )}
+
+              <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
+                <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
+              </ProgressIndicatorWrapper>
+            </div>
 
             <VideoPlayer
               floatingPosition={position}

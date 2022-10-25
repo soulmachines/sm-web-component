@@ -64,10 +64,9 @@ export const VideoPlayer = ({ showFullFrame, floatingPosition, isConnected }: Vi
     ) : (
       <div
         className={classNames({
-          'sm-relative': true,
-          // TODO: does being hidden effect autoplay
+          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88': true,
+          // Hide until video loaded, to avoid taking up space
           'sm-hidden': !isConnected,
-          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88': isConnected,
         })}
       >
         <VideoWrapper>

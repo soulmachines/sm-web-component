@@ -4,7 +4,6 @@ import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
 import debounce from 'lodash/debounce';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Spinner } from '../../components/Spinner';
 import { ConnectionStatus } from '../../enums';
 import { Scene } from '@soulmachines/smwebsdk';
 import classNames from 'classnames';
