@@ -4,22 +4,12 @@ import classNames from 'classnames';
 import { Video } from '../../../Video';
 import { VideoControls } from '../../../VideoControls';
 import { useSoulMachines } from '../../../../contexts/SoulMachinesContext';
+import { Box } from '../../../../components/Box';
 
 export type VideoPlayerProps = {
   renderInFullFrame: boolean;
   floatingPosition: widgetPosition;
 };
-
-// Component which applies the borders, shadows, rounded corners etc
-const VideoWrapper = ({ children }: { children: JSX.Element }) => (
-  <div
-    className={
-      'sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto sm-overflow-hidden sm-w-full sm-h-full sm-border-2 sm-border-solid sm-border-gray-lightest'
-    }
-  >
-    {children}
-  </div>
-);
 
 export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayerProps) => {
   const { connectionStatus } = useSoulMachines();
@@ -48,20 +38,21 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
     config: config.gentle,
   });
 
-  const positionStyles = classNames({
+  const fullFrameClasses = classNames({
+    'sm-z-10': true,
     'sm-origin-bottom-left': floatingPosition === widgetPosition.BOTTOM_LEFT,
     'sm-origin-bottom-right': floatingPosition === widgetPosition.BOTTOM_RIGHT,
   });
 
   return fullFrameTransition((animatedStyles, item) =>
     item ? (
-      <animated.div style={animatedStyles} className={positionStyles}>
-        <VideoWrapper>
+      <animated.div style={animatedStyles} className={fullFrameClasses}>
+        <Box rounded border>
           <>
             <Video autoConnect={false} />
             <VideoControls />
           </>
-        </VideoWrapper>
+        </Box>
       </animated.div>
     ) : (
       <div
@@ -71,12 +62,12 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
           'sm-hidden': !isConnected,
         })}
       >
-        <VideoWrapper>
+        <Box rounded border>
           <>
             <Video autoConnect={false} />
             {isConnected && <VideoControls />}
           </>
-        </VideoWrapper>
+        </Box>
       </div>
     ),
   );

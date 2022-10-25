@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { config, animated, useTransition } from 'react-spring';
+import { Box } from '../../../../components/Box';
 import { widgetPosition } from '../../../../enums';
 
 export const ProgressIndicatorWrapper = ({
@@ -34,9 +35,9 @@ export const ProgressIndicatorWrapper = ({
     (animatedStyles, item) =>
       item && (
         <animated.div style={animatedStyles} className={transformOriginClass}>
-          <div className="sm-relative sm-rounded-xl md:sm-rounded-3xl sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto sm-border-2 sm-border-solid sm-border-gray-lightest sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88">
+          <Box rounded className="sm-relative sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88">
             {children}
-          </div>
+          </Box>
         </animated.div>
       ),
   );
