@@ -28,6 +28,7 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       bottom: 20,
       pointerEvents: 'auto',
       position: 'fixed',
+      zIndex: 9999,
     },
     leave: {
       opacity: 0,
@@ -39,7 +40,6 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
   });
 
   const fullFrameClasses = classNames({
-    'sm-z-10': true,
     'sm-origin-bottom-left': floatingPosition === widgetPosition.BOTTOM_LEFT,
     'sm-origin-bottom-right': floatingPosition === widgetPosition.BOTTOM_RIGHT,
   });
