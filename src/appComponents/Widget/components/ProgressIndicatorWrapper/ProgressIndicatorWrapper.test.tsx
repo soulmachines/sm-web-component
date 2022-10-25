@@ -7,7 +7,7 @@ jest.mock('../../../../contexts/SoulMachinesContext/SoulMachinesContext');
 describe('<ProgressIndicatorWrapper />', () => {
   const customRender = (
     position: widgetPosition = widgetPosition.BOTTOM_LEFT,
-    transitionIn: boolean = true,
+    transitionIn = true,
   ) =>
     render(
       <ProgressIndicatorWrapper position={position} transitionIn={transitionIn}>
