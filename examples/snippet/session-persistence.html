@@ -4,17 +4,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SM Widget - Session Persistence</title>
-
-    <label for="textMessage">Text message</label>
-    <input type="text" name="textMessage" id="textMessage" />
-    <button id="sendMessage" type="submit">Send</button>
-
     <script
       src="widget-snippet.min.js"
       data-sm-greeting="Welcome"
       data-sm-profile-picture="https://assets.cdn.soulmachines.cloud/AvatarCoverImages/image-sam-l.jpg"
       data-sm-api-key="eyJzb3VsSWQiOiJkZG5hLXNvdWxfbWFjaGluZXMteXlibGVuZGVyIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfY2Q5NjgzOTEtY2E5MS00MDViLWFiYmEtMjJhZjU1MjJlOWUyIn0="
     ></script>
+  </head>
+  <body>
+    <label for="textMessage">Text message</label>
+    <input type="text" name="textMessage" id="textMessage" />
+    <button id="sendMessage" type="submit">Send</button>
 
     <script>
       const sendMessageButton = document.getElementById('sendMessage');
@@ -28,6 +28,5 @@
         false,
       );
     </script>
-  </head>
-  <body></body>
+  </body>
 </html>

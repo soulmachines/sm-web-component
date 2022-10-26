@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SM Widget</title>
 
-    <label for="textMessage">Text message</label>
-    <input type="text" name="textMessage" id="textMessage" />
-    <button id="sendMessage" type="submit">Send</button>
-
     <script
       src="widget-snippet.min.js"
       data-sm-greeting="Welcome"
       data-sm-profile-picture="https://assets.cdn.soulmachines.cloud/AvatarCoverImages/image-sam-l.jpg"
       data-sm-api-key="eyJzb3VsSWQiOiJkZG5hLXNvdWxfbWFjaGluZXMtd2VsY29tZW1zZyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzBiYTFhYmY4LWQ4MTgtNDc3Zi05N2Q2LTQ0MjhmMjU3ZDYwOCJ9"
     ></script>
+  </head>
+
+  <body>
+    <label for="textMessage">Text message</label>
+    <input type="text" name="textMessage" id="textMessage" />
+    <button id="sendMessage" type="submit">Send</button>
 
     <script>
       const sendMessageButton = document.getElementById('sendMessage');
@@ -28,6 +30,5 @@
         false,
       );
     </script>
-  </head>
-  <body></body>
+  </body>
 </html>
