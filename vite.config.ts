@@ -14,13 +14,21 @@ export default defineConfig(({ mode }) => {
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
   const version = env.VERSION || new Date().getTime();
+  let developmentPlugins = [];
+
+  if (mode === 'development') {
+    developmentPlugins = [
+      // Injects env into our example files
+      createHtmlPlugin({ template: path.resolve(__dirname, 'index.html') }),
+    ];
+  }
 
   return {
     esbuild: {
       // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
       logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
-    plugins: [preact(), createHtmlPlugin({ template: path.resolve(__dirname, 'index.html') })],
+    plugins: [preact(), ...developmentPlugins],
     server: {
       open: '/index.html',
       port: 3000,
@@ -28,6 +36,7 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: 5050,
     },
+
     build: {
       manifest: true,
       rollupOptions: {
@@ -35,6 +44,7 @@ export default defineConfig(({ mode }) => {
           'web-components': path.resolve(__dirname, 'src', 'web-components'),
         },
         output: {
+          format: 'iife', // UMD no styles but styles in iife
           entryFileNames: `[name]-${version}.js`,
           assetFileNames: `[name]-${version}.[ext]`,
         },

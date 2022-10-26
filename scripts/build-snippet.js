@@ -6,7 +6,9 @@ try {
   const version = process.env.VERSION || 'unknown';
   const { file, css } = manifest['src/web-components/index.ts'];
   let jsFileName = cdnUrl + file;
-  let cssFileNames = css.map((name) => cdnUrl + name).join(',');
+  // TODO: hardcode path
+  let cssFileNames = ['sm-web-components.css'].map((name) => cdnUrl + name).join(',');
+  // let cssFileNames = css.map((name) => cdnUrl + name).join(',');
 
   shell.exec(
     `npx plop widget-snippet --plopfile generators/index.js -- --javascriptFileName ${jsFileName} --cssFileNames ${cssFileNames} --version ${version}`,
