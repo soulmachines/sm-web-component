@@ -4,14 +4,12 @@ try {
   const manifest = require('../dist/manifest.json');
   const cdnUrl = process.env.CDN_ENDPOINT || '';
   const version = process.env.VERSION || 'unknown';
-  const { file, css } = manifest['src/web-components/index.ts'];
-  let jsFileName = cdnUrl + file;
-  // TODO: hardcode path
-  let cssFileNames = ['sm-web-components.css'].map((name) => cdnUrl + name).join(',');
-  // let cssFileNames = css.map((name) => cdnUrl + name).join(',');
+  const manifestItems = manifest['src/web-components/index.ts'];
+  let jsFileName = cdnUrl + manifestItems.file;
+  let cssFileName = cdnUrl + manifestItems['style.css'];
 
   shell.exec(
-    `npx plop widget-snippet --plopfile generators/index.js -- --javascriptFileName ${jsFileName} --cssFileNames ${cssFileNames} --version ${version}`,
+    `npx plop widget-snippet --plopfile generators/index.js -- --javascriptFileName ${jsFileName} --cssFileName ${cssFileName} --version ${version}`,
   );
 } catch (error) {
   console.error(`Something went wrong: ${error}`);

@@ -24,6 +24,11 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    define: {
+      // As of vite 3, process.env are kept in library mode
+      // Replaces process.env.NODE_ENV in the code with the current mode (eg: production or development)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    },
     esbuild: {
       // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
       logOverride: { 'this-is-undefined-in-esm': 'silent' },
@@ -36,17 +41,17 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: 5050,
     },
-
     build: {
       manifest: true,
+      lib: {
+        entry: path.resolve(__dirname, 'src/web-components'),
+        name: 'soulmachines-web-components',
+        formats: ['umd'],
+      },
       rollupOptions: {
-        input: {
-          'web-components': path.resolve(__dirname, 'src', 'web-components'),
-        },
         output: {
-          format: 'iife', // UMD no styles but styles in iife
-          entryFileNames: `[name]-${version}.js`,
-          assetFileNames: `[name]-${version}.[ext]`,
+          entryFileNames: `web-components.${version}.js`,
+          assetFileNames: `web-components.${version}.[ext]`,
         },
       },
     },
