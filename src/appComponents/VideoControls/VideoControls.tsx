@@ -32,11 +32,17 @@ export function VideoControls() {
       <div className="sm-flex sm-flex-col sm-gap-y-2">
         <div className="sm-flex sm-justify-between">
           <IconButton onClick={toggleVideoMuted} name={muteIcon} title={muteText} />
-          <IconButton onClick={disconnect} name="close" title="Close video" />
+          {layout === widgetLayout.FLOAT ? (
+            <IconButton onClick={disconnect} name="close" title="Close video" />
+          ) : (
+            <IconButton onClick={toggleLayout} name={layoutToggleIcon} title={layoutToggleTitle} />
+          )}
         </div>
-        <div className="sm-flex sm-self-end">
-          <IconButton onClick={toggleLayout} name={layoutToggleIcon} title={layoutToggleTitle} />
-        </div>
+        {layout === widgetLayout.FLOAT && (
+          <div className="sm-flex sm-self-end">
+            <IconButton onClick={toggleLayout} name={layoutToggleIcon} title={layoutToggleTitle} />
+          </div>
+        )}
       </div>
 
       <div className="sm-flex sm-flex-col sm-gap-y-2">
