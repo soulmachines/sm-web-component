@@ -52,7 +52,7 @@ function insertIntoHead(el) {
 
 (function () {
   const script = createJsScript('{{javascriptFileName}}');
-  const cssLink = createCSSLink({{ cssFileName }});
+  const cssLink = createCSSLink('{{ cssFileName }}');
   const config = {
     ...document.currentScript.dataset,
     ...window.smConfig
