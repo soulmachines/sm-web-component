@@ -6,17 +6,15 @@ import { IconButton } from '../IconButton';
 
 export type CardProps = {
   flush?: boolean;
-  children?: JSX.Element;
+  children?: JSX.Element | undefined;
   isDismissible?: boolean;
   style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 
-export function Card(
-  { children, isDismissible, style, flush }: CardProps = { isDismissible: true },
-) {
+export function Card({ children, isDismissible, style, flush }: CardProps) {
   const [isHidden, setIsHidden] = useState(false);
   const cardStyles = classNames({
-    'sm-bg-white sm-rounded-xl sm-w-full sm-shadow-lg sm-overflow-hidden': true,
+    'sm-round-shadow-box': true,
     'sm-p-6': !flush,
   });
   const transitions = useTransition(!isHidden, {

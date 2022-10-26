@@ -14,14 +14,14 @@ describe('<Widget />', () => {
 
   describe('positioning', () => {
     describe('rendering in the bottom right corner', () => {
-      it('renders a sm-right-0 class', () => {
+      it('renders a sm-items-end class', () => {
         const { container } = customRender();
-        expect(container.querySelector('.sm-right-0')).toBeInTheDocument();
+        expect(container.querySelector('.sm-items-end')).toBeInTheDocument();
       });
 
-      it('does not render a sm-left-0 class', () => {
+      it('does not render a sm-items-start class', () => {
         const { container } = customRender();
-        expect(container.querySelector('.sm-left-0')).not.toBeInTheDocument();
+        expect(container.querySelector('.sm-items-start')).not.toBeInTheDocument();
       });
 
       it('does not render a sm-flex-row-reverse class', () => {
@@ -31,9 +31,9 @@ describe('<Widget />', () => {
     });
 
     describe('rendering in the bottom left corner', () => {
-      it('renders a sm-left-0 class', () => {
+      it('renders a sm-items-start class', () => {
         const { container } = customRender({ position: widgetPosition.BOTTOM_LEFT });
-        expect(container.querySelector('.sm-left-0')).toBeInTheDocument();
+        expect(container.querySelector('.sm-items-start')).toBeInTheDocument();
       });
 
       it('does renders a sm-flex-row-reverse class', () => {
@@ -41,9 +41,9 @@ describe('<Widget />', () => {
         expect(container.querySelector('.sm-flex-row-reverse')).toBeInTheDocument();
       });
 
-      it('does not render a sm-right-0 class', () => {
+      it('does not render a sm-items-end class', () => {
         const { container } = customRender({ position: widgetPosition.BOTTOM_LEFT });
-        expect(container.querySelector('.sm-right-0')).not.toBeInTheDocument();
+        expect(container.querySelector('.sm-items-end')).not.toBeInTheDocument();
       });
     });
   });

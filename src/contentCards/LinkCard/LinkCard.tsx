@@ -40,7 +40,7 @@ export function LinkCard({ content, isExternal, style }: LinkCardProps) {
             <Text>{data.description}</Text>
           </div>
         )}
-        <div className="sm-bg-white sm-sticky sm-bottom-0 sm-w-full sm-pt-5 sm-border-solid sm-border-0 sm-border-t-2 sm-border-gray-50">
+        <div className="sm-bg-white sm-sticky sm-bottom-0 sm-w-full sm-pt-5 sm-border-solid sm-border-0 sm-border-t-2 sm-border-gray-lightest">
           <a className="sm-text-white sm-no-underline" href={data.url} {...conditionalAttributes}>
             <Button>View Page</Button>
           </a>

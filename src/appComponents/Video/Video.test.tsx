@@ -52,9 +52,9 @@ describe('<Video />', () => {
       });
     });
 
-    it('renders the default svg loading indicator', () => {
-      const { container } = customRender();
-      expect(container.querySelector('svg')).toBeInTheDocument();
+    it('renders no loader when not passed in', () => {
+      const { container } = render(<Video autoConnect={true} />);
+      expect(container.querySelector('svg')).not.toBeInTheDocument();
     });
 
     it('renders a custom loading indicator', () => {
@@ -126,5 +126,15 @@ describe('updateVideoBounds()', () => {
     window.devicePixelRatio = 2;
     updateVideoBounds(mockScene, mockMeasurements);
     expect(mockScene.sendVideoBounds).toHaveBeenCalledWith(223, 444);
+  });
+
+  it('does not call updateVideoBounds if a resize event occurs with a width of 0', () => {
+    updateVideoBounds(mockScene, { ...mockMeasurements, width: 0.2 });
+    expect(mockScene.sendVideoBounds).not.toHaveBeenCalled();
+  });
+
+  it('does not call updateVideoBounds if a resize event occurs with a height of 0', () => {
+    updateVideoBounds(mockScene, { ...mockMeasurements, height: 0 });
+    expect(mockScene.sendVideoBounds).not.toHaveBeenCalled();
   });
 });

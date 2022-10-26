@@ -1,15 +1,15 @@
 import { JSX } from 'preact';
-import { useSpring, animated, config } from 'react-spring';
+import classNames from 'classnames';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Video } from '../Video';
-import { VideoControls } from '../VideoControls';
 import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
 import { Notifications } from '../../components/Notifications';
 import { ProfileImage } from '../ProfileImage';
-import { LoadingIndicator as DefaultLoadingIndicator } from '../../components/LoadingIndicator';
-import classNames from 'classnames';
 import { ContentCards } from '../ContentCards';
 import { useEffect } from 'preact/hooks';
+import { ConnectButton } from './components/ConnectButton';
+import { ProgressIndicator } from './components/ProgressIndicator';
+import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
+import { VideoPlayer } from './components/VideoPlayer';
 
 export type WidgetProps = {
   greeting?: string;
@@ -25,15 +25,20 @@ export function Widget({
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
   const { connectionStatus, connectionState, connect, layout } = useSoulMachines();
+  const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
 
-  const wrapperPositionClass = classNames({
-    'sm-right-0': position === widgetPosition.BOTTOM_RIGHT,
-    'sm-left-0': position === widgetPosition.BOTTOM_LEFT,
+  const layoutStyles = classNames({
+    'sm-h-full sm-flex sm-flex-col sm-justify-end': true,
+    'sm-gap-y-2 md:sm-gap-y-5': layout === widgetLayout.FLOAT,
+    'sm-items-end': position === widgetPosition.BOTTOM_RIGHT,
+    'sm-items-start': position === widgetPosition.BOTTOM_LEFT,
   });
-  const notificationVideoOrderClass = classNames({
+
+  const notificationsVideoWrapperStyles = classNames({
+    'sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5': true,
     'sm-flex-row-reverse': position === widgetPosition.BOTTOM_LEFT,
   });
 
@@ -44,80 +49,38 @@ export function Widget({
     }
   }, [connect, isDisconnected]);
 
-  // Pass through a wrapped loader with some custom styles
-  const LoadingIndicator = () => (
-    <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-base">
-      {loadingIndicator ? (
-        loadingIndicator
-      ) : (
-        <DefaultLoadingIndicator
-          stepName={connectionState.name}
-          totalSteps={connectionState.totalSteps}
-          percentageLoaded={connectionState.percentageLoaded}
-        />
-      )}
-    </div>
-  );
-
-  const scaleAnimation = useSpring({
-    transform: isConnectingOrConnected ? 'scale(2)' : 'scale(1)',
-    config: config.stiff,
-  });
-
-  // Scales down the above animation back to 1, the normal size
-  const scaledDownClass = classNames({
-    'sm-scale-50 sm-origin-bottom-right': isConnectingOrConnected,
-  });
-
-  if (layout === widgetLayout.FULL_FRAME) {
-    //add full frame code here
-  }
-
   return (
-    <div
-      className={`sm-fixed sm-bottom-0 sm-p-2 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full md:sm-p-5 ${wrapperPositionClass}`}
-    >
-      <div className="sm-flex sm-flex-col sm-gap-y-2 sm-h-full sm-justify-end md:sm-gap-y-5">
+    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full sm-p-5">
+      <div className={layoutStyles}>
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
           <ContentCards />
         </div>
 
-        <div
-          className={`sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5 ${notificationVideoOrderClass}`}
-        >
-          {!isConnectingOrConnected && (
-            <div className="sm-max-w-xs sm-z-10">
-              <Notifications greeting={greeting} />
-            </div>
-          )}
-
-          <div className={scaledDownClass}>
-            <animated.div
-              style={scaleAnimation}
-              className="sm-rounded-xl sm-origin-bottom-right sm-shadow-lg sm-bg-white sm-pointer-events-auto md:sm-rounded-3xl"
-            >
-              {isDisconnected && (
-                <button
-                  onClick={connect}
-                  data-sm-cy="connectButton"
-                  className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35 sm-flex sm-justify-center sm-items-center sm-rounded-inherit sm-text-primary-base sm-border-none sm-ring sm-ring-transparent sm-bg-transparent hover:sm-ring-secondary-base sm-transition-colors sm-overflow-hidden"
-                >
-                  <ProfileImage src={profilePicture} />
-                </button>
-              )}
-
-              <div
-                className={classNames({
-                  'sm-relative sm-rounded-inherit sm-overflow-hidden sm-transform-gpu': true,
-                  'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-border-2 sm-border-solid sm-border-gray-lightest':
-                    isConnectingOrConnected,
-                })}
-              >
-                <Video autoConnect={false} loadingIndicator={<LoadingIndicator />} />
-                {isConnected && <VideoControls />}
+        <div className={notificationsVideoWrapperStyles}>
+          <>
+            {!isConnectingOrConnected && (
+              <div className="sm-max-w-xs sm-z-10">
+                <Notifications greeting={greeting} />
               </div>
-            </animated.div>
-          </div>
+            )}
+
+            {isDisconnected && (
+              <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35">
+                <ConnectButton>
+                  <ProfileImage src={profilePicture} />
+                </ConnectButton>
+              </div>
+            )}
+
+            <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
+              <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
+            </ProgressIndicatorWrapper>
+
+            <VideoPlayer
+              floatingPosition={position}
+              renderInFullFrame={isConnected && layout === widgetLayout.FULL_FRAME}
+            />
+          </>
         </div>
       </div>
     </div>

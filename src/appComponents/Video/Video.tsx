@@ -4,7 +4,6 @@ import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
 import debounce from 'lodash/debounce';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Spinner } from '../../components/Spinner';
 import { ConnectionStatus } from '../../enums';
 import { Scene } from '@soulmachines/smwebsdk';
 import classNames from 'classnames';
@@ -17,6 +16,12 @@ type Props = {
 export const updateVideoBounds = (scene: Scene, size: { width: number; height: number }) => {
   const width = Math.round(size.width * devicePixelRatio);
   const height = Math.round(size.height * devicePixelRatio);
+
+  // Don't request a video stream if value is 0
+  // A resize event can be triggered when animating videos in/out
+  if (width === 0 || height === 0) {
+    return;
+  }
 
   scene.sendVideoBounds(width, height);
 };
@@ -62,6 +67,8 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     'sm-hidden': !isConnected,
   });
 
+  const showLoader = isConnecting && loadingIndicator;
+
   useEffect(() => {
     if (autoConnect) {
       connect();
@@ -85,7 +92,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
 
   return (
     <div className={videoWrapperClass}>
-      {isConnecting && (loadingIndicator || <Spinner />)}
+      {showLoader && loadingIndicator}
 
       <animated.video
         style={videoAnimation}
