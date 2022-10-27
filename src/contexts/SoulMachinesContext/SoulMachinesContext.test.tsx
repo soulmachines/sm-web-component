@@ -32,10 +32,11 @@ describe('<SoulMachinesProvider />', () => {
   const mockPersona = new Persona(mockScene, 1);
   const apiKey = 'mock api key';
   const tokenServer = 'mock token server';
+  const initialLayout = widgetLayout.FULL_FRAME;
 
   const customRender = () =>
     render(
-      <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+      <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={initialLayout}>
         <p>mock child</p>
       </SoulMachinesProvider>,
     );
@@ -62,6 +63,11 @@ describe('<SoulMachinesProvider />', () => {
       canAutoPlayAudio: mockCanAutoPlayAudio,
       videoRef: mockVideoRef,
     });
+  });
+
+  it('calls useToggleLayout with initialLayout', () => {
+    customRender();
+    expect(useToggleLayout).toHaveBeenCalledWith(initialLayout);
   });
 
   describe('creating a scene', () => {
@@ -203,7 +209,6 @@ describe('<SoulMachinesProvider />', () => {
         </SoulMachinesProvider>,
       );
       await fireEvent.click(getByText('Trigger disconnect'));
-      expect(useToggleLayout).toHaveBeenCalledWith(initialLayout);
       expect(mockSetLayout).toHaveBeenCalledWith(initialLayout);
     });
   });

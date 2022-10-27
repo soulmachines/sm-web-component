@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/preact';
+import { renderHook } from '@testing-library/react-hooks';
 import { widgetLayout } from '../../enums';
 import { useToggleLayout } from './useToggleLayout';
 
@@ -18,16 +18,18 @@ describe('useToggleLayout', () => {
 
   describe('when toggleLayout fires', () => {
     it('updates layout to FULL_FRAME if previous layout is FLOAT', async () => {
-      const { result } = customRender();
+      const { result, waitForNextUpdate } = customRender();
       expect(result.current.layout).toEqual(widgetLayout.FLOAT);
       await result.current.toggleLayout();
+      await waitForNextUpdate();
       expect(result.current.layout).toEqual(widgetLayout.FULL_FRAME);
     });
 
     it('updates layout to FLOAT if previous layout is FULL_FRAME', async () => {
-      const { result } = customRender(widgetLayout.FULL_FRAME);
+      const { result, waitForNextUpdate } = customRender(widgetLayout.FULL_FRAME);
       expect(result.current.layout).toEqual(widgetLayout.FULL_FRAME);
       await result.current.toggleLayout();
+      await waitForNextUpdate();
       expect(result.current.layout).toEqual(widgetLayout.FLOAT);
     });
   });
