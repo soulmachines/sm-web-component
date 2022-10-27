@@ -4,29 +4,39 @@ import { SoulMachinesProvider, useSoulMachines } from '.';
 import { widgetLayout } from '../../enums';
 import { useConnection } from '../../hooks/useConnection';
 import { useSMMedia } from '../../hooks/useSMMedia';
+import { useToggleLayout } from '../../hooks/useToggleLayout';
 
 const mockCanAutoPlayAudio = true;
 const mockVideoRef = { current: 'mock' };
 const mockConnect = jest.fn();
+const mockDisconnect = jest.fn();
+const mockSetLayout = jest.fn();
 
 jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({
     connect: mockConnect,
+    disconnect: mockDisconnect,
     canAutoPlayAudio: mockCanAutoPlayAudio,
     videoRef: mockVideoRef,
   })),
 }));
 jest.mock('../../hooks/useSMMedia');
+jest.mock('../../hooks/useToggleLayout', () => ({
+  useToggleLayout: jest.fn(() => ({
+    setLayout: mockSetLayout,
+  })),
+}));
 
 describe('<SoulMachinesProvider />', () => {
   const mockScene = new Scene({});
   const mockPersona = new Persona(mockScene, 1);
   const apiKey = 'mock api key';
   const tokenServer = 'mock token server';
+  const initialLayout = widgetLayout.FULL_FRAME;
 
   const customRender = () =>
     render(
-      <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
+      <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={initialLayout}>
         <p>mock child</p>
       </SoulMachinesProvider>,
     );
@@ -53,6 +63,11 @@ describe('<SoulMachinesProvider />', () => {
       canAutoPlayAudio: mockCanAutoPlayAudio,
       videoRef: mockVideoRef,
     });
+  });
+
+  it('calls useToggleLayout with initialLayout', () => {
+    customRender();
+    expect(useToggleLayout).toHaveBeenCalledWith(initialLayout);
   });
 
   describe('creating a scene', () => {
@@ -161,53 +176,40 @@ describe('<SoulMachinesProvider />', () => {
     });
   });
 
-  describe('toggleLayout', () => {
+  describe('when disconnect is called', () => {
     const TestComponent = () => {
-      const { layout, toggleLayout } = useSoulMachines();
-
-      return (
-        <button onClick={() => toggleLayout()} name={layout}>
-          Trigger toggle layout
-        </button>
-      );
+      const { disconnect } = useSoulMachines();
+      return <button onClick={() => disconnect()}>Trigger disconnect</button>;
     };
 
-    it('defaults to FLOAT layout if not defined', async () => {
-      const { getByText } = render(
-        <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer}>
-          <TestComponent />
-        </SoulMachinesProvider>,
-      );
+    const initialLayout = widgetLayout.FULL_FRAME;
 
-      const element = getByText('Trigger toggle layout');
-      expect(element.getAttribute('name')).toEqual(widgetLayout.FLOAT);
-
-      await fireEvent.click(element);
-      expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
-
-      await fireEvent.click(element);
-      expect(element.getAttribute('name')).toEqual(widgetLayout.FLOAT);
-    });
-
-    it('toggles between FLOAT and FULL_FRAME when toggleLayout is called', async () => {
+    it('calls disconnect in useConnection', async () => {
       const { getByText } = render(
         <SoulMachinesProvider
           apiKey={apiKey}
           tokenServer={tokenServer}
-          initialLayout={widgetLayout.FULL_FRAME}
+          initialLayout={initialLayout}
         >
           <TestComponent />
         </SoulMachinesProvider>,
       );
+      await fireEvent.click(getByText('Trigger disconnect'));
+      expect(mockDisconnect).toHaveBeenCalledTimes(1);
+    });
 
-      const element = getByText('Trigger toggle layout');
-      expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
-
-      await fireEvent.click(element);
-      expect(element.getAttribute('name')).toEqual(widgetLayout.FLOAT);
-
-      await fireEvent.click(element);
-      expect(element.getAttribute('name')).toEqual(widgetLayout.FULL_FRAME);
+    it('calls setLayout with the initial layout', async () => {
+      const { getByText } = render(
+        <SoulMachinesProvider
+          apiKey={apiKey}
+          tokenServer={tokenServer}
+          initialLayout={initialLayout}
+        >
+          <TestComponent />
+        </SoulMachinesProvider>,
+      );
+      await fireEvent.click(getByText('Trigger disconnect'));
+      expect(mockSetLayout).toHaveBeenCalledWith(initialLayout);
     });
   });
 });
