@@ -14,13 +14,26 @@ export default defineConfig(({ mode }) => {
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
   const version = env.VERSION || new Date().getTime();
+  let developmentPlugins = [];
+
+  if (mode === 'development') {
+    developmentPlugins = [
+      // Injects env into our example files
+      createHtmlPlugin({ template: path.resolve(__dirname, 'index.html') }),
+    ];
+  }
 
   return {
+    define: {
+      // As of vite 3, process.env are kept in library mode
+      // Replaces process.env.NODE_ENV in the code with the current mode (eg: production or development)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    },
     esbuild: {
       // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
       logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
-    plugins: [preact(), createHtmlPlugin({ template: path.resolve(__dirname, 'index.html') })],
+    plugins: [preact(), ...developmentPlugins],
     server: {
       open: '/index.html',
       port: 3000,
@@ -30,13 +43,15 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       manifest: true,
+      lib: {
+        entry: path.resolve(__dirname, 'src/web-components'),
+        name: 'soulmachines-web-components',
+        formats: ['umd'],
+      },
       rollupOptions: {
-        input: {
-          'web-components': path.resolve(__dirname, 'src', 'web-components'),
-        },
         output: {
-          entryFileNames: `[name]-${version}.js`,
-          assetFileNames: `[name]-${version}.[ext]`,
+          entryFileNames: `web-components.${version}.js`,
+          assetFileNames: `web-components.${version}.[ext]`,
         },
       },
     },

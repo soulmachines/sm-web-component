@@ -8,9 +8,9 @@ module.exports = {
     },
     {
       type: 'input',
-      name: 'cssFileNames',
+      name: 'cssFileName',
       message: 'Enter the built css filename',
-      default: [],
+      default: '',
     },
     {
       type: 'input',

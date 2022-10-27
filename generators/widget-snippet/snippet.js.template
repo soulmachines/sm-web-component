@@ -51,9 +51,8 @@ function insertIntoHead(el) {
 }
 
 (function () {
-  const cssFileNames = '{{ cssFileNames }}'.split(',');
   const script = createJsScript('{{javascriptFileName}}');
-  const cssLinks = cssFileNames.map((fileName) => createCSSLink(fileName));
+  const cssLink = createCSSLink('{{ cssFileName }}');
   const config = {
     ...document.currentScript.dataset,
     ...window.smConfig
@@ -65,7 +64,7 @@ function insertIntoHead(el) {
   };
 
   window.addEventListener('DOMContentLoaded', () => {
-    cssLinks.forEach((link) => insertIntoHead(link));
+    insertIntoHead(cssLink)
     insertIntoHead(script);
   });
 })();

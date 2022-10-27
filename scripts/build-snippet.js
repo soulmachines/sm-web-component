@@ -4,12 +4,13 @@ try {
   const manifest = require('../dist/manifest.json');
   const cdnUrl = process.env.CDN_ENDPOINT || '';
   const version = process.env.VERSION || 'unknown';
-  const { file, css } = manifest['src/web-components/index.ts'];
-  let jsFileName = cdnUrl + file;
-  let cssFileNames = css.map((name) => cdnUrl + name).join(',');
+  const jsManifest = manifest['src/web-components/index.ts'];
+  const styleManifest = manifest['style.css'];
+  let jsFileName = cdnUrl + jsManifest.file;
+  let cssFileName = cdnUrl + styleManifest.file;
 
   shell.exec(
-    `npx plop widget-snippet --plopfile generators/index.js -- --javascriptFileName ${jsFileName} --cssFileNames ${cssFileNames} --version ${version}`,
+    `npx plop widget-snippet --plopfile generators/index.js -- --javascriptFileName ${jsFileName} --cssFileName ${cssFileName} --version ${version}`,
   );
 } catch (error) {
   console.error(`Something went wrong: ${error}`);
