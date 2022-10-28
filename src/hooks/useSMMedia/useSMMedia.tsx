@@ -69,9 +69,12 @@ function useSMMedia({
   useEffect(() => {
     if (isConnected) {
       // Check if user mute the audio in previous page
-      const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
-
-      setVideoMuted({ mute: !canAutoPlayAudio || userMutedAudio, saveSetting: false });
+      const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted);
+      // Only run if a value was previously stored
+      if (userMutedAudio) {
+        const muteAudio = userMutedAudio === 'true';
+        setVideoMuted({ mute: !canAutoPlayAudio || muteAudio, saveSetting: false });
+      }
     }
   }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
