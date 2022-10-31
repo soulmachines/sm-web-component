@@ -25,6 +25,10 @@ function configureSMWidget(config) {
     el.setAttribute('position', config.smPosition);
   }
 
+  if (config.smLayout) {
+    el.setAttribute('layout', config.smLayout);
+  }
+
   document.body.appendChild(el);
 }
 
