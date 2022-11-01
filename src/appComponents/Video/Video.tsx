@@ -42,14 +42,20 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   });
 
   useEffect(() => {
-    isConnected && playVideo();
-  }, [isConnected]);
+    if (!videoRef.current || !isConnected) {
+      return;
+    }
+
+    playVideo();
+  }, [videoRef.current, isConnected]);
 
   const onVisibilityChange = useCallback(() => {
     if (videoRef.current) {
       if (document.visibilityState !== 'visible') {
         videoRef.current.pause();
       } else {
+        //  TODO: Should we use new play function here?
+        // Shouldnt assume play will work on return
         videoRef.current.play();
       }
     }

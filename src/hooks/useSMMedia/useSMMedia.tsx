@@ -74,13 +74,16 @@ function useSMMedia({
   //   }
   // }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
-  const playVideo = () => {
+  const playVideo = useCallback(() => {
+    console.log('play');
     const videoStream = scene.videoElement?.srcObject;
 
     if (videoRef.current && videoStream) {
       // Make sure we are testing with auto unmuted
       videoRef.current.muted = false;
+
       videoRef.current.srcObject = videoStream;
+
       videoRef.current
         .play()
         .then((_) => {
@@ -107,7 +110,7 @@ function useSMMedia({
           setVideoMuted({ mute: true, saveSetting: false });
         });
     }
-  };
+  }, [videoRef.current, setVideoMuted]);
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.

@@ -26,7 +26,6 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       top: 20,
       bottom: 20,
       pointerEvents: 'auto',
-      position: 'fixed',
       zIndex: 9999,
     },
     leave: {
@@ -35,35 +34,33 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       // Turn off pointer events so content is clickable thats under the faded out video
       pointerEvents: 'none',
     },
+    expires: false,
     config: config.gentle,
   });
 
   const fullFrameClasses = classNames({
+    'sm-hidden': !isConnected,
     'sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest': true,
     'sm-origin-bottom-left': floatingPosition === widgetPosition.BOTTOM_LEFT,
     'sm-origin-bottom-right': floatingPosition === widgetPosition.BOTTOM_RIGHT,
   });
 
-  return fullFrameTransition((animatedStyles, item) =>
-    item ? (
-      <animated.div style={animatedStyles} className={fullFrameClasses}>
-        <>
-          <Video autoConnect={false} />
-          <VideoControls />
-        </>
-      </animated.div>
-    ) : (
-      <div
-        className={classNames({
-          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest':
-            true,
-          // Hide until video loaded, to avoid taking up space
-          'sm-hidden': !isConnected,
-        })}
-      >
+  return fullFrameTransition((animatedStyles, item) => (
+    // item ? (
+    <animated.div
+      style={animatedStyles}
+      className={`${fullFrameClasses}
+
+        ${item && 'sm-fixed sm-z-10'}
+        ${
+          !item &&
+          'sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest'
+        }`}
+    >
+      <>
         <Video autoConnect={false} />
-        {isConnected && <VideoControls />}
-      </div>
-    ),
-  );
+        <VideoControls />
+      </>
+    </animated.div>
+  ));
 };
