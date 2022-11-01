@@ -151,7 +151,7 @@ describe('<VideoControls />', () => {
     });
   });
 
-  describe('when layout is float layout', () => {
+  describe.skip('when layout is float layout', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
@@ -178,7 +178,7 @@ describe('<VideoControls />', () => {
     });
   });
 
-  describe('when layout is fullFrame layout', () => {
+  describe.skip('when layout is fullFrame layout', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
