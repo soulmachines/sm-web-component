@@ -66,14 +66,51 @@ function useSMMedia({
 
   // On connection we'll check to see if we can autoplay the video with sound
   // This will update when we determine if its possible
-  useEffect(() => {
-    if (isConnected) {
-      // Check if user mute the audio in previous page
-      const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
+  // useEffect(() => {
+  //   if (isConnected) {
+  //     // Check if user mute the audio in previous page
+  //     // const userMutedAudio = sessionStorage.getItem(SessionDataKeys.videoMuted) === 'true';
+  //     // setVideoMuted({ mute: !canAutoPlayAudio || userMutedAudio, saveSetting: false });
+  //   }
+  // }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
-      setVideoMuted({ mute: !canAutoPlayAudio || userMutedAudio, saveSetting: false });
+  const playVideo = useCallback(() => {
+    console.log('play');
+    const videoStream = scene.videoElement?.srcObject;
+
+    if (videoRef.current && videoStream) {
+      // Make sure we are testing with auto unmuted
+      videoRef.current.muted = false;
+
+      videoRef.current.srcObject = videoStream;
+
+      videoRef.current
+        .play()
+        .then((_) => {
+          // Video playback started ;)
+          console.log('Video playback started');
+          // TODO: check if stored value present and use it instead
+          const userSavedMuteState = sessionStorage.getItem(SessionDataKeys.videoMuted);
+
+          // If stored use setting
+          if (userSavedMuteState) {
+            console.log(
+              'Video playback started with users saved setting: ',
+              userSavedMuteState === 'true',
+            );
+            setVideoMuted({ mute: userSavedMuteState === 'true', saveSetting: false });
+            // Otherwise play with sound
+          } else {
+            setVideoMuted({ mute: false, saveSetting: false });
+          }
+        })
+        .catch((e) => {
+          // Video playback failed ;(
+          console.log('Video playback failed ', e);
+          setVideoMuted({ mute: true, saveSetting: false });
+        });
     }
-  }, [canAutoPlayAudio, setVideoMuted, isConnected]);
+  }, [videoRef.current, setVideoMuted]);
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
@@ -115,6 +152,7 @@ function useSMMedia({
     toggleMicrophone,
     toggleCamera,
     toggleVideoMuted,
+    playVideo,
   };
 }
 

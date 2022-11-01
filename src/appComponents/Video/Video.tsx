@@ -2,7 +2,7 @@ import { JSX } from 'preact';
 import { useCallback, useEffect, useMemo } from 'preact/hooks';
 import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 import { Scene } from '@soulmachines/smwebsdk';
@@ -27,25 +27,35 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
 };
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
-  const { videoRef, scene, connectionStatus, isVideoMuted, connect } = useSoulMachines();
-  const videoStream = scene.videoElement?.srcObject;
+  const { videoRef, scene, connectionStatus, isVideoMuted, connect, playVideo } = useSoulMachines();
+  // const videoStream = scene.videoElement?.srcObject;
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const { observe } = useDimensions<HTMLVideoElement>({
     onResize: useMemo(
       () =>
-        debounce(({ width, height }) => {
+        throttle(({ width, height }) => {
           updateVideoBounds(scene, { width, height });
-        }, 500),
+        }, 250),
       [scene],
     ),
   });
+
+  useEffect(() => {
+    if (!videoRef.current || !isConnected) {
+      return;
+    }
+
+    playVideo();
+  }, [videoRef.current, isConnected]);
 
   const onVisibilityChange = useCallback(() => {
     if (videoRef.current) {
       if (document.visibilityState !== 'visible') {
         videoRef.current.pause();
       } else {
+        //  TODO: Should we use new play function here?
+        // Shouldnt assume play will work on return
         videoRef.current.play();
       }
     }
@@ -75,11 +85,21 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     }
   }, [connect, autoConnect]);
 
-  useEffect(() => {
-    if (videoRef.current && videoStream) {
-      videoRef.current.srcObject = videoStream;
-    }
-  }, [videoRef, videoStream]);
+  // useEffect(() => {
+  //   if (videoRef.current && videoStream) {
+  //     videoRef.current.srcObject = videoStream;
+  //     videoRef.current
+  //       .play()
+  //       .then((_) => {
+  //         // Video playback started ;)
+  //         console.log('Video playback started');
+  //       })
+  //       .catch((e) => {
+  //         // Video playback failed ;(
+  //         console.log('Video playback failed ', e);
+  //       });
+  //   }
+  // }, [videoRef, videoStream]);
 
   useEffect(() => {
     if (isConnected) {

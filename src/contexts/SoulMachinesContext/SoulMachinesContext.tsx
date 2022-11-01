@@ -33,6 +33,7 @@ type Context = {
   enableDebugLogging: (enabled: boolean) => void;
   layout: widgetLayout;
   toggleLayout: () => void;
+  playVideo: () => void;
 };
 
 // Create context with default values
