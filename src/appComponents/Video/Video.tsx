@@ -27,7 +27,7 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
 };
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
-  const { videoRef, scene, connectionStatus, isVideoMuted, connect } = useSoulMachines();
+  const { videoRef, scene, connectionStatus, isVideoMuted, connect, playVideo } = useSoulMachines();
   // const videoStream = scene.videoElement?.srcObject;
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
@@ -40,6 +40,10 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       [scene],
     ),
   });
+
+  useEffect(() => {
+    isConnected && playVideo();
+  }, [isConnected]);
 
   const onVisibilityChange = useCallback(() => {
     if (videoRef.current) {

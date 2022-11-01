@@ -74,7 +74,7 @@ function useSMMedia({
   //   }
   // }, [canAutoPlayAudio, setVideoMuted, isConnected]);
 
-  useEffect(() => {
+  const playVideo = () => {
     const videoStream = scene.videoElement?.srcObject;
 
     if (videoRef.current && videoStream) {
@@ -107,7 +107,7 @@ function useSMMedia({
           setVideoMuted({ mute: true, saveSetting: false });
         });
     }
-  }, [videoRef, scene.videoElement?.srcObject]);
+  };
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
@@ -149,6 +149,7 @@ function useSMMedia({
     toggleMicrophone,
     toggleCamera,
     toggleVideoMuted,
+    playVideo,
   };
 }
 
