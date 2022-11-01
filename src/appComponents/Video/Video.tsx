@@ -28,7 +28,7 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
   const { videoRef, scene, connectionStatus, isVideoMuted, connect } = useSoulMachines();
-  const videoStream = scene.videoElement?.srcObject;
+  // const videoStream = scene.videoElement?.srcObject;
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const { observe } = useDimensions<HTMLVideoElement>({
@@ -75,11 +75,21 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     }
   }, [connect, autoConnect]);
 
-  useEffect(() => {
-    if (videoRef.current && videoStream) {
-      videoRef.current.srcObject = videoStream;
-    }
-  }, [videoRef, videoStream]);
+  // useEffect(() => {
+  //   if (videoRef.current && videoStream) {
+  //     videoRef.current.srcObject = videoStream;
+  //     videoRef.current
+  //       .play()
+  //       .then((_) => {
+  //         // Video playback started ;)
+  //         console.log('Video playback started');
+  //       })
+  //       .catch((e) => {
+  //         // Video playback failed ;(
+  //         console.log('Video playback failed ', e);
+  //       });
+  //   }
+  // }, [videoRef, videoStream]);
 
   useEffect(() => {
     if (isConnected) {
