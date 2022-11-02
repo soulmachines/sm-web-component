@@ -56,7 +56,7 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       <animated.div style={videoContainerAnimation} className={videoContainerClasses}>
         <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
           <Video autoConnect={false} />
-          <VideoControls />
+          {isConnected && <VideoControls />}
         </div>
       </animated.div>
     </div>
