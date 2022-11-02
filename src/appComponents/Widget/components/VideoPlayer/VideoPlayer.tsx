@@ -37,7 +37,7 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       floatingPosition === widgetPosition.BOTTOM_LEFT && !renderInFullFrame,
     'sm-origin-bottom-right sm-right-5':
       floatingPosition === widgetPosition.BOTTOM_RIGHT && !renderInFullFrame,
-    'sm-origin-bottom-right sm-left-0':
+    'sm-origin-bottom-left sm-left-0':
       floatingPosition === widgetPosition.BOTTOM_LEFT && renderInFullFrame,
     'sm-origin-bottom-right sm-right-0':
       floatingPosition === widgetPosition.BOTTOM_RIGHT && renderInFullFrame,
