@@ -36,6 +36,11 @@ describe('<Video />', () => {
       expect(container.querySelector('video')).toBeInTheDocument();
     });
 
+    it('does not call playVideo', () => {
+      customRender();
+      expect(SoulMachinesContext.useSoulMachines().playVideo).not.toHaveBeenCalled();
+    });
+
     it('calls useResizeObserver with a onResize function', () => {
       customRender();
       expect(useDimensions).toHaveBeenCalledWith({
@@ -68,6 +73,11 @@ describe('<Video />', () => {
       const { container } = customRender();
       expect(container.querySelector('video')).toBeInTheDocument();
     });
+
+    it('does not call playVideo', () => {
+      customRender();
+      expect(SoulMachinesContext.useSoulMachines().playVideo).not.toHaveBeenCalled();
+    });
   });
 
   describe('when it is connected', () => {
@@ -78,10 +88,9 @@ describe('<Video />', () => {
       });
     });
 
-    it('sets the video srcObject to be the srcObject from scene.video', () => {
-      const { container } = customRender();
-      const video = container.querySelector('video');
-      expect(video?.srcObject).toEqual('mock video src');
+    it('calls playVideo', () => {
+      customRender();
+      expect(SoulMachinesContext.useSoulMachines().playVideo).toHaveBeenCalledTimes(1);
     });
 
     it('renders a video', () => {
@@ -94,7 +103,7 @@ describe('<Video />', () => {
       expect(container.querySelector('svg')).not.toBeInTheDocument();
     });
 
-    it('sets video muted to true whenn isVideoMuted is true', () => {
+    it('sets video muted to true when isVideoMuted is true', () => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
         isVideoMuted: true,

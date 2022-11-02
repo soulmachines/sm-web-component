@@ -43,11 +43,9 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   });
 
   useEffect(() => {
-    if (!videoRef.current || !isConnected) {
-      return;
+    if (videoRef.current && isConnected) {
+      playVideo();
     }
-
-    playVideo();
   }, [videoRef.current, isConnected]);
 
   const onVisibilityChange = useCallback(() => {
