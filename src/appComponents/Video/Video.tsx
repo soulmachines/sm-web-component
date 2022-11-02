@@ -28,12 +28,13 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
   const { videoRef, scene, connectionStatus, isVideoMuted, connect, playVideo } = useSoulMachines();
-  // const videoStream = scene.videoElement?.srcObject;
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const { observe } = useDimensions<HTMLVideoElement>({
     onResize: useMemo(
       () =>
+        // Throttle works better than debounce when transitioning from floating to fullframe layout
+        // less glitching/blury video
         throttle(({ width, height }) => {
           updateVideoBounds(scene, { width, height });
         }, 250),
@@ -84,22 +85,6 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       connect();
     }
   }, [connect, autoConnect]);
-
-  // useEffect(() => {
-  //   if (videoRef.current && videoStream) {
-  //     videoRef.current.srcObject = videoStream;
-  //     videoRef.current
-  //       .play()
-  //       .then((_) => {
-  //         // Video playback started ;)
-  //         console.log('Video playback started');
-  //       })
-  //       .catch((e) => {
-  //         // Video playback failed ;(
-  //         console.log('Video playback failed ', e);
-  //       });
-  //   }
-  // }, [videoRef, videoStream]);
 
   useEffect(() => {
     if (isConnected) {
