@@ -1,4 +1,4 @@
-import { config, useTransition, useSpring, animated } from 'react-spring';
+import { config, useSpring, animated } from 'react-spring';
 import { ConnectionStatus, widgetPosition } from '../../../../enums';
 import classNames from 'classnames';
 import { Video } from '../../../Video';
@@ -25,13 +25,14 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       width: renderInFullFrame ? '100%' : '0%',
       height: renderInFullFrame ? '100%' : '0%',
     },
-    config: config.slow,
+    config: config.gentle,
   });
 
   const videoContainerClasses = classNames({
-    'sm-fixed': true,
+    'sm-fixed sm-transition-all': true,
     'sm-bottom-0 sm-p-5': renderInFullFrame,
     'sm-min-w-63 sm-min-h-40 md:sm-min-h-54 md:sm-min-w-88 sm-bottom-5': !renderInFullFrame,
+    // TODO: make styles less gross
     'sm-origin-bottom-left sm-left-5':
       floatingPosition === widgetPosition.BOTTOM_LEFT && !renderInFullFrame,
     'sm-origin-bottom-right sm-right-5':
