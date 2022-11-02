@@ -16,9 +16,11 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
 
   const videoContainerAnimation = useSpring({
     from: {
-      opacity: 0.5,
+      opacity: 0,
+      transform: 'scale(0.6)',
     },
     to: {
+      transform: 'scale(1)',
       opacity: 1,
       // Animate from 0 to 100%
       // There is min width/height on the video which gives the floating widget the correct dimensions
@@ -26,21 +28,24 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       height: renderInFullFrame ? '100%' : '0%',
     },
     config: config.gentle,
+    // config: { duration: 2500 },
   });
 
   const videoContainerClasses = classNames({
-    'sm-fixed sm-transition-all': true,
-    'sm-bottom-0 sm-p-5': renderInFullFrame,
-    'sm-min-w-63 sm-min-h-40 md:sm-min-h-54 md:sm-min-w-88 sm-bottom-5': !renderInFullFrame,
+    'sm-fixed sm-transition-all sm-min-w-63 sm-min-h-40 md:sm-min-h-54 md:sm-min-w-88 sm-bottom-0':
+      true,
+    // 'sm-bottom-0 sm-p-5': renderInFullFrame,
+    // 'sm-bottom-5': !renderInFullFrame,
     // TODO: make styles less gross
     'sm-origin-bottom-left sm-left-5':
       floatingPosition === widgetPosition.BOTTOM_LEFT && !renderInFullFrame,
-    'sm-origin-bottom-right sm-right-5':
-      floatingPosition === widgetPosition.BOTTOM_RIGHT && !renderInFullFrame,
+    // 'sm-origin-bottom-right sm-right-5':
+    //   floatingPosition === widgetPosition.BOTTOM_RIGHT && !renderInFullFrame,
     'sm-origin-bottom-left sm-left-0':
       floatingPosition === widgetPosition.BOTTOM_LEFT && renderInFullFrame,
-    'sm-origin-bottom-right sm-right-0':
-      floatingPosition === widgetPosition.BOTTOM_RIGHT && renderInFullFrame,
+    // 'sm-origin-bottom-right sm-right-0':
+    //   floatingPosition === widgetPosition.BOTTOM_RIGHT && renderInFullFrame,
+    'sm-origin-bottom-right sm-right-0': floatingPosition === widgetPosition.BOTTOM_RIGHT,
   });
 
   // TODO better names and maybe create a shared style across these two elements and the loading indicator
