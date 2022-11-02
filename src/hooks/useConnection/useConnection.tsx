@@ -4,7 +4,6 @@ import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
-  const [canAutoPlayAudio, setCanAutoPlayAudio] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -74,7 +73,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   return {
     connectionStatus,
     connectionError,
-    canAutoPlayAudio,
     connect,
     disconnect,
     videoRef,

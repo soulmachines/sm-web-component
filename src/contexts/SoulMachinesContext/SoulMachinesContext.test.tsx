@@ -6,7 +6,6 @@ import { useConnection } from '../../hooks/useConnection';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
 
-const mockCanAutoPlayAudio = true;
 const mockVideoRef = { current: 'mock' };
 const mockConnect = jest.fn();
 const mockDisconnect = jest.fn();
@@ -16,7 +15,6 @@ jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({
     connect: mockConnect,
     disconnect: mockDisconnect,
-    canAutoPlayAudio: mockCanAutoPlayAudio,
     videoRef: mockVideoRef,
   })),
 }));
@@ -56,11 +54,10 @@ describe('<SoulMachinesProvider />', () => {
     expect(useConnection).toHaveBeenCalledWith(mockScene, tokenServer);
   });
 
-  it('calls useSMMedia with the scene, canAutoPlayVideo and the videoRef', () => {
+  it('calls useSMMedia with the scene and the videoRef', () => {
     customRender();
     expect(useSMMedia).toHaveBeenCalledWith({
       scene: mockScene,
-      canAutoPlayAudio: mockCanAutoPlayAudio,
       videoRef: mockVideoRef,
     });
   });

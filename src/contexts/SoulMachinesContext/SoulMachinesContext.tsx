@@ -96,7 +96,6 @@ function SoulMachinesProvider({
   );
   const useMediaData = useSMMedia({
     scene,
-    canAutoPlayAudio: useConnectionData.canAutoPlayAudio,
     videoRef: useConnectionData.videoRef,
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);

@@ -4,14 +4,12 @@ import { SessionDataKeys } from '../../enums';
 
 function useSMMedia({
   scene,
-  canAutoPlayAudio,
   videoRef,
 }: {
   scene: Scene;
-  canAutoPlayAudio: boolean;
   videoRef: MutableRef<HTMLVideoElement | null>;
 }) {
-  const [isVideoMuted, setIsVideoMuted] = useState(!canAutoPlayAudio);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
   const [isCameraEnabled, setIsCameraEnabled] = useState(scene.isCameraActive());
   const isConnected = scene?.isConnected();

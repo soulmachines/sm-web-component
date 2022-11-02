@@ -9,8 +9,8 @@ describe('useSMMedia()', () => {
   const mockVideoRef = {
     current: { muted: true, mock: 124 },
   } as unknown as MutableRef<HTMLVideoElement | null>;
-  const customRender = (scene = mockScene, canAutoPlayAudio = true, videoRef = mockVideoRef) =>
-    renderHook(() => useSMMedia({ scene, canAutoPlayAudio, videoRef }));
+  const customRender = (scene = mockScene, videoRef = mockVideoRef) =>
+    renderHook(() => useSMMedia({ scene, videoRef }));
 
   it('returns a toggleMicrophone function', () => {
     const { result } = customRender();
@@ -55,15 +55,15 @@ describe('useSMMedia()', () => {
       expect(result.current.isCameraEnabled).toEqual(false);
     });
 
-    it('sets isVideoMuted to true when canAutoPlayAudio is false', () => {
-      const { result } = customRender(mockScene, false);
-      expect(result.current.isVideoMuted).toEqual(true);
-    });
+    // it('sets isVideoMuted to true when canAutoPlayAudio is false', () => {
+    //   const { result } = customRender(mockScene, false);
+    //   expect(result.current.isVideoMuted).toEqual(true);
+    // });
 
-    it('sets isVideoMuted to false when canAutoPlayAudio is true', () => {
-      const { result } = customRender(mockScene, true);
-      expect(result.current.isVideoMuted).toEqual(false);
-    });
+    // it('sets isVideoMuted to false when canAutoPlayAudio is true', () => {
+    //   const { result } = customRender(mockScene, true);
+    //   expect(result.current.isVideoMuted).toEqual(false);
+    // });
 
     it('sets isMicrophoneEnabled and isCameraEnabled to false when disconnected', async () => {
       const { result, rerender, waitForNextUpdate } = customRender();
