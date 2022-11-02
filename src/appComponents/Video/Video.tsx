@@ -2,7 +2,7 @@ import { JSX } from 'preact';
 import { useCallback, useEffect, useMemo } from 'preact/hooks';
 import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 import { Scene } from '@soulmachines/smwebsdk';
@@ -34,9 +34,9 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   const { observe } = useDimensions<HTMLVideoElement>({
     onResize: useMemo(
       () =>
-        debounce(({ width, height }) => {
+        throttle(({ width, height }) => {
           updateVideoBounds(scene, { width, height });
-        }, 500),
+        }, 250),
       [scene],
     ),
   });
