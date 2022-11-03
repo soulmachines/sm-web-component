@@ -53,12 +53,10 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       if (document.visibilityState !== 'visible') {
         videoRef.current.pause();
       } else {
-        //  TODO: Should we use new play function here?
-        // Shouldnt assume play will work on return
-        videoRef.current.play();
+        playVideo();
       }
     }
-  }, [videoRef]);
+  }, [videoRef.current]);
 
   const videoAnimation = useSpring({
     opacity: isConnected ? '1' : '0',

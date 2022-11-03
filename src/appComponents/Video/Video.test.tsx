@@ -122,6 +122,61 @@ describe('<Video />', () => {
       const { container } = customRender();
       expect(container.querySelector('video')?.muted).toEqual(false);
     });
+
+    describe('when visibilitychange is fired and document state is visible', () => {
+      beforeEach(() => {
+        jest.spyOn(document, 'visibilityState', 'get').mockReturnValue('visible');
+      });
+
+      it('calls playVideo', () => {
+        customRender();
+
+        // Clear previous playVideo calls
+        jest.clearAllMocks();
+
+        document.dispatchEvent(new Event('visibilitychange'));
+        expect(SoulMachinesContext.useSoulMachines().playVideo).toHaveBeenCalledTimes(1);
+      });
+
+      it('does not call pause', () => {
+        const pauseSpy = jest
+          .spyOn(window.HTMLMediaElement.prototype, 'pause')
+          .mockImplementation();
+
+        customRender();
+
+        document.dispatchEvent(new Event('visibilitychange'));
+        expect(pauseSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('when visibilitychange is fired and document state is hidden', () => {
+      beforeEach(() => {
+        jest.spyOn(document, 'visibilityState', 'get').mockReturnValue('hidden');
+      });
+
+      it('calls pause', () => {
+        const pauseSpy = jest
+          .spyOn(window.HTMLMediaElement.prototype, 'pause')
+          .mockImplementation();
+
+        customRender();
+
+        document.dispatchEvent(new Event('visibilitychange'));
+        expect(pauseSpy).toHaveBeenCalled();
+      });
+
+      it('does not call playVideo', () => {
+        customRender();
+
+        // Clear previous playVideo calls
+        jest.clearAllMocks();
+
+        document.dispatchEvent(new Event('visibilitychange'));
+
+        expect(SoulMachinesContext.useSoulMachines().playVideo).not.toHaveBeenCalled();
+      });
+    });
   });
 });
 
