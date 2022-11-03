@@ -21,31 +21,18 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
     useSoulMachines();
 
   useEffect(() => {
-    // public properties are defined as getters (+ setters optionally)
-    // so that their returned value will change depending on component state
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
-    const publicProperties: [string, PropertyDescriptor][] = [
-      [
-        'persona',
-        {
-          get() {
-            return persona;
-          },
-        },
-      ],
-      [
-        'scene',
-        {
-          get() {
-            return scene;
-          },
-        },
-      ],
-    ];
+    // expose `persona` as a public property
+    Object.defineProperty(element, 'persona', {
+      get() {
+        return persona;
+      },
+    });
 
-    // add public properties immediately, don't wait for connect
-    publicProperties.map(([propertyName, implementation]) => {
-      Object.defineProperty(htmlElement, propertyName, implementation);
+    // expose `scene` as a public property
+    Object.defineProperty(element, 'scene', {
+      get() {
+        return scene;
+      },
     });
 
     const publicMethods: [string, GenericFunction][] = [
