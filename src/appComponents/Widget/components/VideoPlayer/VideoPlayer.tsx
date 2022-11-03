@@ -1,4 +1,3 @@
-import { config, useSpring, animated } from 'react-spring';
 import { ConnectionStatus, widgetPosition } from '../../../../enums';
 import classNames from 'classnames';
 import { Video } from '../../../Video';
@@ -14,45 +13,23 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
   const { connectionStatus } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
 
-  const videoContainerAnimation = useSpring({
-    from: {
-      opacity: 0,
-    },
-    to: {
-      opacity: 1,
-      // Animate from 0 to 100%
-      // There is min width/height on the video which gives the floating widget the correct dimensions
-      width: renderInFullFrame ? '100%' : '0%',
-      height: renderInFullFrame ? '100%' : '0%',
-    },
-    config: config.gentle,
-  });
-
   const videoContainerClasses = classNames({
-    'sm-fixed sm-transition-all sm-floating-container': true,
-    'sm-bottom-0 sm-p-5': renderInFullFrame,
-    'sm-bottom-5': !renderInFullFrame,
-    // TODO: make styles less gross
-    'sm-origin-bottom-left sm-left-5':
-      floatingPosition === widgetPosition.BOTTOM_LEFT && !renderInFullFrame,
-    'sm-origin-bottom-right sm-right-5':
-      floatingPosition === widgetPosition.BOTTOM_RIGHT && !renderInFullFrame,
-    'sm-origin-bottom-left sm-left-0':
-      floatingPosition === widgetPosition.BOTTOM_LEFT && renderInFullFrame,
-    'sm-origin-bottom-right sm-right-0':
-      floatingPosition === widgetPosition.BOTTOM_RIGHT && renderInFullFrame,
+    'sm-transition-all sm-duration-300 sm-floating-container': true,
+    'sm-fixed sm-bottom-0 sm-w-full sm-h-full sm-p-5': renderInFullFrame,
+    'sm-left-0': floatingPosition === widgetPosition.BOTTOM_LEFT,
+    'sm-right-0': floatingPosition === widgetPosition.BOTTOM_RIGHT,
   });
 
   return (
     // Keeps the container in the page for when we go from fullframe to float.
     // Prevents a shift in the layout when the video goes from fixed position to static
     <div className="sm-floating-container" hidden={!isConnected} aria-hidden={!isConnected}>
-      <animated.div style={videoContainerAnimation} className={videoContainerClasses}>
+      <div className={videoContainerClasses}>
         <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
           <Video autoConnect={false} />
           {isConnected && <VideoControls />}
         </div>
-      </animated.div>
+      </div>
     </div>
   );
 };

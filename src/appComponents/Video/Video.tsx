@@ -37,7 +37,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         // less glitching/blury video
         throttle(({ width, height }) => {
           updateVideoBounds(scene, { width, height });
-        }, 250),
+        }, 200),
       [scene],
     ),
   });

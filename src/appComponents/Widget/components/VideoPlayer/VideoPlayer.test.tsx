@@ -21,38 +21,38 @@ describe('<VideoPlayer />', () => {
 
   describe('when not in fullframe layout', () => {
     describe('when position is bottom right', () => {
-      it('renders a sm-origin-bottom-right class', () => {
+      it('renders a sm-right-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_RIGHT,
         });
-        expect(container.querySelector('.sm-origin-bottom-right')).toBeInTheDocument();
+        expect(container.querySelector('.sm-right-0')).toBeInTheDocument();
       });
 
-      it('does not render a sm-origin-bottom-left class', () => {
+      it('does not render a sm-left-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_RIGHT,
         });
-        expect(container.querySelector('.sm-origin-bottom-left')).not.toBeInTheDocument();
+        expect(container.querySelector('.sm-left-0')).not.toBeInTheDocument();
       });
     });
 
     describe('when position is bottom left', () => {
-      it('renders a sm-origin-bottom-left class', () => {
+      it('renders a sm-left-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_LEFT,
         });
-        expect(container.querySelector('.sm-origin-bottom-left')).toBeInTheDocument();
+        expect(container.querySelector('.sm-left-0')).toBeInTheDocument();
       });
 
-      it('does not render a sm-origin-bottom-right class', () => {
+      it('does not render a sm-right-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_LEFT,
         });
-        expect(container.querySelector('.sm-origin-bottom-right')).not.toBeInTheDocument();
+        expect(container.querySelector('.sm-right-0')).not.toBeInTheDocument();
       });
     });
 

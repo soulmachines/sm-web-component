@@ -10,7 +10,7 @@
   }
 
   .sm-floating-container {
-    @apply sm-min-w-63 sm-min-h-40 md:sm-min-h-54 md:sm-min-w-88;
+    @apply sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88;
   }
 }
 
