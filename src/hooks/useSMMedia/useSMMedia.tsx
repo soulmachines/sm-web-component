@@ -62,15 +62,16 @@ function useSMMedia({
     [videoRef],
   );
 
-  const playVideo = useCallback(() => {
+  const playVideo = useCallback(async () => {
     const videoStream = scene.videoElement?.srcObject;
 
     if (videoRef.current && videoStream) {
       // Make sure we are testing with auto unmuted
       videoRef.current.muted = false;
+      // Attach video stream
       videoRef.current.srcObject = videoStream;
 
-      videoRef.current
+      return videoRef.current
         .play()
         .then(() => {
           // Video playback started, can play with audio
@@ -83,7 +84,7 @@ function useSMMedia({
             setVideoMuted({ mute: false, saveSetting: false });
           }
         })
-        .catch((e) => {
+        .catch(() => {
           // Video playback failed, can't play with audio
           setVideoMuted({ mute: true, saveSetting: false });
         });
