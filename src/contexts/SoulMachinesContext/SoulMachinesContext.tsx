@@ -69,6 +69,7 @@ function SoulMachinesProvider({
     [apiKey],
   );
   const persona = new Persona(scene, scene.currentPersonaId);
+
   const sendTextMessage = (text: string) => {
     try {
       persona.conversationSend(text, {}, {});

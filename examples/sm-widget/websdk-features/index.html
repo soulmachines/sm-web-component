@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Key - Default</title>
+  </head>
+  <body>
+    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
+
+    <script type="module" src="/src/web-components/sm-widget"></script>
+
+    <script>
+      let widget = document.getElementsByTagName('sm-widget')[0];
+
+      widget.addEventListener('ready', () => {
+        console.log(widget.scene);
+        console.log(widget.persona);
+
+        widget.scene.connectionState.onConnectionStateUpdated.addListener((connectionStateData) => {
+          console.log('>> Connection State:', connectionStateData);
+        });
+      });
+    </script>
+  </body>
+</html>
