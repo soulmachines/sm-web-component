@@ -43,16 +43,10 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       floatingPosition === widgetPosition.BOTTOM_RIGHT && renderInFullFrame,
   });
 
-  // TODO better names
-  const wrapperClasses = classNames({
-    'sm-floating-container': true,
-    'sm-hidden': !isConnected,
-  });
-
   return (
     // Keeps the container in the page for when we go from fullframe to float.
     // Prevents a shift in the layout when the video goes from fixed position to static
-    <div className={wrapperClasses}>
+    <div className="sm-floating-container" hidden={!isConnected} aria-hidden={!isConnected}>
       <animated.div style={videoContainerAnimation} className={videoContainerClasses}>
         <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
           <Video autoConnect={false} />

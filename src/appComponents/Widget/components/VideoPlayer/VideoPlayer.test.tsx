@@ -78,6 +78,16 @@ describe('<VideoPlayer />', () => {
         const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
         expect(container.querySelector('button')).toBeInTheDocument();
       });
+
+      it('does not render a hidden attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[hidden=""]')).not.toBeInTheDocument();
+      });
+
+      it('renders a aria-hidden false attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[aria-hidden="false"]')).toBeInTheDocument();
+      });
     });
 
     describe('when not connected', () => {
@@ -89,7 +99,7 @@ describe('<VideoPlayer />', () => {
       });
 
       it('renders a single video', () => {
-        const { container } = customRender({ ...defaultProps, renderInFullFrame: true });
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
         expect(container.querySelectorAll('video')).toHaveLength(1);
       });
 
@@ -101,6 +111,16 @@ describe('<VideoPlayer />', () => {
       it('renders no video controls', () => {
         const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
         expect(container.querySelectorAll('button')).toHaveLength(0);
+      });
+
+      it('renders a hidden attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[hidden=""]')).toBeInTheDocument();
+      });
+
+      it('renders a aria-hidden true attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
       });
     });
   });
