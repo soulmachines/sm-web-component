@@ -4,11 +4,11 @@ import 'preact/hooks';
 import { useConnection } from '.';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
-const mockPlay = jest.fn(() => Promise.resolve(true));
+const mockLoad = jest.fn();
 const mockMediaSrc = {} as unknown as MediaSource;
 const reactVideoEl = {
   muted: true,
-  play: mockPlay,
+  load: mockLoad,
   srcObject: mockMediaSrc,
 };
 jest.mock('preact/hooks', () => ({
@@ -48,7 +48,7 @@ describe('useConnection()', () => {
       expect(mockScene.disconnect).toBeCalledTimes(1);
     });
 
-    it('updates video srcObject to null', async () => {
+    it('updates video srcObject to null', () => {
       const { result } = customRender();
       const mockStream = 'mock stream' as unknown as MediaSource;
       reactVideoEl.srcObject = mockStream;
@@ -95,7 +95,7 @@ describe('useConnection()', () => {
       expect(result.current.connectionStatus).toEqual(ConnectionStatus.CONNECTING);
     });
 
-    it('updates the connection status to disconnected when disconnect is called', async () => {
+    it('updates the connection status to disconnected when disconnect is called', () => {
       const { result } = customRender();
 
       act(() => {
@@ -126,9 +126,9 @@ describe('useConnection()', () => {
   });
 
   describe('when token server is undefined', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       const { result } = renderHook(() => useConnection(mockScene, undefined));
-      await result.current.connect();
+      result.current.connect();
     });
 
     it('calls scene.connect once with an empty object', () => {
@@ -150,22 +150,11 @@ describe('useConnection()', () => {
         mockFetch.mockReturnValue(mockedFetchResponse);
       });
 
-      it('sets video muted to false', () => {
-        customRender();
-        expect(reactVideoEl.muted).toEqual(false);
-      });
-
-      it('sets canAutoPlayAudio to true', async () => {
-        const { result, waitForNextUpdate } = customRender();
-        await result.current.connect();
-        await waitForNextUpdate();
-
-        expect(result.current.canAutoPlayAudio).toEqual(true);
-      });
-
       it('calls scene.connect once with an object containing the token server creds', async () => {
-        const { result } = customRender();
-        await result.current.connect();
+        const { result, waitForNextUpdate } = customRender();
+        result.current.connect();
+
+        await waitForNextUpdate();
 
         expect(fetch).toHaveBeenCalledWith(tokenServer);
         expect(mockScene.connect).toHaveBeenCalledWith({
@@ -174,15 +163,15 @@ describe('useConnection()', () => {
         expect(mockScene.connect).toHaveBeenCalledTimes(1);
       });
 
-      it('calls scene.startVideo', async () => {
+      it('calls loadVideo on the video ref', () => {
         const { result } = customRender();
-        await result.current.connect();
-        expect(mockScene.connect).toHaveBeenCalledTimes(1);
+        result.current.connect();
+        expect(mockLoad).toHaveBeenCalledTimes(1);
       });
 
       it('updates the connection status to connected', async () => {
         const { result, waitForNextUpdate } = customRender();
-        await result.current.connect();
+        result.current.connect();
         await waitForNextUpdate();
 
         expect(result.current.connectionStatus).toEqual(ConnectionStatus.CONNECTED);
@@ -190,15 +179,15 @@ describe('useConnection()', () => {
 
       it('updates connectionError to null', async () => {
         const { result, waitForNextUpdate } = customRender();
-        await result.current.connect();
+        result.current.connect();
         await waitForNextUpdate();
 
         expect(result.current.connectionError).toEqual(null);
       });
 
-      it('updates the connection status to disconnected when disconnect is called', async () => {
+      it('updates the connection status to disconnected when disconnect is called', () => {
         const { result } = customRender();
-        await result.current.connect();
+        result.current.connect();
 
         act(() => {
           result.current.disconnect();
@@ -210,7 +199,7 @@ describe('useConnection()', () => {
       describe('when a timeout occurs', () => {
         const customRender = async () => {
           const testUtils = renderHook(() => useConnection(mockScene, tokenServer));
-          await testUtils.result.current.connect();
+          testUtils.result.current.connect();
           await testUtils.waitForNextUpdate();
 
           act(() => {
@@ -227,35 +216,6 @@ describe('useConnection()', () => {
       });
     });
 
-    describe('when video.play() errors', () => {
-      beforeEach(() => {
-        mockFetch.mockReturnValue(mockedFetchResponse);
-        mockPlay?.mockRejectedValue('User interaction required');
-      });
-
-      it('sets canAutoPlayAudio to false', async () => {
-        const { result } = customRender();
-        await result.current.connect();
-        expect(result.current.canAutoPlayAudio).toEqual(false);
-      });
-    });
-
-    describe('when video is undefined', () => {
-      beforeEach(() => {
-        mockFetch.mockReturnValue(mockedFetchResponse);
-      });
-
-      it('sets canAutoPlayAudio to false', async () => {
-        const { result } = customRender({
-          ...mockScene,
-          videoElement: undefined,
-        } as unknown as Scene);
-
-        await result.current.connect();
-        expect(result.current.canAutoPlayAudio).toEqual(false);
-      });
-    });
-
     describe('when an error occurs', () => {
       const error = new Error('Boom');
 
@@ -266,7 +226,7 @@ describe('useConnection()', () => {
       it('updates connectionError with the error', async () => {
         const { result, waitForNextUpdate } = customRender();
 
-        await result.current.connect();
+        result.current.connect();
         await waitForNextUpdate();
 
         expect(result.current.connectionError).toEqual(error);
@@ -275,15 +235,15 @@ describe('useConnection()', () => {
       it('updates connection status to errored', async () => {
         const { result, waitForNextUpdate } = customRender();
 
-        await result.current.connect();
+        result.current.connect();
         await waitForNextUpdate();
 
         expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
       });
 
-      it('clears session storage data', async () => {
+      it('clears session storage data', () => {
         const { result } = customRender();
-        await result.current.connect();
+        result.current.connect();
 
         expect(sessionStorage.getItem(SessionDataKeys.sessionId)).toBeNull();
         expect(sessionStorage.getItem(SessionDataKeys.apiKey)).toBeNull();

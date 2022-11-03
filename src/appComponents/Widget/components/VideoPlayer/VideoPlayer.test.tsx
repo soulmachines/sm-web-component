@@ -21,38 +21,38 @@ describe('<VideoPlayer />', () => {
 
   describe('when not in fullframe layout', () => {
     describe('when position is bottom right', () => {
-      it('renders a sm-origin-bottom-right class', () => {
+      it('renders a sm-right-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_RIGHT,
         });
-        expect(container.querySelector('.sm-origin-bottom-right')).toBeInTheDocument();
+        expect(container.querySelector('.sm-right-0')).toBeInTheDocument();
       });
 
-      it('does not render a sm-origin-bottom-left class', () => {
+      it('does not render a sm-left-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_RIGHT,
         });
-        expect(container.querySelector('.sm-origin-bottom-left')).not.toBeInTheDocument();
+        expect(container.querySelector('.sm-left-0')).not.toBeInTheDocument();
       });
     });
 
     describe('when position is bottom left', () => {
-      it('renders a sm-origin-bottom-left class', () => {
+      it('renders a sm-left-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_LEFT,
         });
-        expect(container.querySelector('.sm-origin-bottom-left')).toBeInTheDocument();
+        expect(container.querySelector('.sm-left-0')).toBeInTheDocument();
       });
 
-      it('does not render a sm-origin-bottom-right class', () => {
+      it('does not render a sm-right-0 class', () => {
         const { container } = customRender({
           renderInFullFrame: true,
           floatingPosition: widgetPosition.BOTTOM_LEFT,
         });
-        expect(container.querySelector('.sm-origin-bottom-right')).not.toBeInTheDocument();
+        expect(container.querySelector('.sm-right-0')).not.toBeInTheDocument();
       });
     });
 
@@ -78,6 +78,16 @@ describe('<VideoPlayer />', () => {
         const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
         expect(container.querySelector('button')).toBeInTheDocument();
       });
+
+      it('does not render a hidden attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[hidden=""]')).not.toBeInTheDocument();
+      });
+
+      it('renders a aria-hidden false attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[aria-hidden="false"]')).toBeInTheDocument();
+      });
     });
 
     describe('when not connected', () => {
@@ -89,7 +99,7 @@ describe('<VideoPlayer />', () => {
       });
 
       it('renders a single video', () => {
-        const { container } = customRender({ ...defaultProps, renderInFullFrame: true });
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
         expect(container.querySelectorAll('video')).toHaveLength(1);
       });
 
@@ -101,6 +111,16 @@ describe('<VideoPlayer />', () => {
       it('renders no video controls', () => {
         const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
         expect(container.querySelectorAll('button')).toHaveLength(0);
+      });
+
+      it('renders a hidden attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[hidden=""]')).toBeInTheDocument();
+      });
+
+      it('renders a aria-hidden true attribute', () => {
+        const { container } = customRender({ ...defaultProps, renderInFullFrame: false });
+        expect(container.querySelector('[aria-hidden="true"]')).toBeInTheDocument();
       });
     });
   });

@@ -34,9 +34,7 @@ export const ProgressIndicatorWrapper = ({
     (animatedStyles, item) =>
       item && (
         <animated.div style={animatedStyles} className={transformOriginClass}>
-          <div className="sm-relative sm-w-63 sm-h-40 md:sm-h-54 md:sm-w-88 sm-round-shadow-box">
-            {children}
-          </div>
+          <div className="sm-relative sm-floating-container sm-round-shadow-box">{children}</div>
         </animated.div>
       ),
   );

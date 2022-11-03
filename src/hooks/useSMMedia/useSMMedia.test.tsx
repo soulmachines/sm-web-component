@@ -5,12 +5,13 @@ import { useSMMedia } from '.';
 import { SessionDataKeys } from '../../enums';
 
 describe('useSMMedia()', () => {
+  const mockPlay = jest.fn();
   const mockScene = new Scene();
   const mockVideoRef = {
-    current: { muted: true, mock: 124 },
+    current: { muted: true, mock: 124, srcObject: null, play: mockPlay },
   } as unknown as MutableRef<HTMLVideoElement | null>;
-  const customRender = (scene = mockScene, canAutoPlayAudio = true, videoRef = mockVideoRef) =>
-    renderHook(() => useSMMedia({ scene, canAutoPlayAudio, videoRef }));
+  const customRender = (scene = mockScene, videoRef = mockVideoRef) =>
+    renderHook(() => useSMMedia({ scene, videoRef }));
 
   it('returns a toggleMicrophone function', () => {
     const { result } = customRender();
@@ -55,16 +56,6 @@ describe('useSMMedia()', () => {
       expect(result.current.isCameraEnabled).toEqual(false);
     });
 
-    it('sets isVideoMuted to true when canAutoPlayAudio is false', () => {
-      const { result } = customRender(mockScene, false);
-      expect(result.current.isVideoMuted).toEqual(true);
-    });
-
-    it('sets isVideoMuted to false when canAutoPlayAudio is true', () => {
-      const { result } = customRender(mockScene, true);
-      expect(result.current.isVideoMuted).toEqual(false);
-    });
-
     it('sets isMicrophoneEnabled and isCameraEnabled to false when disconnected', async () => {
       const { result, rerender, waitForNextUpdate } = customRender();
 
@@ -88,21 +79,15 @@ describe('useSMMedia()', () => {
     });
 
     describe('when toggleVideoMuted is called', () => {
-      it('sets changes the video muted status to the opposite value', async () => {
+      it('sets changes the isVideoMuted status to the opposite value', async () => {
         const { result, waitForNextUpdate } = customRender();
 
-        expect(mockVideoRef.current?.muted).toEqual(false);
+        expect(mockVideoRef.current?.muted).toEqual(true);
 
         await result.current.toggleVideoMuted();
         await waitForNextUpdate();
 
-        expect(mockVideoRef.current?.muted).toEqual(true);
-      });
-
-      it('sets isVideoMuted to the opposite value', async () => {
-        const { result, waitForNextUpdate } = customRender();
-
-        expect(result.current.isVideoMuted).toEqual(false);
+        expect(mockVideoRef.current?.muted).toEqual(false);
 
         await result.current.toggleVideoMuted();
         await waitForNextUpdate();
@@ -116,7 +101,7 @@ describe('useSMMedia()', () => {
         await result.current.toggleVideoMuted();
         await waitForNextUpdate();
 
-        expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toEqual('true');
+        expect(sessionStorage.getItem(SessionDataKeys.videoMuted)).toEqual('false');
       });
     });
 
@@ -196,6 +181,194 @@ describe('useSMMedia()', () => {
       it('sets the video muted state to the saved muted state in session storage', () => {
         const { result } = customRender();
         expect(result.current.isVideoMuted).toEqual(true);
+      });
+    });
+  });
+
+  describe('playVideo', () => {
+    describe('when theres no video ref', () => {
+      it('does not store the mute state', async () => {
+        const sessionStorageSpy = jest.spyOn(Storage.prototype, 'setItem');
+        const videoRef = { current: null };
+        const { result } = customRender(mockScene, videoRef);
+
+        result.current.playVideo();
+
+        expect(sessionStorageSpy).not.toHaveBeenCalledWith('sm-video-muted', expect.any(String));
+      });
+
+      it('does not call sessionStorage setItem', () => {
+        const videoRef = { current: null };
+        const { result } = customRender(mockScene, videoRef);
+
+        result.current.playVideo();
+
+        expect(mockVideoRef.current?.play).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('when theres no video stream', () => {
+      it('does not call sessionStorage setItem', () => {
+        const scene = { ...mockScene, videoElement: null } as unknown as Scene;
+        const sessionStorageSpy = jest.spyOn(Storage.prototype, 'setItem');
+        const { result } = customRender(scene);
+
+        result.current.playVideo();
+
+        expect(sessionStorageSpy).not.toHaveBeenCalledWith('sm-video-muted', expect.any(String));
+      });
+
+      it('does not call play on the video', () => {
+        const scene = { ...mockScene, videoElement: null } as unknown as Scene;
+        const { result } = customRender(scene);
+
+        result.current.playVideo();
+
+        expect(mockVideoRef.current?.play).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('when theres is a video ref and video stream', () => {
+      beforeEach(() => {
+        mockPlay.mockResolvedValue('play');
+      });
+
+      it('attaches the video stream to the video ref', () => {
+        const { result } = customRender();
+
+        result.current.playVideo();
+
+        expect(mockVideoRef.current?.srcObject).toEqual('mock video src');
+      });
+
+      it('calls play on the video', () => {
+        const { result } = customRender();
+
+        result.current.playVideo();
+
+        expect(mockVideoRef.current?.play).toHaveBeenCalled();
+      });
+
+      describe('when play is successful', () => {
+        describe('when video muted true is stored in session storage', () => {
+          beforeEach(() => {
+            window.sessionStorage.setItem('sm-video-muted', 'true');
+          });
+
+          it('sets the video muted attribute to false', async () => {
+            const { result } = customRender();
+
+            await result.current.playVideo();
+
+            expect(mockVideoRef.current?.muted).toEqual(true);
+          });
+
+          it('does not store the mute state', async () => {
+            const scene = { ...mockScene, videoElement: null } as unknown as Scene;
+            const sessionStorageSpy = jest.spyOn(Storage.prototype, 'setItem');
+            const { result } = customRender(scene);
+
+            // Clear mock as is called in setup
+            sessionStorageSpy.mockClear();
+
+            await result.current.playVideo();
+
+            expect(sessionStorageSpy).not.toHaveBeenCalledWith(
+              'sm-video-muted',
+              expect.any(String),
+            );
+          });
+        });
+
+        describe('when video muted false is stored in session storage', () => {
+          beforeEach(() => {
+            window.sessionStorage.setItem('sm-video-muted', 'false');
+          });
+
+          it('sets the video muted attribute to false', async () => {
+            const { result } = customRender();
+
+            await result.current.playVideo();
+
+            expect(mockVideoRef.current?.muted).toEqual(false);
+          });
+
+          it('does not store the mute state', async () => {
+            const scene = { ...mockScene, videoElement: null } as unknown as Scene;
+            const sessionStorageSpy = jest.spyOn(Storage.prototype, 'setItem');
+            const { result } = customRender(scene);
+
+            // Clear mock as is called in setup
+            sessionStorageSpy.mockClear();
+
+            await result.current.playVideo();
+
+            expect(sessionStorageSpy).not.toHaveBeenCalledWith(
+              'sm-video-muted',
+              expect.any(String),
+            );
+          });
+        });
+
+        describe('when video muted is not stored in session storage', () => {
+          it('sets the video muted attribute to false', async () => {
+            const { result } = customRender();
+
+            await result.current.playVideo();
+
+            expect(mockVideoRef.current?.muted).toEqual(false);
+          });
+
+          it('does not store the mute state', async () => {
+            const scene = { ...mockScene, videoElement: null } as unknown as Scene;
+            const sessionStorageSpy = jest.spyOn(Storage.prototype, 'setItem');
+            const { result } = customRender(scene);
+
+            await result.current.playVideo();
+
+            expect(sessionStorageSpy).not.toHaveBeenCalledWith(
+              'sm-video-muted',
+              expect.any(String),
+            );
+          });
+        });
+      });
+
+      describe('when play errors', () => {
+        beforeEach(() => {
+          mockPlay.mockRejectedValue('Boom');
+        });
+
+        it('sets the video muted attribute to true', async () => {
+          const { result } = customRender();
+
+          await result.current.playVideo();
+
+          expect(mockVideoRef.current?.muted).toEqual(true);
+        });
+
+        it('does not call sessionStorage getItem', async () => {
+          const scene = { ...mockScene, videoElement: null } as unknown as Scene;
+          const sessionStorageSpy = jest.spyOn(Storage.prototype, 'getItem');
+          const { result } = customRender(scene);
+
+          // Clear mock as is called in setup
+          sessionStorageSpy.mockClear();
+
+          await result.current.playVideo();
+
+          expect(sessionStorageSpy).not.toHaveBeenCalled();
+        });
+
+        it('does not store the mute state', async () => {
+          const scene = { ...mockScene, videoElement: null } as unknown as Scene;
+          const sessionStorageSpy = jest.spyOn(Storage.prototype, 'setItem');
+          const { result } = customRender(scene);
+
+          await result.current.playVideo();
+
+          expect(sessionStorageSpy).not.toHaveBeenCalledWith('sm-video-muted', expect.any(String));
+        });
       });
     });
   });

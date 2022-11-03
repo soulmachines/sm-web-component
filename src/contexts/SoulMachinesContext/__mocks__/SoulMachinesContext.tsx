@@ -11,6 +11,7 @@ const scene = new Scene();
 const persona = new Persona(scene, personID);
 
 const mockUseSoulMachines = {
+  playVideo: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
   sendTextMessage: jest.fn(),

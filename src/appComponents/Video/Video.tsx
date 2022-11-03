@@ -2,7 +2,7 @@ import { JSX } from 'preact';
 import { useCallback, useEffect, useMemo } from 'preact/hooks';
 import useDimensions from 'react-cool-dimensions';
 import { useSpring, animated, config } from 'react-spring';
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 import { Scene } from '@soulmachines/smwebsdk';
@@ -27,29 +27,36 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
 };
 
 export function Video({ loadingIndicator, autoConnect }: Props) {
-  const { videoRef, scene, connectionStatus, isVideoMuted, connect } = useSoulMachines();
-  const videoStream = scene.videoElement?.srcObject;
+  const { videoRef, scene, connectionStatus, isVideoMuted, connect, playVideo } = useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const { observe } = useDimensions<HTMLVideoElement>({
     onResize: useMemo(
       () =>
-        debounce(({ width, height }) => {
+        // Throttle works better than debounce when transitioning from floating to fullframe layout
+        // less glitching/blury video
+        throttle(({ width, height }) => {
           updateVideoBounds(scene, { width, height });
-        }, 500),
+        }, 200),
       [scene],
     ),
   });
+
+  useEffect(() => {
+    if (videoRef.current && isConnected) {
+      playVideo();
+    }
+  }, [videoRef, isConnected, playVideo]);
 
   const onVisibilityChange = useCallback(() => {
     if (videoRef.current) {
       if (document.visibilityState !== 'visible') {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        playVideo();
       }
     }
-  }, [videoRef]);
+  }, [videoRef, playVideo]);
 
   const videoAnimation = useSpring({
     opacity: isConnected ? '1' : '0',
@@ -74,12 +81,6 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
       connect();
     }
   }, [connect, autoConnect]);
-
-  useEffect(() => {
-    if (videoRef.current && videoStream) {
-      videoRef.current.srcObject = videoStream;
-    }
-  }, [videoRef, videoStream]);
 
   useEffect(() => {
     if (isConnected) {

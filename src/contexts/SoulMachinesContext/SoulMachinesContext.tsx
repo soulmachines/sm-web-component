@@ -33,6 +33,7 @@ type Context = {
   enableDebugLogging: (enabled: boolean) => void;
   layout: widgetLayout;
   toggleLayout: () => void;
+  playVideo: () => void;
 };
 
 // Create context with default values
@@ -95,7 +96,6 @@ function SoulMachinesProvider({
   );
   const useMediaData = useSMMedia({
     scene,
-    canAutoPlayAudio: useConnectionData.canAutoPlayAudio,
     videoRef: useConnectionData.videoRef,
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);

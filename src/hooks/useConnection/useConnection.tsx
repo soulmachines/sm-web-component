@@ -4,58 +4,42 @@ import { ConnectionStatus, SessionDataKeys } from '../../enums';
 
 function useConnection(scene: Scene, tokenServer: string | undefined) {
   const [connectionStatus, setConnectionStatus] = useState(ConnectionStatus.DISCONNECTED);
-  const [canAutoPlayAudio, setCanAutoPlayAudio] = useState(false);
   const [connectionError, setConnectionError] = useState<Error | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const connect = useCallback(async () => {
-    try {
-      const connectOptions: ConnectOptions = {};
+  const connect = useCallback(() => {
+    const fetchVideo = async () => {
+      try {
+        if (tokenServer) {
+          const res = await fetch(tokenServer);
+          const { url, jwt } = await res.json();
+          connectOptions.tokenServer = {
+            uri: url,
+            token: jwt,
+          };
+        }
 
-      setConnectionError(null);
-      setConnectionStatus(ConnectionStatus.CONNECTING);
+        await scene.connect(connectOptions);
+        setConnectionStatus(ConnectionStatus.CONNECTED);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setConnectionError(error);
+        }
 
-      if (tokenServer) {
-        const res = await fetch(tokenServer);
-        const { url, jwt } = await res.json();
-        connectOptions.tokenServer = {
-          uri: url,
-          token: jwt,
-        };
+        cleanupSessionStorage();
+        setConnectionStatus(ConnectionStatus.ERRORED);
       }
+    };
 
-      await scene.connect(connectOptions);
+    const connectOptions: ConnectOptions = {};
 
-      // Ensure we are checking autoplay with an unmuted video
-      if (videoRef.current) {
-        videoRef.current.muted = false;
-      }
+    setConnectionError(null);
+    setConnectionStatus(ConnectionStatus.CONNECTING);
 
-      // Check if we can play audio as browsers need an interaction to occur before playing sound
-      // - Safari and IOS are the most restrictive
-      // - When using await syntax it can end up hanging state
-      // - https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide#the_play_method
-      // - Also note that since reload, page back, and page forward are not interactions with the domain
-      //   canPlayPromise will always return an error and force the DP to be muted (See
-      //   https://developer.chrome.com/blog/autoplay/)
-      const canPlayPromise = videoRef.current?.play();
-      canPlayPromise
-        ?.then(() => {
-          setCanAutoPlayAudio(true);
-        })
-        .catch(() => {
-          setCanAutoPlayAudio(false);
-        });
-
-      setConnectionStatus(ConnectionStatus.CONNECTED);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setConnectionError(error);
-      }
-
-      cleanupSessionStorage();
-      setConnectionStatus(ConnectionStatus.ERRORED);
-    }
+    // Autoplaying audio is complicated and we're following this doc https://developer.chrome.com/blog/play-request-was-interrupted/#how-to-fix-it
+    // Our connect function needs to be synchronous. We tell the video element we're loading and make a request to fetch the video stream
+    videoRef.current?.load();
+    fetchVideo();
   }, [scene, tokenServer]);
 
   const disconnect = () => {
@@ -89,7 +73,6 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
   return {
     connectionStatus,
     connectionError,
-    canAutoPlayAudio,
     connect,
     disconnect,
     videoRef,
