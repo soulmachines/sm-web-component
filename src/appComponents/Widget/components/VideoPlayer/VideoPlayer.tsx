@@ -29,7 +29,7 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
   });
 
   const videoContainerClasses = classNames({
-    'sm-fixed sm-transition-all sm-min-w-63 sm-min-h-40 md:sm-min-h-54 md:sm-min-w-88': true,
+    'sm-fixed sm-transition-all sm-floating-container': true,
     'sm-bottom-0 sm-p-5': renderInFullFrame,
     'sm-bottom-5': !renderInFullFrame,
     // TODO: make styles less gross
@@ -43,9 +43,9 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
       floatingPosition === widgetPosition.BOTTOM_RIGHT && renderInFullFrame,
   });
 
-  // TODO better names and maybe create a shared style across these two elements and the loading indicator
+  // TODO better names
   const wrapperClasses = classNames({
-    'sm-min-w-63 sm-min-h-40 md:sm-min-h-54 md:sm-min-w-88': true,
+    'sm-floating-container': true,
     'sm-hidden': !isConnected,
   });
 

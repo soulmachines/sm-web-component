@@ -8,6 +8,10 @@
   .sm-round-shadow-box {
     @apply sm-rounded-xl md:sm-rounded-3xl sm-overflow-hidden sm-transform-gpu sm-shadow-lg sm-bg-white sm-pointer-events-auto;
   }
+
+  .sm-floating-container {
+    @apply sm-min-w-63 sm-min-h-40 md:sm-min-h-54 md:sm-min-w-88;
+  }
 }
 
 /*
