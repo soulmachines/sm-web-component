@@ -51,7 +51,6 @@ module.exports = {
       height: {
         18: '4.5rem',
         35: '8.75rem',
-        54: '13.5rem',
       },
       width: {
         18: '4.5rem',
@@ -64,15 +63,11 @@ module.exports = {
         54: '13.5rem',
       },
       minWidth: {
-        xs: '15.625rem',
         63: '15.75rem',
         88: '22rem',
       },
       maxWidth: {
         xs: '17rem',
-        md: '25rem',
-        '2xl': '40rem',
-        '60-screen': '60vw',
       },
       zIndex: {
         max: '9999',
