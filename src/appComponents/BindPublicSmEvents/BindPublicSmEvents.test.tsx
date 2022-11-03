@@ -7,6 +7,49 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<BindPublicSmEvents />', () => {
   const element: WebComponentElement = document.createElement('div');
+
+  describe(`when it is initialized`, () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+      });
+    });
+
+    it('exposes `persona` as a property of the element', () => {
+      const { persona } = SoulMachinesContext.useSoulMachines();
+      render(<BindPublicSmEvents element={element} />);
+
+      expect(element.persona).toBe(persona);
+    });
+
+    it('exposes `scene` as a property of the element', () => {
+      const { scene } = SoulMachinesContext.useSoulMachines();
+      render(<BindPublicSmEvents element={element} />);
+
+      expect(element.scene).toBe(scene);
+    });
+
+    it('dispatches a `ready` event from the element', () => {
+      const mockCallback = jest.fn();
+      element.addEventListener('ready', mockCallback);
+      render(<BindPublicSmEvents element={element} />);
+
+      expect(mockCallback).toHaveBeenCalledTimes(1);
+      element.removeEventListener('ready', mockCallback);
+    });
+
+    it('dispatches `ready` event after all properties are ready', () => {
+      const callback = () => {
+        element.removeEventListener('ready', callback);
+        expect(element.scene).toBeDefined();
+        expect(element.persona).toBeDefined();
+      };
+      element.addEventListener('ready', callback);
+
+      render(<BindPublicSmEvents element={element} />);
+    });
+  });
+
   const whenNotConnectingOrConnected = [
     { description: 'disconnected', statusEnum: ConnectionStatus.DISCONNECTED },
     { description: 'timed out', statusEnum: ConnectionStatus.TIMED_OUT },

@@ -1,8 +1,11 @@
 import { useEffect } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
+import { Persona, Scene } from '@soulmachines/smwebsdk';
 
 export interface WebComponentElement extends HTMLElement {
+  persona?: Persona;
+  scene?: Scene;
   sendTextMessage?: (message: string) => void;
   enableDebugLogging?: (enabled: boolean) => void;
 }
@@ -23,6 +26,7 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
   useEffect(() => {
     // expose `persona` as a public property
     Object.defineProperty(element, 'persona', {
+      configurable: true,
       get() {
         return persona;
       },
@@ -30,6 +34,7 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
 
     // expose `scene` as a public property
     Object.defineProperty(element, 'scene', {
+      configurable: true,
       get() {
         return scene;
       },
@@ -60,8 +65,8 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
       removePublicMethods();
     }
 
-    // add an event for widget users to know when the component
-    // is ready and can be extended using the element's public api
+    // dispatch an event for widget consumers to know when
+    // the element's public api is ready to be consumed
     element.dispatchEvent(new Event('ready'));
   }, [element, connectionStatus, htmlElement, persona, scene, sendTextMessage, enableDebugLogging]);
 
