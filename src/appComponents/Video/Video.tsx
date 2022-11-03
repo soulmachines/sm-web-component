@@ -46,7 +46,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     if (videoRef.current && isConnected) {
       playVideo();
     }
-  }, [videoRef.current, isConnected]);
+  }, [videoRef, isConnected, playVideo]);
 
   const onVisibilityChange = useCallback(() => {
     if (videoRef.current) {
@@ -56,7 +56,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         playVideo();
       }
     }
-  }, [videoRef.current]);
+  }, [videoRef, playVideo]);
 
   const videoAnimation = useSpring({
     opacity: isConnected ? '1' : '0',

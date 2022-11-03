@@ -89,7 +89,7 @@ function useSMMedia({
           setVideoMuted({ mute: true, saveSetting: false });
         });
     }
-  }, [videoRef.current, setVideoMuted]);
+  }, [videoRef, setVideoMuted, scene.videoElement?.srcObject]);
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
