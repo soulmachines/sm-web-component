@@ -17,8 +17,14 @@
         console.log(widget.scene);
         console.log(widget.persona);
 
+        // handle speech markers from persona
+        widget.persona.onSpeechMarkerEvent.addListener((marker) => {
+          console.log('Speech Marker:', marker);
+        });
+
+        // handle connection states from scene
         widget.scene.connectionState.onConnectionStateUpdated.addListener((connectionStateData) => {
-          console.log('>> Connection State:', connectionStateData);
+          console.log('Connection State:', connectionStateData);
         });
       });
     </script>
