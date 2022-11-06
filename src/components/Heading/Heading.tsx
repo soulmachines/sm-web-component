@@ -11,7 +11,8 @@ export type HeadingProps = {
 };
 
 export function Heading({ type, children, size = 'lg' }: HeadingProps) {
-  const sizeClass = classNames({
+  const headingClassNames = classNames({
+    'sm-font-primary sm-font-medium sm-m-0 sm-text-primary-text': true,
     'sm-text-xs md:sm-text-xs': size === 'xs',
     'sm-text-xs md:sm-text-sm': size === 'sm',
     'sm-text-sm md:sm-text-base': size === 'md',
@@ -22,7 +23,7 @@ export function Heading({ type, children, size = 'lg' }: HeadingProps) {
   return createElement(
     type,
     {
-      className: `sm-font-primary sm-font-medium sm-m-0 sm-text-primary-text ${sizeClass}`,
+      className: headingClassNames,
     },
     children,
   );

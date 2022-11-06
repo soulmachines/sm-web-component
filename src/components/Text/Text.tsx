@@ -8,17 +8,15 @@ export type TextProps = {
 };
 
 export function Text({ children, size, ...rest }: TextProps) {
-  const sizeClass = classNames({
+  const textClassNames = classNames({
+    'sm-text-primary-text sm-font-primary sm-font-normal sm-m-0': true,
     'sm-text-xs md:sm-text-sm': size === 'sm',
     'sm-text-sm md:sm-text-base': size === 'md',
     'sm-text-base md:sm-text-lg': size === 'lg',
   });
 
   return (
-    <p
-      className={`sm-text-primary-text sm-font-primary sm-font-normal sm-m-0 ${sizeClass}`}
-      {...rest}
-    >
+    <p className={textClassNames} {...rest}>
       {children}
     </p>
   );

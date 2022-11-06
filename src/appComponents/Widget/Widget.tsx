@@ -30,14 +30,14 @@ export function Widget({
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
 
-  const layoutStyles = classNames({
+  const layoutClassNames = classNames({
     'sm-h-full sm-flex sm-flex-col sm-justify-end': true,
     'sm-gap-y-2 md:sm-gap-y-5': layout === widgetLayout.FLOAT,
     'sm-items-end': position === widgetPosition.BOTTOM_RIGHT,
     'sm-items-start': position === widgetPosition.BOTTOM_LEFT,
   });
 
-  const notificationsVideoWrapperStyles = classNames({
+  const notificationsVideoWrapperClassNames = classNames({
     'sm-flex sm-flex-wrap sm-gap-2 sm-items-center sm-justify-end md:sm-gap-5': true,
     'sm-flex-row-reverse': position === widgetPosition.BOTTOM_LEFT,
   });
@@ -51,12 +51,12 @@ export function Widget({
 
   return (
     <div className="sm-fixed sm-bottom-0 sm-right-0 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full sm-p-5">
-      <div className={layoutStyles}>
+      <div className={layoutClassNames}>
         <div class="sm-w-63 md:sm-w-88 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 sm-box-content md:sm-gap-y-3">
           <ContentCards />
         </div>
 
-        <div className={notificationsVideoWrapperStyles}>
+        <div className={notificationsVideoWrapperClassNames}>
           <>
             {!isConnectingOrConnected && (
               <div className="sm-max-w-xs sm-z-10">
