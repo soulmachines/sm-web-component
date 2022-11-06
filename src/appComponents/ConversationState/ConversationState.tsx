@@ -9,17 +9,18 @@ export type ConversationStateProps = {
 };
 
 export function ConversationState({ state }: ConversationStateProps) {
-  const wapperClassNames = classNames({
-    'sm-flex sm-justify-center sm-items-center sm-transition-all sm-w-[42px] sm-h-[42px] sm-rounded-full sm-gap-x-1':
-      true,
-    'sm-bg-black': state === ConversationStateTypes.dpSpeaking,
-    'sm-bg-white sm-animate-spread': state === ConversationStateTypes.idle,
-    'sm-bg-secondary-base': state === ConversationStateTypes.userSpeaking,
-    'sm-bg-white': state === ConversationStateTypes.dpProcessing,
-  });
-
   return (
-    <div className={wapperClassNames}>
+    <div
+      className={classNames(
+        'sm-flex sm-justify-center sm-items-center sm-transition-all sm-w-[42px] sm-h-[42px] sm-rounded-full sm-gap-x-1',
+        {
+          'sm-bg-black': state === ConversationStateTypes.dpSpeaking,
+          'sm-bg-white sm-animate-spread': state === ConversationStateTypes.idle,
+          'sm-bg-secondary-base': state === ConversationStateTypes.userSpeaking,
+          'sm-bg-white': state === ConversationStateTypes.dpProcessing,
+        },
+      )}
+    >
       {state === ConversationStateTypes.dpSpeaking && (
         <WaveFormAnimation title="Digital Person Speaking" />
       )}

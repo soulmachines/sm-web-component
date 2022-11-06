@@ -11,11 +11,6 @@ export const ProgressIndicatorWrapper = ({
   transitionIn: boolean;
   position: widgetPosition;
 }) => {
-  const transformOriginClassNames = classNames({
-    'sm-origin-bottom-right': position === widgetPosition.BOTTOM_RIGHT,
-    'sm-origin-bottom-left': position === widgetPosition.BOTTOM_LEFT,
-  });
-
   const scaleTransition = useTransition(transitionIn, {
     from: {
       transform: 'scale(0.5)',
@@ -33,7 +28,13 @@ export const ProgressIndicatorWrapper = ({
   return scaleTransition(
     (animatedStyles, item) =>
       item && (
-        <animated.div style={animatedStyles} className={transformOriginClassNames}>
+        <animated.div
+          style={animatedStyles}
+          className={classNames({
+            'sm-origin-bottom-right': position === widgetPosition.BOTTOM_RIGHT,
+            'sm-origin-bottom-left': position === widgetPosition.BOTTOM_LEFT,
+          })}
+        >
           <div className="sm-relative sm-floating-container sm-round-shadow-box">{children}</div>
         </animated.div>
       ),

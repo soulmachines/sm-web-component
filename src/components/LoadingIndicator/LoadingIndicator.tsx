@@ -37,19 +37,18 @@ export function LoadingIndicator({
     to: { number: nextPercentageLoaded },
   });
 
-  const wrapperClassNames = classNames({
-    'sm-transition-all sm-duration-300 sm-font-primary sm-flex sm-items-center sm-justify-center sm-text-[6em] md:sm-text-[10em] sm-relative sm-w-full sm-h-full':
-      true,
-    'sm-translate-y-8 sm-opacity-60': percentageLoaded === 0,
-  });
-
   return (
     <div
       aria-label="Loading..."
       role="progressbar"
       aria-busy={percentageLoaded < 100}
       aria-valuenow={percentageLoaded}
-      className={wrapperClassNames}
+      className={classNames(
+        'sm-transition-all sm-duration-300 sm-font-primary sm-flex sm-items-center sm-justify-center sm-text-[6em] md:sm-text-[10em] sm-relative sm-w-full sm-h-full',
+        {
+          'sm-translate-y-8 sm-opacity-60': percentageLoaded === 0,
+        },
+      )}
     >
       {stepName && <span className="sm-sr-only">{stepName}</span>}
       <div className="sm-bg-white sm-rounded-3xl sm-border-gray-light sm-border sm-border-solid sm-overflow-hidden sm-w-2/5 sm-h-3 sm-absolute sm-top-1/2 sm-left-1/2 -sm-translate-x-1/2 -sm-translate-y-1/2">

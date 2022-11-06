@@ -13,10 +13,6 @@ export type CardProps = {
 
 export function Card({ children, isDismissible, style, flush }: CardProps) {
   const [isHidden, setIsHidden] = useState(false);
-  const cardClassNames = classNames({
-    'sm-round-shadow-box': true,
-    'sm-p-6': !flush,
-  });
   const transitions = useTransition(!isHidden, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
@@ -30,7 +26,13 @@ export function Card({ children, isDismissible, style, flush }: CardProps) {
           className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8"
           style={{ ...transitionStyles, ...style }}
         >
-          <div className={cardClassNames}>{children}</div>
+          <div
+            className={classNames('sm-round-shadow-box', {
+              'sm-p-6': !flush,
+            })}
+          >
+            {children}
+          </div>
 
           {isDismissible && (
             <div className="sm-absolute sm-top-8 sm-right-8 sm-translate-x-1/3 -sm-translate-y-1/3">
