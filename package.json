@@ -21,6 +21,11 @@
     "generate": "plop --plopfile generators/index.js",
     "prepare": "husky install",
     "e2e": "npx playwright test",
+    "e2e:chromium": "npx playwright test --project=chromium",
+    "e2e:firefox": "npx playwright test --project=firefox",
+    "e2e:webkit": "npx playwright test --project=webkit",
+    "e2e:mobile-chrome": "npx playwright test --project='Mobile Chrome'",
+    "e2e:mobile-safari": "npx playwright test --project='Mobile Safari'",
     "e2e:debug": "  npx playwright test --debug",
     "e2e:codegen": "npx playwright codegen"
   },
