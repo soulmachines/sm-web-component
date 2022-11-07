@@ -7,6 +7,6 @@ cypress/screenshots
 .eslintcache
 docs
 storybook-static
-/test-results/
+/e2e-results/
 /playwright-report/
 /playwright/.cache/

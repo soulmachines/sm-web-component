@@ -32,7 +32,7 @@ export function VideoControls() {
       <div className="sm-flex sm-flex-col sm-gap-y-2">
         <div className="sm-flex sm-justify-between">
           <IconButton onClick={toggleVideoMuted} name={muteIcon} title={muteText} />
-          <IconButton onClick={disconnect} name="close" title="Close video" />
+          <IconButton onClick={disconnect} name="close" title="Disconnect video" />
         </div>
       </div>
 
