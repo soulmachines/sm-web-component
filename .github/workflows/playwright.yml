@@ -1,24 +1,49 @@
 name: Playwright Tests
+
 on:
-  push:
-    branches: [main, master]
   pull_request:
-    branches: [main, master]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+
+      - name: Set Version
+        id: RELEASE_VERSION
+        run: |
+          version=$(git rev-parse --short HEAD)
+          echo "::set-output name=tag::${version}"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: '.nvmrc'
+
+      - name: Caching Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Build widget snippet and example files
+        run: npm run build:example
+        env:
+          # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
+          VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
       - name: Run Playwright tests
         run: npx playwright test
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:
