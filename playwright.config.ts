@@ -39,6 +39,7 @@ const config: PlaywrightTestConfig = {
     // baseURL: 'http://localhost:3000',
 
     screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -57,6 +58,14 @@ const config: PlaywrightTestConfig = {
       name: 'firefox',
       use: {
         ...devices['Desktop Firefox'],
+        launchOptions: {
+          firefoxUserPrefs: {
+            // use fake audio and video media
+            'media.navigator.streams.fake': true,
+            'permissions.default.microphone': 1,
+            'permissions.default.camera': 1,
+          },
+        },
       },
     },
 
