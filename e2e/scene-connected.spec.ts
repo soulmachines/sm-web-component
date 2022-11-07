@@ -21,4 +21,18 @@ test.describe('connecting to a scene', () => {
     await expect(page.getByAltText('Digital person')).toHaveCount(0);
     await expect(page.getByRole('button', { name: 'Digital person' })).toHaveCount(0);
   });
+
+  test('it renders a enable microphone button and then renders a disable microphone button once clicked', async ({
+    page,
+  }) => {
+    await page.getByRole('button', { name: 'Enable microphone' }).click();
+
+    await expect(page.getByRole('button', { name: 'Enable microphone' })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Disable microphone' })).toHaveCount(1);
+
+    await page.getByRole('button', { name: 'Disable microphone' }).click();
+
+    await expect(page.getByRole('button', { name: 'Disable microphone' })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Enable microphone' })).toHaveCount(1);
+  });
 });
