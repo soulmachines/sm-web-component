@@ -38,6 +38,8 @@ const config: PlaywrightTestConfig = {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
+    screenshot: 'only-on-failure',
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
@@ -81,7 +83,7 @@ const config: PlaywrightTestConfig = {
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  // outputDir: 'test-results/',
+  outputDir: 'e2e-results/',
 
   /* Run your local dev server before starting the tests */
   webServer: {
