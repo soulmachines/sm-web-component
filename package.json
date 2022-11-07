@@ -19,7 +19,10 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs",
     "generate": "plop --plopfile generators/index.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "e2e": "npx playwright test",
+    "e2e:debug": "  npx playwright test --debug",
+    "e2e:codegen": "npx playwright codegen"
   },
   "dependencies": {
     "@soulmachines/smwebsdk": "15.3.0",
