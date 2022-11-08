@@ -51,6 +51,10 @@ const config: PlaywrightTestConfig = {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+        permissions: ['microphone', 'camera'],
+        launchOptions: {
+          args: ['--use-fake-ui-for-media-stream'],
+        },
       },
     },
 
@@ -60,7 +64,6 @@ const config: PlaywrightTestConfig = {
         ...devices['Desktop Firefox'],
         launchOptions: {
           firefoxUserPrefs: {
-            // use fake audio and video media
             'media.navigator.streams.fake': true,
             'permissions.default.microphone': 1,
             'permissions.default.camera': 1,
@@ -81,6 +84,10 @@ const config: PlaywrightTestConfig = {
       name: 'Mobile Chrome',
       use: {
         ...devices['Pixel 5'],
+        permissions: ['microphone', 'camera'],
+        launchOptions: {
+          args: ['--use-fake-ui-for-media-stream'],
+        },
       },
     },
     {
