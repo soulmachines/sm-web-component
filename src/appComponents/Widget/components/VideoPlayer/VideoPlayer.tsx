@@ -13,23 +13,24 @@ export const VideoPlayer = ({ renderInFullFrame, floatingPosition }: VideoPlayer
   const { connectionStatus } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
 
-  // Keeps the container in the page for when we go from fullframe to float.
-  // Otherwise we loose the position when the elements fixed and we get a weird layout shift
-  // Need to remove it when in full frame mode as it wasnt appearing full width in safari
-  const wrapperClasses = classNames({
-    'sm-floating-container': !renderInFullFrame,
-  });
-
-  const videoContainerClasses = classNames({
-    'sm-transition-all sm-duration-300 sm-w-full sm-h-full': true,
-    'sm-fixed sm-bottom-0 sm-p-5': renderInFullFrame,
-    'sm-left-0': floatingPosition === widgetPosition.BOTTOM_LEFT,
-    'sm-right-0': floatingPosition === widgetPosition.BOTTOM_RIGHT,
-  });
-
   return (
-    <div className={wrapperClasses} hidden={!isConnected} aria-hidden={!isConnected}>
-      <div className={videoContainerClasses}>
+    // Keeps the container in the page for when we go from fullframe to float.
+    // Otherwise we loose the position when the elements fixed and we get a weird layout shift
+    // Need to remove it when in full frame mode as it wasnt appearing full width in safari
+    <div
+      className={classNames({
+        'sm-floating-container': !renderInFullFrame,
+      })}
+      hidden={!isConnected}
+      aria-hidden={!isConnected}
+    >
+      <div
+        className={classNames('sm-transition-all sm-duration-300 sm-w-full sm-h-full', {
+          'sm-fixed sm-bottom-0 sm-p-5': renderInFullFrame,
+          'sm-left-0': floatingPosition === widgetPosition.BOTTOM_LEFT,
+          'sm-right-0': floatingPosition === widgetPosition.BOTTOM_RIGHT,
+        })}
+      >
         <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
           <Video autoConnect={false} />
           {isConnected && <VideoControls />}

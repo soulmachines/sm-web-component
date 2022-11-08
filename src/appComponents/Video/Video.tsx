@@ -64,16 +64,6 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
     config: config.gentle,
   });
 
-  const videoWrapperClass = classNames({
-    'sm-w-full sm-h-full sm-overflow-hidden': true,
-    'sm-hidden': !isConnected && !isConnecting,
-  });
-
-  const videoClass = classNames({
-    'sm-w-full sm-h-full sm-object-cover': true,
-    'sm-hidden': !isConnected,
-  });
-
   const showLoader = isConnecting && loadingIndicator;
 
   useEffect(() => {
@@ -92,7 +82,11 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   }, [isConnected, onVisibilityChange]);
 
   return (
-    <div className={videoWrapperClass}>
+    <div
+      className={classNames('sm-w-full sm-h-full sm-overflow-hidden', {
+        'sm-hidden': !isConnected && !isConnecting,
+      })}
+    >
       {showLoader && loadingIndicator}
 
       <animated.video
@@ -100,7 +94,9 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         autoPlay
         playsInline
         data-sm-video
-        className={videoClass}
+        className={classNames('sm-w-full sm-h-full sm-object-cover', {
+          'sm-hidden': !isConnected,
+        })}
         muted={isVideoMuted}
         ref={(el: HTMLVideoElement) => {
           // From the plugin docs https://github.com/wellyshen/react-cool-dimensions#how-to-share-a-ref
