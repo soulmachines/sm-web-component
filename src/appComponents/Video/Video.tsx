@@ -49,6 +49,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
   }, [videoRef, isConnected, playVideo]);
 
   const onVisibilityChange = useCallback(() => {
+    console.log('???????');
     if (videoRef.current) {
       if (document.visibilityState !== 'visible') {
         videoRef.current.pause();
