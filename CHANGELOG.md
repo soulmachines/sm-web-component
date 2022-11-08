@@ -1,5 +1,25 @@
 # Change Log
 
+# [1.11.0](https://github.com/soulmachines/sm-web-component/compare/1.10.0...1.11.0) (2022-11-08)
+
+
+### Bug Fixes
+
+* set connect button bg to white quic-2256 ([#340](https://github.com/soulmachines/sm-web-component/issues/340)) ([f4e95d2](https://github.com/soulmachines/sm-web-component/commit/f4e95d243b1d786bbea15a49ad951150896329ff))
+* use different config for serving the app tp building it quic-2246 ([#338](https://github.com/soulmachines/sm-web-component/issues/338)) ([2129ed7](https://github.com/soulmachines/sm-web-component/commit/2129ed70adae6a68d82d3340ac10631f4954cb1d))
+
+
+### Features
+
+* Add layout attribute on widget ([#330](https://github.com/soulmachines/sm-web-component/issues/330)) ([0f04222](https://github.com/soulmachines/sm-web-component/commit/0f042225157e52f2b47e0ccc41880f77ca840eb2))
+* add layout attribute on widget QUIC-2195 ([#341](https://github.com/soulmachines/sm-web-component/issues/341)) ([18bff12](https://github.com/soulmachines/sm-web-component/commit/18bff1268ad4b5694c53e6f9e3194a843dfaec10))
+* add maximize and chevronDown buttons to toggle float layout and full frame layout QUIC-2223 QUIC-2224 ([#334](https://github.com/soulmachines/sm-web-component/issues/334)) ([e179c39](https://github.com/soulmachines/sm-web-component/commit/e179c39e002d396ab62f6327a557ddcabf9d4f50))
+* bundle web components in umd library mode quic-2246 ([#337](https://github.com/soulmachines/sm-web-component/issues/337)) ([0c8bc33](https://github.com/soulmachines/sm-web-component/commit/0c8bc3304e1a397e10945c1dbf7446ebe7ea0116))
+* create fullframe style quic-2196 ([#335](https://github.com/soulmachines/sm-web-component/issues/335)) ([380089c](https://github.com/soulmachines/sm-web-component/commit/380089c0819398df095b624019a43c1a1e7d55db))
+* fix autoplay issues quic-2234 ([#344](https://github.com/soulmachines/sm-web-component/issues/344)) ([9ed4bf1](https://github.com/soulmachines/sm-web-component/commit/9ed4bf189fc472cd0af58bcabdd9551cb3601274))
+* refactor component folder quic-2215 ([#332](https://github.com/soulmachines/sm-web-component/issues/332)) ([8d60428](https://github.com/soulmachines/sm-web-component/commit/8d604285df058f50aa27ce823a7d97da159c458f))
+* Reset layout to passed in layout attribute on disconnect QUIC-2233 ([#336](https://github.com/soulmachines/sm-web-component/issues/336)) ([64c55ca](https://github.com/soulmachines/sm-web-component/commit/64c55ca1c3c728ab868deb8ee9a8689508b2c8b1))
+
 # [1.10.0](https://github.com/soulmachines/sm-web-component/compare/1.9.1...1.10.0) (2022-10-13)
 
 
