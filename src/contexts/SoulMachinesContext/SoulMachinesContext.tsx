@@ -7,11 +7,12 @@ import {
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
-import { ConnectionStatus, widgetLayout } from '../../enums';
+import { ConnectionStatus, widgetLayout, widgetPosition } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
+import { VideoPlayer } from '../../appComponents/Widget/components/VideoPlayer';
 
 type Context = {
   scene: Scene;
@@ -34,6 +35,7 @@ type Context = {
   layout: widgetLayout;
   toggleLayout: () => void;
   playVideo: () => void;
+  VideoPlayerComponent: any;
 };
 
 // Create context with default values
@@ -52,6 +54,7 @@ function SoulMachinesProvider({
   tokenServer,
   initialLayout = widgetLayout.FLOAT,
 }: SoulMachinesProviderProps) {
+  const VideoPlayerComponent = <VideoPlayer />;
   const personaId = 1;
   const scene = useMemo(
     () =>
@@ -113,6 +116,7 @@ function SoulMachinesProvider({
         scene,
         persona,
         layout,
+        VideoPlayerComponent,
         toggleLayout,
         sendTextMessage,
         enableDebugLogging,

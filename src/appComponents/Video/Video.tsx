@@ -94,6 +94,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
         autoPlay
         playsInline
         data-sm-video
+        controls
         className={classNames('sm-w-full sm-h-full sm-object-cover', {
           'sm-hidden': !isConnected,
         })}

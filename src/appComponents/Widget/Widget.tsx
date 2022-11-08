@@ -10,6 +10,9 @@ import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
 import { VideoPlayer } from './components/VideoPlayer';
+import { Dialog } from '@headlessui/react';
+import { Video } from '../Video';
+import { VideoControls } from '../VideoControls';
 
 export type WidgetProps = {
   greeting?: string;
@@ -24,7 +27,8 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, layout } = useSoulMachines();
+  const { connectionStatus, connectionState, connect, layout, toggleLayout, VideoPlayerComponent } =
+    useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
@@ -64,7 +68,6 @@ export function Widget({
                 <Notifications greeting={greeting} />
               </div>
             )}
-
             {isDisconnected && (
               <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35">
                 <ConnectButton>
@@ -72,18 +75,35 @@ export function Widget({
                 </ConnectButton>
               </div>
             )}
-
             <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
               <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
             </ProgressIndicatorWrapper>
 
-            <VideoPlayer
-              floatingPosition={position}
-              renderInFullFrame={isConnected && layout === widgetLayout.FULL_FRAME}
-            />
+            <div className="sm-floating-container" hidden={!isConnected} aria-hidden={!isConnected}>
+              {layout === widgetLayout.FLOAT && VideoPlayerComponent}
+            </div>
           </>
         </div>
       </div>
+      <Dialog
+        open={isConnected && layout === widgetLayout.FULL_FRAME}
+        onClose={() => toggleLayout()}
+      >
+        {/* The backdrop, rendered as a fixed sibling to the panel container */}
+        <div className="sm-fixed sm-inset-0 sm-bg-black/60" aria-hidden="true" />
+
+        {/* Full-screen scrollable container */}
+        <div className="sm-fixed sm-inset-5 sm-z-max sm-rounded sm-bg-white">
+          {/* Container to center the panel */}
+          <div className="sm-flex sm-h-full sm-min-h-full sm-items-center sm-justify-center sm-p-4">
+            {/* The actual dialog panel  */}
+            <Dialog.Panel className="sm-w-full sm-h-full">
+              {/* <Dialog.Title>Complete your order</Dialog.Title> */}
+              {VideoPlayerComponent}
+            </Dialog.Panel>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }
