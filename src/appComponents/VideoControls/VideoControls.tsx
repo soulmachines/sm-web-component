@@ -28,17 +28,33 @@ export function VideoControls() {
     layout === widgetLayout.FLOAT ? 'Switch to fullframe layout' : 'Switch to float layout';
 
   return (
-    <div className="sm-p-3 sm-flex sm-flex-col sm-justify-between sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
-      <div className="sm-flex sm-flex-col sm-gap-y-2">
+    <div className="sm-p-3 sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
+      <div className="sm-flex sm-flex-col">
         <div className="sm-flex sm-justify-between">
           <IconButton onClick={toggleVideoMuted} name={muteIcon} title={muteText} />
-          <IconButton onClick={disconnect} name="close" title="Close video" />
+          {layout === widgetLayout.FLOAT ? (
+            <IconButton onClick={disconnect} name="close" title="Close video" />
+          ) : (
+            <IconButton onClick={toggleLayout} name={layoutToggleIcon} title={layoutToggleTitle} />
+          )}
         </div>
       </div>
 
-      <div className="sm-flex sm-flex-col sm-gap-y-2">
-        <div className="sm-flex sm-justify-between">
-          <ConversationState state={conversationState} />
+      <div className="sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-flex-1">
+        <div className="sm-flex sm-justify-between sm-flex-2">
+          <div className="md:sm-self-end">
+            <ConversationState state={conversationState} />
+          </div>
+
+          {layout === widgetLayout.FLOAT && (
+            <div>
+              <IconButton
+                onClick={toggleLayout}
+                name={layoutToggleIcon}
+                title={layoutToggleTitle}
+              />
+            </div>
+          )}
         </div>
         <div className="sm-flex sm-justify-between">
           <IconButton
