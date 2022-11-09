@@ -125,49 +125,6 @@ Prevent `sub` and `sup` elements from affecting the line height in all browsers.
 }
 
 /*
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-3. Remove default padding in all browsers.
-*/
-
-.sm-widget button,
-.sm-widget input,
-.sm-widget optgroup,
-.sm-widget select,
-.sm-widget textarea {
-  font-family: inherit; /* 1 */
-  font-size: 100%; /* 1 */
-  font-weight: inherit; /* 1 */
-  line-height: inherit; /* 1 */
-  color: inherit; /* 1 */
-  margin: 0; /* 2 */
-  padding: 0; /* 3 */
-}
-
-/*
-Remove the inheritance of text transform in Edge and Firefox.
-*/
-
-.sm-widget button,
-.sm-widget select {
-  text-transform: none;
-}
-
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Remove default button styles.
-*/
-
-.sm-widget button,
-.sm-widget [type='button'],
-.sm-widget [type='reset'],
-.sm-widget [type='submit'] {
-  -webkit-appearance: button; /* 1 */
-  background-color: transparent; /* 2 */
-  background-image: none; /* 2 */
-}
-
-/*
 Use the modern Firefox focus style for all focusable elements.
 */
 
@@ -302,11 +259,10 @@ Make sure disabled buttons don't get the pointer cursor.
 }
 
 /*
-Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+Constrain images to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
 */
 
-.sm-widget img,
-.sm-widget video {
+.sm-widget img {
   max-width: 100%;
   height: auto;
 }
