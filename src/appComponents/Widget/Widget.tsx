@@ -80,28 +80,23 @@ export function Widget({
             </ProgressIndicatorWrapper>
 
             <div className="sm-floating-container" hidden={!isConnected} aria-hidden={!isConnected}>
-              {layout === widgetLayout.FLOAT && VideoPlayerComponent}
+              {layout === widgetLayout.FLOAT && <VideoPlayer />}
             </div>
           </>
         </div>
       </div>
+
       <Dialog
         open={isConnected && layout === widgetLayout.FULL_FRAME}
         onClose={() => toggleLayout()}
       >
         {/* The backdrop, rendered as a fixed sibling to the panel container */}
-        <div className="sm-fixed sm-inset-0 sm-bg-black/60" aria-hidden="true" />
+        <div className="sm-fixed sm-inset-0 sm-bg-black/40 sm-z-max" aria-hidden="true" />
 
-        {/* Full-screen scrollable container */}
-        <div className="sm-fixed sm-inset-5 sm-z-max sm-rounded sm-bg-white">
-          {/* Container to center the panel */}
-          <div className="sm-flex sm-h-full sm-min-h-full sm-items-center sm-justify-center sm-p-4">
-            {/* The actual dialog panel  */}
-            <Dialog.Panel className="sm-w-full sm-h-full">
-              {/* <Dialog.Title>Complete your order</Dialog.Title> */}
-              {VideoPlayerComponent}
-            </Dialog.Panel>
-          </div>
+        <div className="sm-fixed sm-inset-0 md:sm-inset-10 sm-z-max">
+          <Dialog.Panel className="sm-w-full sm-h-full">
+            <VideoPlayer />
+          </Dialog.Panel>
         </div>
       </Dialog>
     </div>

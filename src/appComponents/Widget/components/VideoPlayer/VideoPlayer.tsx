@@ -1,44 +1,18 @@
-import { ConnectionStatus, widgetPosition } from '../../../../enums';
-import { Dialog } from '@headlessui/react';
-import classNames from 'classnames';
+import { ConnectionStatus } from '../../../../enums';
 import { Video } from '../../../Video';
 import { VideoControls } from '../../../VideoControls';
 import { useSoulMachines } from '../../../../contexts/SoulMachinesContext';
-import { useEffect } from 'preact/hooks';
 
-export type VideoPlayerProps = {};
-
-export const VideoPlayer = ({}: VideoPlayerProps) => {
-  const { connectionStatus, playVideo, layout } = useSoulMachines();
+export const VideoPlayer = () => {
+  const { connectionStatus } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
 
-  // useEffect(() => {
-  //   playVideo();
-  // }, [layout]);
-
   return (
-    // Keeps the container in the page for when we go from fullframe to float.
-    // Otherwise we loose the position when the elements fixed and we get a weird layout shift
-    // Need to remove it when in full frame mode as it wasnt appearing full width in safari
-    // <div
-    // className={classNames({
-    //   'sm-floating-container': !renderInFullFrame,
-    // })}
-    // hidden={!isConnected}
-    // aria-hidden={!isConnected}
-    // >
-    <div
-      className={classNames('sm-transition-all sm-duration-300 sm-w-full sm-h-full', {
-        // 'sm-fixed sm-bottom-0 sm-p-5': renderInFullFrame,
-        // 'sm-left-0': floatingPosition === widgetPosition.BOTTOM_LEFT,
-        // 'sm-right-0': floatingPosition === widgetPosition.BOTTOM_RIGHT,
-      })}
-    >
-      <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
+    <div className="sm-transition-all sm-duration-300 sm-w-full sm-h-full">
+      <div className="sm-w-full sm-h-full sm-overflow-y-auto sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
         <Video autoConnect={false} />
         {isConnected && <VideoControls />}
       </div>
     </div>
-    // </div>
   );
 };

@@ -35,7 +35,6 @@ type Context = {
   layout: widgetLayout;
   toggleLayout: () => void;
   playVideo: () => void;
-  VideoPlayerComponent: any;
 };
 
 // Create context with default values
@@ -54,7 +53,6 @@ function SoulMachinesProvider({
   tokenServer,
   initialLayout = widgetLayout.FLOAT,
 }: SoulMachinesProviderProps) {
-  const VideoPlayerComponent = <VideoPlayer />;
   const personaId = 1;
   const scene = useMemo(
     () =>
@@ -116,7 +114,6 @@ function SoulMachinesProvider({
         scene,
         persona,
         layout,
-        VideoPlayerComponent,
         toggleLayout,
         sendTextMessage,
         enableDebugLogging,
