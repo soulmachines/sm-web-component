@@ -1,4 +1,5 @@
 import { Scene } from '@soulmachines/smwebsdk';
+import { fireEvent } from '@testing-library/preact';
 import { act, renderHook } from '@testing-library/react-hooks';
 import 'preact/hooks';
 import { useConnection } from '.';
@@ -251,6 +252,29 @@ describe('useConnection()', () => {
         expect(sessionStorage.getItem(SessionDataKeys.cameraEnabled)).toBeNull();
         expect(sessionStorage.getItem(SessionDataKeys.microphoneEnabled)).toBeNull();
       });
+    });
+  });
+
+  describe('when pageshow event is fired', () => {
+    beforeAll(() => {
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        value: { reload: jest.fn() },
+      });
+    });
+
+    afterAll(() => {
+      Object.defineProperty(window, 'location', { configurable: true, value: window.location });
+    });
+
+    it('reloads the page if the current page is from bfcache', () => {
+      fireEvent(window, new PageTransitionEvent('pageshow', { persisted: true }));
+      expect(window.location.reload).toHaveBeenCalled();
+    });
+
+    it('does not reload the page if the current page is newly loaded', () => {
+      fireEvent(window, new PageTransitionEvent('pageshow', { persisted: false }));
+      expect(window.location.reload).not.toHaveBeenCalled();
     });
   });
 });
