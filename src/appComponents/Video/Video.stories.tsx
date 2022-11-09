@@ -1,5 +1,6 @@
 import { Video } from './Video';
 import { SMProviderDecorator } from '../../../.storybook/decorators/SMProviderDecorator';
+import { Spinner } from '../../components/Spinner';
 
 export default {
   title: 'App Components / Video',
@@ -7,4 +8,4 @@ export default {
   decorators: [SMProviderDecorator],
 };
 
-export const Basic = () => <Video autoConnect={true} />;
+export const Basic = () => <Video autoConnect={true} loadingIndicator={<Spinner />} />;
