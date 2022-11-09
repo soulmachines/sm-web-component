@@ -27,7 +27,7 @@ export function Card({ children, isDismissible, style, flush }: CardProps) {
           style={{ ...transitionStyles, ...style }}
         >
           <div
-            className={classNames('sm-round-shadow-box', {
+            className={classNames('sm-round-shadow-box sm-w-full', {
               'sm-p-6': !flush,
             })}
           >
