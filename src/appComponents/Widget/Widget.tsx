@@ -94,6 +94,7 @@ export function Widget({
       <Dialog
         open={isConnected && layout === widgetLayout.FULL_FRAME}
         onClose={() => toggleLayout()}
+        className="sm-widget"
       >
         {/* The backdrop, rendered as a fixed sibling to the panel container */}
         <div className="sm-fixed sm-inset-0 sm-bg-black/40 sm-z-max" aria-hidden="true" />
