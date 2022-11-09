@@ -12,7 +12,7 @@ export function ConversationState({ state }: ConversationStateProps) {
   return (
     <div
       className={classNames(
-        'sm-flex sm-justify-center sm-items-center sm-transition-all sm-w-[42px] sm-h-[42px] sm-rounded-full sm-gap-x-1',
+        'sm-flex sm-justify-center sm-items-center sm-transition-all sm-w-[46px] sm-h-[46px] sm-rounded-full sm-gap-x-1',
         {
           'sm-bg-black': state === ConversationStateTypes.dpSpeaking,
           'sm-bg-white sm-animate-spread': state === ConversationStateTypes.idle,
