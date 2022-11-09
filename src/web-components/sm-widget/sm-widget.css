@@ -18,7 +18,7 @@
 Theme
 */
 
-sm-widget {
+.sm-widget {
   /*
     Default colors for when user does not provide a css var
     */
@@ -55,7 +55,7 @@ Custom CSS Reset
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 */
 
-sm-widget * {
+.sm-widget * {
   box-sizing: border-box;
 }
 
@@ -65,7 +65,7 @@ sm-widget * {
 3. Use a more readable tab size.
 */
 
-sm-widget {
+.sm-widget {
   line-height: 1.5; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
   -moz-tab-size: 4; /* 3 */
@@ -76,12 +76,12 @@ sm-widget {
 Remove the default font size and weight for headings.
 */
 
-sm-widget h1,
-sm-widget h2,
-sm-widget h3,
-sm-widget h4,
-sm-widget h5,
-sm-widget h6 {
+.sm-widget h1,
+.sm-widget h2,
+.sm-widget h3,
+.sm-widget h4,
+.sm-widget h5,
+.sm-widget h6 {
   font-size: inherit;
   font-weight: inherit;
 }
@@ -90,7 +90,7 @@ sm-widget h6 {
 Reset links to optimize for opt-in styling instead of opt-out.
 */
 
-sm-widget a {
+.sm-widget a {
   color: inherit;
   text-decoration: inherit;
 }
@@ -99,8 +99,8 @@ sm-widget a {
 Add the correct font weight in Edge and Safari.
 */
 
-sm-widget b,
-sm-widget strong {
+.sm-widget b,
+.sm-widget strong {
   font-weight: bolder;
 }
 
@@ -108,70 +108,27 @@ sm-widget strong {
 Prevent `sub` and `sup` elements from affecting the line height in all browsers.
 */
 
-sm-widget sub,
-sm-widget sup {
+.sm-widget sub,
+.sm-widget sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
   vertical-align: baseline;
 }
 
-sm-widget sub {
+.sm-widget sub {
   bottom: -0.25em;
 }
 
-sm-widget sup {
+.sm-widget sup {
   top: -0.5em;
-}
-
-/*
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-3. Remove default padding in all browsers.
-*/
-
-sm-widget button,
-sm-widget input,
-sm-widget optgroup,
-sm-widget select,
-sm-widget textarea {
-  font-family: inherit; /* 1 */
-  font-size: 100%; /* 1 */
-  font-weight: inherit; /* 1 */
-  line-height: inherit; /* 1 */
-  color: inherit; /* 1 */
-  margin: 0; /* 2 */
-  padding: 0; /* 3 */
-}
-
-/*
-Remove the inheritance of text transform in Edge and Firefox.
-*/
-
-sm-widget button,
-sm-widget select {
-  text-transform: none;
-}
-
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Remove default button styles.
-*/
-
-sm-widget button,
-sm-widget [type='button'],
-sm-widget [type='reset'],
-sm-widget [type='submit'] {
-  -webkit-appearance: button; /* 1 */
-  background-color: transparent; /* 2 */
-  background-image: none; /* 2 */
 }
 
 /*
 Use the modern Firefox focus style for all focusable elements.
 */
 
-sm-widget :-moz-focusring {
+.sm-widget :-moz-focusring {
   outline: auto;
 }
 
@@ -179,7 +136,7 @@ sm-widget :-moz-focusring {
 Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
 */
 
-sm-widget :-moz-ui-invalid {
+.sm-widget :-moz-ui-invalid {
   box-shadow: none;
 }
 
@@ -187,8 +144,8 @@ sm-widget :-moz-ui-invalid {
 Correct the cursor style of increment and decrement buttons in Safari.
 */
 
-sm-widget ::-webkit-inner-spin-button,
-sm-widget ::-webkit-outer-spin-button {
+.sm-widget ::-webkit-inner-spin-button,
+.sm-widget ::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -196,7 +153,7 @@ sm-widget ::-webkit-outer-spin-button {
 Remove the inner padding in Chrome and Safari on macOS.
 */
 
-sm-widget ::-webkit-search-decoration {
+.sm-widget ::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -205,7 +162,7 @@ sm-widget ::-webkit-search-decoration {
 2. Change font properties to `inherit` in Safari.
 */
 
-sm-widget ::-webkit-file-upload-button {
+.sm-widget ::-webkit-file-upload-button {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
@@ -214,34 +171,34 @@ sm-widget ::-webkit-file-upload-button {
 Removes the default spacing and border for appropriate elements.
 */
 
-sm-widget blockquote,
-sm-widget dl,
-sm-widget dd,
-sm-widget h1,
-sm-widget h2,
-sm-widget h3,
-sm-widget h4,
-sm-widget h5,
-sm-widget h6,
-sm-widget hr,
-sm-widget figure,
-sm-widget p,
-sm-widget pre {
+.sm-widget blockquote,
+.sm-widget dl,
+.sm-widget dd,
+.sm-widget h1,
+.sm-widget h2,
+.sm-widget h3,
+.sm-widget h4,
+.sm-widget h5,
+.sm-widget h6,
+.sm-widget hr,
+.sm-widget figure,
+.sm-widget p,
+.sm-widget pre {
   margin: 0;
 }
 
-sm-widget fieldset {
+.sm-widget fieldset {
   margin: 0;
   padding: 0;
 }
 
-sm-widget legend {
+.sm-widget legend {
   padding: 0;
 }
 
-sm-widget ol,
-sm-widget ul,
-sm-widget menu {
+.sm-widget ol,
+.sm-widget ul,
+.sm-widget menu {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -251,7 +208,7 @@ sm-widget menu {
 Prevent resizing textareas horizontally by default.
 */
 
-sm-widget textarea {
+.sm-widget textarea {
   resize: vertical;
 }
 
@@ -260,8 +217,8 @@ sm-widget textarea {
 2. Set the default placeholder color to the user's configured gray 400 color.
 */
 
-sm-widget input::placeholder,
-sm-widget textarea::placeholder {
+.sm-widget input::placeholder,
+.sm-widget textarea::placeholder {
   opacity: 1; /* 1 */
   color: theme('colors.gray.400', #9ca3af); /* 2 */
 }
@@ -271,15 +228,15 @@ Set the default cursor for buttons.
 Remove border
 */
 
-sm-widget button,
-sm-widget [role='button'] {
+.sm-widget button,
+.sm-widget [role='button'] {
   cursor: pointer;
 }
 
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
-sm-widget :disabled {
+.sm-widget :disabled {
   cursor: default;
 }
 
@@ -289,24 +246,23 @@ sm-widget :disabled {
    This can trigger a poorly considered lint error in some tools but is included by design.
 */
 
-sm-widget img,
-sm-widget svg,
-sm-widget video,
-sm-widget canvas,
-sm-widget audio,
-sm-widget iframe,
-sm-widget embed,
-sm-widget object {
+.sm-widget img,
+.sm-widget svg,
+.sm-widget video,
+.sm-widget canvas,
+.sm-widget audio,
+.sm-widget iframe,
+.sm-widget embed,
+.sm-widget object {
   display: block; /* 1 */
   vertical-align: middle; /* 2 */
 }
 
 /*
-Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+Constrain images to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
 */
 
-sm-widget img,
-sm-widget video {
+.sm-widget img {
   max-width: 100%;
   height: auto;
 }

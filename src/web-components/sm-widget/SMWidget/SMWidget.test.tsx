@@ -10,6 +10,11 @@ describe('<SMWidget />', () => {
   const customRender = () =>
     render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} parent={mockParent} />);
 
+  it('attaches a sm-widget class to the parent element', () => {
+    customRender();
+    expect(mockParent.classList.contains('sm-widget')).toEqual(true);
+  });
+
   it('renders a loading indicator when connecting', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),

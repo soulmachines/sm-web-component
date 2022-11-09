@@ -26,5 +26,5 @@ export const parameters = {
   },
 };
 
-// Render our stories into a sm-widget so we get the global styles
-export const decorators = [(Story) => <sm-widget>{Story()}</sm-widget>];
+// Render our stories in a .sm-widget class so we get the global styles
+export const decorators = [(Story) => <div className="sm-widget">{Story()}</div>];
