@@ -84,8 +84,7 @@ function useSMMedia({
             setVideoMuted({ mute: false, saveSetting: false });
           }
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(() => {
           // Video playback failed, can't play with audio
           setVideoMuted({ mute: true, saveSetting: false });
         });

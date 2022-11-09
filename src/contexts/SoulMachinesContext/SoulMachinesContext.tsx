@@ -7,12 +7,11 @@ import {
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
-import { ConnectionStatus, widgetLayout, widgetPosition } from '../../enums';
+import { ConnectionStatus, widgetLayout } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
-import { VideoPlayer } from '../../appComponents/Widget/components/VideoPlayer';
 
 type Context = {
   scene: Scene;

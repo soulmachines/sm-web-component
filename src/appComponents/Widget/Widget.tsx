@@ -9,7 +9,6 @@ import { useEffect } from 'preact/hooks';
 import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
-import { VideoPlayer } from './components/VideoPlayer';
 import { Dialog } from '@headlessui/react';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
@@ -27,8 +26,7 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, layout, toggleLayout, VideoPlayerComponent } =
-    useSoulMachines();
+  const { connectionStatus, connectionState, connect, layout, toggleLayout } = useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
