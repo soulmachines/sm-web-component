@@ -25,6 +25,9 @@ export function SMWidget({
   parent,
   layout,
 }: SMWidgetProps) {
+  // Add class to parent that contains our global styles
+  parent.classList.add('sm-widget');
+
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={layout}>
       <BindPublicSmEvents element={parent} />
