@@ -99,7 +99,7 @@ export function Widget({
         {/* The backdrop, rendered as a fixed sibling to the panel container */}
         <div className="sm-fixed sm-inset-0 sm-bg-black/40 sm-z-max" aria-hidden="true" />
 
-        <div className="sm-fixed sm-inset-0 md:sm-inset-10 sm-z-max sm-overflow-y-auto">
+        <div className="sm-fixed sm-inset-0 md:sm-inset-10 xl:sm-inset-16 sm-z-max sm-overflow-y-auto">
           <Dialog.Panel className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
             <Video autoConnect={false} />
             {isConnected && <VideoControls />}

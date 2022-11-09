@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     screens: {
       md: { raw: '(min-width: 768px) and (min-height: 450px)' },
+      xl: { raw: '(min-width: 1920px)' },
     },
     colors: {
       transparent: 'transparent',
