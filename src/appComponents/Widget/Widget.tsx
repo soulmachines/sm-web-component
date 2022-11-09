@@ -100,7 +100,7 @@ export function Widget({
         <div className="sm-fixed sm-inset-0 sm-bg-black/40 sm-z-max" aria-hidden="true" />
 
         <div className="sm-fixed sm-inset-0 md:sm-inset-10 xl:sm-inset-16 sm-z-max sm-overflow-y-auto">
-          <Dialog.Panel className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
+          <Dialog.Panel className="sm-w-full sm-h-full md:sm-rounded-3xl sm-overflow-hidden sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest">
             <Video autoConnect={false} />
             {isConnected && <VideoControls />}
           </Dialog.Panel>
