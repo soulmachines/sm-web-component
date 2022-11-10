@@ -70,6 +70,15 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     setConnectionStatus(ConnectionStatus.TIMED_OUT);
   });
 
+  //Safari not able to play video and shows blank video when loading from bfcache, we need to force a reload when page is loaded from bfcache
+  //https://stackoverflow.com/questions/8788802/prevent-safari-loading-from-cache-when-back-button-is-clicked
+  //https://web.dev/bfcache/
+  window.addEventListener('pageshow', (event: PageTransitionEvent) => {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+
   return {
     connectionStatus,
     connectionError,
