@@ -64,10 +64,6 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
     } else {
       removePublicMethods();
     }
-
-    // dispatch an event for widget consumers to know when
-    // the element's public api is ready to be consumed
-    element.dispatchEvent(new Event('ready'));
   }, [element, connectionStatus, htmlElement, persona, scene, sendTextMessage, enableDebugLogging]);
 
   return null;
