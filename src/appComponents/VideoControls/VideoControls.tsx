@@ -31,7 +31,12 @@ export function VideoControls() {
     <div className="sm-p-3 sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
       <div className="sm-flex sm-flex-col">
         <div className="sm-flex sm-justify-between">
-          <IconButton onClick={toggleVideoMuted} name={muteIcon} title={muteText} />
+          <IconButton
+            onClick={toggleVideoMuted}
+            name={muteIcon}
+            title={muteText}
+            theme={isVideoMuted ? Theme.danger : Theme.default}
+          />
           {layout === widgetLayout.FLOAT ? (
             <IconButton onClick={disconnect} name="close" title="Close video" />
           ) : (
