@@ -66,6 +66,7 @@ export function Widget({
                 <Notifications greeting={greeting} />
               </div>
             )}
+
             {isDisconnected && (
               <div className="sm-w-18 sm-h-18 md:sm-w-35 md:sm-h-35">
                 <ConnectButton>
@@ -77,14 +78,14 @@ export function Widget({
               <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
             </ProgressIndicatorWrapper>
 
-            <div className="sm-floating-container" hidden={!isConnected} aria-hidden={!isConnected}>
-              {layout === widgetLayout.FLOAT && (
+            {layout === widgetLayout.FLOAT && isConnected && (
+              <div className="sm-floating-container">
                 <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
                   <Video autoConnect={false} />
-                  {isConnected && <VideoControls />}
+                  <VideoControls />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </>
         </div>
       </div>
