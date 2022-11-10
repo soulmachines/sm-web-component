@@ -9,7 +9,9 @@ import { useEffect } from 'preact/hooks';
 import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
-import { VideoPlayer } from './components/VideoPlayer';
+import { Video } from '../Video';
+import { VideoControls } from '../VideoControls';
+import { FullFrameModal } from '../FullFrameModal';
 
 export type WidgetProps = {
   greeting?: string;
@@ -72,18 +74,23 @@ export function Widget({
                 </ConnectButton>
               </div>
             )}
-
             <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
               <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
             </ProgressIndicatorWrapper>
 
-            <VideoPlayer
-              floatingPosition={position}
-              renderInFullFrame={isConnected && layout === widgetLayout.FULL_FRAME}
-            />
+            {layout === widgetLayout.FLOAT && isConnected && (
+              <div className="sm-floating-container">
+                <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
+                  <Video autoConnect={false} />
+                  <VideoControls />
+                </div>
+              </div>
+            )}
           </>
         </div>
       </div>
+
+      <FullFrameModal isOpen={isConnected && layout === widgetLayout.FULL_FRAME} />
     </div>
   );
 }

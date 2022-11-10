@@ -14,3 +14,13 @@ Object.defineProperty(window, 'ResizeObserver', {
     unobserve: jest.fn(),
   })),
 });
+
+Object.defineProperty(window, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: jest.fn().mockImplementation(() => ({
+    disconnect: jest.fn(),
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+  })),
+});
