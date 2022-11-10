@@ -2,11 +2,12 @@ import { render } from '@testing-library/preact';
 import { SMWidget } from '.';
 import * as SoulMachinesContext from '../../../contexts/SoulMachinesContext/SoulMachinesContext';
 import { ConnectionStatus } from '../../../enums';
+import { SMWidgetElement } from './SMWidget';
 
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMWidget />', () => {
-  const mockParent = document.createElement('div');
+  const mockParent: SMWidgetElement = document.createElement('div');
   const customRender = () =>
     render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} parent={mockParent} />);
 
@@ -15,6 +16,36 @@ describe('<SMWidget />', () => {
     expect(mockParent.classList.contains('sm-widget')).toEqual(true);
   });
 
+  describe(`when it is initialized`, () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+      });
+    });
+
+    it('dispatches a `ready` event from the element', () => {
+      const mockCallback = jest.fn();
+      mockParent.addEventListener('ready', mockCallback);
+
+      customRender();
+
+      expect(mockCallback).toHaveBeenCalledTimes(1);
+      mockParent.removeEventListener('ready', mockCallback);
+    });
+
+    it('dispatches `ready` event after all properties are ready', () => {
+      const callback = () => {
+        mockParent.removeEventListener('ready', callback);
+
+        expect(mockParent.scene).toBeDefined();
+        expect(mockParent.persona).toBeDefined();
+      };
+
+      mockParent.addEventListener('ready', callback);
+
+      customRender();
+    });
+  });
   it('renders a loading indicator when connecting', () => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),

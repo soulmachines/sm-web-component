@@ -1,17 +1,10 @@
 import { useEffect } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
-import { Persona, Scene } from '@soulmachines/smwebsdk';
-
-export interface WebComponentElement extends HTMLElement {
-  persona?: Persona;
-  scene?: Scene;
-  sendTextMessage?: (message: string) => void;
-  enableDebugLogging?: (enabled: boolean) => void;
-}
+import { SMWidgetElement } from '../../web-components/sm-widget/SMWidget/SMWidget';
 
 export type BindPublicSmEventsProps = {
-  element: WebComponentElement;
+  element: SMWidgetElement;
 };
 
 // Ignoring as I want to use the generic Function type since we don't know what the Function will look like
@@ -24,19 +17,18 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
     useSoulMachines();
 
   useEffect(() => {
-    // expose `persona` as a public property
-    Object.defineProperty(element, 'persona', {
-      configurable: true,
-      get() {
-        return persona;
+    /**
+     * Expose persona and scene immediately, before connect,
+     * to allow for adding listeners before connect starts
+     */
+    Object.defineProperties(element, {
+      persona: {
+        configurable: true,
+        get: () => persona,
       },
-    });
-
-    // expose `scene` as a public property
-    Object.defineProperty(element, 'scene', {
-      configurable: true,
-      get() {
-        return scene;
+      scene: {
+        configurable: true,
+        get: () => scene,
       },
     });
 

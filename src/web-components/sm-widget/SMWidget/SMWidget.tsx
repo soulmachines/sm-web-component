@@ -4,6 +4,7 @@ import { Widget } from '../../../appComponents/Widget';
 import { BindPublicSmEvents } from '../../../appComponents/BindPublicSmEvents';
 import { widgetLayout, widgetPosition } from '../../../enums';
 import { useEffect } from 'preact/hooks';
+import { Persona, Scene } from '@soulmachines/smwebsdk';
 
 export type SMWidgetProps = {
   apiKey?: string;
@@ -15,6 +16,17 @@ export type SMWidgetProps = {
   layout?: widgetLayout;
   parent: HTMLElement;
 };
+
+/**
+ * Public interface for the SMWidget custom element,
+ * may be used by Typescript-based consumers.
+ */
+export interface SMWidgetElement extends HTMLElement {
+  persona?: Persona;
+  scene?: Scene;
+  sendTextMessage?: (message: string) => void;
+  enableDebugLogging?: (enabled: boolean) => void;
+}
 
 export function SMWidget({
   tokenServer,

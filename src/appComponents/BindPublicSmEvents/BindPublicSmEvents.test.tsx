@@ -1,12 +1,13 @@
 import { render } from '@testing-library/preact';
-import { BindPublicSmEvents, WebComponentElement } from '.';
+import { BindPublicSmEvents } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
+import { SMWidgetElement } from '../../web-components/sm-widget/SMWidget/SMWidget';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<BindPublicSmEvents />', () => {
-  const element: WebComponentElement = document.createElement('div');
+  const element: SMWidgetElement = document.createElement('div');
 
   describe(`when it is initialized`, () => {
     beforeEach(() => {
@@ -27,26 +28,6 @@ describe('<BindPublicSmEvents />', () => {
       render(<BindPublicSmEvents element={element} />);
 
       expect(element.scene).toBe(scene);
-    });
-
-    it('dispatches a `ready` event from the element', () => {
-      const mockCallback = jest.fn();
-      element.addEventListener('ready', mockCallback);
-      render(<BindPublicSmEvents element={element} />);
-
-      expect(mockCallback).toHaveBeenCalledTimes(1);
-      element.removeEventListener('ready', mockCallback);
-    });
-
-    it('dispatches `ready` event after all properties are ready', () => {
-      const callback = () => {
-        element.removeEventListener('ready', callback);
-        expect(element.scene).toBeDefined();
-        expect(element.persona).toBeDefined();
-      };
-      element.addEventListener('ready', callback);
-
-      render(<BindPublicSmEvents element={element} />);
     });
   });
 
