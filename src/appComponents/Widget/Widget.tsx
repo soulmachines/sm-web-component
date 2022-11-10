@@ -9,9 +9,9 @@ import { useEffect } from 'preact/hooks';
 import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
-import { Dialog } from '@headlessui/react';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
+import { FullFrameModal } from '../FullFrameModal';
 
 export type WidgetProps = {
   greeting?: string;
@@ -26,7 +26,7 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, layout, toggleLayout } = useSoulMachines();
+  const { connectionStatus, connectionState, connect, layout } = useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
@@ -89,21 +89,7 @@ export function Widget({
         </div>
       </div>
 
-      <Dialog
-        open={isConnected && layout === widgetLayout.FULL_FRAME}
-        onClose={() => toggleLayout()}
-        className="sm-widget"
-      >
-        {/* The backdrop, rendered as a fixed sibling to the panel container */}
-        <div className="sm-fixed sm-inset-0 sm-bg-black/40 sm-z-max" aria-hidden="true" />
-
-        <div className="sm-fixed sm-inset-0 md:sm-inset-10 xl:sm-inset-16 sm-z-max sm-overflow-y-auto">
-          <Dialog.Panel className="sm-w-full sm-h-full md:sm-rounded-3xl sm-overflow-hidden sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest">
-            <Video autoConnect={false} />
-            {isConnected && <VideoControls />}
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+      <FullFrameModal isOpen={isConnected && layout === widgetLayout.FULL_FRAME} />
     </div>
   );
 }
