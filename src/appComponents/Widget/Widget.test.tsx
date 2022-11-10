@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/preact';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { ConnectionStatus, SessionDataKeys, widgetPosition } from '../../enums';
+import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -158,36 +158,54 @@ describe('<Widget />', () => {
   });
 
   describe('when the scene is connected', () => {
-    beforeEach(() => {
-      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
-        ...SoulMachinesContext.useSoulMachines(),
-        connectionStatus: ConnectionStatus.CONNECTED,
+    describe('when layout is FLOAT', () => {
+      beforeEach(() => {
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          connectionStatus: ConnectionStatus.CONNECTED,
+          layout: widgetLayout.FLOAT,
+        });
+      });
+
+      it('renders a video', () => {
+        const { container } = customRender();
+        expect(container.querySelectorAll('video')).toHaveLength(1);
+      });
+
+      it('renders a disconnect button', () => {
+        const { queryByTitle } = customRender();
+        expect(queryByTitle('Close video')).toBeInTheDocument();
+      });
+
+      it('does not render a loading indicator', () => {
+        const { queryByRole } = customRender();
+        expect(queryByRole('progressbar')).not.toBeInTheDocument();
+      });
+
+      it('does not render the default greeting', () => {
+        const { queryByText } = customRender();
+        expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
+      });
+
+      it('does not render a timeout message', () => {
+        const { queryByText } = customRender();
+        expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
       });
     });
 
-    it('renders a video', () => {
-      const { container } = customRender();
-      expect(container.querySelector('video')).toBeInTheDocument();
-    });
+    describe('when layout is FULLFRAME', () => {
+      beforeEach(() => {
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          connectionStatus: ConnectionStatus.CONNECTED,
+          layout: widgetLayout.FULL_FRAME,
+        });
+      });
 
-    it('renders a disconnect button', () => {
-      const { queryByTitle } = customRender();
-      expect(queryByTitle('Close video')).toBeInTheDocument();
-    });
-
-    it('does not render a loading indicator', () => {
-      const { queryByRole } = customRender();
-      expect(queryByRole('progressbar')).not.toBeInTheDocument();
-    });
-
-    it('does not render the default greeting', () => {
-      const { queryByText } = customRender();
-      expect(queryByText(defaultGreeting)).not.toBeInTheDocument();
-    });
-
-    it('does not render a timeout message', () => {
-      const { queryByText } = customRender();
-      expect(queryByText(timeoutMessage)).not.toBeInTheDocument();
+      it('renders a video', () => {
+        const { baseElement } = customRender();
+        expect(baseElement.querySelectorAll('video')).toHaveLength(1);
+      });
     });
   });
 });
