@@ -26,4 +26,9 @@ describe('<FullFrameModal />', () => {
 
     expect(SoulMachinesContext.useSoulMachines().toggleLayout).toHaveBeenCalledTimes(1);
   });
+
+  it('renders a video', () => {
+    const { baseElement } = render(<FullFrameModal isOpen={true} />);
+    expect(baseElement.querySelectorAll('video')).toHaveLength(1);
+  });
 });
