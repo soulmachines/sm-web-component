@@ -1,11 +1,11 @@
 import { fireEvent, render } from '@testing-library/preact';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { FullFrameModal } from '.';
+import { Modal } from '.';
 import { widgetLayout } from '../../enums';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
-describe('<FullFrameModal />', () => {
+describe('<Modal />', () => {
   beforeAll(() => {
     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
       ...SoulMachinesContext.useSoulMachines(),
@@ -14,12 +14,12 @@ describe('<FullFrameModal />', () => {
   });
 
   it('does not call toggleLayout by default', () => {
-    render(<FullFrameModal isOpen={true} />);
+    render(<Modal isOpen={true} />);
     expect(SoulMachinesContext.useSoulMachines().toggleLayout).not.toHaveBeenCalled();
   });
 
   it('calls toggleLayout when the minimize button is clicked', async () => {
-    const { getByTitle } = render(<FullFrameModal isOpen={true} />);
+    const { getByTitle } = render(<Modal isOpen={true} />);
 
     const button = getByTitle('Switch to float layout');
     await fireEvent.click(button);
@@ -28,7 +28,7 @@ describe('<FullFrameModal />', () => {
   });
 
   it('renders a video', () => {
-    const { baseElement } = render(<FullFrameModal isOpen={true} />);
+    const { baseElement } = render(<Modal isOpen={true} />);
     expect(baseElement.querySelectorAll('video')).toHaveLength(1);
   });
 });

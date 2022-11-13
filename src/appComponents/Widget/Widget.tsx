@@ -11,7 +11,7 @@ import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
-import { FullFrameModal } from '../FullFrameModal';
+import { Modal } from '../Modal';
 
 export type WidgetProps = {
   greeting?: string;
@@ -48,9 +48,11 @@ export function Widget({
           'sm-items-start': position === widgetPosition.BOTTOM_LEFT,
         })}
       >
-        <div class="sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
-          <ContentCards />
-        </div>
+        {layout === widgetLayout.FLOAT && isConnected && (
+          <div class="sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
+            <ContentCards />
+          </div>
+        )}
 
         <div
           className={classNames(
@@ -90,7 +92,13 @@ export function Widget({
         </div>
       </div>
 
-      <FullFrameModal isOpen={isConnected && layout === widgetLayout.FULL_FRAME} />
+      <Modal isOpen={isConnected && layout === widgetLayout.FULL_FRAME}>
+        <div class="sm-fixed sm-bottom-20 sm-right-20 sm-z-max sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-row  sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
+          <ContentCards />
+        </div>
+        <Video autoConnect={false} />
+        <VideoControls />
+      </Modal>
     </div>
   );
 }

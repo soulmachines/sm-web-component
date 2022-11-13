@@ -1,12 +1,11 @@
 import { ContentCard } from '@soulmachines/smwebsdk';
 import { Fragment, JSX } from 'preact';
-import { useEffect, useState } from 'preact/hooks';
 import { useTransition, animated, config } from 'react-spring';
-import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ImageCard } from '../../contentCards/ImageCard';
 import { LinkCard, LinkCardProps } from '../../contentCards/LinkCard';
 import { MarkdownCard } from '../../contentCards/MarkdownCard';
 import { OptionsCard } from '../../contentCards/OptionsCard';
+import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 
 export type CardComponent = {
   content: ContentCard;
@@ -16,8 +15,7 @@ const ExternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExtern
 const InternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={false} />;
 
 export function ContentCards() {
-  const { scene } = useSoulMachines();
-  const [cards, setCards] = useState<ContentCard[]>([]);
+  const { cards } = useSoulMachines();
   const transitions = useTransition(cards, {
     from: { opacity: 0, transform: 'translateY(20px)' },
     enter: { opacity: 1, transform: 'translateY(0px)' },
@@ -31,14 +29,6 @@ export function ContentCards() {
     internalLink: InternalLinkCard,
     markdown: MarkdownCard,
   };
-
-  useEffect(() => {
-    scene.conversation.onCardChanged.addListener((activeCards: ContentCard[]) =>
-      setCards(activeCards),
-    );
-
-    scene.conversation.autoClearCards = true;
-  }, [scene]);
 
   return (
     <Fragment>

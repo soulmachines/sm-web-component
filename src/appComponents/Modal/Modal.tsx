@@ -1,13 +1,12 @@
 import { Dialog } from '@headlessui/react';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { Video } from '../Video';
-import { VideoControls } from '../VideoControls';
 
-export type FullFrameModalProps = {
+export type ModalProps = {
   isOpen?: boolean;
+  children: JSX.Element[];
 };
 
-export function FullFrameModal({ isOpen }: FullFrameModalProps) {
+export function Modal({ isOpen, children }: ModalProps) {
   const { toggleLayout } = useSoulMachines();
 
   return (
@@ -19,8 +18,7 @@ export function FullFrameModal({ isOpen }: FullFrameModalProps) {
 
       <div className="sm-fixed sm-inset-0 md:sm-inset-10 xl:sm-inset-16 sm-z-max sm-overflow-y-auto">
         <Dialog.Panel className="sm-w-full sm-h-full md:sm-rounded-3xl sm-overflow-hidden sm-bg-white sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest">
-          <Video autoConnect={false} />
-          <VideoControls />
+          {children}
         </Dialog.Panel>
       </div>
     </Dialog>
