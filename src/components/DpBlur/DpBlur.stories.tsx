@@ -13,7 +13,7 @@ export default {
         max: 10,
         step: 1,
       },
-      defaultValue: 10,
+      defaultValue: 20,
     },
   },
 };
@@ -29,7 +29,7 @@ export const Basic = ({ maxBlur }: DpBlurProps) => {
       style="background-image:url(https://assets.gocomics.com/uploads/collection_images/collection_image_large_1628638_dilbert-inventions-content-admin-2048x1280_201809101600.jpg);background-attachment:fixed"
     >
       <DpBlur maxBlur={maxBlur}>
-        <div className="" style="padding-top:calc(90%);">
+        <div className="" style="padding-top:90px;">
           <ImageCard content={imageCardContent} />
           <ImageCard content={imageCardContent} />
         </div>
