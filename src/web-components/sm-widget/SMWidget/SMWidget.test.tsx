@@ -7,13 +7,13 @@ import { SMWidgetElement } from './SMWidget';
 jest.mock('../../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<SMWidget />', () => {
-  const mockParent: SMWidgetElement = document.createElement('div');
+  const element: SMWidgetElement = document.createElement('div');
   const customRender = () =>
-    render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} parent={mockParent} />);
+    render(<SMWidget apiKey="123" connecting-indicator={<p>Loading...</p>} parent={element} />);
 
   it('attaches a sm-widget class to the parent element', () => {
     customRender();
-    expect(mockParent.classList.contains('sm-widget')).toEqual(true);
+    expect(element.classList.contains('sm-widget')).toEqual(true);
   });
 
   describe(`when it is initialized`, () => {
@@ -25,23 +25,23 @@ describe('<SMWidget />', () => {
 
     it('dispatches a `ready` event from the element', () => {
       const mockCallback = jest.fn();
-      mockParent.addEventListener('ready', mockCallback);
+      element.addEventListener('ready', mockCallback);
 
       customRender();
 
       expect(mockCallback).toHaveBeenCalledTimes(1);
-      mockParent.removeEventListener('ready', mockCallback);
+      element.removeEventListener('ready', mockCallback);
     });
 
     it('dispatches `ready` event after all properties are ready', () => {
       const callback = () => {
-        mockParent.removeEventListener('ready', callback);
+        element.removeEventListener('ready', callback);
 
-        expect(mockParent.scene).toBeDefined();
-        expect(mockParent.persona).toBeDefined();
+        expect(element.scene).toBeDefined();
+        expect(element.persona).toBeDefined();
       };
 
-      mockParent.addEventListener('ready', callback);
+      element.addEventListener('ready', callback);
 
       customRender();
     });
