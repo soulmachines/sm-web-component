@@ -1,16 +1,14 @@
 import { Dialog } from '@headlessui/react';
-import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 
 export type ModalProps = {
   isOpen?: boolean;
+  onClose: () => void;
   children: JSX.Element[];
 };
 
-export function Modal({ isOpen, children }: ModalProps) {
-  const { toggleLayout } = useSoulMachines();
-
+export function Modal({ isOpen, onClose, children }: ModalProps) {
   return (
-    <Dialog open={isOpen} onClose={() => toggleLayout()} className="sm-widget">
+    <Dialog open={isOpen} onClose={onClose} className="sm-widget">
       <Dialog.Title className="sm-sr-only">Interactive Digital Person</Dialog.Title>
 
       {/* The backdrop, rendered as a fixed sibling to the panel container */}

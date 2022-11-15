@@ -26,7 +26,7 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, layout } = useSoulMachines();
+  const { connectionStatus, connectionState, connect, layout, toggleLayout } = useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
@@ -48,11 +48,7 @@ export function Widget({
           'sm-items-start': position === widgetPosition.BOTTOM_LEFT,
         })}
       >
-        {layout === widgetLayout.FLOAT && isConnected && (
-          <div class="sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
-            <ContentCards />
-          </div>
-        )}
+        {layout === widgetLayout.FLOAT && <ContentCards />}
 
         <div
           className={classNames(
@@ -92,12 +88,15 @@ export function Widget({
         </div>
       </div>
 
-      <Modal isOpen={isConnected && layout === widgetLayout.FULL_FRAME}>
-        <div class="sm-fixed sm-bottom-20 sm-right-20 sm-z-max sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-row  sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
-          <ContentCards />
-        </div>
+      <Modal
+        isOpen={isConnected && layout === widgetLayout.FULL_FRAME}
+        onClose={() => toggleLayout()}
+      >
         <Video autoConnect={false} />
         <VideoControls />
+        <div class="sm-absolute sm-bottom-1/2 sm-translate-y-1/2 md:sm-right-24 xl:sm-right-40">
+          <ContentCards />
+        </div>
       </Modal>
     </div>
   );
