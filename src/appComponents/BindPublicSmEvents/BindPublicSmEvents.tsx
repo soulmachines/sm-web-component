@@ -12,7 +12,6 @@ export type BindPublicSmEventsProps = {
 type GenericFunction = Function;
 
 export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
-  const htmlElement = element as unknown as Record<string, GenericFunction | undefined>;
   const { connectionStatus, persona, scene, sendTextMessage, enableDebugLogging } =
     useSoulMachines();
 
@@ -31,6 +30,10 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
         get: () => scene,
       },
     });
+  }, [element, persona, scene]);
+
+  useEffect(() => {
+    const htmlElement = element as unknown as Record<string, GenericFunction | undefined>;
 
     const publicMethods: [string, GenericFunction][] = [
       ['sendTextMessage', sendTextMessage],
@@ -56,7 +59,7 @@ export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
     } else {
       removePublicMethods();
     }
-  }, [element, connectionStatus, htmlElement, persona, scene, sendTextMessage, enableDebugLogging]);
+  }, [element, connectionStatus, sendTextMessage, enableDebugLogging]);
 
   return null;
 }
