@@ -1,8 +1,9 @@
 import React from 'react';
 
-type DpBlurProps = {
+export type DpBlurProps = {
   children?: JSX.Element | undefined;
+  maxBlur?: number;
 };
-export function DpBlur({ children }: DpBlurProps) {
-  return <div style="backdrop-filter:blur(10px)">{children}</div>;
+export function DpBlur({ children, maxBlur = 10 }: DpBlurProps) {
+  return <div style={'backdrop-filter:blur(' + maxBlur + 'px);'}>{children}</div>;
 }
