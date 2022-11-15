@@ -16,7 +16,7 @@ describe('<SMWidget />', () => {
     expect(element.classList.contains('sm-widget')).toEqual(true);
   });
 
-  describe(`when it is initialized`, () => {
+  describe('when it is initialized', () => {
     beforeEach(() => {
       jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
         ...SoulMachinesContext.useSoulMachines(),
