@@ -1,5 +1,5 @@
 import { Dialog } from '@headlessui/react';
-import { DpBlur } from '../../components/DpBlur';
+import { BackdropBlur } from '../../components/BackdropBlur';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
@@ -11,9 +11,10 @@ export type FullFrameModalProps = {
 
 export function FullFrameModal({ isOpen }: FullFrameModalProps) {
   const { toggleLayout } = useSoulMachines();
+  const ref = useRef(null);
 
   return (
-    <Dialog open={isOpen} onClose={() => toggleLayout()} className="sm-widget">
+    <Dialog ref={ref} open={isOpen} onClose={() => toggleLayout()} className="sm-widget">
       <Dialog.Title className="sm-sr-only">Interactive Digital Person</Dialog.Title>
 
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
@@ -23,7 +24,7 @@ export function FullFrameModal({ isOpen }: FullFrameModalProps) {
         <Dialog.Panel className="sm-w-full sm-h-full md:sm-rounded-3xl sm-overflow-hidden sm-bg-white sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest">
           <Video autoConnect={false} />
           <VideoControls />
-          {isOpen && <DpBlur scrollTargetRef={ref} />}
+          {isOpen && <BackdropBlur scrollTargetRef={ref} />}
         </Dialog.Panel>
       </div>
     </Dialog>
