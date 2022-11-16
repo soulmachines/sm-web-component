@@ -2,7 +2,7 @@ import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { fireEvent, render } from '@testing-library/preact';
 import { SoulMachinesProvider, useSoulMachines } from '.';
 import { widgetLayout } from '../../enums';
-import { useCards } from '../../hooks/useCards';
+import { useContentCards } from '../../hooks/useContentCards';
 import { useConnection } from '../../hooks/useConnection';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
@@ -30,8 +30,8 @@ jest.mock('../../hooks/useToggleLayout', () => ({
     setLayout: mockSetLayout,
   })),
 }));
-jest.mock('../../hooks/useCards', () => ({
-  useCards: jest.fn(() => ({
+jest.mock('../../hooks/useContentCards', () => ({
+  useContentCards: jest.fn(() => ({
     cards: mockCards,
   })),
 }));
@@ -78,9 +78,9 @@ describe('<SoulMachinesProvider />', () => {
     expect(useToggleLayout).toHaveBeenCalledWith(initialLayout);
   });
 
-  it('calls useCards with scene', () => {
+  it('calls useContentCards with scene', () => {
     customRender();
-    expect(useCards).toHaveBeenCalledWith(mockScene);
+    expect(useContentCards).toHaveBeenCalledWith(mockScene);
   });
 
   describe('creating a scene', () => {

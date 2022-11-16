@@ -1,10 +1,10 @@
 import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/preact';
-import { useCards } from './useCards';
+import { useContentCards } from './useContentCards';
 
-describe('useCards', () => {
+describe('useContentCards', () => {
   const mockScene = new Scene();
-  const customRender = () => renderHook(() => useCards(mockScene));
+  const customRender = () => renderHook(() => useContentCards(mockScene));
 
   it('returns an empty array by default', () => {
     const { result } = customRender();

@@ -13,7 +13,7 @@ import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
-import { useCards } from '../../hooks/useCards';
+import { useContentCards } from '../../hooks/useContentCards';
 
 export type SMContext = {
   scene: Scene;
@@ -102,7 +102,7 @@ function SoulMachinesProvider({
     videoRef: useConnectionData.videoRef,
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);
-  const { cards } = useCards(scene);
+  const { cards } = useContentCards(scene);
 
   // Define a new global disconnection function here
   const disconnect = () => {

@@ -1,7 +1,7 @@
 import { Scene, ContentCard } from '@soulmachines/smwebsdk';
 import { useEffect, useState } from 'preact/hooks';
 
-function useCards(scene: Scene) {
+function useContentCards(scene: Scene) {
   const [cards, setCards] = useState<ContentCard[]>([]);
 
   useEffect(() => {
@@ -17,4 +17,4 @@ function useCards(scene: Scene) {
   };
 }
 
-export { useCards };
+export { useContentCards };
