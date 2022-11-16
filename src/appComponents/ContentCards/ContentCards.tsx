@@ -32,20 +32,22 @@ export function ContentCards() {
 
   return (
     <Fragment>
-      <div class="sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
-        {transitions((style, card) => {
-          // Get the custom content card to render
-          const ContentCardComponent = cardComponents[card?.type || ''];
+      {transitions((style, card) => {
+        // Get the custom content card to render
+        const ContentCardComponent = cardComponents[card?.type || ''];
 
-          // Return if one does not exist
-          if (!ContentCardComponent) return null;
+        // Return if one does not exist
+        if (!ContentCardComponent) return null;
 
-          // Wrap content card in react springs animation hooks
-          const AnimatedContentCardComponent = animated(ContentCardComponent);
+        // Wrap content card in react springs animation hooks
+        const AnimatedContentCardComponent = animated(ContentCardComponent);
 
-          return <AnimatedContentCardComponent style={style} content={card} />;
-        })}
-      </div>
+        return (
+          <div class="sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
+            <AnimatedContentCardComponent style={style} content={card} />
+          </div>
+        );
+      })}
     </Fragment>
   );
 }

@@ -6,12 +6,11 @@ import { ContentCard } from '@soulmachines/smwebsdk';
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<ContentCards />', () => {
-  const { scene } = useSoulMachines();
+  const { setCards } = useSoulMachines();
 
   const customRender = (contentCards: ContentCard[] = []) => {
     const testUtils = render(<ContentCards />);
-    scene.conversation.onCardChanged.call(contentCards);
-
+    setCards(contentCards);
     testUtils.rerender(<ContentCards />);
 
     return testUtils;
@@ -20,10 +19,6 @@ describe('<ContentCards />', () => {
   it('renders nothing by default', () => {
     const { container } = render(<ContentCards />);
     expect(container).toBeEmptyDOMElement();
-  });
-
-  it('sets conversation autoClearCards to true', () => {
-    expect(scene.conversation.autoClearCards).toEqual(true);
   });
 
   describe('when cards are present', () => {

@@ -1,5 +1,6 @@
 import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
+import { ContentCards } from '../../../appComponents/ContentCards';
 import { ConnectionStatus, widgetLayout } from '../../../enums';
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
@@ -29,6 +30,7 @@ const mockUseSoulMachines = {
     percentageLoaded: 0,
     totalSteps: 3,
   },
+  setCards: jest.fn(),
   videoRef: jest.fn(),
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),

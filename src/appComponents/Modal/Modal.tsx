@@ -3,7 +3,7 @@ import { Dialog } from '@headlessui/react';
 export type ModalProps = {
   isOpen?: boolean;
   onClose: () => void;
-  children: JSX.Element[];
+  children: JSX.Element | JSX.Element[];
 };
 
 export function Modal({ isOpen, onClose, children }: ModalProps) {

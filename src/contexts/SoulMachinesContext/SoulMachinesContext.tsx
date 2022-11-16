@@ -34,6 +34,7 @@ type Context = {
   enableDebugLogging: (enabled: boolean) => void;
   layout: widgetLayout;
   cards: ContentCard[];
+  setCards: (activeCards: ContentCard[]) => void;
   toggleLayout: () => void;
   playVideo: () => void;
 };
@@ -126,6 +127,7 @@ function SoulMachinesProvider({
         persona,
         layout,
         cards,
+        setCards,
         toggleLayout,
         sendTextMessage,
         enableDebugLogging,
