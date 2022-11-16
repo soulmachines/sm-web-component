@@ -1,3 +1,4 @@
+import throttle from 'lodash/throttle';
 import classNames from 'classnames';
 import { useState, useEffect, MutableRef } from 'preact/hooks';
 
@@ -9,17 +10,17 @@ export type BackdropBlurProps = {
 export function BackdropBlur({ scrollTargetRef, children, scrollOffset = 20 }: BackdropBlurProps) {
   const [isBlurred, setIsBlurred] = useState(false);
 
-  //TODO add Throttle. Check the video component
   useEffect(() => {
     const element = scrollTargetRef.current;
 
-    const foo = () => {
+    const foo = throttle(() => {
+      console.log('fire');
       if (element && element.scrollTop >= scrollOffset) {
         setIsBlurred(true);
       } else {
         setIsBlurred(false);
       }
-    };
+    }, 250);
 
     if (element) {
       element.addEventListener('scroll', foo);
