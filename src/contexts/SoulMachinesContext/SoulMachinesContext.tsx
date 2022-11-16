@@ -15,7 +15,7 @@ import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
 import { useCards } from '../../hooks/useCards/useCards';
 
-type Context = {
+export type SoulMachinesContext = {
   scene: Scene;
   persona: Persona;
   connectionStatus: ConnectionStatus;
@@ -40,7 +40,7 @@ type Context = {
 };
 
 // Create context with default values
-const SoulMachinesContext = createContext<Context | undefined>(undefined);
+const SMContext = createContext<SoulMachinesContext | undefined>(undefined);
 
 type SoulMachinesProviderProps = {
   apiKey?: string;
@@ -102,7 +102,6 @@ function SoulMachinesProvider({
     videoRef: useConnectionData.videoRef,
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);
-
   const { cards } = useCards(scene);
 
   // Define a new global disconnection function here
@@ -113,7 +112,7 @@ function SoulMachinesProvider({
   };
 
   return (
-    <SoulMachinesContext.Provider
+    <SMContext.Provider
       value={{
         scene,
         persona,
@@ -130,12 +129,12 @@ function SoulMachinesProvider({
       }}
     >
       {children}
-    </SoulMachinesContext.Provider>
+    </SMContext.Provider>
   );
 }
 
 function useSoulMachines() {
-  const context = useContext(SoulMachinesContext);
+  const context = useContext(SMContext);
 
   if (context === undefined) {
     throw new Error('useSoulMachines must be used within a SoulMachinesProvider');
