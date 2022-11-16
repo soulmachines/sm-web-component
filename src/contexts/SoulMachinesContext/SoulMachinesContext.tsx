@@ -13,7 +13,7 @@ import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
-import { useCards } from '../../hooks/useCards/useCards';
+import { useCards } from '../../hooks/useCards';
 
 export type SoulMachinesContext = {
   scene: Scene;

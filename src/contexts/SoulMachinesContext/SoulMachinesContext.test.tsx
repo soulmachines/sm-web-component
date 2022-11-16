@@ -2,7 +2,7 @@ import { Scene, Persona } from '@soulmachines/smwebsdk';
 import { fireEvent, render } from '@testing-library/preact';
 import { SoulMachinesProvider, useSoulMachines } from '.';
 import { widgetLayout } from '../../enums';
-import { useCards } from '../../hooks/useCards/useCards';
+import { useCards } from '../../hooks/useCards';
 import { useConnection } from '../../hooks/useConnection';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
@@ -17,7 +17,6 @@ const mockCards = [
     data: {},
   },
 ];
-
 jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({
     connect: mockConnect,
@@ -81,9 +80,7 @@ describe('<SoulMachinesProvider />', () => {
 
   it('calls useCards with scene', () => {
     customRender();
-    expect(useCards).toHaveBeenCalledWith({
-      scene: mockScene,
-    });
+    expect(useCards).toHaveBeenCalledWith(mockScene);
   });
 
   describe('creating a scene', () => {
