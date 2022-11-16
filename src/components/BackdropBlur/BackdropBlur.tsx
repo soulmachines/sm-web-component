@@ -1,7 +1,5 @@
 import classNames from 'classnames';
-import { useRef, useState, useEffect } from 'react';
-import { widgetLayout } from '../../enums';
-import { MutableRef } from 'preact/hooks';
+import { useState, useEffect, MutableRef } from 'preact/hooks';
 
 export type BackdropBlurProps = {
   children?: JSX.Element | undefined;
