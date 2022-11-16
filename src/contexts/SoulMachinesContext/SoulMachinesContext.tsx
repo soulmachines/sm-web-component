@@ -6,7 +6,7 @@ import {
   ConnectionStateData,
   ContentCard,
 } from '@soulmachines/smwebsdk';
-import { MutableRef, useContext, useEffect, useMemo, useState } from 'preact/hooks';
+import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus, widgetLayout } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
@@ -40,7 +40,7 @@ export type SMContext = {
 };
 
 // Create context with default values
-const SoulMachines = createContext<SMContext | undefined>(undefined);
+const SoulMachinesContext = createContext<SMContext | undefined>(undefined);
 
 type SoulMachinesProviderProps = {
   apiKey?: string;
@@ -112,7 +112,7 @@ function SoulMachinesProvider({
   };
 
   return (
-    <SoulMachines.Provider
+    <SoulMachinesContext.Provider
       value={{
         scene,
         persona,
@@ -129,12 +129,12 @@ function SoulMachinesProvider({
       }}
     >
       {children}
-    </SoulMachines.Provider>
+    </SoulMachinesContext.Provider>
   );
 }
 
 function useSoulMachines() {
-  const context = useContext(SMContext);
+  const context = useContext(SoulMachinesContext);
 
   if (context === undefined) {
     throw new Error('useSoulMachines must be used within a SoulMachinesProvider');
