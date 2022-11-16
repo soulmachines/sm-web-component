@@ -12,15 +12,19 @@ describe('<Modal />', () => {
     expect(onCloseFn).not.toHaveBeenCalled();
   });
 
-  it.skip('calls onCloseFn when the modal is clicked', async () => {
-    const { getByTitle } = render(
+  it('calls onCloseFn when the escape key is pushed', async () => {
+    const { container } = render(
       <Modal isOpen={true} onClose={onCloseFn}>
         <p title="children">children</p>
       </Modal>,
     );
 
-    const button = getByTitle('Interactive Digital Person');
-    await fireEvent.click(button);
+    fireEvent.keyDown(container, {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
 
     expect(onCloseFn).toHaveBeenCalledTimes(1);
   });
