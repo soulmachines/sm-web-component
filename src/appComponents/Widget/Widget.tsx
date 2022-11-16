@@ -89,6 +89,7 @@ export function Widget({
       </div>
 
       <Modal
+        title="Interactive Digital Person"
         isOpen={isConnected && layout === widgetLayout.FULL_FRAME}
         onClose={() => toggleLayout()}
       >

@@ -1,23 +1,29 @@
 import { fireEvent, render } from '@testing-library/preact';
-import { Modal } from '.';
+import { Modal, ModalProps } from '.';
 
 describe('<Modal />', () => {
   const onCloseFn = jest.fn();
-  it('does not call onCloseFn by default', () => {
-    render(
-      <Modal isOpen={true} onClose={onCloseFn}>
-        <p>children</p>
+  const defaultProps = {
+    isOpen: true,
+    onClose: onCloseFn,
+    title: 'Modal title',
+  };
+  const customRender = (props?: Partial<ModalProps>) => {
+    return render(
+      <Modal {...defaultProps} {...props}>
+        <button>Child element 1</button>
+        <button>Child element 2</button>
       </Modal>,
     );
+  };
+
+  it('does not call onCloseFn by default', () => {
+    customRender();
     expect(onCloseFn).not.toHaveBeenCalled();
   });
 
   it('calls onCloseFn when the escape key is pushed', async () => {
-    const { container } = render(
-      <Modal isOpen={true} onClose={onCloseFn}>
-        <p title="children">children</p>
-      </Modal>,
-    );
+    const { container } = customRender();
 
     fireEvent.keyDown(container, {
       key: 'Escape',
@@ -30,12 +36,19 @@ describe('<Modal />', () => {
   });
 
   it('renders children elements', () => {
-    const { getByTitle } = render(
-      <Modal isOpen={true} onClose={onCloseFn}>
-        <p title="children">children</p>
-      </Modal>,
-    );
+    const { getByText } = customRender();
 
-    expect(getByTitle('children')).toBeInTheDocument();
+    expect(getByText('Child element 1')).toBeInTheDocument();
+    expect(getByText('Child element 2')).toBeInTheDocument();
+  });
+
+  it('renders the title with a screen reader only class', () => {
+    const { getByText } = customRender();
+    expect(getByText('Modal title')).toHaveClass('sm-sr-only');
+  });
+
+  it('renders the description with a screen reader only class', () => {
+    const { getByText } = customRender({ description: 'Modal description' });
+    expect(getByText('Modal description')).toHaveClass('sm-sr-only');
   });
 });

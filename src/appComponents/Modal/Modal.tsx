@@ -4,12 +4,15 @@ export type ModalProps = {
   isOpen?: boolean;
   onClose: () => void;
   children: JSX.Element | JSX.Element[];
+  title: string;
+  description?: string;
 };
 
-export function Modal({ isOpen, onClose, children }: ModalProps) {
+export function Modal({ isOpen, onClose, children, title, description }: ModalProps) {
   return (
     <Dialog open={isOpen} onClose={onClose} className="sm-widget">
-      <Dialog.Title className="sm-sr-only">Interactive Digital Person</Dialog.Title>
+      <Dialog.Title className="sm-sr-only">{title}</Dialog.Title>
+      {description && <Dialog.Description className="sm-sr-only">{description}</Dialog.Description>}
 
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <div className="sm-fixed sm-inset-0 sm-bg-black/40 sm-z-max" aria-hidden="true" />
