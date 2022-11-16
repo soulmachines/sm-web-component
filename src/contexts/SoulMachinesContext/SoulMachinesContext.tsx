@@ -15,7 +15,7 @@ import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
 import { useCards } from '../../hooks/useCards';
 
-export type SoulMachinesContext = {
+export type SMContext = {
   scene: Scene;
   persona: Persona;
   connectionStatus: ConnectionStatus;
@@ -40,7 +40,7 @@ export type SoulMachinesContext = {
 };
 
 // Create context with default values
-const SMContext = createContext<SoulMachinesContext | undefined>(undefined);
+const SoulMachines = createContext<SMContext | undefined>(undefined);
 
 type SoulMachinesProviderProps = {
   apiKey?: string;
@@ -112,7 +112,7 @@ function SoulMachinesProvider({
   };
 
   return (
-    <SMContext.Provider
+    <SoulMachines.Provider
       value={{
         scene,
         persona,
@@ -129,7 +129,7 @@ function SoulMachinesProvider({
       }}
     >
       {children}
-    </SMContext.Provider>
+    </SoulMachines.Provider>
   );
 }
 

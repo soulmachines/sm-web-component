@@ -6,7 +6,7 @@ import {
 } from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { ConnectionStatus, widgetLayout } from '../../../enums';
-import { SoulMachinesContext } from '../SoulMachinesContext';
+import { SMContext } from '../SoulMachinesContext';
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
@@ -16,7 +16,7 @@ const personID = 1;
 const scene = new Scene();
 const persona = new Persona(scene, personID);
 
-const mockUseSoulMachines: SoulMachinesContext = {
+const mockUseSoulMachines: SMContext = {
   playVideo: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
