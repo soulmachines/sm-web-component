@@ -1,7 +1,9 @@
 import { Dialog } from '@headlessui/react';
+import { DpBlur } from '../../components/DpBlur';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
+import { useRef } from 'preact/hooks';
 
 export type FullFrameModalProps = {
   isOpen?: boolean;
@@ -21,6 +23,7 @@ export function FullFrameModal({ isOpen }: FullFrameModalProps) {
         <Dialog.Panel className="sm-w-full sm-h-full md:sm-rounded-3xl sm-overflow-hidden sm-bg-white sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest">
           <Video autoConnect={false} />
           <VideoControls />
+          {isOpen && <DpBlur scrollTargetRef={ref} />}
         </Dialog.Panel>
       </div>
     </Dialog>
