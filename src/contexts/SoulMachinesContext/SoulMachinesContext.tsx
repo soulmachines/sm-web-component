@@ -13,6 +13,7 @@ import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
+import { useCards } from '../../hooks/useCards/useCards';
 
 type Context = {
   scene: Scene;
@@ -102,15 +103,7 @@ function SoulMachinesProvider({
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);
 
-  const [cards, setCards] = useState<ContentCard[]>([]);
-
-  useEffect(() => {
-    scene.conversation.onCardChanged.addListener((activeCards: ContentCard[]) =>
-      setCards(activeCards),
-    );
-
-    scene.conversation.autoClearCards = true;
-  }, [scene]);
+  const { cards } = useCards(scene);
 
   // Define a new global disconnection function here
   const disconnect = () => {
