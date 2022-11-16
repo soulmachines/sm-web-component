@@ -48,7 +48,7 @@ export function DpBlur({ scrollTargetRef, children, scrollOffset = 20 }: DpBlurP
     // <div style={isActive?'backdrop-filter:blur(' + maxBlur + 'px);':''}>{children}</div>
     <div
       className={classNames('sm-transition-all', {
-        'sm-backdrop-blur-lg': isBlurred,
+        'sm-backdrop-blur-lg sm:sm-backdrop-blur-none': isBlurred,
       })}
     >
       {children}
