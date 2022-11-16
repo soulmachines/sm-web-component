@@ -1,6 +1,12 @@
-import { Persona, Scene, ConversationStateTypes } from '@soulmachines/smwebsdk';
+import {
+  Persona,
+  Scene,
+  ConversationStateTypes,
+  ConnectionStateTypes,
+} from '@soulmachines/smwebsdk';
 import { JSX } from 'preact';
 import { ConnectionStatus, widgetLayout } from '../../../enums';
+import { SMContext } from '../SoulMachinesContext';
 
 function SoulMachinesProvider(props: { children: JSX.Element }) {
   return props.children;
@@ -10,7 +16,7 @@ const personID = 1;
 const scene = new Scene();
 const persona = new Persona(scene, personID);
 
-const mockUseSoulMachines = {
+const mockUseSoulMachines: SMContext = {
   playVideo: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
@@ -25,11 +31,13 @@ const mockUseSoulMachines = {
   persona,
   conversationState: ConversationStateTypes.idle,
   connectionState: {
-    name: 'mock name',
+    name: ConnectionStateTypes.Connected,
+    currentStep: 2,
     percentageLoaded: 0,
     totalSteps: 3,
   },
-  videoRef: jest.fn(),
+  cards: [],
+  videoRef: { current: null },
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),
   toggleVideoMuted: jest.fn(),

@@ -1,17 +1,19 @@
 import { render } from '@testing-library/preact';
 import { ContentCards } from '.';
-import { useSoulMachines } from '../../contexts/SoulMachinesContext';
+import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ContentCard } from '@soulmachines/smwebsdk';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<ContentCards />', () => {
-  const { scene } = useSoulMachines();
-
   const customRender = (contentCards: ContentCard[] = []) => {
+    // Spy on machines context and return our default mocked data and our custom cards
+    jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      ...SoulMachinesContext.useSoulMachines(),
+      cards: contentCards,
+    });
     const testUtils = render(<ContentCards />);
-    scene.conversation.onCardChanged.call(contentCards);
-
     testUtils.rerender(<ContentCards />);
 
     return testUtils;
@@ -20,10 +22,6 @@ describe('<ContentCards />', () => {
   it('renders nothing by default', () => {
     const { container } = render(<ContentCards />);
     expect(container).toBeEmptyDOMElement();
-  });
-
-  it('sets conversation autoClearCards to true', () => {
-    expect(scene.conversation.autoClearCards).toEqual(true);
   });
 
   describe('when cards are present', () => {

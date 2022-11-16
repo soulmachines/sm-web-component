@@ -4,6 +4,7 @@ import {
   Scene,
   ConversationStateTypes,
   ConnectionStateData,
+  ContentCard,
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
@@ -12,8 +13,9 @@ import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
+import { useContentCards } from '../../hooks/useContentCards';
 
-type Context = {
+export type SMContext = {
   scene: Scene;
   persona: Persona;
   connectionStatus: ConnectionStatus;
@@ -32,12 +34,13 @@ type Context = {
   toggleVideoMuted: () => void;
   enableDebugLogging: (enabled: boolean) => void;
   layout: widgetLayout;
+  cards: ContentCard[];
   toggleLayout: () => void;
   playVideo: () => void;
 };
 
 // Create context with default values
-const SoulMachinesContext = createContext<Context | undefined>(undefined);
+const SoulMachinesContext = createContext<SMContext | undefined>(undefined);
 
 type SoulMachinesProviderProps = {
   apiKey?: string;
@@ -99,6 +102,7 @@ function SoulMachinesProvider({
     videoRef: useConnectionData.videoRef,
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);
+  const { cards } = useContentCards(scene);
 
   // Define a new global disconnection function here
   const disconnect = () => {
@@ -113,6 +117,7 @@ function SoulMachinesProvider({
         scene,
         persona,
         layout,
+        cards,
         toggleLayout,
         sendTextMessage,
         enableDebugLogging,
