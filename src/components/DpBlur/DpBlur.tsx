@@ -11,12 +11,11 @@ export type DpBlurProps = {
 export function DpBlur({ scrollTargetRef, children, scrollOffset = 20 }: DpBlurProps) {
   const [isBlurred, setIsBlurred] = useState(false);
 
+  //TODO add Throttle. Check the video component
   useEffect(() => {
     const element = scrollTargetRef.current;
-    console.log(element);
 
     const foo = () => {
-      console.log('???? ', element?.scrollTop);
       if (element && element.scrollTop >= scrollOffset) {
         setIsBlurred(true);
       } else {
@@ -25,7 +24,6 @@ export function DpBlur({ scrollTargetRef, children, scrollOffset = 20 }: DpBlurP
     };
 
     if (element) {
-      console.log(element);
       element.addEventListener('scroll', foo);
     }
 
@@ -35,14 +33,6 @@ export function DpBlur({ scrollTargetRef, children, scrollOffset = 20 }: DpBlurP
       }
     };
   }, [scrollTargetRef, scrollOffset]);
-  // whatever the scrollable container is in the modal
-  // const modal = document.querySelector('#modal'); // TODO the modal will be the card modal
-
-  // {{element && element.addEventListener('scroll', () => {
-  //   //  Add/remove blur style when scrolled certain amount
-  //   // Might be able to add sm-transition-all to make it transition in/out of blur
-  //   ref.current.classList
-  // });}}
 
   return (
     // <div style={isActive?'backdrop-filter:blur(' + maxBlur + 'px);':''}>{children}</div>
