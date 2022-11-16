@@ -6,8 +6,13 @@ describe('useCards', () => {
   const mockScene = new Scene();
   const customRender = () => renderHook(() => useCards(mockScene));
 
-  it('set cards with activeCards', () => {
+  it('returns an empty array by default', () => {
     const { result } = customRender();
+    expect(result.current.cards).toEqual([]);
+  });
+
+  it('updates the cards when onCardChanged is called', () => {
+    const { result, rerender } = customRender();
     const contentCardsData = [
       {
         id: 'id',
@@ -16,6 +21,8 @@ describe('useCards', () => {
     ];
     mockScene.conversation.onCardChanged.call(contentCardsData);
 
-    expect(result.current.cards).toContainEqual(contentCardsData);
+    rerender();
+
+    expect(result.current.cards).toEqual(contentCardsData);
   });
 });
