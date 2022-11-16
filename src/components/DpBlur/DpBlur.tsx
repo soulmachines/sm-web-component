@@ -5,26 +5,36 @@ import { MutableRef } from 'preact/hooks';
 
 export type DpBlurProps = {
   children?: JSX.Element | undefined;
-  maxBlur?: number;
+  scrollOffset?: number;
   scrollTargetRef: MutableRef<HTMLDivElement | null>;
 };
-export function DpBlur({ scrollTargetRef, children, maxBlur = 10 }: DpBlurProps) {
+export function DpBlur({ scrollTargetRef, children, scrollOffset = 20 }: DpBlurProps) {
   const [isBlurred, setIsBlurred] = useState(false);
 
   useEffect(() => {
     const element = scrollTargetRef.current;
     console.log(element);
+
+    const foo = () => {
+      console.log('???? ', element?.scrollTop);
+      if (element && element.scrollTop >= scrollOffset) {
+        setIsBlurred(true);
+      } else {
+        setIsBlurred(false);
+      }
+    };
+
     if (element) {
       console.log(element);
-      element.addEventListener('scroll', () => {
-        if (element.scrollTop > 15) {
-          setIsBlurred(true);
-        } else {
-          setIsBlurred(false);
-        }
-      });
+      element.addEventListener('scroll', foo);
     }
-  }, [scrollTargetRef]);
+
+    return () => {
+      if (element) {
+        element.removeEventListener('click', foo);
+      }
+    };
+  }, [scrollTargetRef, scrollOffset]);
   // whatever the scrollable container is in the modal
   // const modal = document.querySelector('#modal'); // TODO the modal will be the card modal
 

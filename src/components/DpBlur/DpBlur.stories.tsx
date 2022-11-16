@@ -7,7 +7,7 @@ export default {
   title: `Components / DpBlur`,
   component: DpBlur,
   argTypes: {
-    maxBlur: {
+    scrollOffset: {
       control: {
         type: 'number',
         min: 1,
@@ -16,9 +16,6 @@ export default {
       },
       defaultValue: 10,
     },
-    isActive: {
-      control: 'boolean',
-    },
   },
 };
 
@@ -26,18 +23,18 @@ export default {
 //   maxBlur:
 // };
 
-export const Basic = ({ maxBlur, isActive }: DpBlurProps) => {
+export const Basic = ({ scrollOffset }: DpBlurProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
     <div
       id="video"
       ref={ref}
-      className="sm-h-full sm-overflow-y-auto"
+      className="sm-h-screen sm-overflow-y-auto"
       style="background-image:url(https://assets.gocomics.com/uploads/collection_images/collection_image_large_1628638_dilbert-inventions-content-admin-2048x1280_201809101600.jpg);background-attachment:fixed"
     >
-      <DpBlur scrollTargetRef={ref}>
-        <div id="modal" className="" style="padding-top:90px;height=150%">
+      <DpBlur scrollTargetRef={ref} scrollOffset={scrollOffset}>
+        <div id="modal" style={{ height: '3000px' }}>
           <ImageCard content={imageCardContent} />
           <ImageCard content={imageCardContent} />
         </div>
