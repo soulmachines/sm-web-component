@@ -50,6 +50,6 @@ export function Card({ children, isDismissible, style, flush }: CardProps) {
 }
 
 Card.defaultProps = {
-  isDismissible: true,
+  isDismissible: false,
   flush: false,
 };

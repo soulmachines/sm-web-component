@@ -29,11 +29,6 @@ describe('<ImageCard />', () => {
     expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
   });
 
-  it('renders a dismiss button', () => {
-    const { queryByTitle } = render(<ImageCard content={imageCard} />);
-    expect(queryByTitle('Hide card')).toBeInTheDocument();
-  });
-
   it('renders an image with alt text', () => {
     const { getByRole } = render(<ImageCard content={imageCard} />);
     expect(getByRole('img')).toBeInTheDocument();

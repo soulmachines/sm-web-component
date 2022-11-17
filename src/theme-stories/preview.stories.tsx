@@ -197,7 +197,7 @@ const CardContainer = () => {
   return (
     <div className="sm-flex sm-flex-wrap sm-gap-10">
       <OptionsCard content={optionsCardContent} />
-      <Card isDismissible={true} flush={false}>
+      <Card flush={false}>
         <div>
           <Text>This is a dismissible content card.</Text>
           <Button>Button</Button>
