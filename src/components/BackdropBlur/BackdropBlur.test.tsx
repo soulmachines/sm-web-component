@@ -20,7 +20,7 @@ function renderBackdropBlur(scrollOffset = 100) {
 const minimumScrollToRenderBlur = 100;
 
 describe('<BackdropBlur />', () => {
-  it('Content wrapped by BackdropBlur blurs on scroll greater than minimum Scroll', () => {
+  it('adds the blur class when scroll amount is greater than the scrollOffset', () => {
     const { getByTestId, container } = renderBackdropBlur(minimumScrollToRenderBlur);
     const backgroundblur = getByTestId(scrollElTestId);
     jest.spyOn(backgroundblur, 'scrollTop', 'get').mockReturnValue(minimumScrollToRenderBlur + 1);
