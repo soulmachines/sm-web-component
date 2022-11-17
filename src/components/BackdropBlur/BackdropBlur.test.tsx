@@ -1,5 +1,5 @@
-import { BackdropBlur, BackdropBlurProps } from '.';
-import { fireEvent, render, cleanup } from '@testing-library/preact';
+import { BackdropBlur } from '.';
+import { fireEvent, render } from '@testing-library/preact';
 import '@testing-library/jest-dom/extend-expect';
 import { imageCardContent } from '../../storybook-content';
 import { ImageCard } from '../../contentCards/ImageCard';

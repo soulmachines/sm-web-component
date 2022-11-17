@@ -1,4 +1,3 @@
-import throttle from 'lodash/throttle';
 import classNames from 'classnames';
 import { useState, useEffect, MutableRef } from 'preact/hooks';
 
@@ -6,28 +5,35 @@ export type BackdropBlurProps = {
   children?: JSX.Element | undefined;
   scrollOffset?: number;
   scrollTargetRef: MutableRef<HTMLDivElement | null>;
+  blurOnlyOnMobile?: boolean;
 };
-export function BackdropBlur({ scrollTargetRef, children, scrollOffset = 20 }: BackdropBlurProps) {
-  const [isBlurredOnlyOnMobile, setIsBlurredOnlyOnMobile] = useState(false);
+export function BackdropBlur({
+  scrollTargetRef,
+  children,
+  scrollOffset = 20,
+  blurOnlyOnMobile = true,
+}: BackdropBlurProps) {
+  const [isBlurred, setIsBlurred] = useState(false);
 
+  //TODO add Throttle. Check the video component
   useEffect(() => {
     const element = scrollTargetRef.current;
 
-    const foo = throttle(() => {
+    const blurredEventListener = () => {
       if (element && element.scrollTop >= scrollOffset) {
-        setIsBlurredOnlyOnMobile(true);
+        setIsBlurred(true);
       } else {
-        setIsBlurredOnlyOnMobile(false);
+        setIsBlurred(false);
       }
-    }, 250);
+    };
 
     if (element) {
-      element.addEventListener('scroll', foo);
+      element.addEventListener('scroll', blurredEventListener);
     }
 
     return () => {
       if (element) {
-        element.removeEventListener('click', foo);
+        element.removeEventListener('click', blurredEventListener);
       }
     };
   }, [scrollTargetRef, scrollOffset]);
@@ -35,7 +41,8 @@ export function BackdropBlur({ scrollTargetRef, children, scrollOffset = 20 }: B
   return (
     <div
       className={classNames('sm-transition-all', {
-        'sm-backdrop-blur-lg sm:sm-backdrop-blur-none': isBlurredOnlyOnMobile,
+        'sm-backdrop-blur-lg sm:sm-backdrop-blur-none': blurOnlyOnMobile && isBlurred,
+        'sm-backdrop-blur-lg': !blurOnlyOnMobile && isBlurred,
       })}
     >
       {children}
