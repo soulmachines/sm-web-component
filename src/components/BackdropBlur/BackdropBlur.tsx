@@ -19,7 +19,7 @@ export function BackdropBlur({
   useEffect(() => {
     const element = scrollTargetRef.current;
 
-    const blurredEventListener = () => {
+    const scrollOccurred = () => {
       if (element && element.scrollTop >= scrollOffset) {
         setIsBlurred(true);
       } else {
@@ -28,12 +28,12 @@ export function BackdropBlur({
     };
 
     if (element) {
-      element.addEventListener('scroll', blurredEventListener);
+      element.addEventListener('scroll', scrollOccurred);
     }
 
     return () => {
       if (element) {
-        element.removeEventListener('click', blurredEventListener);
+        element.removeEventListener('click', scrollOccurred);
       }
     };
   }, [scrollTargetRef, scrollOffset]);
