@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useState, useEffect, MutableRef } from 'preact/hooks';
 
 export type BackdropBlurProps = {
-  children?: JSX.Element | undefined;
+  children?: JSX.Element | JSX.Element[] | undefined;
   scrollOffset?: number;
   scrollTargetRef: MutableRef<HTMLDivElement | null>;
   smallScreenOnly?: boolean;
