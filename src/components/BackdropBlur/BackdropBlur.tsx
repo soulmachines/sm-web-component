@@ -6,13 +6,13 @@ export type BackdropBlurProps = {
   children?: JSX.Element | undefined;
   scrollOffset?: number;
   scrollTargetRef: MutableRef<HTMLDivElement | null>;
-  blurOnlyOnMobile?: boolean;
+  smallScreenOnly?: boolean;
 };
 export function BackdropBlur({
   scrollTargetRef,
   children,
   scrollOffset = 20,
-  blurOnlyOnMobile = true,
+  smallScreenOnly = true,
 }: BackdropBlurProps) {
   const [isBlurred, setIsBlurred] = useState(false);
 
@@ -42,8 +42,8 @@ export function BackdropBlur({
   return (
     <div
       className={classNames('sm-transition-all', {
-        'sm-backdrop-blur-lg sm:sm-backdrop-blur-none': blurOnlyOnMobile && isBlurred,
-        'sm-backdrop-blur-lg': !blurOnlyOnMobile && isBlurred,
+        'sm-backdrop-blur-lg': isBlurred,
+        'sm:sm-backdrop-blur-none': smallScreenOnly,
       })}
     >
       {children}
