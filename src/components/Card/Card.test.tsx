@@ -48,7 +48,7 @@ describe('<Card />', () => {
       </Card>,
     );
 
-    expect(queryByTitle('Hide card')).not.toBeInTheDocument();
+    expect(queryByTitle('Hide card')).toBeInTheDocument();
   });
 
   describe('when the close button is clicked', () => {
