@@ -16,7 +16,6 @@ export function BackdropBlur({
 }: BackdropBlurProps) {
   const [isBlurred, setIsBlurred] = useState(false);
 
-  //TODO add Throttle. Check the video component
   useEffect(() => {
     const element = scrollTargetRef.current;
 
