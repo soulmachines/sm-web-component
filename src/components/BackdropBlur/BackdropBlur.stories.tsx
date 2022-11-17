@@ -16,10 +16,14 @@ export default {
       },
       defaultValue: 10,
     },
+    smallScreenOnly: {
+      control: 'boolean',
+      defaultValue: true,
+    },
   },
 };
 
-export const Basic = ({ scrollOffset }: BackdropBlurProps) => {
+export const Basic = ({ scrollOffset, smallScreenOnly }: BackdropBlurProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
@@ -28,7 +32,11 @@ export const Basic = ({ scrollOffset }: BackdropBlurProps) => {
       className="sm-h-screen sm-overflow-y-auto"
       style="background-image:url(https://assets.gocomics.com/uploads/collection_images/collection_image_large_1628638_dilbert-inventions-content-admin-2048x1280_201809101600.jpg);background-attachment:fixed"
     >
-      <BackdropBlur scrollTargetRef={ref} scrollOffset={scrollOffset}>
+      <BackdropBlur
+        scrollTargetRef={ref}
+        scrollOffset={scrollOffset}
+        smallScreenOnly={smallScreenOnly}
+      >
         <div id="modal" style={{ height: '3000px' }}>
           <ImageCard content={imageCardContent} />
           <ImageCard content={imageCardContent} />
