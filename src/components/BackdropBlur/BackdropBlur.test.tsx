@@ -28,7 +28,7 @@ describe('<BackdropBlur />', () => {
     expect(container.querySelectorAll('.sm-backdrop-blur-lg')).toHaveLength(1);
   });
 
-  it('Content wrapped by BackdropBlur does not blur on scroll less than minimum Scroll', () => {
+  it('does not add the blur class when scroll amount is less than the scrollOffset', () => {
     const { getByTestId, container } = renderBackdropBlur(minimumScrollToRenderBlur);
     const backgroundblur = getByTestId(scrollElTestId);
     jest.spyOn(backgroundblur, 'scrollTop', 'get').mockReturnValue(minimumScrollToRenderBlur - 1);
