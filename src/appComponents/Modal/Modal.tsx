@@ -1,5 +1,4 @@
 import { Dialog } from '@headlessui/react';
-import { useRef } from 'preact/hooks';
 
 export type ModalProps = {
   isOpen?: boolean;
