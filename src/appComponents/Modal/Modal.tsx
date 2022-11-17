@@ -1,6 +1,5 @@
 import { Dialog } from '@headlessui/react';
 import { useRef } from 'preact/hooks';
-import { BackdropBlur } from '../../components/BackdropBlur';
 
 export type ModalProps = {
   isOpen?: boolean;
@@ -11,7 +10,6 @@ export type ModalProps = {
 };
 
 export function Modal({ isOpen, onClose, children, title, description }: ModalProps) {
-  const ref = useRef(null);
   return (
     <Dialog open={isOpen} onClose={onClose} className="sm-widget">
       <Dialog.Title className="sm-sr-only">{title}</Dialog.Title>
