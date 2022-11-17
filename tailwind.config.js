@@ -2,6 +2,7 @@ module.exports = {
   content: ['./src/**/**/**.tsx'],
   theme: {
     screens: {
+      sm: { raw: '(min-width: 430px)' },
       md: { raw: '(min-width: 768px) and (min-height: 450px)' },
       xl: { raw: '(min-width: 1920px)' },
     },
