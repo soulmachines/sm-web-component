@@ -15,7 +15,6 @@ export const Basic = ({ isDismissible, flush }: CardProps) => {
     <Card isDismissible={isDismissible} flush={flush}>
       <div>
         <p>Any content can be passed here</p>
-        <Button>Trigger</Button>
       </div>
     </Card>
   );

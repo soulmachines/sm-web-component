@@ -41,5 +41,5 @@ export function Notifications({ greeting }: NotificationsProps) {
     }
   };
 
-  return <Card>{renderContent()}</Card>;
+  return <Card isDismissible={true}>{renderContent()}</Card>;
 }
