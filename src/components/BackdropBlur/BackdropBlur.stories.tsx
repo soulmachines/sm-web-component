@@ -19,16 +19,11 @@ export default {
   },
 };
 
-// type BlurData = {
-//   maxBlur:
-// };
-
 export const Basic = ({ scrollOffset }: BackdropBlurProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   return (
     <div
-      id="video"
       ref={ref}
       className="sm-h-screen sm-overflow-y-auto"
       style="background-image:url(https://assets.gocomics.com/uploads/collection_images/collection_image_large_1628638_dilbert-inventions-content-admin-2048x1280_201809101600.jpg);background-attachment:fixed"

@@ -8,17 +8,16 @@ export type BackdropBlurProps = {
   scrollTargetRef: MutableRef<HTMLDivElement | null>;
 };
 export function BackdropBlur({ scrollTargetRef, children, scrollOffset = 20 }: BackdropBlurProps) {
-  const [isBlurred, setIsBlurred] = useState(false);
+  const [isBlurredOnlyOnMobile, setIsBlurredOnlyOnMobile] = useState(false);
 
   useEffect(() => {
     const element = scrollTargetRef.current;
 
     const foo = throttle(() => {
-      console.log('fire');
       if (element && element.scrollTop >= scrollOffset) {
-        setIsBlurred(true);
+        setIsBlurredOnlyOnMobile(true);
       } else {
-        setIsBlurred(false);
+        setIsBlurredOnlyOnMobile(false);
       }
     }, 250);
 
@@ -36,7 +35,7 @@ export function BackdropBlur({ scrollTargetRef, children, scrollOffset = 20 }: B
   return (
     <div
       className={classNames('sm-transition-all', {
-        'sm-backdrop-blur-lg sm:sm-backdrop-blur-none': isBlurred,
+        'sm-backdrop-blur-lg sm:sm-backdrop-blur-none': isBlurredOnlyOnMobile,
       })}
     >
       {children}
