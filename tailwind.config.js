@@ -73,6 +73,10 @@ module.exports = {
       zIndex: {
         max: '9999',
       },
+      backdropBlur: {
+        // Override default as blur(0) causes a slight blur
+        none: 'none',
+      },
       animation: {
         grow: 'grow 1.2s ease-in-out infinite',
         spread: 'spread 1.6s ease-in-out infinite',

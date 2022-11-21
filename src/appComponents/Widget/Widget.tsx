@@ -5,13 +5,14 @@ import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from 
 import { Notifications } from '../../components/Notifications';
 import { ProfileImage } from '../ProfileImage';
 import { ContentCards } from '../ContentCards';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useRef } from 'preact/hooks';
 import { ConnectButton } from './components/ConnectButton';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
 import { Modal } from '../Modal';
+import { BackdropBlur } from '../../components/BackdropBlur';
 
 export type WidgetProps = {
   greeting?: string;
@@ -31,6 +32,7 @@ export function Widget({
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
+  const modalPanelRef = useRef<HTMLDivElement | null>(null);
 
   // Connect directly if it's resume session
   useEffect(() => {
@@ -92,11 +94,23 @@ export function Widget({
         title="Interactive Digital Person"
         isOpen={isConnected && layout === widgetLayout.FULL_FRAME}
         onClose={() => toggleLayout()}
+        panelRef={modalPanelRef}
       >
-        <Video autoConnect={false} />
-        <VideoControls />
-        <div class="sm-absolute sm-bottom-1/2 sm-translate-y-1/2 md:sm-right-24 xl:sm-right-40">
-          <ContentCards />
+        <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
+          <Video autoConnect={false} />
+          <VideoControls />
+        </div>
+
+        <div
+          class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
+            md:sm-w-auto md:sm-h-auto  md:sm-top-auto md:sm-left-auto
+            md:sm-bottom-1/2 md:sm-translate-y-1/2 md:sm-right-24 xl:sm-right-40 "
+        >
+          <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
+            <div className="sm-pt-[70vh] sm-flex sm-justify-center sm-pb-8 md:sm-pt-0">
+              <ContentCards />
+            </div>
+          </BackdropBlur>
         </div>
       </Modal>
     </div>
