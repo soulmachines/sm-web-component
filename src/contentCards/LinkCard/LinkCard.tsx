@@ -29,7 +29,7 @@ export function LinkCard({ content, isExternal, style }: LinkCardProps) {
 
   return (
     <ContentCard contentId={content.id} style={style}>
-      <div className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-overflow-y-auto sm-content-card-max-height">
+      <>
         {data.imageUrl && <img src={data.imageUrl} alt={data.title} />}
         <Heading type="h2">{data.title}</Heading>
         {data.description && <Text>{data.description}</Text>}
@@ -38,7 +38,7 @@ export function LinkCard({ content, isExternal, style }: LinkCardProps) {
             <Button>View Page</Button>
           </a>
         </div>
-      </div>
+      </>
     </ContentCard>
   );
 }

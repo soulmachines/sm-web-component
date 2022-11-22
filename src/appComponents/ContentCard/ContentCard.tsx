@@ -20,7 +20,9 @@ export function ContentCard({ contentId, children, style, flush }: ContentCardPr
           'sm-p-6': !flush,
         })}
       >
-        {children}
+        <div className="sm-overflow-y-auto sm-content-card-max-height sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-text-primary-text sm-font-normal sm-font-primary">
+          {children}
+        </div>
       </div>
     </div>
   );

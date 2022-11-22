@@ -53,7 +53,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
 
   return (
     <ContentCard contentId={content.id} style={style}>
-      <div className="sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-content-card-max-height sm-overflow-y-auto sm-text-primary-text sm-font-normal sm-font-primary">
+      <>
         {/*
         Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
         @ts-ignore */}
@@ -140,7 +140,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
         >
           {markdown}
         </ReactMarkdown>
-      </div>
+      </>
     </ContentCard>
   );
 }
