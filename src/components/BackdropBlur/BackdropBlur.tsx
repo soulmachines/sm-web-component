@@ -33,7 +33,7 @@ export function BackdropBlur({
 
     return () => {
       if (element) {
-        element.removeEventListener('click', scrollOccurred);
+        element.removeEventListener('scroll', scrollOccurred);
       }
     };
   }, [scrollTargetRef, scrollOffset]);
@@ -41,8 +41,8 @@ export function BackdropBlur({
   return (
     <div
       className={classNames('sm-transition-all', {
-        'sm-backdrop-blur-lg': isBlurred,
-        'sm:sm-backdrop-blur-none': smallScreenOnly,
+        'sm-backdrop-blur-md': isBlurred,
+        'md:sm-backdrop-blur-none': smallScreenOnly,
       })}
     >
       {children}
