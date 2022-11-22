@@ -10,7 +10,7 @@ export default {
 
 export const Basic = ({ flush }: ContentCardProps) => {
   return (
-    <ContentCard flush={flush}>
+    <ContentCard contentId="mockId" flush={flush}>
       <div>
         <p>Any content can be passed here</p>
       </div>
