@@ -28,11 +28,8 @@ export function OptionsCard({ content, style }: OptionsCardProps) {
   }
 
   return (
-    <ContentCard style={style}>
-      <div
-        data-sm-content={content.id}
-        className="sm-content-card-max-height sm-h-full sm-flex sm-flex-col sm-gap-y-2 sm-overflow-y-auto"
-      >
+    <ContentCard contentId={content.id} style={style}>
+      <div className="sm-content-card-max-height sm-h-full sm-flex sm-flex-col sm-gap-y-2 sm-overflow-y-auto">
         {data.options.map((option) => {
           return (
             <Button

@@ -1,33 +1,31 @@
 import { render } from '@testing-library/preact';
-import { ContentCard } from '.';
+import { ContentCard, ContentCardProps } from '.';
 
 describe('<ContentCard />', () => {
-  it('renders the children', () => {
-    const { queryByText } = render(
-      <ContentCard>
+  const customRender = (props: Partial<ContentCardProps> = {}) =>
+    render(
+      <ContentCard contentId="mockId" {...props}>
         <p>Some text</p>
       </ContentCard>,
     );
+
+  it('renders the content id', () => {
+    const { container } = customRender();
+    expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
+  });
+
+  it('renders the children', () => {
+    const { queryByText } = customRender();
     expect(queryByText('Some text')).toBeInTheDocument();
   });
 
   it('renders the card with padding by default', () => {
-    const { container } = render(
-      <ContentCard>
-        <p>Some text</p>
-      </ContentCard>,
-    );
-
+    const { container } = customRender();
     expect(container.querySelector('.sm-p-6')).toBeInTheDocument();
   });
 
   it('renders the card with no padding when flush is true', () => {
-    const { container } = render(
-      <ContentCard flush={true}>
-        <p>Some text</p>
-      </ContentCard>,
-    );
-
+    const { container } = customRender({ flush: true });
     expect(container.querySelector('.sm-p-6')).not.toBeInTheDocument();
   });
 });

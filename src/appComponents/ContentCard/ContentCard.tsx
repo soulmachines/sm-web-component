@@ -5,12 +5,14 @@ export type ContentCardProps = {
   flush?: boolean;
   children?: JSX.Element | undefined;
   style?: Record<string, 'string | CSSProperties | undefined'>;
+  contentId: string | number;
 };
 
-export function ContentCard({ children, style, flush }: ContentCardProps) {
+export function ContentCard({ contentId, children, style, flush }: ContentCardProps) {
   return (
     <div
       className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8"
+      data-sm-content={contentId}
       style={style}
     >
       <div

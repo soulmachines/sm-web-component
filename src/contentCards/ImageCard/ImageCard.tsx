@@ -21,9 +21,8 @@ export function ImageCard({ content, style }: ImageCardProps) {
 
   return (
     <div className="sm-flex sm-justify-center">
-      <ContentCard flush={true} style={style}>
+      <ContentCard contentId={content.id} style={style} flush={true}>
         <img
-          data-sm-content={content.id}
           src={data.url}
           alt={data.alt}
           className="sm-mx-auto sm-object-contain sm-max-w-full sm-h-full sm-max-h-87"
