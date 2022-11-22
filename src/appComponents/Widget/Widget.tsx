@@ -98,19 +98,21 @@ export function Widget({
       >
         <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
           <Video autoConnect={false} />
-          <VideoControls />
         </div>
 
         <div
-          class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
+          class="sm-absolute sm-isolate sm-top-0 sm-left-0 sm-w-full sm-h-full
             md:sm-w-auto md:sm-h-auto  md:sm-top-auto md:sm-left-auto
-            md:sm-bottom-1/2 md:sm-translate-y-1/2 md:sm-right-24 xl:sm-right-40 "
+            md:sm-bottom-1/2 md:sm-translate-y-1/2 md:sm-right-24 xl:sm-right-40"
         >
           <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
             <div className="sm-pt-[70vh] sm-flex sm-justify-center sm-pb-8 md:sm-pt-0">
               <ContentCards />
             </div>
           </BackdropBlur>
+        </div>
+        <div className="sm-sticky sm-top-0 sm-bottom-0 sm-left-0 sm-right-0 sm-w-full sm-h-full">
+          <VideoControls />
         </div>
       </Modal>
     </div>
