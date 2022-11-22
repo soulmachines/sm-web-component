@@ -1,11 +1,11 @@
 import { Button } from '../../components/Button';
-import { Card } from '../../components/Card';
+import { ContentCard } from '../../appComponents/ContentCard';
 import { Text } from '../../components/Text';
-import { ContentCard } from '@soulmachines/smwebsdk';
+import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
 import { Heading } from '../../components/Heading';
 
 export type LinkCardProps = {
-  content: ContentCard;
+  content: SMContentCard;
   isExternal?: boolean;
   style?: Record<string, 'string | CSSProperties | undefined'>;
 };
@@ -28,7 +28,7 @@ export function LinkCard({ content, isExternal, style }: LinkCardProps) {
   }
 
   return (
-    <Card style={style}>
+    <ContentCard style={style}>
       <div
         data-sm-content={content.id}
         className="sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-overflow-y-auto sm-content-card-max-height"
@@ -42,7 +42,7 @@ export function LinkCard({ content, isExternal, style }: LinkCardProps) {
           </a>
         </div>
       </div>
-    </Card>
+    </ContentCard>
   );
 }
 

@@ -1,12 +1,12 @@
-import { ContentCard } from '@soulmachines/smwebsdk';
-import { Card } from '../../components/Card';
+import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
+import { ContentCard } from '../../appComponents/ContentCard';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Heading, HeadingProps } from '../../components/Heading';
 import { Text, TextProps } from '../../components/Text';
 
 export type MarkdownCardProps = {
-  content: ContentCard;
+  content: SMContentCard;
   //  Styles are passed through from react spring
   style?: Record<string, 'string | CSSProperties | undefined'>;
 };
@@ -52,7 +52,7 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
   const markdown = data.text;
 
   return (
-    <Card style={style}>
+    <ContentCard style={style}>
       <div
         data-sm-content={content.id}
         className="sm-sans sm-flex sm-flex-col sm-gap-y-3 sm-items-start sm-h-full sm-content-card-max-height sm-overflow-y-auto sm-text-primary-text sm-font-normal sm-font-primary"
@@ -144,6 +144,6 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
           {markdown}
         </ReactMarkdown>
       </div>
-    </Card>
+    </ContentCard>
   );
 }

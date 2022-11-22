@@ -1,12 +1,12 @@
-import { ContentCard } from '@soulmachines/smwebsdk';
+import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Button } from '../../components/Button';
-import { Card } from '../../components/Card';
+import { ContentCard } from '../../appComponents/ContentCard';
 import { Icon } from '../../components/Icon';
 
 type OptionsCardProps = {
-  content: ContentCard;
-  //  Styles are passed through from react spring
+  content: SMContentCard;
+  //  Styles are SMSMContentCard through from react spring
   style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 
@@ -28,7 +28,7 @@ export function OptionsCard({ content, style }: OptionsCardProps) {
   }
 
   return (
-    <Card isDismissible={false} style={style}>
+    <ContentCard style={style}>
       <div
         data-sm-content={content.id}
         className="sm-content-card-max-height sm-h-full sm-flex sm-flex-col sm-gap-y-2 sm-overflow-y-auto"
@@ -46,6 +46,6 @@ export function OptionsCard({ content, style }: OptionsCardProps) {
           );
         })}
       </div>
-    </Card>
+    </ContentCard>
   );
 }
