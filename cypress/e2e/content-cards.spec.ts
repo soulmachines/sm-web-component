@@ -13,35 +13,27 @@ describe('content cards', () => {
     cy.get('[data-sm-content=options]').should('not.exist');
   });
 
-  it('renders an image card and hides the card once the close button is clicked', () => {
+  it('renders an image card', () => {
     cy.sendTextMessage(corpusCommands.imageCard);
     cy.get('[data-sm-content=image]', { timeout: 6000 }).should('exist');
-    cy.get('button').contains('svg', 'Hide card').click();
-    cy.get('[data-sm-content=image]').should('not.exist');
   });
 
-  it('renders an external link card and hides the card once the close button is clicked', () => {
+  it('renders an external link card', () => {
     cy.sendTextMessage(corpusCommands.externalLink);
     cy.get('[data-sm-content=externalLink]', { timeout: 6000 }).should('exist');
-    cy.get('button').contains('svg', 'Hide card').click();
-    cy.get('[data-sm-content=externalLink]').should('not.exist');
   });
 
-  it('renders an internal link card and hides the card once the close button is clicked', () => {
+  it('renders an internal link card', () => {
     cy.sendTextMessage(corpusCommands.internalLink);
     cy.get('[data-sm-content=internalLink]', { timeout: 6000 }).should('exist');
-    cy.get('button').contains('svg', 'Hide card').click();
-    cy.get('[data-sm-content=internalLink]').should('not.exist');
   });
 
-  it('renders a Markdown Card and hides the card once the close button is clicked', () => {
+  it('renders a Markdown Card', () => {
     cy.sendTextMessage(corpusCommands.markdownCard);
     cy.get('[data-sm-content=markdown]', { timeout: 6000 }).should('exist');
-    cy.get('button').contains('svg', 'Hide card').click();
-    cy.get('[data-sm-content=markdown]').should('not.exist');
   });
 
-  it('renders a Markdown Card correctly', () => {
+  it('renders a Markdown Card', () => {
     cy.sendTextMessage(corpusCommands.markdownCard);
     cy.get('h1').contains('Structured Text').should('exist');
     cy.get('h2').contains('Subheadings').should('exist');

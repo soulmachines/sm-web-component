@@ -101,12 +101,12 @@ export function Widget({
         </div>
 
         <div
-          class="sm-absolute sm-isolate sm-top-0 sm-left-0 sm-w-full sm-h-full
-            md:sm-w-auto md:sm-h-auto  md:sm-top-auto md:sm-left-auto
-            md:sm-bottom-1/2 md:sm-translate-y-1/2 md:sm-right-24 xl:sm-right-40"
+          class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
+          minRatio4/3:sm-w-auto minRatio4/3:sm-h-auto minRatio4/3:sm-left-auto
+          minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-pointer-events-none"
         >
           <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
-            <div className="sm-pt-[70vh] sm-flex sm-justify-center sm-pb-8 md:sm-pt-0">
+            <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0">
               <ContentCards />
             </div>
           </BackdropBlur>

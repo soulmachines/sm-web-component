@@ -13,7 +13,7 @@ describe('<Card />', () => {
 
   it('renders the card with padding by default', () => {
     const { container } = render(
-      <Card isDismissible={false}>
+      <Card>
         <p>Some text</p>
       </Card>,
     );
@@ -23,7 +23,7 @@ describe('<Card />', () => {
 
   it('renders the card with no padding when flush is true', () => {
     const { container } = render(
-      <Card isDismissible={false} flush={true}>
+      <Card flush={true}>
         <p>Some text</p>
       </Card>,
     );
@@ -31,9 +31,9 @@ describe('<Card />', () => {
     expect(container.querySelector('.sm-p-6')).not.toBeInTheDocument();
   });
 
-  it('does not render a close button when isDismissible is false', () => {
+  it('does not render a close button by default', () => {
     const { queryByTitle } = render(
-      <Card isDismissible={false}>
+      <Card>
         <p>Some text</p>
       </Card>,
     );
@@ -41,9 +41,19 @@ describe('<Card />', () => {
     expect(queryByTitle('Hide card')).not.toBeInTheDocument();
   });
 
+  it('renders a close button when isDismissible is true', () => {
+    const { queryByTitle } = render(
+      <Card isDismissible={true}>
+        <p>Some text</p>
+      </Card>,
+    );
+
+    expect(queryByTitle('Hide card')).toBeInTheDocument();
+  });
+
   describe('when the close button is clicked', () => {
     it('renders nothing', async () => {
-      const { getByTitle, container } = render(<Card />);
+      const { getByTitle, container } = render(<Card isDismissible={true} />);
       const button = getByTitle('Hide card');
 
       await fireEvent.click(button);
