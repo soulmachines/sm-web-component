@@ -112,9 +112,7 @@ export function Widget({
             </div>
           </BackdropBlur>
         </div>
-        {/* <div className="sm-sticky sm-top-0 sm-bottom-0 sm-left-0 sm-right-0 sm-w-full sm-h-full sm-pointer-events-none"> */}
         <VideoControls />
-        {/* </div> */}
       </Modal>
     </div>
   );
