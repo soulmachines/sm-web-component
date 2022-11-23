@@ -33,6 +33,31 @@ export const optionsCardContent = {
       {
         label: 'London',
       },
+      {
+        label: 'Singapore',
+        value: 'singapore',
+      },
+      {
+        label: 'Denmark',
+      },
+      {
+        label: 'Wellington',
+        value: 'wellington',
+      },
+      {
+        label: 'Arizona',
+        value: 'arizona',
+      },
+      {
+        label: 'Melbourne',
+      },
+      {
+        label: 'Iceland',
+        value: 'iceland',
+      },
+      {
+        label: 'England',
+      },
     ],
   },
 };

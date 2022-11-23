@@ -13,14 +13,11 @@ describe('<ContentCards />', () => {
       ...SoulMachinesContext.useSoulMachines(),
       cards: contentCards,
     });
-    const testUtils = render(<ContentCards />);
-    testUtils.rerender(<ContentCards />);
-
-    return testUtils;
+    return render(<ContentCards fullHeight={false} />);
   };
 
   it('renders nothing by default', () => {
-    const { container } = render(<ContentCards />);
+    const { container } = customRender();
     expect(container).toBeEmptyDOMElement();
   });
 

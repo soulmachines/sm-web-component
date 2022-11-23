@@ -1,5 +1,4 @@
 import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
-import { ContentCard } from '../../appComponents/ContentCard';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Heading, HeadingProps } from '../../components/Heading';
@@ -7,8 +6,6 @@ import { Text, TextProps } from '../../components/Text';
 
 export type MarkdownCardProps = {
   content: SMContentCard;
-  //  Styles are passed through from react spring
-  style?: Record<string, 'string | CSSProperties | undefined'>;
 };
 
 export type LiProps = {
@@ -44,7 +41,7 @@ export type GenericProps = {
   node: object;
 };
 
-export function MarkdownCard({ content, style }: MarkdownCardProps) {
+export function MarkdownCard({ content }: MarkdownCardProps) {
   const data = content.data as unknown as MarkdownData;
   if (!data.text) {
     return null;
@@ -52,95 +49,93 @@ export function MarkdownCard({ content, style }: MarkdownCardProps) {
   const markdown = data.text;
 
   return (
-    <ContentCard contentId={content.id} style={style}>
-      <>
-        {/*
+    <>
+      {/*
         Fixes a typescript issue "JSX element type 'ReactMarkdown' does not have any construct or call signatures".
         @ts-ignore */}
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            h1: ({ type = 'h1', children, size = '2xl' }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} />
-            ),
-            h2: ({ type = 'h2', children, size = '2xl' }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} />
-            ),
-            h3: ({ type = 'h3', children, size = 'lg' }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} />
-            ),
-            h4: ({ type = 'h4', children, size = 'lg' }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} />
-            ),
-            h5: ({ type = 'h5', children, size = 'md' }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} />
-            ),
-            h6: ({ type = 'h6', children, size = 'md' }: HeadingProps) => (
-              <Heading type={type} children={children} size={size} />
-            ),
-            li: ({ children }: LiProps) => {
-              return <li>{children}</li>;
-            },
-            ol: ({ children }: OlProps) => {
-              return <ol className="sm-ml-4 sm-list-decimal">{children}</ol>;
-            },
-            ul: ({ children, className }: OlProps) => {
-              if (className === 'task-list-item') {
-                return <ul className="sm-ml-4 sm-list-none">{children}</ul>;
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          h1: ({ type = 'h1', children, size = '2xl' }: HeadingProps) => (
+            <Heading type={type} children={children} size={size} />
+          ),
+          h2: ({ type = 'h2', children, size = '2xl' }: HeadingProps) => (
+            <Heading type={type} children={children} size={size} />
+          ),
+          h3: ({ type = 'h3', children, size = 'lg' }: HeadingProps) => (
+            <Heading type={type} children={children} size={size} />
+          ),
+          h4: ({ type = 'h4', children, size = 'lg' }: HeadingProps) => (
+            <Heading type={type} children={children} size={size} />
+          ),
+          h5: ({ type = 'h5', children, size = 'md' }: HeadingProps) => (
+            <Heading type={type} children={children} size={size} />
+          ),
+          h6: ({ type = 'h6', children, size = 'md' }: HeadingProps) => (
+            <Heading type={type} children={children} size={size} />
+          ),
+          li: ({ children }: LiProps) => {
+            return <li>{children}</li>;
+          },
+          ol: ({ children }: OlProps) => {
+            return <ol className="sm-ml-4 sm-list-decimal">{children}</ol>;
+          },
+          ul: ({ children, className }: OlProps) => {
+            if (className === 'task-list-item') {
+              return <ul className="sm-ml-4 sm-list-none">{children}</ul>;
+            }
+            return <ul className="sm-ml-4 sm-list-disc">{children}</ul>;
+          },
+          a: ({ href, children, title, target }: AProps) => {
+            let isExternal = false;
+            if (!target) {
+              const currentDomain = window.location.hostname;
+              const destinationDomain = new URL(href).hostname;
+              if (!(currentDomain === destinationDomain)) {
+                isExternal = true;
               }
-              return <ul className="sm-ml-4 sm-list-disc">{children}</ul>;
-            },
-            a: ({ href, children, title, target }: AProps) => {
-              let isExternal = false;
-              if (!target) {
-                const currentDomain = window.location.hostname;
-                const destinationDomain = new URL(href).hostname;
-                if (!(currentDomain === destinationDomain)) {
-                  isExternal = true;
-                }
-              }
-              const conditionalAttributes: Record<string, string> = {};
+            }
+            const conditionalAttributes: Record<string, string> = {};
 
-              if (isExternal) {
-                conditionalAttributes['target'] = '_blank';
-                conditionalAttributes['rel'] = 'noopener noreferrer';
-              }
+            if (isExternal) {
+              conditionalAttributes['target'] = '_blank';
+              conditionalAttributes['rel'] = 'noopener noreferrer';
+            }
 
-              return (
-                <a
-                  className="sm-text-primary-base active:sm-text-primary-dark hover:sm-underline focus:underline visited:sm-text-primary-dark"
-                  href={href}
-                  title={title}
-                  {...conditionalAttributes}
-                >
-                  {children}
-                </a>
-              );
-            },
-            p: ({ children }: TextProps) => {
-              return <Text children={children} size="md" />;
-            },
-            hr: () => <hr className="sm-w-11/12 sm-bg-gray-lightest" />,
-            table: ({ ...props }: GenericProps) => {
-              return (
-                <table
-                  className="sm-table-auto md:sm-table-fixed sm-w-full sm-border-spacing-0"
-                  {...props}
-                />
-              );
-            },
-            tr: ({ ...props }: GenericProps) => {
-              return <tr className="even:sm-bg-gray-lightest" {...props} />;
-            },
-            thead: ({ ...props }: GenericProps) => {
-              return <thead className="sm-bg-gray-light sm-text-left" {...props} />;
-            },
-            pre: ({ ...props }) => <pre className="sm-bg-gray-light sm-rounded-sm" {...props} />,
-          }}
-        >
-          {markdown}
-        </ReactMarkdown>
-      </>
-    </ContentCard>
+            return (
+              <a
+                className="sm-text-primary-base active:sm-text-primary-dark hover:sm-underline focus:underline visited:sm-text-primary-dark"
+                href={href}
+                title={title}
+                {...conditionalAttributes}
+              >
+                {children}
+              </a>
+            );
+          },
+          p: ({ children }: TextProps) => {
+            return <Text children={children} size="md" />;
+          },
+          hr: () => <hr className="sm-w-11/12 sm-bg-gray-lightest" />,
+          table: ({ ...props }: GenericProps) => {
+            return (
+              <table
+                className="sm-table-auto md:sm-table-fixed sm-w-full sm-border-spacing-0"
+                {...props}
+              />
+            );
+          },
+          tr: ({ ...props }: GenericProps) => {
+            return <tr className="even:sm-bg-gray-lightest" {...props} />;
+          },
+          thead: ({ ...props }: GenericProps) => {
+            return <thead className="sm-bg-gray-light sm-text-left" {...props} />;
+          },
+          pre: ({ ...props }) => <pre className="sm-bg-gray-light sm-rounded-sm" {...props} />,
+        }}
+      >
+        {markdown}
+      </ReactMarkdown>
+    </>
   );
 }

@@ -12,10 +12,6 @@
   .sm-floating-container {
     @apply sm-w-63 sm-h-43 md:sm-h-54 md:sm-w-88;
   }
-
-  .sm-content-card-max-height {
-    @apply sm-max-h-80 md:sm-max-h-137;
-  }
 }
 
 /*
