@@ -73,20 +73,6 @@ Custom CSS Reset
 }
 
 /*
-Remove the default font size and weight for headings.
-*/
-
-.sm-widget h1,
-.sm-widget h2,
-.sm-widget h3,
-.sm-widget h4,
-.sm-widget h5,
-.sm-widget h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-/*
 Reset links to optimize for opt-in styling instead of opt-out.
 */
 
@@ -165,43 +151,6 @@ Remove the inner padding in Chrome and Safari on macOS.
 .sm-widget ::-webkit-file-upload-button {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
-}
-
-/*
-Removes the default spacing and border for appropriate elements.
-*/
-
-.sm-widget blockquote,
-.sm-widget dl,
-.sm-widget dd,
-.sm-widget h1,
-.sm-widget h2,
-.sm-widget h3,
-.sm-widget h4,
-.sm-widget h5,
-.sm-widget h6,
-.sm-widget hr,
-.sm-widget figure,
-.sm-widget p,
-.sm-widget pre {
-  margin: 0;
-}
-
-.sm-widget fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-.sm-widget legend {
-  padding: 0;
-}
-
-.sm-widget ol,
-.sm-widget ul,
-.sm-widget menu {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 /*

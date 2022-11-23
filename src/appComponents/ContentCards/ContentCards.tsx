@@ -1,50 +1,64 @@
-import { ContentCard } from '@soulmachines/smwebsdk';
+import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
 import { Fragment, JSX } from 'preact';
-import { useTransition, animated, config } from 'react-spring';
-import { ImageCard } from '../../contentCards/ImageCard';
-import { LinkCard, LinkCardProps } from '../../contentCards/LinkCard';
-import { MarkdownCard } from '../../contentCards/MarkdownCard';
-import { OptionsCard } from '../../contentCards/OptionsCard';
+import { useTransition, config } from 'react-spring';
+import { ImageCardContent } from '../../contentCards/ImageCardContent';
+import { LinkCardContent, LinkCardContentProps } from '../../contentCards/LinkCardContent';
+import { MarkdownCardContent } from '../../contentCards/MarkdownCardContent';
+import { OptionsCardContent } from '../../contentCards/OptionsCardContent';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
+import { ContentCard } from '../ContentCard/ContentCard';
 
-export type CardComponent = {
-  content: ContentCard;
+export type ContentCardsProps = {
+  fullHeight: boolean;
 };
 
-const ExternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={true} />;
-const InternalLinkCard = (props: LinkCardProps) => <LinkCard {...props} isExternal={false} />;
+export type CardComponent = {
+  content: SMContentCard;
+};
 
-export function ContentCards() {
+const ExternalLinkCardContent = (props: LinkCardContentProps) => (
+  <LinkCardContent {...props} isExternal={true} />
+);
+const InternalLinkCardContent = (props: LinkCardContentProps) => (
+  <LinkCardContent {...props} isExternal={false} />
+);
+
+export function ContentCards({ fullHeight }: ContentCardsProps) {
   const { cards } = useSoulMachines();
   const transitions = useTransition(cards, {
     from: { opacity: 0, transform: 'translateY(20px)' },
     enter: { opacity: 1, transform: 'translateY(0px)' },
     config: config.gentle,
   });
+  const flushCards = ['image'];
 
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
-    options: OptionsCard,
-    image: ImageCard,
-    externalLink: ExternalLinkCard,
-    internalLink: InternalLinkCard,
-    markdown: MarkdownCard,
+    options: OptionsCardContent,
+    image: ImageCardContent,
+    externalLink: ExternalLinkCardContent,
+    internalLink: InternalLinkCardContent,
+    markdown: MarkdownCardContent,
   };
 
   return (
     <Fragment>
       {transitions((style, card) => {
         // Get the custom content card to render
-        const ContentCardComponent = cardComponents[card?.type || ''];
+        const CardContentComponent = cardComponents[card?.type || ''];
 
         // Return if one does not exist
-        if (!ContentCardComponent) return null;
-
-        // Wrap content card in react springs animation hooks
-        const AnimatedContentCardComponent = animated(ContentCardComponent);
+        if (!CardContentComponent) return null;
 
         return (
           <div class="sm-w-79 md:sm-w-104 sm-max-h-full sm-flex sm-flex-col sm-justify-end sm-gap-y-2 sm-overflow-hidden sm-p-8 -sm-m-8 md:sm-gap-y-3">
-            <AnimatedContentCardComponent style={style} content={card} />
+            <ContentCard
+              contentId={card.id}
+              fullHeight={fullHeight}
+              springStyle={style}
+              flush={flushCards.includes(card?.type || '')}
+            >
+              <CardContentComponent content={card} />
+            </ContentCard>
           </div>
         );
       })}

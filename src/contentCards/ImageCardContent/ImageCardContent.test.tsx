@@ -1,7 +1,7 @@
 import { render } from '@testing-library/preact';
-import { ImageCard } from '.';
+import { ImageCardContent } from '.';
 
-describe('<ImageCard />', () => {
+describe('<ImageCardContent />', () => {
   const emptyCard = {
     id: 'mockId',
     type: 'options',
@@ -10,7 +10,7 @@ describe('<ImageCard />', () => {
     },
   };
 
-  const imageCard = {
+  const cardContent = {
     id: 'mockId',
     type: 'image',
     data: {
@@ -20,22 +20,17 @@ describe('<ImageCard />', () => {
   };
 
   it('renders nothing when url is not provided', () => {
-    const { container } = render(<ImageCard content={emptyCard} />);
+    const { container } = render(<ImageCardContent content={emptyCard} />);
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders data-sm-content with the card id', () => {
-    const { container } = render(<ImageCard content={imageCard} />);
-    expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
-  });
-
   it('renders an image with alt text', () => {
-    const { getByRole } = render(<ImageCard content={imageCard} />);
+    const { getByRole } = render(<ImageCardContent content={cardContent} />);
     expect(getByRole('img')).toBeInTheDocument();
   });
 
   it('renders alt text', () => {
-    const { getByAltText } = render(<ImageCard content={imageCard} />);
+    const { getByAltText } = render(<ImageCardContent content={cardContent} />);
     expect(getByAltText('mock alt text')).toBeInTheDocument();
   });
 });

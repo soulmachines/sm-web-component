@@ -16,6 +16,7 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "lint": "eslint src/",
+    "type-check": "tsc",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs",
     "generate": "plop --plopfile generators/index.js",

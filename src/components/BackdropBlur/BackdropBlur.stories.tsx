@@ -1,7 +1,8 @@
 import { BackdropBlur, BackdropBlurProps } from '.';
-import { imageCardContent } from '../../storybook-content';
-import { ImageCard } from '../../contentCards/ImageCard';
 import { useRef } from 'preact/hooks';
+import { ContentCard } from '../../appComponents/ContentCard';
+import { Heading } from '../Heading';
+import { Text } from '../Text';
 
 export default {
   title: `Components / BackdropBlur`,
@@ -30,16 +31,20 @@ export const Basic = ({ scrollOffset, smallScreenOnly }: BackdropBlurProps) => {
     <div
       ref={ref}
       className="sm-h-screen sm-overflow-y-auto"
-      style="background-image:url(https://assets.gocomics.com/uploads/collection_images/collection_image_large_1628638_dilbert-inventions-content-admin-2048x1280_201809101600.jpg);background-attachment:fixed"
+      style="background-image:url(https://dp-images.cdn.soulmachines.cloud/stg/ZT_ASSET_4D621603C3F22BE7954B45DA866255C2_17_0_STG.jpg);background-size:cover;background-position: center;"
     >
       <BackdropBlur
         scrollTargetRef={ref}
         scrollOffset={scrollOffset}
         smallScreenOnly={smallScreenOnly}
       >
-        <div id="modal" style={{ height: '3000px' }}>
-          <ImageCard content={imageCardContent} />
-          <ImageCard content={imageCardContent} />
+        <div id="modal" className="sm-flex sm-flex-col sm-gap-y-3" style={{ height: '2000px' }}>
+          <ContentCard contentId="mockId">
+            <>
+              <Heading type="h1">Backdrop Blur</Heading>
+              <Text>The background will when you scroll the offset amount.</Text>
+            </>
+          </ContentCard>
         </div>
       </BackdropBlur>
     </div>

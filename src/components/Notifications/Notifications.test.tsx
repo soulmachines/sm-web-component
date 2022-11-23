@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/preact';
+import { fireEvent, render, waitFor } from '@testing-library/preact';
 import { Notifications } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
@@ -115,6 +115,21 @@ describe('<Notifications />', () => {
     it('does not render "unable to connect" text', () => {
       const { queryByText } = customRender();
       expect(queryByText(unableToConnectText)).not.toBeInTheDocument();
+    });
+
+    describe('when the close button is clicked', () => {
+      it('renders nothing', async () => {
+        const { container, getByText } = customRender();
+
+        const button = getByText('Hide card');
+
+        await fireEvent.click(button);
+
+        // Wait for animation to complete
+        await waitFor(() => {
+          expect(container).toBeEmptyDOMElement();
+        });
+      });
     });
   });
 

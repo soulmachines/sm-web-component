@@ -2,8 +2,11 @@ module.exports = {
   content: ['./src/**/**/**.tsx'],
   theme: {
     screens: {
-      sm: { raw: '(min-width: 430px)' },
+      'minRatio4/3': {
+        raw: '(min-aspect-ratio: 4/3) ',
+      },
       md: { raw: '(min-width: 768px) and (min-height: 450px)' },
+      lg: { raw: '(min-width: 1024px)' },
       xl: { raw: '(min-width: 1920px)' },
     },
     colors: {
@@ -50,8 +53,8 @@ module.exports = {
         primary: ['var(--sm-font-family-primary)'],
       },
       maxHeight: {
-        contentCard: '34.25rem',
         87: '21.75rem',
+        137: '34.25rem',
       },
       height: {
         18: '4.5rem',
@@ -72,6 +75,10 @@ module.exports = {
       },
       zIndex: {
         max: '9999',
+      },
+      backdropBlur: {
+        // Override default as blur(0) causes a slight blur
+        none: 'none',
       },
       animation: {
         grow: 'grow 1.2s ease-in-out infinite',
