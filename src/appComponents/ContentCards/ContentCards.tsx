@@ -1,6 +1,6 @@
 import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
 import { Fragment, JSX } from 'preact';
-import { useTransition, animated, config } from 'react-spring';
+import { useTransition, config } from 'react-spring';
 import { ImageCardContent } from '../../contentCards/ImageCardContent';
 import { LinkCardContent, LinkCardContentProps } from '../../contentCards/LinkCardContent';
 import { MarkdownCardContent } from '../../contentCards/MarkdownCardContent';

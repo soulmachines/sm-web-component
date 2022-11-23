@@ -1,5 +1,8 @@
 import { BackdropBlur, BackdropBlurProps } from '.';
 import { useRef } from 'preact/hooks';
+import { ContentCard } from '../../appComponents/ContentCard';
+import { Heading } from '../Heading';
+import { Text } from '../Text';
 
 export default {
   title: `Components / BackdropBlur`,
@@ -35,11 +38,14 @@ export const Basic = ({ scrollOffset, smallScreenOnly }: BackdropBlurProps) => {
         scrollOffset={scrollOffset}
         smallScreenOnly={smallScreenOnly}
       >
-        <div
-          id="modal"
-          className="sm-flex sm-flex-col sm-gap-y-3"
-          style={{ height: '2000px' }}
-        ></div>
+        <div id="modal" className="sm-flex sm-flex-col sm-gap-y-3" style={{ height: '2000px' }}>
+          <ContentCard contentId="mockId">
+            <>
+              <Heading type="h1">Backdrop Blur</Heading>
+              <Text>The background will when you scroll the offset amount.</Text>
+            </>
+          </ContentCard>
+        </div>
       </BackdropBlur>
     </div>
   );
