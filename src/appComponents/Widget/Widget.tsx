@@ -104,7 +104,7 @@ export function Widget({
           ref={scrollRef}
           class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
           minRatio4/3:sm-w-auto minRatio4/3:sm-h-auto minRatio4/3:sm-left-auto
-          minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-pointer-events-none sm-overflow-y-auto sm-pointer-events-auto"
+          minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-overflow-y-auto sm-pointer-events-auto"
         >
           <BackdropBlur scrollTargetRef={scrollRef} smallScreenOnly={true}>
             <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0 sm-overflow-y-auto">
