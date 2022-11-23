@@ -24,11 +24,6 @@ describe('<ImageCard />', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders data-sm-content with the card id', () => {
-    const { container } = render(<ImageCard content={imageCard} />);
-    expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
-  });
-
   it('renders an image with alt text', () => {
     const { getByRole } = render(<ImageCard content={imageCard} />);
     expect(getByRole('img')).toBeInTheDocument();

@@ -1,23 +1,30 @@
 import classNames from 'classnames';
 import { JSX } from 'preact';
+import { animated, SpringValue } from 'react-spring';
 
 export type ContentCardProps = {
   flush?: boolean;
   fullHeight: boolean;
   children?: JSX.Element | undefined;
-  style?: Record<string, 'string | CSSProperties | undefined'>;
+  springStyle?: Record<string, SpringValue<number> | SpringValue<string>>;
   contentId: string | number;
 };
 
-export function ContentCard({ contentId, children, style, flush, fullHeight }: ContentCardProps) {
+export function ContentCard({
+  contentId,
+  children,
+  springStyle,
+  flush,
+  fullHeight,
+}: ContentCardProps) {
   return (
-    <div
+    <animated.div
       className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8 sm-justify-center"
       data-sm-content={contentId}
-      style={style}
+      style={springStyle}
     >
       <div
-        className={classNames('sm-round-shadow-box ', {
+        className={classNames('sm-round-shadow-box', {
           'sm-p-6': !flush,
         })}
       >
@@ -32,7 +39,7 @@ export function ContentCard({ contentId, children, style, flush, fullHeight }: C
           {children}
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 }
 

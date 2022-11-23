@@ -53,7 +53,7 @@ export function ContentCards({ fullHeight }: ContentCardsProps) {
             <ContentCard
               contentId={card.id}
               fullHeight={fullHeight}
-              style={style}
+              springStyle={style}
               flush={flushCards.includes(card?.type || '')}
             >
               <AnimatedContentCardComponent content={card} />
