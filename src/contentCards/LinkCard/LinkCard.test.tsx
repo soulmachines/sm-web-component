@@ -13,11 +13,6 @@ describe('<LinkCard />', () => {
     },
   };
 
-  it('renders data-sm-content with the card id', () => {
-    const { container } = render(<LinkCard content={mockCard} isExternal={true} />);
-    expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
-  });
-
   it('renders target=_blank and rel=noreferrer when card is externalLink', () => {
     const { container } = render(<LinkCard content={mockCard} isExternal={true} />);
     expect(container.querySelector('[target="_blank"]')).toBeInTheDocument();

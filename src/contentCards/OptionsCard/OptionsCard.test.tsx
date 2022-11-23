@@ -34,11 +34,6 @@ describe('<OptionsCard />', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders data-sm-content with the card id', () => {
-    const { container } = render(<OptionsCard content={cards} />);
-    expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
-  });
-
   it('renders a button with the label text for each option', () => {
     const { getByRole } = render(<OptionsCard content={cards} />);
     expect(getByRole('button', { name: /option one/ })).toBeInTheDocument();

@@ -21,11 +21,6 @@ describe('<MarkdownCard />', () => {
     },
   };
 
-  it('renders data-sm-content with the card id', () => {
-    const { container } = render(<MarkdownCard content={mockCard} />);
-    expect(container.querySelector('[data-sm-content="mockId"]')).toBeInTheDocument();
-  });
-
   it('renders nothing if nothing received', () => {
     const markdown = '';
 
