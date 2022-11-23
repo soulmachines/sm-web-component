@@ -2,7 +2,6 @@ import { ConversationStateTypes } from '@soulmachines/smwebsdk/lib-esm/enums/Con
 import { SMProviderDecorator } from '../../.storybook/decorators/SMProviderDecorator';
 import paths from '../components/Icon/paths';
 import { Button } from '../components/Button';
-import { Card } from '../components/Card';
 import { ConversationState } from '../appComponents/ConversationState';
 import { Heading, headingSizes } from '../components/Heading';
 import { IconButton, Theme } from '../components/IconButton/IconButton';
@@ -197,13 +196,6 @@ const CardContainer = () => {
   return (
     <div className="sm-flex sm-flex-wrap sm-gap-10">
       <OptionsCard content={optionsCardContent} />
-      <Card flush={false}>
-        <div>
-          <Text>This is a dismissible content card.</Text>
-          <Button>Button</Button>
-        </div>
-      </Card>
-
       <ImageCard content={imageCardContent} />
       <LinkCard content={linkCardContent} isExternal={true} />
       <MarkdownCard content={markdownCardContent} />

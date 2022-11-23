@@ -77,20 +77,6 @@ Custom CSS Reset
 }
 
 /*
-Remove the default font size and weight for headings.
-*/
-
-.sm-widget h1,
-.sm-widget h2,
-.sm-widget h3,
-.sm-widget h4,
-.sm-widget h5,
-.sm-widget h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-/*
 Reset links to optimize for opt-in styling instead of opt-out.
 */
 
