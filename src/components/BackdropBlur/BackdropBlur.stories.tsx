@@ -1,7 +1,5 @@
 import { BackdropBlur, BackdropBlurProps } from '.';
 import { useRef } from 'preact/hooks';
-import { ImageCard } from '../../contentCards/ImageCardContent';
-import { imageCardContent } from '../../storybook-content';
 
 export default {
   title: `Components / BackdropBlur`,
@@ -37,11 +35,11 @@ export const Basic = ({ scrollOffset, smallScreenOnly }: BackdropBlurProps) => {
         scrollOffset={scrollOffset}
         smallScreenOnly={smallScreenOnly}
       >
-        <div id="modal" className="sm-flex sm-flex-col sm-gap-y-3" style={{ height: '2000px' }}>
-          <ImageCard content={imageCardContent} />
-          <ImageCard content={imageCardContent} />
-          <ImageCard content={imageCardContent} />
-        </div>
+        <div
+          id="modal"
+          className="sm-flex sm-flex-col sm-gap-y-3"
+          style={{ height: '2000px' }}
+        ></div>
       </BackdropBlur>
     </div>
   );

@@ -4,7 +4,7 @@ import { animated, SpringValue } from 'react-spring';
 
 export type ContentCardProps = {
   flush?: boolean;
-  fullHeight: boolean;
+  fullHeight?: boolean;
   children?: JSX.Element | undefined;
   springStyle?: Record<string, SpringValue<number> | SpringValue<string>>;
   contentId: string | number;
@@ -45,4 +45,5 @@ export function ContentCard({
 
 ContentCard.defaultProps = {
   flush: false,
+  fullHeight: false,
 };
