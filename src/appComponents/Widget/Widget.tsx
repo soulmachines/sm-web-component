@@ -107,7 +107,7 @@ export function Widget({
           minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-overflow-y-auto sm-pointer-events-auto"
         >
           <BackdropBlur scrollTargetRef={scrollRef} smallScreenOnly={true}>
-            <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0 sm-overflow-y-auto">
+            <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0 sm-overflow-y-auto sm-overflow-x-hidden">
               <ContentCards />
             </div>
           </BackdropBlur>

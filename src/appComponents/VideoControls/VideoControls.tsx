@@ -2,7 +2,6 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../../components/IconButton';
 import { widgetLayout } from '../../enums';
-import classNames from 'classnames';
 
 export function VideoControls() {
   const {

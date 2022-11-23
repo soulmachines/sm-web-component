@@ -22,7 +22,7 @@ export function Modal({ isOpen, onClose, children, title, description, panelRef 
       <div className="sm-fixed sm-inset-0 md:sm-inset-10 xl:sm-inset-16 sm-z-max">
         <Dialog.Panel
           ref={panelRef}
-          className="sm-w-full sm-h-full md:sm-rounded-3xl sm-bg-white sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest sm-overflow-y-hidden"
+          className="sm-w-full sm-h-full md:sm-rounded-3xl sm-bg-white sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest sm-overflow-y-auto"
         >
           {children}
         </Dialog.Panel>
