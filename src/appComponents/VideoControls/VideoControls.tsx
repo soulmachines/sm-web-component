@@ -2,6 +2,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../../components/IconButton';
 import { widgetLayout } from '../../enums';
+import classNames from 'classnames';
 
 export function VideoControls() {
   const {
@@ -28,7 +29,7 @@ export function VideoControls() {
     layout === widgetLayout.FLOAT ? 'Switch to fullframe layout' : 'Switch to float layout';
 
   return (
-    <div className="sm-p-3 sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
+    <div className="sm-p-3 sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full sm-pointer-events-none">
       <div className="sm-flex sm-flex-col">
         <div className="sm-flex sm-justify-between">
           <IconButton

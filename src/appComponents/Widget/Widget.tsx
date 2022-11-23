@@ -33,6 +33,7 @@ export function Widget({
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   // Connect directly if it's resume session
   useEffect(() => {
@@ -99,21 +100,21 @@ export function Widget({
         <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
           <Video autoConnect={false} />
         </div>
-
         <div
+          ref={scrollRef}
           class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
           minRatio4/3:sm-w-auto minRatio4/3:sm-h-auto minRatio4/3:sm-left-auto
-          minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-pointer-events-none"
+          minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-pointer-events-none sm-overflow-y-auto sm-pointer-events-auto"
         >
-          <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
-            <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0">
+          <BackdropBlur scrollTargetRef={scrollRef} smallScreenOnly={true}>
+            <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0 sm-overflow-y-auto">
               <ContentCards />
             </div>
           </BackdropBlur>
         </div>
-        <div className="sm-sticky sm-top-0 sm-bottom-0 sm-left-0 sm-right-0 sm-w-full sm-h-full sm-pointer-events-none">
-          <VideoControls />
-        </div>
+        {/* <div className="sm-sticky sm-top-0 sm-bottom-0 sm-left-0 sm-right-0 sm-w-full sm-h-full sm-pointer-events-none"> */}
+        <VideoControls />
+        {/* </div> */}
       </Modal>
     </div>
   );
