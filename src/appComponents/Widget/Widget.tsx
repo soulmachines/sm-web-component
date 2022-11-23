@@ -94,16 +94,16 @@ export function Widget({
         title="Interactive Digital Person"
         isOpen={isConnected && layout === widgetLayout.FULL_FRAME}
         onClose={() => toggleLayout()}
-        panelRef={modalPanelRef}
       >
         <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
           <Video autoConnect={false} />
         </div>
 
         <div
-          class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
+          ref={modalPanelRef}
+          class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full  sm-overflow-y-auto
           minRatio4/3:sm-w-auto minRatio4/3:sm-h-auto minRatio4/3:sm-left-auto
-          minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-pointer-events-none"
+          minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 "
         >
           <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
             <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0">
@@ -111,7 +111,7 @@ export function Widget({
             </div>
           </BackdropBlur>
         </div>
-        <div className="sm-sticky sm-top-0 sm-bottom-0 sm-left-0 sm-right-0 sm-w-full sm-h-full sm-pointer-events-none">
+        <div className="sm-fixed sm-top-0 sm-bottom-0 sm-left-0 sm-right-0 sm-w-full sm-h-full sm-pointer-events-none">
           <VideoControls />
         </div>
       </Modal>
