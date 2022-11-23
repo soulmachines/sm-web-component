@@ -1,8 +1,8 @@
-import { MarkdownCard } from '.';
+import { MarkdownCardContent } from '.';
 import { render } from '@testing-library/preact';
 import { ContentCard } from '@soulmachines/smwebsdk';
 
-describe('<MarkdownCard />', () => {
+describe('<MarkdownCardContent />', () => {
   function markdownData(markdown: string): ContentCard {
     return {
       id: 'mockId',
@@ -16,7 +16,7 @@ describe('<MarkdownCard />', () => {
   it('renders nothing if nothing received', () => {
     const markdown = '';
 
-    const { container } = render(<MarkdownCard content={markdownData(markdown)} />);
+    const { container } = render(<MarkdownCardContent content={markdownData(markdown)} />);
     expect(container).toBeEmptyDOMElement();
   });
 });

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/preact';
-import { LinkCard } from '.';
+import { LinkCardContent } from '.';
 
-describe('<LinkCard />', () => {
+describe('<LinkCardContentContent />', () => {
   const mockCard = {
     id: 'mockId',
     type: 'externalLink',
@@ -14,36 +14,36 @@ describe('<LinkCard />', () => {
   };
 
   it('renders target=_blank and rel=noreferrer when card is externalLink', () => {
-    const { container } = render(<LinkCard content={mockCard} isExternal={true} />);
+    const { container } = render(<LinkCardContent content={mockCard} isExternal={true} />);
     expect(container.querySelector('[target="_blank"]')).toBeInTheDocument();
     expect(container.querySelector('[rel="noreferrer"]')).toBeInTheDocument();
   });
 
   it('does not render target=_blank when card is internalLink', () => {
-    const { container } = render(<LinkCard content={mockCard} isExternal={false} />);
+    const { container } = render(<LinkCardContent content={mockCard} isExternal={false} />);
     expect(container.querySelector('[target="_blank"]')).not.toBeInTheDocument();
     expect(container.querySelector('[rel="noreferrer"]')).not.toBeInTheDocument();
   });
 
   it('renders card description', () => {
-    const { getByText } = render(<LinkCard content={mockCard} isExternal={true} />);
+    const { getByText } = render(<LinkCardContent content={mockCard} isExternal={true} />);
     expect(getByText('placeholder text')).toBeInTheDocument();
   });
 
   it('renders card image', () => {
-    const { getByRole } = render(<LinkCard content={mockCard} isExternal={true} />);
+    const { getByRole } = render(<LinkCardContent content={mockCard} isExternal={true} />);
     expect(getByRole('img', { name: 'Soul Machines' })).toBeInTheDocument();
   });
 
   it('renders card link anchor with label', async () => {
-    const { getByRole } = render(<LinkCard content={mockCard} isExternal={true} />);
+    const { getByRole } = render(<LinkCardContent content={mockCard} isExternal={true} />);
     const linkButton = getByRole('link', { name: 'View Page' });
     expect(linkButton).toBeInTheDocument();
     expect(linkButton.getAttribute('href')).toEqual('https://www.soulmachines.com');
   });
 
   it('renders card title', () => {
-    const { getByRole } = render(<LinkCard content={mockCard} isExternal={true} />);
+    const { getByRole } = render(<LinkCardContent content={mockCard} isExternal={true} />);
     expect(getByRole('heading', { level: 2, name: 'Soul Machines' })).toBeInTheDocument();
   });
 
@@ -57,7 +57,9 @@ describe('<LinkCard />', () => {
         imageUrl: 'https://placekitten.com/300/300',
       },
     };
-    const { container } = render(<LinkCard content={mockCardNoDescription} isExternal={true} />);
+    const { container } = render(
+      <LinkCardContent content={mockCardNoDescription} isExternal={true} />,
+    );
     expect(container.querySelector('p')).not.toBeInTheDocument();
   });
 
@@ -71,7 +73,7 @@ describe('<LinkCard />', () => {
         description: 'placeholder text',
       },
     };
-    const { container } = render(<LinkCard content={mockCardNoImage} isExternal={true} />);
+    const { container } = render(<LinkCardContent content={mockCardNoImage} isExternal={true} />);
     expect(container.querySelector('img')).not.toBeInTheDocument();
   });
 });

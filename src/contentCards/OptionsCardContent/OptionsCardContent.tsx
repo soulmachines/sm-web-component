@@ -3,7 +3,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { Button } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 
-type OptionsCardProps = {
+type OptionsCardContentProps = {
   content: SMContentCard;
 };
 
@@ -16,7 +16,7 @@ type OptionsData = {
   options: Option[];
 };
 
-export function OptionsCard({ content }: OptionsCardProps) {
+export function OptionsCardContent({ content }: OptionsCardContentProps) {
   const { sendTextMessage } = useSoulMachines();
   const data = content.data as unknown as OptionsData;
 

@@ -5,11 +5,11 @@ import { Button } from '../components/Button';
 import { ConversationState } from '../appComponents/ConversationState';
 import { Heading, headingSizes } from '../components/Heading';
 import { IconButton, Theme } from '../components/IconButton/IconButton';
-import { ImageCard } from '../contentCards/ImageCard/ImageCard';
-import { LinkCard } from '../contentCards/LinkCard/LinkCard';
-import { MarkdownCard } from '../contentCards/MarkdownCard/MarkdownCard';
+import { ImageCard } from '../contentCards/ImageCardContent/ImageCard';
+import { LinkCard } from '../contentCards/LinkCardContent/LinkCard';
+import { MarkdownCard } from '../contentCards/MarkdownCardContent/MarkdownCard';
 import { Notifications } from '../components/Notifications/Notifications';
-import { OptionsCard } from '../contentCards/OptionsCard/OptionsCard';
+import { OptionsCard } from '../contentCards/OptionsCardContent/OptionsCard';
 import { Text, textSizes } from '../components/Text/Text';
 import { Widget } from '../appComponents/Widget';
 import {

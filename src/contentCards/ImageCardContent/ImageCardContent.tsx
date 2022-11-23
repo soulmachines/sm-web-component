@@ -1,6 +1,6 @@
 import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
 
-type ImageCardProps = {
+type ImageCardContentProps = {
   content: SMContentCard;
 };
 
@@ -9,7 +9,7 @@ type ImageData = {
   alt?: string;
 };
 
-export function ImageCard({ content }: ImageCardProps) {
+export function ImageCardContent({ content }: ImageCardContentProps) {
   const data = content.data as unknown as ImageData;
 
   if (!data.url) {
@@ -24,6 +24,6 @@ export function ImageCard({ content }: ImageCardProps) {
     />
   );
 }
-ImageCard.defaultProps = {
+ImageCardContent.defaultProps = {
   alt: '',
 };

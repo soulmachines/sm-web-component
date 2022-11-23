@@ -3,7 +3,7 @@ import { Text } from '../../components/Text';
 import { ContentCard as SMContentCard } from '@soulmachines/smwebsdk';
 import { Heading } from '../../components/Heading';
 
-export type LinkCardProps = {
+export type LinkCardContentProps = {
   content: SMContentCard;
   isExternal?: boolean;
 };
@@ -16,7 +16,7 @@ export type LinkData = {
   imageUrl?: string;
 };
 
-export function LinkCard({ content, isExternal }: LinkCardProps) {
+export function LinkCardContent({ content, isExternal }: LinkCardContentProps) {
   const data = content.data as unknown as LinkData;
   const conditionalAttributes: Record<string, string> = {};
 
@@ -39,6 +39,6 @@ export function LinkCard({ content, isExternal }: LinkCardProps) {
   );
 }
 
-LinkCard.defaultProps = {
+LinkCardContent.defaultProps = {
   isExternal: true,
 };

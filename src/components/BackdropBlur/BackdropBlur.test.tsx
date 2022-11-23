@@ -1,8 +1,6 @@
 import { BackdropBlur } from '.';
 import { fireEvent, render } from '@testing-library/preact';
 import '@testing-library/jest-dom/extend-expect';
-import { imageCardContent } from '../../storybook-content';
-import { ImageCard } from '../../contentCards/ImageCard';
 
 const ref = { current: document.createElement('div') };
 const scrollableContainerId = 'scrollEl';
@@ -11,7 +9,7 @@ function customRender(scrollOffset = 100, mobileOnly = false) {
   return render(
     <div ref={ref} data-testid={scrollableContainerId}>
       <BackdropBlur scrollTargetRef={ref} scrollOffset={scrollOffset} smallScreenOnly={mobileOnly}>
-        <ImageCard content={imageCardContent} />
+        <p>Mock content</p>
       </BackdropBlur>
     </div>,
   );

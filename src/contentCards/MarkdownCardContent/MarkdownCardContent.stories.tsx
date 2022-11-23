@@ -1,23 +1,26 @@
-import { MarkdownCard, MarkdownCardProps } from '.';
+import { MarkdownCardContent, MarkdownCardContentProps } from '.';
 import { ContentCard } from '../../appComponents/ContentCard';
 import { markdownCardContent } from '../../storybook-content';
 
 export default {
-  title: `Content Cards / MarkdownCard`,
-  component: MarkdownCard,
+  title: `Content Cards / MarkdownCardContent`,
+  component: MarkdownCardContent,
   argTypes: {
     content: { control: 'object', defaultValue: markdownCardContent },
     fullHeight: { control: 'boolean', defaultValue: false },
   },
   parameters: {
     docs: {
-      page: <MarkdownCard content={markdownCardContent} />,
+      page: <MarkdownCardContent content={markdownCardContent} />,
     },
   },
 };
 
-export const Basic = ({ content, fullHeight }: MarkdownCardProps & { fullHeight: boolean }) => (
+export const Basic = ({
+  content,
+  fullHeight,
+}: MarkdownCardContentProps & { fullHeight: boolean }) => (
   <ContentCard contentId="mockId" fullHeight={fullHeight}>
-    <MarkdownCard content={content} />
+    <MarkdownCardContent content={content} />
   </ContentCard>
 );

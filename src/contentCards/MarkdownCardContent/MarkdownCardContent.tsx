@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm';
 import { Heading, HeadingProps } from '../../components/Heading';
 import { Text, TextProps } from '../../components/Text';
 
-export type MarkdownCardProps = {
+export type MarkdownCardContentProps = {
   content: SMContentCard;
 };
 
@@ -41,7 +41,7 @@ export type GenericProps = {
   node: object;
 };
 
-export function MarkdownCard({ content }: MarkdownCardProps) {
+export function MarkdownCardContent({ content }: MarkdownCardContentProps) {
   const data = content.data as unknown as MarkdownData;
   if (!data.text) {
     return null;

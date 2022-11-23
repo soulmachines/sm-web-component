@@ -1,6 +1,6 @@
 import { BackdropBlur, BackdropBlurProps } from '.';
 import { useRef } from 'preact/hooks';
-import { ImageCard } from '../../contentCards/ImageCard';
+import { ImageCard } from '../../contentCards/ImageCardContent';
 import { imageCardContent } from '../../storybook-content';
 
 export default {
