@@ -1,7 +1,7 @@
 import { render } from '@testing-library/preact';
 import { LinkCardContent } from '.';
 
-describe('<LinkCardContentContent />', () => {
+describe('<LinkCardContent />', () => {
   const mockCard = {
     id: 'mockId',
     type: 'externalLink',
