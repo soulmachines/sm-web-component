@@ -75,10 +75,10 @@ export function MarkdownCard({ content }: MarkdownCardProps) {
             <Heading type={type} children={children} size={size} />
           ),
           li: ({ children }: LiProps) => {
-            return <li>{children}</li>;
+            return <li className="sm-p-0">{children}</li>;
           },
           ol: ({ children }: OlProps) => {
-            return <ol className="sm-ml-4 sm-list-decimal">{children}</ol>;
+            return <ol className="sm-ml-4 sm-list-decimal sm-p-0">{children}</ol>;
           },
           ul: ({ children, className }: OlProps) => {
             if (className === 'task-list-item') {
