@@ -5,11 +5,11 @@ import { Button } from '../components/Button';
 import { ConversationState } from '../appComponents/ConversationState';
 import { Heading, headingSizes } from '../components/Heading';
 import { IconButton, Theme } from '../components/IconButton/IconButton';
-import { ImageCard } from '../contentCards/ImageCard/ImageCard';
-import { LinkCard } from '../contentCards/LinkCard/LinkCard';
-import { MarkdownCard } from '../contentCards/MarkdownCard/MarkdownCard';
+import { ImageCardContent } from '../contentCards/ImageCardContent/ImageCardContent';
+import { LinkCardContent } from '../contentCards/LinkCardContent/LinkCardContent';
+import { MarkdownCardContent } from '../contentCards/MarkdownCardContent/MarkdownCardContent';
 import { Notifications } from '../components/Notifications/Notifications';
-import { OptionsCard } from '../contentCards/OptionsCard/OptionsCard';
+import { OptionsCardContent } from '../contentCards/OptionsCardContent/OptionsCardContent';
 import { Text, textSizes } from '../components/Text/Text';
 import { Widget } from '../appComponents/Widget';
 import {
@@ -18,6 +18,7 @@ import {
   markdownCardContent,
   optionsCardContent,
 } from '../storybook-content';
+import { ContentCard } from '../appComponents/ContentCard';
 
 export default {
   title: `Theme / Preview`,
@@ -195,10 +196,18 @@ const IconContainer = () => {
 const CardContainer = () => {
   return (
     <div className="sm-flex sm-flex-wrap sm-gap-10">
-      <OptionsCard content={optionsCardContent} />
-      <ImageCard content={imageCardContent} />
-      <LinkCard content={linkCardContent} isExternal={true} />
-      <MarkdownCard content={markdownCardContent} />
+      <ContentCard contentId="optionsCard">
+        <OptionsCardContent content={optionsCardContent} />
+      </ContentCard>
+      <ContentCard contentId="imageCard">
+        <ImageCardContent content={imageCardContent} />
+      </ContentCard>
+      <ContentCard contentId="linkCard">
+        <LinkCardContent content={linkCardContent} isExternal={true} />
+      </ContentCard>
+      <ContentCard contentId="markdownCard">
+        <MarkdownCardContent content={markdownCardContent} />
+      </ContentCard>
     </div>
   );
 };

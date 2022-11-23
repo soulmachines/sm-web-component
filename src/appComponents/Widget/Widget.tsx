@@ -50,7 +50,7 @@ export function Widget({
           'sm-items-start': position === widgetPosition.BOTTOM_LEFT,
         })}
       >
-        {layout === widgetLayout.FLOAT && <ContentCards />}
+        {layout === widgetLayout.FLOAT && <ContentCards fullHeight={false} />}
 
         <div
           className={classNames(
@@ -108,7 +108,7 @@ export function Widget({
         >
           <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
             <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0">
-              <ContentCards />
+              <ContentCards fullHeight={true} />
             </div>
           </BackdropBlur>
         </div>

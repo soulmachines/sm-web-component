@@ -3,14 +3,15 @@ import { ContentCard, ContentCardProps } from '.';
 export default {
   title: `App Components / Content Card`,
   component: ContentCard,
-  args: {
-    flush: false,
+  argTypes: {
+    flush: { control: 'boolean', defaultValue: false },
+    fullHeight: { control: 'boolean', defaultValue: false },
   },
 };
 
-export const Basic = ({ flush }: ContentCardProps) => {
+export const Basic = ({ flush, fullHeight }: ContentCardProps) => {
   return (
-    <ContentCard contentId="mockId" flush={flush}>
+    <ContentCard contentId="mockId" flush={flush} fullHeight={fullHeight}>
       <div>
         <p>Any content can be passed here</p>
       </div>

@@ -4,7 +4,7 @@ import { ContentCard, ContentCardProps } from '.';
 describe('<ContentCard />', () => {
   const customRender = (props: Partial<ContentCardProps> = {}) =>
     render(
-      <ContentCard contentId="mockId" {...props}>
+      <ContentCard fullHeight={false} contentId="mockId" {...props}>
         <p>Some text</p>
       </ContentCard>,
     );
