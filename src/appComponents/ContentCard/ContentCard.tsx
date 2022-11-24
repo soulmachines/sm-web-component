@@ -20,10 +20,10 @@ export function ContentCard({
   return (
     <animated.div
       className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8 sm-justify-center"
-      data-sm-content={contentId}
       style={springStyle}
     >
       <div
+        data-sm-content={contentId}
         className={classNames('sm-round-shadow-box', {
           'sm-p-6': !flush,
         })}
