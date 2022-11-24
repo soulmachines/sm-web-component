@@ -27,6 +27,7 @@ const persona = {
 } as unknown as SDKPersona;
 
 const scene = {
+  currentPersonaId: 1,
   startVideo: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
@@ -41,6 +42,7 @@ const scene = {
     addListener: (fn: () => void) => {
       triggerDisconnectEvent = fn;
     },
+    removeListener: jest.fn(),
     call: jest.fn(() => {
       triggerDisconnectEvent();
     }),
@@ -58,6 +60,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onConnectionStateUpdatedCallback = cb;
       },
+      removeListener: jest.fn(),
       call: jest.fn((data: ConnectionStateTypes) => {
         onConnectionStateUpdatedCallback(data);
       }),
@@ -72,6 +75,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onConversationStateUpdatedCallback = cb;
       },
+      removeListener: jest.fn(),
       call: jest.fn((data: ConversationStateTypes) => {
         onConversationStateUpdatedCallback(data);
       }),
@@ -80,6 +84,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onCardChangedCallback = cb;
       },
+      removeListener: jest.fn(),
       call: jest.fn((data: ContentCard[]) => {
         onCardChangedCallback(data);
       }),

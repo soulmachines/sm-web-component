@@ -25,4 +25,14 @@ describe('useContentCards', () => {
 
     expect(result.current.cards).toEqual(contentCardsData);
   });
+
+  it('removes the event listener when component is unmounted', () => {
+    const { unmount } = customRender();
+
+    unmount();
+
+    expect(mockScene.conversation.onCardChanged.removeListener).toBeCalledWith(
+      expect.any(Function),
+    );
+  });
 });

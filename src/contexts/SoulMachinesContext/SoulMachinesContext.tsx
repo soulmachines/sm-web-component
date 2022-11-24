@@ -55,7 +55,6 @@ function SoulMachinesProvider({
   tokenServer,
   initialLayout = widgetLayout.FLOAT,
 }: SoulMachinesProviderProps) {
-  const personaId = 1;
   const scene = useMemo(
     () =>
       new Scene({
@@ -69,7 +68,7 @@ function SoulMachinesProvider({
       }),
     [apiKey],
   );
-  const persona = new Persona(scene, personaId);
+  const persona = new Persona(scene, scene.currentPersonaId);
   const sendTextMessage = (text: string) => {
     try {
       persona.conversationSend(text, {}, {});
