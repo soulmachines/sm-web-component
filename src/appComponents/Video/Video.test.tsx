@@ -123,6 +123,15 @@ describe('<Video />', () => {
       expect(container.querySelector('video')?.muted).toEqual(false);
     });
 
+    it('removes the visibilitychange event listener when the component unmounts', () => {
+      const { unmount } = customRender();
+
+      const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
+      unmount();
+
+      expect(removeEventListenerSpy).toBeCalledWith('visibilitychange', expect.any(Function));
+    });
+
     describe('when visibilitychange is fired and document state is visible', () => {
       beforeEach(() => {
         jest.spyOn(document, 'visibilityState', 'get').mockReturnValue('visible');
