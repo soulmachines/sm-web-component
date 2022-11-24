@@ -5,6 +5,7 @@ import { BindPublicSmInterface } from '../../../appComponents/BindPublicSmInterf
 import { widgetLayout, widgetPosition } from '../../../enums';
 import { useEffect } from 'preact/hooks';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
+import { BindSpeechMarkersEvents } from '../../../appComponents/BindSpeechMarkersEvents';
 
 export type SMWidgetProps = {
   apiKey?: string;
@@ -53,6 +54,7 @@ export function SMWidget({
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={layout}>
       <BindPublicSmInterface element={parent} />
+      <BindSpeechMarkersEvents />
       <Widget
         greeting={greeting}
         profilePicture={profilePicture}
