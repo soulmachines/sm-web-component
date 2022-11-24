@@ -6,9 +6,9 @@ export function BindSpeechMarkersEvents() {
   const { featureMarkers, setLayout } = useSoulMachines();
   const processFeatures = () => {
     if (featureMarkers.length >= 2) {
-      const feature = featureMarkers[0];
+      const featureType = featureMarkers[0];
 
-      if (feature === 'layout') {
+      if (featureType === 'layout') {
         featureMarkers[1] === 'fullframe'
           ? setLayout(widgetLayout.FULL_FRAME)
           : setLayout(widgetLayout.FLOAT);
