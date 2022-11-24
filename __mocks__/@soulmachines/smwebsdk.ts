@@ -41,6 +41,7 @@ const scene = {
     addListener: (fn: () => void) => {
       triggerDisconnectEvent = fn;
     },
+    removeListener: jest.fn(),
     call: jest.fn(() => {
       triggerDisconnectEvent();
     }),
@@ -58,6 +59,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onConnectionStateUpdatedCallback = cb;
       },
+      removeListener: jest.fn(),
       call: jest.fn((data: ConnectionStateTypes) => {
         onConnectionStateUpdatedCallback(data);
       }),

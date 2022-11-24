@@ -14,6 +14,16 @@ describe('useConnectionState()', () => {
     });
   });
 
+  it('removes the event listener when component is unmounted', () => {
+    const { unmount } = renderHook(() => useConnectionState(scene));
+
+    unmount();
+
+    expect(scene.connectionState.onConnectionStateUpdated.removeListener).toBeCalledWith(
+      expect.any(Function),
+    );
+  });
+
   describe('when onConnectionStateUpdated fires', () => {
     it('updates the state to the state received from the event', () => {
       const mockData = {};

@@ -10,7 +10,7 @@ describe('useConversationState()', () => {
     expect(result.current.conversationState).toEqual(ConversationStateTypes.idle);
   });
 
-  fit('removes the event listener when component is unmounted', () => {
+  it('removes the event listener when component is unmounted', () => {
     const { unmount } = renderHook(() => useConversationState(scene));
 
     unmount();
