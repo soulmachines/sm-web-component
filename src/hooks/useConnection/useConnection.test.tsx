@@ -268,13 +268,24 @@ describe('useConnection()', () => {
     });
 
     it('reloads the page if the current page is from bfcache', () => {
+      customRender();
       fireEvent(window, new PageTransitionEvent('pageshow', { persisted: true }));
       expect(window.location.reload).toHaveBeenCalled();
     });
 
     it('does not reload the page if the current page is newly loaded', () => {
+      customRender();
       fireEvent(window, new PageTransitionEvent('pageshow', { persisted: false }));
       expect(window.location.reload).not.toHaveBeenCalled();
+    });
+
+    it('removes the pageshow event listener when the component unmounts', () => {
+      const { unmount } = customRender();
+
+      const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+      unmount();
+
+      expect(removeEventListenerSpy).toBeCalledWith('pageshow', expect.any(Function));
     });
   });
 });
