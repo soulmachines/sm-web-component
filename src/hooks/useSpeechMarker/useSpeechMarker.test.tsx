@@ -8,7 +8,7 @@ describe('useSpeechMarker', () => {
     renderHook(() => useSpeechMarker(scene, personaId));
 
   it('adds listener to scene onSpeechMarkerEvents', () => {
-    const { result } = customRender();
+    customRender();
     expect(mockScene.onSpeechMarkerEvents[1].addListener).toHaveBeenCalled();
   });
 });

@@ -1,10 +1,10 @@
-import { useEffect } from 'preact/hooks';
+import { useCallback, useEffect } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { widgetLayout } from '../../enums';
 
 export function BindSpeechMarkersEvents() {
   const { featureMarkers, setLayout } = useSoulMachines();
-  const processFeatures = () => {
+  const processFeatures = useCallback(() => {
     if (featureMarkers.length >= 2) {
       const featureType = featureMarkers[0];
 
@@ -14,7 +14,7 @@ export function BindSpeechMarkersEvents() {
           : setLayout(widgetLayout.FLOAT);
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     processFeatures();
