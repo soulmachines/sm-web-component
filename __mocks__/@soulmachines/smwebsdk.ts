@@ -72,6 +72,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onConversationStateUpdatedCallback = cb;
       },
+      removeListener: jest.fn(),
       call: jest.fn((data: ConversationStateTypes) => {
         onConversationStateUpdatedCallback(data);
       }),

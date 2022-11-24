@@ -5,9 +5,15 @@ function useConversationState(scene: Scene) {
   const [conversationState, setConversationState] = useState(ConversationStateTypes.idle);
 
   useEffect(() => {
-    scene.conversation.onConversationStateUpdated.addListener((state: ConversationStateTypes) => {
+    const handleConversationStateUpdated = (state: ConversationStateTypes) => {
       setConversationState(state);
-    });
+    };
+
+    scene.conversation.onConversationStateUpdated.addListener(handleConversationStateUpdated);
+
+    return () => {
+      scene.conversation.onConversationStateUpdated.removeListener(handleConversationStateUpdated);
+    };
   }, [scene]);
 
   return {
