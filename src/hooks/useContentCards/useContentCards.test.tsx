@@ -2,8 +2,6 @@ import { Scene } from '@soulmachines/smwebsdk';
 import { renderHook } from '@testing-library/preact';
 import { useContentCards } from './useContentCards';
 
-jest.mock('@soulmachines/smwebsdk');
-
 describe('useContentCards', () => {
   const mockScene = new Scene();
   const customRender = () => renderHook(() => useContentCards(mockScene));
