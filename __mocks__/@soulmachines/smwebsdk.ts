@@ -27,6 +27,7 @@ const persona = {
 } as unknown as SDKPersona;
 
 const scene = {
+  currentPersonaId: 1,
   startVideo: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
