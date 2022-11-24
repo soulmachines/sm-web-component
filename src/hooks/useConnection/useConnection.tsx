@@ -64,11 +64,19 @@ function useConnection(scene: Scene, tokenServer: string | undefined) {
     videoRef.current.srcObject = null;
   };
 
-  scene.onDisconnectedEvent.addListener(() => {
-    cleanupSessionStorage();
-    cleanupVideoSrc();
-    setConnectionStatus(ConnectionStatus.TIMED_OUT);
-  });
+  useEffect(() => {
+    const handleDisconnectedEvent = () => {
+      cleanupSessionStorage();
+      cleanupVideoSrc();
+      setConnectionStatus(ConnectionStatus.TIMED_OUT);
+    };
+
+    scene.onDisconnectedEvent.addListener(handleDisconnectedEvent);
+
+    return () => {
+      scene.onDisconnectedEvent.removeListener(handleDisconnectedEvent);
+    };
+  }, [scene.onDisconnectedEvent]);
 
   useEffect(() => {
     const handlePageShow = (event: PageTransitionEvent) => {

@@ -197,6 +197,14 @@ describe('useConnection()', () => {
         expect(result.current.connectionStatus).toEqual(ConnectionStatus.DISCONNECTED);
       });
 
+      fit('removes the disconnected event listener when component is unmounted', () => {
+        const { unmount } = customRender();
+
+        unmount();
+
+        expect(mockScene.onDisconnectedEvent.removeListener).toBeCalledWith(expect.any(Function));
+      });
+
       describe('when a timeout occurs', () => {
         const customRender = async () => {
           const testUtils = renderHook(() => useConnection(mockScene, tokenServer));
