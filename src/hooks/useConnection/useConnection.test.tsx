@@ -197,7 +197,7 @@ describe('useConnection()', () => {
         expect(result.current.connectionStatus).toEqual(ConnectionStatus.DISCONNECTED);
       });
 
-      fit('removes the disconnected event listener when component is unmounted', () => {
+      it('removes the disconnected event listener when component is unmounted', () => {
         const { unmount } = customRender();
 
         unmount();
