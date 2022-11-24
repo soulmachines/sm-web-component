@@ -80,6 +80,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onCardChangedCallback = cb;
       },
+      removeListener: jest.fn(),
       call: jest.fn((data: ContentCard[]) => {
         onCardChangedCallback(data);
       }),
