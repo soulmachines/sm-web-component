@@ -82,7 +82,9 @@ export function Widget({
               <div className="sm-floating-container">
                 <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
                   <Video autoConnect={false} />
-                  <VideoControls />
+                  <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
+                    <VideoControls />
+                  </div>
                 </div>
               </div>
             )}
@@ -98,19 +100,21 @@ export function Widget({
       >
         <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
           <Video autoConnect={false} />
-          <VideoControls />
+          <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
+            <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
+              <VideoControls />
+            </BackdropBlur>
+          </div>
         </div>
 
         <div
-          class="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
+          className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full
             minRatio4/3:sm-w-auto minRatio4/3:sm-h-auto minRatio4/3:sm-left-auto
             minRatio4/3:sm-top-24 minRatio4/3:sm-right-24 xl:sm-top-40 xl:sm-right-40 sm-pointer-events-none"
         >
-          <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
-            <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0">
-              <ContentCards fullHeight={true} />
-            </div>
-          </BackdropBlur>
+          <div className="sm-pt-[60vh] sm-flex sm-justify-center sm-pb-8 minRatio4/3:sm-pt-0">
+            <ContentCards fullHeight={true} />
+          </div>
         </div>
       </Modal>
     </div>
