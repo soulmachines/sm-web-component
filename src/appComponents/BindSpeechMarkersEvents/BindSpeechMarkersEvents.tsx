@@ -4,7 +4,7 @@ import { widgetLayout } from '../../enums';
 
 export function BindSpeechMarkersEvents() {
   const { featureMarkers, setLayout } = useSoulMachines();
-  const processFeatures = useCallback(() => {
+  useEffect(() => {
     if (featureMarkers.length >= 2) {
       const featureType = featureMarkers[0];
 
@@ -14,11 +14,7 @@ export function BindSpeechMarkersEvents() {
           : setLayout(widgetLayout.FLOAT);
       }
     }
-  }, []);
-
-  useEffect(() => {
-    processFeatures();
-  }, [featureMarkers, processFeatures]);
+  }, [featureMarkers]);
 
   return null;
 }

@@ -8,7 +8,8 @@ describe('useSpeechMarker', () => {
     renderHook(() => useSpeechMarker(scene, personaId));
 
   it('adds listener to scene onSpeechMarkerEvents', () => {
-    customRender();
-    expect(mockScene.onSpeechMarkerEvents[1].addListener).toHaveBeenCalled();
+    const { result, rerender } = customRender();
+    rerender();
+    expect(result.current.featureMarkers).toEqual(['layout', 'fullframe']);
   });
 });
