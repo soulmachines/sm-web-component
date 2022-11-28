@@ -132,6 +132,11 @@ export function MarkdownCardContent({ content }: MarkdownCardContentProps) {
             return <thead className="sm-bg-gray-light sm-text-left" {...props} />;
           },
           pre: ({ ...props }) => <pre className="sm-bg-gray-light sm-rounded-sm" {...props} />,
+          blockquote: ({ ...props }) => (
+            <div className="sm-pl-1 sm-bg-gray-light">
+              <blockquote className="sm-m-0 sm-bg-white sm-pl-2" {...props} />
+            </div>
+          ),
         }}
       >
         {markdown}

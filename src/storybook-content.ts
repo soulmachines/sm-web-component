@@ -113,6 +113,12 @@ Horizontal Rule
   "age": 25
 }
 \`\`\`
+
+### Block Quote
+
+> "To be, or not to be"
+> 
+>   ~ Shakespeare
 `,
   },
 };
