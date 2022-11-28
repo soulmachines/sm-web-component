@@ -1,4 +1,5 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { LinkCardContent } from '.';
 
 describe('<LinkCardContent />', () => {
@@ -12,6 +13,11 @@ describe('<LinkCardContent />', () => {
       description: 'placeholder text',
     },
   };
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<LinkCardContent content={mockCard} isExternal={true} />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('renders target=_blank and rel=noreferrer when card is externalLink', () => {
     const { container } = render(<LinkCardContent content={mockCard} isExternal={true} />);

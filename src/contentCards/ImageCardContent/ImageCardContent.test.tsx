@@ -1,4 +1,5 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { ImageCardContent } from '.';
 
 describe('<ImageCardContent />', () => {
@@ -18,6 +19,11 @@ describe('<ImageCardContent />', () => {
       alt: 'mock alt text',
     },
   };
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<ImageCardContent content={cardContent} />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('renders nothing when url is not provided', () => {
     const { container } = render(<ImageCardContent content={emptyCard} />);

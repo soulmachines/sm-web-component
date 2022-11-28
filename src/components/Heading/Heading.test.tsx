@@ -1,7 +1,13 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { Heading } from '.';
 
 describe('<Heading />', () => {
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<Heading type="h1">Hello</Heading>);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   it('renders the heading text', () => {
     const { getByText } = render(<Heading type="h1">Hello</Heading>);
     expect(getByText('Hello')).toBeInTheDocument();

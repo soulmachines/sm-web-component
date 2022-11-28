@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { Modal, ModalProps } from '.';
 
 describe('<Modal />', () => {
@@ -16,6 +17,11 @@ describe('<Modal />', () => {
       </Modal>,
     );
   };
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = customRender();
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('does not call onCloseFn by default', () => {
     customRender();

@@ -1,4 +1,5 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { useSpring } from 'react-spring';
 import { LoadingIndicator } from '.';
 
@@ -8,6 +9,11 @@ describe('<LoadingIndicator />', () => {
     percentageLoaded: 0,
     totalSteps: 4,
   };
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<LoadingIndicator {...defaultProps} />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('has the attribute aria-label with the value of Loading...', () => {
     const { getByRole } = render(<LoadingIndicator {...defaultProps} />);

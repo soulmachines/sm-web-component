@@ -1,4 +1,5 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { ContentCard, ContentCardProps } from '.';
 
 describe('<ContentCard />', () => {
@@ -8,6 +9,11 @@ describe('<ContentCard />', () => {
         <p>Some text</p>
       </ContentCard>,
     );
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = customRender();
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('renders the content id', () => {
     const { container } = customRender();

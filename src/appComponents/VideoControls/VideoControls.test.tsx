@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { VideoControls } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { widgetLayout } from '../../enums';
@@ -7,6 +8,11 @@ jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<VideoControls />', () => {
   const customRender = () => render(<VideoControls />);
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = customRender();
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('renders the conversation state indicator', () => {
     const { getByText } = customRender();

@@ -20,4 +20,9 @@ describe('<ConnectButton />', () => {
     await fireEvent.click(button);
     expect(connect).toHaveBeenCalled();
   });
+
+  it('renders button with an aria-label', () => {
+    const { getByLabelText } = render(<ConnectButton>Click me</ConnectButton>);
+    expect(getByLabelText('Talk to a Digital Person', { selector: 'button' })).toBeInTheDocument();
+  });
 });

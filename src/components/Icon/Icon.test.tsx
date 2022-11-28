@@ -1,7 +1,13 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { Icon } from '.';
 
 describe('<Icon />', () => {
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<Icon name="profile" />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   it('renders the name in the title when title is not supplied', () => {
     const { getByTitle } = render(<Icon name="profile" />);
     expect(getByTitle('profile')).toBeInTheDocument();
