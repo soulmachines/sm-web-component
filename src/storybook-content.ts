@@ -79,11 +79,16 @@ export const markdownCardContent = {
    1. Sublist 1
    2. Sublist 2
 3. Least Interesting
+
 **bold**
+
 - item 1
 - item 2
+
 [External Link](https://www.google.com)
+
 [Internal Link](http://localhost:3000)
+
 *emphasis*
 ---
 Horizontal Rule
