@@ -9,7 +9,7 @@ describe('useSpeechMarker', () => {
 
   it('updates featureMarkers when scene onSpeechMarkerEvents is called with speechMarkerMessage name "feature"', () => {
     const { result, rerender } = customRender();
-    let speechMarkerMessage = { name: 'feature', arguments: ['layout', 'fullframe'] };
+    const speechMarkerMessage = { name: 'feature', arguments: ['layout', 'fullframe'] };
     mockScene.onSpeechMarkerEvents['1'].call(mockPersona, speechMarkerMessage);
     rerender();
     expect(result.current.featureMarkers).toEqual(speechMarkerMessage.arguments);
@@ -17,10 +17,10 @@ describe('useSpeechMarker', () => {
 
   it('does not update featureMarkers when scene onSpeechMarkerEvents is called with speechMarkerMessage name not "feature"', () => {
     const { result, rerender } = customRender();
-    let speechMarkerMessage1 = { name: 'feature', arguments: ['layout', 'fullframe'] };
+    const speechMarkerMessage1 = { name: 'feature', arguments: ['layout', 'fullframe'] };
     mockScene.onSpeechMarkerEvents['1'].call(mockPersona, speechMarkerMessage1);
     rerender();
-    let speechMarkerMessage2 = { name: 'x', arguments: ['x', 'y'] };
+    const speechMarkerMessage2 = { name: 'x', arguments: ['x', 'y'] };
     mockScene.onSpeechMarkerEvents['1'].call(mockPersona, speechMarkerMessage2);
     expect(result.current.featureMarkers).toEqual(speechMarkerMessage1.arguments);
   });
