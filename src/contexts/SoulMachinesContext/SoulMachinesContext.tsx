@@ -106,7 +106,7 @@ function SoulMachinesProvider({
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);
   const { cards } = useContentCards(scene);
-  const { featureMarkers } = useSpeechMarker(scene, personaId);
+  const { featureMarkers } = useSpeechMarker(scene);
 
   // Define a new global disconnection function here
   const disconnect = () => {

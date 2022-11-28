@@ -5,8 +5,7 @@ import { useSpeechMarker } from './useSpeechMarker';
 describe('useSpeechMarker', () => {
   const mockScene = new Scene();
   const mockPersona = new Persona(mockScene, 1);
-  const customRender = (scene = mockScene, personaId = 1) =>
-    renderHook(() => useSpeechMarker(scene, personaId));
+  const customRender = (scene = mockScene) => renderHook(() => useSpeechMarker(scene));
 
   it('adds listener to scene onSpeechMarkerEvents', () => {
     const { result, rerender } = customRender();
