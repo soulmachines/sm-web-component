@@ -19,7 +19,7 @@ export function ContentCard({
 }: ContentCardProps) {
   return (
     <animated.div
-      className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8 sm-justify-center"
+      className="sm-relative sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8 sm-justify-center"
       style={springStyle}
     >
       <div
