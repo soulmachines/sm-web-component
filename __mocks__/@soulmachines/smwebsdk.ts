@@ -54,8 +54,8 @@ const scene = {
     }),
   },
 
-  onSpeechMarkerEvents: [
-    {
+  onSpeechMarkerEvents: {
+    '1': {
       addListener: (cb: () => void) => {
         onSpeechMarkerEventsCallback = cb;
       },
@@ -63,7 +63,8 @@ const scene = {
         onSpeechMarkerEventsCallback(persona, message);
       }),
     },
-  ],
+  },
+
   videoElement: {
     srcObject: 'mock video src',
   },
