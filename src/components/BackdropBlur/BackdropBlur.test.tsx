@@ -1,6 +1,7 @@
 import { BackdropBlur } from '.';
 import { fireEvent, render } from '@testing-library/preact';
 import '@testing-library/jest-dom/extend-expect';
+import { axe } from 'jest-axe';
 
 const ref = { current: document.createElement('div') };
 const scrollableContainerId = 'scrollEl';
@@ -23,6 +24,11 @@ function triggerScroll(element: HTMLElement, offset: number) {
 const minimumScrollToRenderBlur = 100;
 
 describe('<BackdropBlur />', () => {
+  it('should not have any accessibility violations', async () => {
+    const { container } = customRender(minimumScrollToRenderBlur);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   it('adds the blur class when scroll amount is greater than the scrollOffset', () => {
     const { getByTestId, container } = customRender(minimumScrollToRenderBlur);
     const scrollableContainer = getByTestId(scrollableContainerId);
