@@ -1,5 +1,10 @@
+import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { {{ properCase name }} } from '.';
 
 describe('<{{ properCase name }} />', () => {
-
+  it('should not have any accessibility violations', async () => {
+    const { container } =  render(<{{ properCase name }} />)
+    expect(await axe(container)).toHaveNoViolations();
+  });
 });
