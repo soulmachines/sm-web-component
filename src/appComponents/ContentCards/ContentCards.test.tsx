@@ -2,6 +2,7 @@ import { render } from '@testing-library/preact';
 import { ContentCards } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ContentCard } from '@soulmachines/smwebsdk';
+import { axe } from 'jest-axe';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -15,6 +16,16 @@ describe('<ContentCards />', () => {
     });
     return render(<ContentCards fullHeight={false} />);
   };
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = customRender([
+      {
+        id: 'id',
+        data: {},
+      },
+    ]);
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('renders nothing by default', () => {
     const { container } = customRender();

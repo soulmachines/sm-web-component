@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { Widget } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
@@ -11,6 +12,11 @@ describe('<Widget />', () => {
   const unableToConnectMessage = /Unable to connect/;
   const customRender = ({ position }: { position?: widgetPosition } = {}) =>
     render(<Widget position={position} />);
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = customRender();
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   describe('positioning', () => {
     describe('rendering in the bottom right corner', () => {
