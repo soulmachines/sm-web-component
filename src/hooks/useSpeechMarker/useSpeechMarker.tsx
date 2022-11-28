@@ -1,5 +1,6 @@
 import { Scene, Persona, SpeechMarkerResponseBody } from '@soulmachines/smwebsdk';
 import { useEffect, useState } from 'preact/hooks';
+import { speechMarkers } from '../../enums';
 
 function useSpeechMarker(scene: Scene, personaId: number) {
   const [featureMarkers, setFeatureMarkers] = useState(['']);
@@ -7,17 +8,11 @@ function useSpeechMarker(scene: Scene, personaId: number) {
   useEffect(() => {
     scene.onSpeechMarkerEvents[personaId].addListener(
       (_: Persona, message: SpeechMarkerResponseBody) => {
-        const markerName = message.name;
-        const markerArguments = message.arguments;
-        if (markerName === 'feature') {
-          setFeatureMarkers(markerArguments);
+        if (message.name === speechMarkers.FEATURE) {
+          setFeatureMarkers(message.arguments);
         }
       },
     );
-
-    return () => {
-      scene.onSpeechMarkerEvents[personaId].removeListener(() => setFeatureMarkers(['']));
-    };
   }, [scene, personaId]);
 
   return {

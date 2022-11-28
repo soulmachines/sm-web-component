@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { widgetLayout } from '../../enums';
+import { speechMarkers, widgetLayout } from '../../enums';
 
 export function BindSpeechMarkersEvents() {
   const { featureMarkers, setLayout } = useSoulMachines();
@@ -8,13 +8,15 @@ export function BindSpeechMarkersEvents() {
     if (featureMarkers.length >= 2) {
       const featureType = featureMarkers[0];
 
-      if (featureType === 'layout') {
-        featureMarkers[1] === 'fullframe'
+      if (featureType === speechMarkers.LAYOUT) {
+        featureMarkers[1] === 'fullFrame' ||
+        featureMarkers[1] === 'fullframe' ||
+        featureMarkers[1] === 'full frame'
           ? setLayout(widgetLayout.FULL_FRAME)
           : setLayout(widgetLayout.FLOAT);
       }
     }
-  }, [featureMarkers]);
+  }, [featureMarkers, setLayout]);
 
   return null;
 }

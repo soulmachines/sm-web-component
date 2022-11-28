@@ -16,6 +16,11 @@ export enum widgetLayout {
   FULL_FRAME = 'fullFrame',
 }
 
+export enum speechMarkers {
+  FEATURE = 'feature',
+  LAYOUT = 'layout',
+}
+
 export enum SessionDataKeys {
   sessionId = 'sm-session-id',
   apiKey = 'sm-api-key',

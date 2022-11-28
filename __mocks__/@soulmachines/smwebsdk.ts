@@ -22,6 +22,7 @@ export enum ConnectionStateTypes {
 }
 
 let onCardChangedCallback: (data: ContentCard[]) => void;
+let onSpeechMarkerEventsCallback: (persona: SDKPersona, message: SpeechMarkerResponseBody) => void;
 let triggerDisconnectEvent: () => void;
 
 let onConversationStateUpdatedCallback: (data: ConversationStateTypes) => void;
@@ -53,10 +54,16 @@ const scene = {
     }),
   },
 
-  onSpeechMarkerEvents: {
-    addListener: (fn: (persona: SDKPersona, message: SpeechMarkerResponseBody) => void) => {},
-    call: jest.fn(() => {}),
-  },
+  onSpeechMarkerEvents: [
+    {
+      addListener: (cb: () => void) => {
+        onSpeechMarkerEventsCallback = cb;
+      },
+      call: jest.fn((persona: SDKPersona, message: SpeechMarkerResponseBody) => {
+        onSpeechMarkerEventsCallback(persona, message);
+      }),
+    },
+  ],
   videoElement: {
     srcObject: 'mock video src',
   },
