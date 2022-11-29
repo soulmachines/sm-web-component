@@ -103,7 +103,12 @@ export function MarkdownCardContent({ content }: MarkdownCardContentProps) {
             }
 
             return (
-              <a className="" href={href} title={title} {...conditionalAttributes}>
+              <a
+                className="sm-text-primary-base active:sm-text-primary-dark hover:sm-underline focus:underline visited:sm-text-primary-dark"
+                href={href}
+                title={title}
+                {...conditionalAttributes}
+              >
                 {children}
               </a>
             );
