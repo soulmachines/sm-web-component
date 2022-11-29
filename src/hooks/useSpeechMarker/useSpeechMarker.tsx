@@ -3,16 +3,22 @@ import { useEffect, useState } from 'preact/hooks';
 import { speechMarkers } from '../../enums';
 
 function useSpeechMarker(scene: Scene) {
-  const [featureMarkers, setFeatureMarkers] = useState(['']);
+  const [featureMarkers, setFeatureMarkers] = useState({});
+
+  const speechMarkerEventHandler = (_: Persona, message: SpeechMarkerResponseBody) => {
+    if (message.name === speechMarkers.FEATURE) {
+      setFeatureMarkers({
+        command: message.arguments[0],
+        value: message.arguments[1],
+      });
+    }
+  };
 
   useEffect(() => {
-    scene.onSpeechMarkerEvents[scene.currentPersonaId].addListener(
-      (_: Persona, message: SpeechMarkerResponseBody) => {
-        if (message.name === speechMarkers.FEATURE) {
-          setFeatureMarkers(message.arguments);
-        }
-      },
-    );
+    scene.onSpeechMarkerEvents[scene.currentPersonaId].addListener(speechMarkerEventHandler);
+    return () => {
+      scene.onSpeechMarkerEvents[scene.currentPersonaId].removeListener(speechMarkerEventHandler);
+    };
   }, [scene]);
 
   return {

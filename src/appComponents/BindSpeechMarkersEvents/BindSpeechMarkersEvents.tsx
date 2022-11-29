@@ -4,17 +4,21 @@ import { speechMarkers, widgetLayout } from '../../enums';
 
 export function BindSpeechMarkersEvents() {
   const { featureMarkers, setLayout } = useSoulMachines();
-  useEffect(() => {
-    if (featureMarkers.length >= 2) {
-      const featureType = featureMarkers[0];
 
-      if (featureType === speechMarkers.LAYOUT) {
-        featureMarkers[1] === 'fullFrame' ||
-        featureMarkers[1] === 'fullframe' ||
-        featureMarkers[1] === 'full frame'
-          ? setLayout(widgetLayout.FULL_FRAME)
-          : setLayout(widgetLayout.FLOAT);
+  useEffect(() => {
+    if (featureMarkers.command === speechMarkers.LAYOUT) {
+      const layouts = {
+        fullFrame: widgetLayout.FULL_FRAME,
+        float: widgetLayout.FLOAT,
+      };
+      const selectedLayout: widgetLayout = layouts[featureMarkers.value];
+      if (selectedLayout) {
+        setLayout(selectedLayout);
+        return;
       }
+      console.warn(
+        `Speech Marker received with unknown command "${featureMarkers.value}". Please check your spelling`,
+      );
     }
   }, [featureMarkers, setLayout]);
 
