@@ -25,7 +25,7 @@ export function OptionsCardContent({ content }: OptionsCardContentProps) {
   }
 
   return (
-    <div className="sm-flex sm-flex-col sm-gap-y-2">
+    <div className="sm-flex sm-flex-col sm-gap-y-2 sm-w-full">
       {data.options.map((option) => {
         return (
           <Button
