@@ -78,13 +78,13 @@ export function MarkdownCardContent({ content }: MarkdownCardContentProps) {
             return <li>{children}</li>;
           },
           ol: ({ children }: OlProps) => {
-            return <ol className="sm-ml-4 sm-list-decimal">{children}</ol>;
+            return <ol className="sm-list-decimal sm-pl-5 sm-mt-0 sm-mb-0">{children}</ol>;
           },
           ul: ({ children, className }: OlProps) => {
-            if (className === 'task-list-item') {
-              return <ul className="sm-ml-4 sm-list-none">{children}</ul>;
+            if (className === 'contains-task-list') {
+              return <ul className="sm-list-none sm-pl-0 sm-mt-0 sm-mb-0">{children}</ul>;
             }
-            return <ul className="sm-ml-4 sm-list-disc">{children}</ul>;
+            return <ul className="sm-list-disc sm-pl-5 sm-mt-0 sm-mb-0">{children}</ul>;
           },
           a: ({ href, children, title, target }: AProps) => {
             let isExternal = false;
@@ -132,6 +132,11 @@ export function MarkdownCardContent({ content }: MarkdownCardContentProps) {
             return <thead className="sm-bg-gray-light sm-text-left" {...props} />;
           },
           pre: ({ ...props }) => <pre className="sm-bg-gray-light sm-rounded-sm" {...props} />,
+          blockquote: ({ ...props }) => (
+            <div className="sm-pl-1 sm-bg-gray-light">
+              <blockquote className="sm-m-0 sm-bg-white sm-pl-2" {...props} />
+            </div>
+          ),
         }}
       >
         {markdown}
