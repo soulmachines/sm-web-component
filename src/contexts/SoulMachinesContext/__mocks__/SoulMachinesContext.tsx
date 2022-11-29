@@ -37,7 +37,7 @@ const mockUseSoulMachines: SMContext = {
     totalSteps: 3,
   },
   cards: [],
-  featureMarkers: [],
+  featureMarkers: {},
   videoRef: { current: null },
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),
