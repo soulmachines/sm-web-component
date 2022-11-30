@@ -6,7 +6,7 @@ import { LinkCardContent, LinkCardContentProps } from '../../contentCards/LinkCa
 import { MarkdownCardContent } from '../../contentCards/MarkdownCardContent';
 import { OptionsCardContent } from '../../contentCards/OptionsCardContent';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { ContentCard } from '../ContentCard/ContentCard';
+import { ContentCard, ContentCardProps } from '../ContentCard/ContentCard';
 
 export type ContentCardsProps = {
   fullHeight: boolean;
@@ -30,7 +30,12 @@ export function ContentCards({ fullHeight }: ContentCardsProps) {
     enter: { opacity: 1, transform: 'translateY(0px)' },
     config: config.gentle,
   });
-  const flushCards = ['image'];
+  const additionalContentCardProps: Record<string, Partial<ContentCardProps>> = {
+    image: {
+      flush: true,
+      fullWidth: false,
+    },
+  };
 
   const cardComponents: Record<string, (props: CardComponent) => JSX.Element | null> = {
     options: OptionsCardContent,
@@ -45,6 +50,7 @@ export function ContentCards({ fullHeight }: ContentCardsProps) {
       {transitions((style, card) => {
         // Get the custom content card to render
         const CardContentComponent = cardComponents[card?.type || ''];
+        const additionalProps = additionalContentCardProps[card?.type || ''] || {};
 
         // Return if one does not exist
         if (!CardContentComponent) return null;
@@ -55,7 +61,7 @@ export function ContentCards({ fullHeight }: ContentCardsProps) {
               contentId={card.id}
               fullHeight={fullHeight}
               springStyle={style}
-              flush={flushCards.includes(card?.type || '')}
+              {...additionalProps}
             >
               <CardContentComponent content={card} />
             </ContentCard>

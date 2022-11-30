@@ -10,7 +10,7 @@ export default {
 };
 
 export const Basic = () => (
-  <ContentCard contentId="mockId" fullHeight={false} flush={true}>
+  <ContentCard contentId="mockId" fullHeight={false} fullWidth={false} flush={true}>
     <ImageCardContent content={imageCardContent} />
   </ContentCard>
 );
