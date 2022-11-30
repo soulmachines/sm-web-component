@@ -1,7 +1,6 @@
 import { render } from '@testing-library/preact';
 import { BindPublicSmInterface } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
-import { ConnectionStatus } from '../../enums';
 import { SMWidgetElement } from '../../web-components/sm-widget/SMWidget/SMWidget';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');

@@ -1,6 +1,5 @@
 import { useEffect } from 'preact/hooks';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
-import { ConnectionStatus } from '../../enums';
 import { SMWidgetElement } from '../../web-components/sm-widget/SMWidget/SMWidget';
 
 export type BindPublicSmInterfaceProps = {
@@ -12,8 +11,7 @@ export type BindPublicSmInterfaceProps = {
 type GenericFunction = Function;
 
 export function BindPublicSmInterface({ element }: BindPublicSmInterfaceProps) {
-  const { connectionStatus, persona, scene, sendTextMessage, enableDebugLogging } =
-    useSoulMachines();
+  const { persona, scene, sendTextMessage, enableDebugLogging } = useSoulMachines();
 
   useEffect(() => {
     /**
