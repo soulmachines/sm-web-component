@@ -40,26 +40,10 @@ export function BindPublicSmInterface({ element }: BindPublicSmInterfaceProps) {
       ['enableDebugLogging', enableDebugLogging],
     ];
 
-    const addPublicMethods = () => {
-      publicMethods.map(([name, implementation]) => {
-        htmlElement[name] = implementation;
-      });
-    };
-    const removePublicMethods = () => {
-      publicMethods.map(([name]) => {
-        htmlElement[name] = undefined;
-      });
-    };
-
-    if (
-      connectionStatus === ConnectionStatus.CONNECTING ||
-      connectionStatus === ConnectionStatus.CONNECTED
-    ) {
-      addPublicMethods();
-    } else {
-      removePublicMethods();
-    }
-  }, [element, connectionStatus, sendTextMessage, enableDebugLogging]);
+    publicMethods.map(([name, implementation]) => {
+      htmlElement[name] = implementation;
+    });
+  }, [element, sendTextMessage, enableDebugLogging]);
 
   return null;
 }
