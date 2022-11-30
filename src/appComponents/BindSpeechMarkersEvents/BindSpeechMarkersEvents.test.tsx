@@ -26,7 +26,7 @@ describe('<BindSpeechMarkersEvents />', () => {
     render(<BindSpeechMarkersEvents />);
     expect(setLayout).not.toHaveBeenCalled();
     expect(console.warn).toBeCalledWith(
-      `Speech Marker received with unknown command \"layout\", \"x\". Please check your spelling`,
+      `Speech Marker received with unknown command "layout", "x". Please check your spelling`,
     );
   });
 
