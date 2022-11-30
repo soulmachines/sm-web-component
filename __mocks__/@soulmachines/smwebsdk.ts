@@ -1,4 +1,9 @@
-import { ContentCard, Persona as SDKPersona, Scene as SDKScene } from '@soulmachines/smwebsdk';
+import {
+  ContentCard,
+  SpeechMarkerResponseBody,
+  Persona as SDKPersona,
+  Scene as SDKScene,
+} from '@soulmachines/smwebsdk';
 
 //copy ConversationStateTypes from smwebsdk here to avoid loop reference
 enum ConversationStateTypes {
@@ -17,6 +22,7 @@ export enum ConnectionStateTypes {
 }
 
 let onCardChangedCallback: (data: ContentCard[]) => void;
+let onSpeechMarkerEventsCallback: (persona: SDKPersona, message: SpeechMarkerResponseBody) => void;
 let triggerDisconnectEvent: () => void;
 
 let onConversationStateUpdatedCallback: (data: ConversationStateTypes) => void;
@@ -47,6 +53,19 @@ const scene = {
       triggerDisconnectEvent();
     }),
   },
+
+  onSpeechMarkerEvents: {
+    '1': {
+      addListener: (cb: () => void) => {
+        onSpeechMarkerEventsCallback = cb;
+      },
+      removeListener: jest.fn(),
+      call: jest.fn((persona: SDKPersona, message: SpeechMarkerResponseBody) => {
+        onSpeechMarkerEventsCallback(persona, message);
+      }),
+    },
+  },
+
   videoElement: {
     srcObject: 'mock video src',
   },

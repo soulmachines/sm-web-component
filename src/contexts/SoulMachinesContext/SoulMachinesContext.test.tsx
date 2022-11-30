@@ -17,6 +17,7 @@ const mockCards = [
     data: {},
   },
 ];
+const mockFeatureMarkers = ['layout', 'fullframe'];
 jest.mock('../../hooks/useConnection', () => ({
   useConnection: jest.fn(() => ({
     connect: mockConnect,
@@ -33,6 +34,11 @@ jest.mock('../../hooks/useToggleLayout', () => ({
 jest.mock('../../hooks/useContentCards', () => ({
   useContentCards: jest.fn(() => ({
     cards: mockCards,
+  })),
+}));
+jest.mock('../../hooks/useSpeechMarker', () => ({
+  useSpeechMarker: jest.fn(() => ({
+    featureMarkers: mockFeatureMarkers,
   })),
 }));
 
