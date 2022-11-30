@@ -3,7 +3,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 import { SMWidgetElement } from '../../web-components/sm-widget/SMWidget/SMWidget';
 
-export type BindPublicSmEventsProps = {
+export type BindPublicSmInterfaceProps = {
   element: SMWidgetElement;
 };
 
@@ -11,7 +11,7 @@ export type BindPublicSmEventsProps = {
 // eslint-disable-next-line @typescript-eslint/ban-types
 type GenericFunction = Function;
 
-export function BindPublicSmEvents({ element }: BindPublicSmEventsProps) {
+export function BindPublicSmInterface({ element }: BindPublicSmInterfaceProps) {
   const { connectionStatus, persona, scene, sendTextMessage, enableDebugLogging } =
     useSoulMachines();
 

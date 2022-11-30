@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
 import { Widget } from '../../../appComponents/Widget';
-import { BindPublicSmEvents } from '../../../appComponents/BindPublicSmEvents';
+import { BindPublicSmInterface } from '../../../appComponents/BindPublicSmInterface';
 import { widgetLayout, widgetPosition } from '../../../enums';
 import { useEffect } from 'preact/hooks';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
@@ -52,7 +52,7 @@ export function SMWidget({
 
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={layout}>
-      <BindPublicSmEvents element={parent} />
+      <BindPublicSmInterface element={parent} />
       <Widget
         greeting={greeting}
         profilePicture={profilePicture}
