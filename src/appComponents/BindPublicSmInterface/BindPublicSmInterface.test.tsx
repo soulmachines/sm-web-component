@@ -1,12 +1,36 @@
 import { render } from '@testing-library/preact';
-import { BindPublicSmEvents, WebComponentElement } from '.';
+import { BindPublicSmInterface } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
+import { SMWidgetElement } from '../../web-components/sm-widget/SMWidget/SMWidget';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
-describe('<BindPublicSmEvents />', () => {
-  const element: WebComponentElement = document.createElement('div');
+describe('<BindPublicSmInterface />', () => {
+  const element: SMWidgetElement = document.createElement('div');
+
+  describe(`when it is initialized`, () => {
+    beforeEach(() => {
+      jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+        ...SoulMachinesContext.useSoulMachines(),
+      });
+    });
+
+    it('exposes `persona` as a property of the element', () => {
+      const { persona } = SoulMachinesContext.useSoulMachines();
+      render(<BindPublicSmInterface element={element} />);
+
+      expect(element.persona).toBe(persona);
+    });
+
+    it('exposes `scene` as a property of the element', () => {
+      const { scene } = SoulMachinesContext.useSoulMachines();
+      render(<BindPublicSmInterface element={element} />);
+
+      expect(element.scene).toBe(scene);
+    });
+  });
+
   const whenNotConnectingOrConnected = [
     { description: 'disconnected', statusEnum: ConnectionStatus.DISCONNECTED },
     { description: 'timed out', statusEnum: ConnectionStatus.TIMED_OUT },
@@ -24,7 +48,7 @@ describe('<BindPublicSmEvents />', () => {
 
       it('does not call sendTextMessage', () => {
         const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
-        render(<BindPublicSmEvents element={element} />);
+        render(<BindPublicSmInterface element={element} />);
 
         element.sendTextMessage?.('test');
         expect(sendTextMessage).not.toHaveBeenCalled();
@@ -32,7 +56,7 @@ describe('<BindPublicSmEvents />', () => {
 
       it('does not call enableDebugLogging', () => {
         const { enableDebugLogging } = SoulMachinesContext.useSoulMachines();
-        render(<BindPublicSmEvents element={element} />);
+        render(<BindPublicSmInterface element={element} />);
 
         element.enableDebugLogging?.(true);
         expect(enableDebugLogging).not.toHaveBeenCalled();
@@ -56,7 +80,7 @@ describe('<BindPublicSmEvents />', () => {
 
       it('calls sendTextMessage with the text when element.sendTextMessage is called', () => {
         const { sendTextMessage } = SoulMachinesContext.useSoulMachines();
-        render(<BindPublicSmEvents element={element} />);
+        render(<BindPublicSmInterface element={element} />);
 
         element.sendTextMessage?.('test');
         expect(sendTextMessage).toHaveBeenCalledWith('test');
@@ -64,7 +88,7 @@ describe('<BindPublicSmEvents />', () => {
 
       it('calls enableDebugLogging when element.enableDebugLogging is called', () => {
         const { enableDebugLogging } = SoulMachinesContext.useSoulMachines();
-        render(<BindPublicSmEvents element={element} />);
+        render(<BindPublicSmInterface element={element} />);
 
         element.enableDebugLogging?.(true);
         expect(enableDebugLogging).toHaveBeenCalledWith(true);

@@ -1,8 +1,10 @@
 import { JSX } from 'preact';
 import { SoulMachinesProvider } from '../../../contexts/SoulMachinesContext';
 import { Widget } from '../../../appComponents/Widget';
-import { BindPublicSmEvents } from '../../../appComponents/BindPublicSmEvents';
+import { BindPublicSmInterface } from '../../../appComponents/BindPublicSmInterface';
 import { widgetLayout, widgetPosition } from '../../../enums';
+import { useEffect } from 'preact/hooks';
+import { Persona, Scene } from '@soulmachines/smwebsdk';
 
 export type SMWidgetProps = {
   apiKey?: string;
@@ -15,6 +17,17 @@ export type SMWidgetProps = {
   parent: HTMLElement;
 };
 
+/**
+ * Public interface for the SMWidget custom element,
+ * may be used by Typescript-based consumers.
+ */
+export interface SMWidgetElement extends HTMLElement {
+  persona?: Persona;
+  scene?: Scene;
+  sendTextMessage?: (message: string) => void;
+  enableDebugLogging?: (enabled: boolean) => void;
+}
+
 export function SMWidget({
   tokenServer,
   apiKey,
@@ -25,12 +38,21 @@ export function SMWidget({
   parent,
   layout,
 }: SMWidgetProps) {
-  // Add class to parent that contains our global styles
-  parent.classList.add('sm-widget');
+  useEffect(() => {
+    // Add class to parent that contains our global styles
+    parent.classList.add('sm-widget');
+
+    // dispatch an event for widget consumers to know when
+    // the element's public api is ready to be consumed
+    parent.dispatchEvent(new Event('ready'));
+
+    // exclude all deps so effect runs only on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={layout}>
-      <BindPublicSmEvents element={parent} />
+      <BindPublicSmInterface element={parent} />
       <Widget
         greeting={greeting}
         profilePicture={profilePicture}

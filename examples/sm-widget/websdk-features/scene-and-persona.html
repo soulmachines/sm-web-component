@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSDK Features - Scene and Persona</title>
+  </head>
+  <body>
+    <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
+
+    <script type="module" src="/src/web-components/sm-widget"></script>
+
+    <script>
+      let widget = document.getElementsByTagName('sm-widget')[0];
+
+      console.log('Scene is not available yet:', widget.scene);
+      console.log('Persona is not available yet:', widget.persona);
+
+      widget.addEventListener('ready', () => {
+        console.log('Widget ready event');
+
+        console.log('widget.scene:', widget.scene);
+        console.log('widget.persona:', widget.persona);
+
+        // handle speech markers from persona
+        widget.persona.onSpeechMarkerEvent.addListener((marker) => {
+          console.log('Speech Marker:', marker);
+        });
+
+        // handle connection states from scene
+        widget.scene.connectionState.onConnectionStateUpdated.addListener((connectionStateData) => {
+          console.log('Connection State:', connectionStateData);
+        });
+      });
+    </script>
+  </body>
+</html>
