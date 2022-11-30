@@ -36,7 +36,7 @@ export type SMContext = {
   enableDebugLogging: (enabled: boolean) => void;
   layout: widgetLayout;
   cards: ContentCard[];
-  featureMarkers: { command?: speechMarkers; value?: widgetLayout };
+  featureMarkers: { command?: speechMarkers | string; value?: widgetLayout | string };
   toggleLayout: () => void;
   setLayout: (layout: widgetLayout) => void;
   playVideo: () => void;

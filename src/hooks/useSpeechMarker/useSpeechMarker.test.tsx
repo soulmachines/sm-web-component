@@ -30,4 +30,12 @@ describe('useSpeechMarker', () => {
       value: speechMarkerMessage1.arguments[1],
     });
   });
+
+  it('removes the handleSpeechMarker listener when component is unmounted', () => {
+    const { unmount } = customRender();
+    unmount();
+    expect(
+      mockScene.onSpeechMarkerEvents[mockScene.currentPersonaId].removeListener,
+    ).toBeCalledWith(expect.any(Function));
+  });
 });

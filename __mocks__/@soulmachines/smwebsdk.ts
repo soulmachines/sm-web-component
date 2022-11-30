@@ -59,6 +59,7 @@ const scene = {
       addListener: (cb: () => void) => {
         onSpeechMarkerEventsCallback = cb;
       },
+      removeListener: jest.fn(),
       call: jest.fn((persona: SDKPersona, message: SpeechMarkerResponseBody) => {
         onSpeechMarkerEventsCallback(persona, message);
       }),

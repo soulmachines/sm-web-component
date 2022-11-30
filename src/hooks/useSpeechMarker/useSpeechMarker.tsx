@@ -5,7 +5,7 @@ import { speechMarkers } from '../../enums';
 function useSpeechMarker(scene: Scene) {
   const [featureMarkers, setFeatureMarkers] = useState({});
 
-  const speechMarkerEventHandler = (_: Persona, message: SpeechMarkerResponseBody) => {
+  const handleSpeechMarker = (_: Persona, message: SpeechMarkerResponseBody) => {
     if (message.name === speechMarkers.FEATURE) {
       setFeatureMarkers({
         command: message.arguments[0],
@@ -15,9 +15,9 @@ function useSpeechMarker(scene: Scene) {
   };
 
   useEffect(() => {
-    scene.onSpeechMarkerEvents[scene.currentPersonaId].addListener(speechMarkerEventHandler);
+    scene.onSpeechMarkerEvents[scene.currentPersonaId].addListener(handleSpeechMarker);
     return () => {
-      scene.onSpeechMarkerEvents[scene.currentPersonaId].removeListener(speechMarkerEventHandler);
+      scene.onSpeechMarkerEvents[scene.currentPersonaId].removeListener(handleSpeechMarker);
     };
   }, [scene]);
 

@@ -12,7 +12,7 @@ export function BindSpeechMarkersEvents() {
           fullFrame: widgetLayout.FULL_FRAME,
           float: widgetLayout.FLOAT,
         };
-        const selectedLayout: widgetLayout = layouts[featureMarkers.value];
+        const selectedLayout: widgetLayout = layouts[featureMarkers.value as widgetLayout];
         if (selectedLayout) {
           setLayout(selectedLayout);
           return;
