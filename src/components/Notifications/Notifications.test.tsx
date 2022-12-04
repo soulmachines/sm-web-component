@@ -1,4 +1,5 @@
 import { fireEvent, render, waitFor } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { Notifications } from '.';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
@@ -10,6 +11,11 @@ describe('<Notifications />', () => {
   const timeoutMessage = /Your session has ended/;
   const unableToConnectText = /Unable to connect/;
   const customRender = () => render(<Notifications />);
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<Notifications />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   describe('when the scene is disconnected', () => {
     beforeEach(() => {

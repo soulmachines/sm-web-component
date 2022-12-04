@@ -1,8 +1,15 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { Text } from '.';
 
 describe('<Text />', () => {
   const text = 'Hello, I am some text';
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<Text>Hello</Text>);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   it('allows data attributes to be set', () => {
     const { container } = render(<Text data-sm-cy="test">{text}</Text>);
     expect(container.querySelector('[data-sm-cy="test"]')).toBeInTheDocument();

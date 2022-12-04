@@ -40,7 +40,7 @@ export function BackdropBlur({
 
   return (
     <div
-      className={classNames('sm-transition-all', {
+      className={classNames('sm-transition-all sm-w-full sm-h-full sm-sticky sm-top-0', {
         'sm-backdrop-blur-md': isBlurred,
         'md:sm-backdrop-blur-none': smallScreenOnly,
       })}

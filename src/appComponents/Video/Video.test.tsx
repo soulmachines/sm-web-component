@@ -5,6 +5,7 @@ import { updateVideoBounds } from './Video';
 import { Scene } from '@soulmachines/smwebsdk';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
+import { axe } from 'jest-axe';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -12,6 +13,11 @@ describe('<Video />', () => {
   const customRender = (props = { autoConnect: true }) => {
     return render(<Video {...props} />);
   };
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = customRender();
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('calls connect once when autoConnect is set to true', () => {
     customRender({ autoConnect: true });
@@ -121,6 +127,15 @@ describe('<Video />', () => {
 
       const { container } = customRender();
       expect(container.querySelector('video')?.muted).toEqual(false);
+    });
+
+    it('removes the visibilitychange event listener when the component unmounts', () => {
+      const { unmount } = customRender();
+
+      const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
+      unmount();
+
+      expect(removeEventListenerSpy).toBeCalledWith('visibilitychange', expect.any(Function));
     });
 
     describe('when visibilitychange is fired and document state is visible', () => {

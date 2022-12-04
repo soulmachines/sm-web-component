@@ -10,6 +10,16 @@ describe('useConversationState()', () => {
     expect(result.current.conversationState).toEqual(ConversationStateTypes.idle);
   });
 
+  it('removes the event listener when component is unmounted', () => {
+    const { unmount } = renderHook(() => useConversationState(scene));
+
+    unmount();
+
+    expect(scene.conversation.onConversationStateUpdated.removeListener).toBeCalledWith(
+      expect.any(Function),
+    );
+  });
+
   describe('when onConversationStateUpdated fires', () => {
     it('updates the state to the state received from the event', () => {
       const { result, rerender } = renderHook(() => useConversationState(scene));

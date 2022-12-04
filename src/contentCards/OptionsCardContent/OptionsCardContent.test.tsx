@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/preact';
 import * as SoulMachinesContext from '../../contexts/SoulMachinesContext';
 import { OptionsCardContent } from '.';
+import { axe } from 'jest-axe';
 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
@@ -28,6 +29,11 @@ describe('<OptionsCardContent />', () => {
       ],
     },
   };
+
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<OptionsCardContent content={cards} />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
 
   it('renders nothing when options are empty', () => {
     const { container } = render(<OptionsCardContent content={emptyCard} />);

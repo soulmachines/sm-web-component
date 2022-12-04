@@ -7,9 +7,14 @@ function useConnectionState(scene: Scene) {
   );
 
   useEffect(() => {
-    scene.connectionState.onConnectionStateUpdated.addListener((state: ConnectionStateData) => {
+    const handleConnectionStateUpdated = (state: ConnectionStateData) => {
       setConnectionState(state);
-    });
+    };
+    scene.connectionState.onConnectionStateUpdated.addListener(handleConnectionStateUpdated);
+
+    return () => {
+      scene.connectionState.onConnectionStateUpdated.removeListener(handleConnectionStateUpdated);
+    };
   }, [scene]);
 
   return {

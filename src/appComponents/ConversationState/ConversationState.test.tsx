@@ -1,7 +1,13 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { ConversationState } from '.';
 
 describe('<ConversationState />', () => {
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<ConversationState state="dpSpeaking" />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   describe('when state is dpSpeaking', () => {
     it('renders a digital person speaking animation', () => {
       const { queryByText } = render(<ConversationState state="dpSpeaking" />);

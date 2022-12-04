@@ -5,6 +5,7 @@ import { animated, SpringValue } from 'react-spring';
 export type ContentCardProps = {
   flush?: boolean;
   fullHeight?: boolean;
+  fullWidth?: boolean;
   children?: JSX.Element | undefined;
   springStyle?: Record<string, SpringValue<number> | SpringValue<string>>;
   contentId: string | number;
@@ -16,16 +17,20 @@ export function ContentCard({
   springStyle,
   flush,
   fullHeight,
+  fullWidth,
 }: ContentCardProps) {
   return (
     <animated.div
-      className="sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8 sm-justify-center"
-      data-sm-content={contentId}
+      className={
+        'sm-relative sm-flex sm-overflow-hidden sm-pointer-events-auto sm-p-8 -sm-m-8 sm-justify-center'
+      }
       style={springStyle}
     >
       <div
+        data-sm-content={contentId}
         className={classNames('sm-round-shadow-box', {
           'sm-p-6': !flush,
+          'sm-w-full': fullWidth,
         })}
       >
         <div
@@ -46,4 +51,5 @@ export function ContentCard({
 ContentCard.defaultProps = {
   flush: false,
   fullHeight: false,
+  fullWidth: true,
 };

@@ -19,6 +19,7 @@ export type IconButtonProps = {
 export function IconButton({ name, size, title, shadow, theme, onClick }: IconButtonProps) {
   return (
     <button
+      aria-label={title}
       onClick={onClick}
       className={classNames(
         'sm-border-solid sm-border-1 sm-border-gray-lightest sm-cursor-pointer sm-transition-colors',

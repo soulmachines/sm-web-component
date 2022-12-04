@@ -1,7 +1,13 @@
 import { render } from '@testing-library/preact';
+import { axe } from 'jest-axe';
 import { ProfileImage } from '.';
 
 describe('<ProfileImage />', () => {
+  it('should not have any accessibility violations', async () => {
+    const { container } = render(<ProfileImage />);
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   describe('when a src is provided', () => {
     const src = 'My mock profile url';
     const customRender = () => render(<ProfileImage src={src} />);

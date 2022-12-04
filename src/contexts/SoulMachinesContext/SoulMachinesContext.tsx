@@ -8,12 +8,13 @@ import {
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
-import { ConnectionStatus, widgetLayout } from '../../enums';
+import { ConnectionStatus, speechMarkers, widgetLayout } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
 import { useContentCards } from '../../hooks/useContentCards';
+import { useSpeechMarker } from '../../hooks/useSpeechMarker';
 
 export type SMContext = {
   scene: Scene;
@@ -35,7 +36,9 @@ export type SMContext = {
   enableDebugLogging: (enabled: boolean) => void;
   layout: widgetLayout;
   cards: ContentCard[];
+  featureMarkers: { command?: speechMarkers | string; value?: widgetLayout | string };
   toggleLayout: () => void;
+  setLayout: (layout: widgetLayout) => void;
   playVideo: () => void;
 };
 
@@ -55,7 +58,6 @@ function SoulMachinesProvider({
   tokenServer,
   initialLayout = widgetLayout.FLOAT,
 }: SoulMachinesProviderProps) {
-  const personaId = 1;
   const scene = useMemo(
     () =>
       new Scene({
@@ -69,7 +71,8 @@ function SoulMachinesProvider({
       }),
     [apiKey],
   );
-  const persona = new Persona(scene, personaId);
+  const persona = new Persona(scene, scene.currentPersonaId);
+
   const sendTextMessage = (text: string) => {
     try {
       persona.conversationSend(text, {}, {});
@@ -103,6 +106,7 @@ function SoulMachinesProvider({
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);
   const { cards } = useContentCards(scene);
+  const { featureMarkers } = useSpeechMarker(scene);
 
   // Define a new global disconnection function here
   const disconnect = () => {
@@ -118,7 +122,9 @@ function SoulMachinesProvider({
         persona,
         layout,
         cards,
+        featureMarkers,
         toggleLayout,
+        setLayout,
         sendTextMessage,
         enableDebugLogging,
         disconnect,

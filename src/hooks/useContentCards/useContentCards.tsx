@@ -5,11 +5,17 @@ function useContentCards(scene: Scene) {
   const [cards, setCards] = useState<ContentCard[]>([]);
 
   useEffect(() => {
-    scene.conversation.onCardChanged.addListener((activeCards: ContentCard[]) => {
+    const handleCardChange = (activeCards: ContentCard[]) => {
       setCards(activeCards);
-    });
+    };
+
+    scene.conversation.onCardChanged.addListener(handleCardChange);
 
     scene.conversation.autoClearCards = true;
+
+    return () => {
+      scene.conversation.onCardChanged.removeListener(handleCardChange);
+    };
   }, [scene]);
 
   return {
