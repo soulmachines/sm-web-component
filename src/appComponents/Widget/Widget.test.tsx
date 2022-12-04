@@ -223,9 +223,30 @@ describe('<Widget />', () => {
         expect(baseElement.querySelectorAll('video')).toHaveLength(1);
       });
 
-      it('calls scroll on a html element with top 0', () => {
+      it('calls scroll on the html element with top 0', () => {
         customRender();
         expect(scrollSpy).toHaveBeenCalledWith({ top: 0 });
+      });
+
+      it('calls scroll on the html element each time the content cards change', () => {
+        const { rerender } = customRender();
+
+        expect(scrollSpy).toHaveBeenCalledTimes(1);
+
+        // Rerender with same card data
+        rerender(<Widget position={widgetPosition.BOTTOM_RIGHT} />);
+        expect(scrollSpy).toHaveBeenCalledTimes(1);
+
+        // Rerender with different card data
+        jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+          ...SoulMachinesContext.useSoulMachines(),
+          connectionStatus: ConnectionStatus.CONNECTED,
+          layout: widgetLayout.FULL_FRAME,
+          cards: [],
+        });
+
+        rerender(<Widget position={widgetPosition.BOTTOM_RIGHT} />);
+        expect(scrollSpy).toHaveBeenCalledTimes(2);
       });
     });
   });
