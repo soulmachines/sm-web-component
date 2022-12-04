@@ -27,7 +27,8 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, layout, toggleLayout } = useSoulMachines();
+  const { connectionStatus, connectionState, connect, layout, toggleLayout, cards } =
+    useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
@@ -40,6 +41,14 @@ export function Widget({
       connect();
     }
   }, [connect, isDisconnected]);
+
+  // When in fullframe mode and content cards change, return the user to the top of the scrollable container
+  // Android and Firefox browsers do not return the user to the top and sometimes the new content card is no visible
+  useEffect(() => {
+    if (layout === widgetLayout.FULL_FRAME) {
+      modalPanelRef.current?.scroll({ top: 0 });
+    }
+  }, [cards, layout]);
 
   return (
     <div className="sm-fixed sm-bottom-0 sm-right-0 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full sm-p-5">

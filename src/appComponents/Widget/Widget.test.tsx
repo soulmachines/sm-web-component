@@ -7,15 +7,25 @@ import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from 
 jest.mock('../../contexts/SoulMachinesContext/SoulMachinesContext');
 
 describe('<Widget />', () => {
+  const scrollSpy = jest.fn();
   const defaultGreeting = "Got any questions? I'm happy to help.";
   const timeoutMessage = /Your session has ended/;
   const unableToConnectMessage = /Unable to connect/;
   const customRender = ({ position }: { position?: widgetPosition } = {}) =>
     render(<Widget position={position} />);
 
+  beforeEach(() => {
+    window.HTMLElement.prototype.scroll = scrollSpy;
+  });
+
   it('should not have any accessibility violations', async () => {
     const { container } = customRender();
     expect(await axe(container)).toHaveNoViolations();
+  });
+
+  it('does not call scroll on a html element', () => {
+    customRender();
+    expect(scrollSpy).not.toHaveBeenCalled();
   });
 
   describe('positioning', () => {
@@ -211,6 +221,11 @@ describe('<Widget />', () => {
       it('renders a video', () => {
         const { baseElement } = customRender();
         expect(baseElement.querySelectorAll('video')).toHaveLength(1);
+      });
+
+      it('calls scroll on a html element with top 0', () => {
+        customRender();
+        expect(scrollSpy).toHaveBeenCalledWith({ top: 0 });
       });
     });
   });
