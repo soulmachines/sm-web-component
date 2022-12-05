@@ -47,7 +47,7 @@ export function VideoControls() {
 
       <div className="sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-flex-1">
         <div className="sm-flex sm-justify-between sm-flex-2">
-          <div className="md:sm-self-end">
+          <div className="sm-self-end">
             <ConversationState state={conversationState} />
           </div>
 
