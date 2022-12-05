@@ -43,7 +43,7 @@ export function Widget({
   }, [connect, isDisconnected]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
-  // Android and Firefox browsers do not return the user to the top and sometimes the new content card is no visible
+  // Android and Firefox browsers do not return the user to the top and sometimes the new content card is not visible
   useEffect(() => {
     if (layout === widgetLayout.FULL_FRAME) {
       modalPanelRef.current?.scroll({ top: 0 });
