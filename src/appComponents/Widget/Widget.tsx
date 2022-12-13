@@ -50,7 +50,19 @@ export function Widget({
     }
   }, [cards, layout]);
 
-  return (
+  return layout === widgetLayout.EMBEDDED ? (
+    <>
+      {
+        <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
+          <Video autoConnect={true} />
+          <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
+            <VideoControls />
+          </div>
+          {isConnecting && <ProfileImage src={profilePicture} />}
+        </div>
+      }
+    </>
+  ) : (
     <div className="sm-fixed sm-bottom-0 sm-right-0 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full sm-p-5">
       <div
         className={classNames('sm-h-full sm-flex sm-flex-col sm-justify-end', {

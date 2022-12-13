@@ -11,6 +11,7 @@ export function BindSpeechMarkersEvents() {
         const layouts = {
           fullFrame: widgetLayout.FULL_FRAME,
           float: widgetLayout.FLOAT,
+          embedded: widgetLayout.EMBEDDED,
         };
         const selectedLayout: widgetLayout = layouts[featureMarkers.value as widgetLayout];
         if (selectedLayout) {

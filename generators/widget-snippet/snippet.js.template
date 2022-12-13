@@ -29,7 +29,12 @@ function configureSMWidget(config) {
     el.setAttribute('layout', config.smLayout);
   }
 
-  document.body.appendChild(el);
+  if(config.smContainerId) {
+    el.setAttribute('layout', 'embedded');
+    document.getElementById(config.smContainerId).appendChild(el);
+  } else {
+    document.body.appendChild(el);
+  }
 }
 
 function createCSSLink(fileName) {
