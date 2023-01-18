@@ -1,5 +1,36 @@
 # Change Log
 
+# [1.12.0](https://github.com/soulmachines/sm-web-component/compare/1.11.0...1.12.0) (2023-01-18)
+
+
+### Bug Fixes
+
+* audio button color is not correct when muted QUIC-2310 ([#351](https://github.com/soulmachines/sm-web-component/issues/351)) ([0a0b3b5](https://github.com/soulmachines/sm-web-component/commit/0a0b3b54d5c493e73c7c4d5a186e29be6f507d36))
+* firefox scroll issue when going from a long cc to a short cc quic-2376  ([#372](https://github.com/soulmachines/sm-web-component/issues/372)) ([b403d70](https://github.com/soulmachines/sm-web-component/commit/b403d70bceae6bf52d8f0b33f7d1f6c5fb9e67c1))
+* fix markup card QUIC-2346 ([#367](https://github.com/soulmachines/sm-web-component/issues/367)) ([a1a897f](https://github.com/soulmachines/sm-web-component/commit/a1a897fdb3d5f85c3f31f2d70e461f7636d1be5c))
+* fullframe small screen put convo icon at bottom quic-2348 ([#371](https://github.com/soulmachines/sm-web-component/issues/371)) ([3476dcf](https://github.com/soulmachines/sm-web-component/commit/3476dcfbea98f6f880584cc4b81b222118770c90))
+* options not full width ([#369](https://github.com/soulmachines/sm-web-component/issues/369)) ([c5b86aa](https://github.com/soulmachines/sm-web-component/commit/c5b86aad1372355f4680d8b8d1b60b0acf70ccaa))
+* outline the content card and not the area around it ([#364](https://github.com/soulmachines/sm-web-component/issues/364)) ([8033161](https://github.com/soulmachines/sm-web-component/commit/8033161d2b03cc79685ffa9ed3c3423a1202d572))
+* remove default controls from video ([#354](https://github.com/soulmachines/sm-web-component/issues/354)) ([c319e49](https://github.com/soulmachines/sm-web-component/commit/c319e49cb9012ae2fd6e6f8482d3488a82d40ae6))
+* Safari bfcache issue - reload when navigating from bfcache QUIC-2288 ([#347](https://github.com/soulmachines/sm-web-component/issues/347)) ([97d854d](https://github.com/soulmachines/sm-web-component/commit/97d854d6139a17d42364f89e36946b88b435556e))
+
+
+### Features
+
+* add backdrop blur component QUIC-2277 ([#355](https://github.com/soulmachines/sm-web-component/issues/355)) ([18f7c0b](https://github.com/soulmachines/sm-web-component/commit/18f7c0b435e7b8b642b62f63fea1e6fcca3e81c2))
+* Add speech marker event handler in widget to toggle layout QUIC-2282 ([#365](https://github.com/soulmachines/sm-web-component/issues/365)) ([9c22918](https://github.com/soulmachines/sm-web-component/commit/9c2291872fa0d347d5cd9ff2ff5e7b0936b14027))
+* always bind public methods quic-2370 ([#370](https://github.com/soulmachines/sm-web-component/issues/370)) ([a56340d](https://github.com/soulmachines/sm-web-component/commit/a56340d0121d4ddebeb40958aa3de0182c72cb3f))
+* blur video but not controls quic-2339 ([#362](https://github.com/soulmachines/sm-web-component/issues/362)) ([4311888](https://github.com/soulmachines/sm-web-component/commit/43118889b4367ac27c4e8033e2250c637ef2ea91))
+* clean up event listeners quic-2355 ([#363](https://github.com/soulmachines/sm-web-component/issues/363)) ([c4a7d50](https://github.com/soulmachines/sm-web-component/commit/c4a7d5057c1a90725e393bf04e806e5555fa6de0))
+* Expose scene and persona as public properties of the widget QUIC-2274 ([#352](https://github.com/soulmachines/sm-web-component/issues/352)) ([1f73c6a](https://github.com/soulmachines/sm-web-component/commit/1f73c6abbbd414e84ecc52aff1fee7010935d404))
+* position content cards and wire up blur quic-2276 ([#357](https://github.com/soulmachines/sm-web-component/issues/357)) ([703928f](https://github.com/soulmachines/sm-web-component/commit/703928f87ba216ff5fdd78e8e02b88269368c4ec))
+* position content cards in fullframe desktop mode QUIC-2232 ([#353](https://github.com/soulmachines/sm-web-component/issues/353)) ([f8c1e0c](https://github.com/soulmachines/sm-web-component/commit/f8c1e0c1d6e98833fa55195f5bed029d60ee6f26))
+* remove close button of content cards ([#356](https://github.com/soulmachines/sm-web-component/issues/356)) ([c53ff03](https://github.com/soulmachines/sm-web-component/commit/c53ff03626d49f0b10b7b321d1502684b98d08c0))
+* remove max height modal cc quic-2341 ([#360](https://github.com/soulmachines/sm-web-component/issues/360)) ([75d9c94](https://github.com/soulmachines/sm-web-component/commit/75d9c9459ee996420b26fcc86d06719373fc73e6))
+* setup fullframe a11y modal QUIC-2214 QUIC-2225 ([#350](https://github.com/soulmachines/sm-web-component/issues/350)) ([8e3d114](https://github.com/soulmachines/sm-web-component/commit/8e3d114522f55ba8d8b0cb6269e60370e747e4d6))
+* setup jest axe to catch some a11y issues ([#366](https://github.com/soulmachines/sm-web-component/issues/366)) ([d64dd4c](https://github.com/soulmachines/sm-web-component/commit/d64dd4c4562c6ba513517cb23bd0f930289066f8))
+* style it for mobile ([#349](https://github.com/soulmachines/sm-web-component/issues/349)) ([a0aedb0](https://github.com/soulmachines/sm-web-component/commit/a0aedb0240c916e45627740b6790075e38d18627))
+
 # [1.11.0](https://github.com/soulmachines/sm-web-component/compare/1.10.0...1.11.0) (2022-11-08)
 
 
