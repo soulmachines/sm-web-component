@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
-    "@soulmachines/smwebsdk": "15.5.0",
+    "@soulmachines/smwebsdk": "15.6.0",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "preact": "^10.10.6",
