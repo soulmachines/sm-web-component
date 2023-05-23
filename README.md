@@ -11,7 +11,8 @@
 - [Deployment](#deployment)
 - [Storybook](#storybook)
 - [Debugging](#debugging)
-- [Linking to local version of Web SDK](#linking-to-a-local-version-of-the-web-sdk)
+- [Licensing](#licensing)
+- [Issues](#issues)
 
 ## About the project
 
@@ -271,39 +272,11 @@ graph TD
 
 We log the version of the widget to the console. This means if a user reports an issue with the widget, you can ask them to tell you what version they are using.
 
-## Linking to a local version of the Web SDK
+## Licensing
 
-Sometimes it's helpful to link to your local smwebsdk repo when debugging an issue. There are a few steps you need to do. These instructions assume you have the websdk repo checked out locally.
+This repository is licensed under the Apache License, Version 2.0. See
+[LICENSE](./LICENSE) for the full license text.
 
-### Linking
+## Issues
 
-1. In your terminal navigate to the websdk folder and run `npm link`
-2. Run `npm run watch` to start watching the sdk files
-3. In a seperate terminal navigate to the sm web component folder
-4. Link to your local websdk by running `npm link "@soulmachines/smwebsdk"`
-5. Open `vite.config.ts` and add optimizeDeps to the config. This is needed as vite does some special caching locally
-
-```
-export default defineConfig(({ mode }) => {
-  ...
-  return {
-    optimizeDeps: {
-      exclude: ['@soulmachines/smwebsdk'],
-    },
-    ...
-  }
-  ...
-}
-```
-
-6. Run `npm run start` and it should be using your local websdk
-
-#### Debugging
-
-If you get an error that looks like `[vite] Internal server error: Failed to resolve import "xxx" from "yyy". Does the file exist?`, check that the websdk and web-component are using the same node version. This is because both projects are using nvm and nvm will look in the nvm node version node_modules folder and not find the package. For example if the websdk is using 16.15.1 and the web component is using 16.4.2, it won't find websdk packages as it will look in `.nvm/versions/node/v16.14.2/lib/node_modules/@soulmachines/smwebsdk/..`.
-
-### Unlinking
-
-1. Remove the `optimizeDeps` object in `vite.config.ts` that you previously added
-2. Open your terminal to the sm web component repo and run `npm unlink "@soulmachines/smwebsdk"`
-3. Run `npm install`
+For any issues, please reach out to one of our Customer Success team members.
