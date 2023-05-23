@@ -3,14 +3,6 @@ name: Release Stable
 on:
   workflow_dispatch:
 
-env:
-  ASSET_LOCATION: dist
-  AWS_PATH: 's3://static-prod.soulmachines.com'
-  AWS_DEFAULT_OUTPUT: 'json'
-  AWS_DEFAULT_REGION: 'us-east-1'
-  AWS_ROLE_ARN: arn:aws:iam::924390807111:role/static_sm_com_GHA_Role
-  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-
 jobs:
   version:
     runs-on: ubuntu-latest
@@ -53,6 +45,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    environment: aws
     needs: [version]
     permissions:
       id-token: write # Required for configure AWS credentials
@@ -103,11 +96,11 @@ jobs:
       - name: Configure AWS credential
         uses: aws-actions/configure-aws-credentials@master
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
 
       - name: Release to CDN
         run: |
-          aws s3 cp --sse AES256 ${{ env.ASSET_LOCATION }} ${{ env.AWS_PATH }}/ --recursive
-          aws cloudfront create-invalidation --distribution-id=${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+          aws s3 cp --sse AES256 dist ${{ vars.AWS_PATH_PROD }}/ --recursive
+          aws cloudfront create-invalidation --distribution-id=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
           echo "release done"
