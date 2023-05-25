@@ -12,7 +12,7 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment: aws
+    environment: dev
 
     steps:
       - name: Checkout Source Code
@@ -52,10 +52,10 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Release to CDN
         run: |
-          aws s3 cp --sse AES256 dist ${{ vars.AWS_PATH_DEV }}/ --recursive
-          aws cloudfront create-invalidation --distribution-id=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+          aws s3 cp --sse AES256 dist ${{ vars.S3_DEPLOY_PATH }}/ --recursive
+          aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
           echo "dev release done"
