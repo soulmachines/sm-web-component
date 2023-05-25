@@ -1,6 +1,6 @@
 ## PR Checklist
 
-Please check if your PR fulfills the following requirements:
+Please ensure that your PR meets the following requirements:
 
 - [ ] Describe the purpose of your changes — what is the impact of your contribution?
 - [ ] Code builds clean without any errors or warnings
