@@ -4,7 +4,7 @@ export const textSizes = ['sm', 'md', 'lg'] as const;
 
 export type TextProps = {
   children: string | string[];
-  size: typeof textSizes[number];
+  size: (typeof textSizes)[number];
 };
 
 export function Text({ children, size, ...rest }: TextProps) {
