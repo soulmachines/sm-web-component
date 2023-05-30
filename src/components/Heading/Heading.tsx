@@ -6,8 +6,8 @@ export const headingSizes = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
 
 export type HeadingProps = {
   children: string;
-  type: typeof headingTypes[number];
-  size?: typeof headingSizes[number];
+  type: (typeof headingTypes)[number];
+  size?: (typeof headingSizes)[number];
 };
 
 export function Heading({ type, children, size = 'lg' }: HeadingProps) {
