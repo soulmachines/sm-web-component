@@ -66,10 +66,10 @@ function useSMMedia({
     const videoStream = scene.videoElement?.srcObject;
 
     if (videoRef.current && videoStream) {
+      scene.setVideoElement(videoRef.current);
+
       // Make sure we are testing with auto unmuted
       videoRef.current.muted = false;
-      // Attach video stream
-      videoRef.current.srcObject = videoStream;
 
       return videoRef.current
         .play()
