@@ -3,6 +3,7 @@ import preact from '@preact/preset-vite';
 import * as path from 'path';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import dns from 'dns';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 // https://vitejs.dev/config/server-options.html#server-host
 // Fixes issue where server opens at 127.0.0.1 instead of localhost
@@ -25,7 +26,17 @@ export default defineConfig(({ mode, command }) => {
       // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
       logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
-    plugins: [preact()],
+    plugins: [
+      preact(),
+      viteStaticCopy({
+        targets: [
+          {
+            src: './node_modules/@soulmachines/smwebsdk/dedicated-workers',
+            dest: '',
+          },
+        ],
+      }),
+    ],
     preview: {
       port: 5050,
     },
