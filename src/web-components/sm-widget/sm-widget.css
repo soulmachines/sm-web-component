@@ -213,3 +213,7 @@ Constrain images to the parent width and preserve their intrinsic aspect ratio. 
   max-width: 100%;
   height: auto;
 }
+
+.transparentBG {
+  background-color: transparent;
+}

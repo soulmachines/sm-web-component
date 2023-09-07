@@ -68,6 +68,9 @@ function SoulMachinesProvider({
         sendMetadata: {
           pageUrl: true,
         },
+        chromaKeyOptions: {
+          enabled: true,
+        },
       }),
     [apiKey],
   );

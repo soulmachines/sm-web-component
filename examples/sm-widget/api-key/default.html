@@ -6,8 +6,31 @@
     <title>API Key - Default</title>
   </head>
   <body>
+    <!-- <body background="https://cdn.pixabay.com/animation/2022/12/24/01/36/01-36-27-376_512.gif"> -->
     <sm-widget api-key="<%= VITE__PROJECT_API_KEY %>"></sm-widget>
 
     <script type="module" src="/src/web-components/sm-widget"></script>
+    <iframe
+      src="https://mashable.com/"
+      name="targetframe"
+      allowTransparency="true"
+      frameborder="0"
+      style="
+        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0%;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+      "
+      height="100%"
+      width="100%"
+    >
+    </iframe>
+    <!-- <embed src="https://webflow.com/made-in-webflow/iframe" style="width:500px; height: 300px;"> -->
   </body>
 </html>

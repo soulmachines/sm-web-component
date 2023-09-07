@@ -89,7 +89,7 @@ export function Widget({
 
             {layout === widgetLayout.FLOAT && isConnected && (
               <div className="sm-floating-container">
-                <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
+                <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest transparentBG">
                   <Video autoConnect={false} />
                   <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
                     <VideoControls />
@@ -107,7 +107,7 @@ export function Widget({
         onClose={() => toggleLayout()}
         panelRef={modalPanelRef}
       >
-        <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
+        <div className="sm-sticky sm-top-0 sm-w-full sm-h-full transparentBG">
           <Video autoConnect={false} />
           <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
             <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>

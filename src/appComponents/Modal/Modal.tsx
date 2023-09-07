@@ -19,10 +19,10 @@ export function Modal({ isOpen, onClose, children, title, description, panelRef 
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <div className="sm-fixed sm-inset-0 sm-bg-black/40 sm-z-max" aria-hidden="true" />
 
-      <div className="sm-fixed sm-inset-0 md:sm-inset-10 xl:sm-inset-16 sm-z-max">
+      <div className="sm-fixed sm-inset-0 md:sm-inset-10 xl:sm-inset-16 sm-z-max transparentBG">
         <Dialog.Panel
           ref={panelRef}
-          className="sm-w-full sm-h-full md:sm-rounded-3xl sm-bg-white sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest sm-overflow-y-auto"
+          className="sm-w-full sm-h-full md:sm-rounded-3xl sm-bg-white sm-transform-gpu sm-border-2 sm-border-solid sm-border-gray-lightest sm-overflow-y-auto transparentBG"
         >
           {children}
         </Dialog.Panel>

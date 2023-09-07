@@ -83,7 +83,7 @@ export function Video({ loadingIndicator, autoConnect }: Props) {
 
   return (
     <div
-      className={classNames('sm-w-full sm-h-full sm-overflow-hidden', {
+      className={classNames('sm-w-full sm-h-full sm-overflow-hidden transparentBG', {
         'sm-hidden': !isConnected && !isConnecting,
       })}
     >
