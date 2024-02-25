@@ -18,7 +18,7 @@
 
 The aim of the web components is to allow for easy integration of a Digital Person into any website. We have two main types of users, a developer and a non tech person.
 
-To support these two different types of users we out two different scripts.
+To support these two different types of users we have two different scripts.
 
 The first is a script called `web-components.js`. Once added to a web page you'll be able to use our custom html elements `<sm-video />` and `<sm-widget />`.
 
@@ -50,38 +50,39 @@ graph TD
 
 ## Installation
 
+### Environment file
+
 Copy the `.env.template` file and rename it to `.env`.
 
 ### Using the correct node version
 
 Most of the team uses [nvm](https://github.com/nvm-sh/nvm), which allows you to switch node versions quickly. You can see what node version to use by looking at our `.nvmrc` file.
 
-You can setup your terminal to switch node versions automatically based on the node version. The docs have [illustrate](https://github.com/nvm-sh/nvm#deeper-shell-integration)how to do it. If you don't want to setup automatic switching and you use `nvm`, you can type `nvm use` and it will switch to the correct node version. You'll see the automatic node switching working when you navigate into the folder. A message will appear "Now using node v16.14.2 (npm v8.5.0)". If you see something like this "You need to run "nvm install 16.14.2" to install it before using it." you'll need to run the command to install the node version.
+You can setup your terminal to switch node versions automatically based on the node version. The docs [illustrate](https://github.com/nvm-sh/nvm#deeper-shell-integration) how to do it. If you don't want to setup automatic switching and you use `nvm`, you can type `nvm use` and it will switch to the correct node version. You'll see the automatic node switching working when you navigate into the folder. A message will appear "Now using node v16.14.2 (npm v8.5.0)". If you see something like this "You need to run "nvm install 16.14.2" to install it before using it." you'll need to run the command to install the node version.
 
 ### Connecting via an API Key
 
-When working locally you'll need an api key to connect to a digital person.
+When working locally you'll need an API key to connect to a Digital Person.
 
 #### Creating an API Key
 
 **Prerequisites**
 
-- You have created a project in DDNA Studio dev.
-- You are connected to the full vpn
+- You have created a project in DDNA Studio
 
 **Steps**
 
-- Visit the [create api key page](https://studio-dev.soulmachines.cloud/api-keys/create) in studio
+- Visit the [Create API key page](https://studio.soulmachines.cloud/api-keys/create) in studio
 - Give your key a memorable name, eg: Web Component Local Development
 - Pick "web" for the scope
 - Select your project
 - Tick "I'm developing locally"
-- Enter your IP address and subnet mask. Make sure you are on the VPN when doing this.
+- Enter your IP address and subnet mask.
 
   - Find your IP address by running this command in your terminal `curl ifconfig.me && echo`
   - Most likely your subnet mask is 32
 
-- Enter the domains that the api keys are allowed to be used.
+- Enter the domains that the API keys are allowed to be used with.
   - To cover our local html files and storybook, enter `http://localhost:6006` and `http://localhost:3000`
 - Select an expiry
 - Publish
@@ -104,7 +105,7 @@ Build and Server Code Snippet (Prerequisite for Cypress):
 - `npm run build:example` to compile the scripts and build the snippet
 - `npm run serve` to start a server and serve the dist folder
 
-Run Cypress Test:
+Run Cypress tests:
 
 - `npm run cypress:open` to open cypress browser
 
@@ -146,9 +147,9 @@ Our theme is using css variables with defaults. Users can choose to override our
 
 ### Sizing
 
-By default Tailwind uses `rem` which has some benefits over pixel sizing. Such as scaling up content nicely when the zoom is increased, which is great for accessibility. Unfortunately `rem` sizing is based off the `html` element. Our styles assume the font-size on the `html` element is `16px`. The web component can be embedded on any website and the website may have changed the font size on `html` element to another value(eg: 10px is common). This would make our web component appear at a different size than we expect.
+By default Tailwind uses `rem` which has some benefits over pixel sizing, such as scaling up content nicely when the zoom is increased, which is great for accessibility. Unfortunately `rem` sizing is based off the `html` element. Our styles assume the font-size on the `html` element is `16px`. The web component can be embedded on any website and the website may have changed the font size on `html` element to another value(eg: 10px is common). This would make our web component appear at a different size than we expect.
 
-Tailwind currently only supports `rem`. To work around this i've added a postcss plugin which converts all `rem` values to `px`. Postcss works by running scripts against your compiled css. In future we can stick with `rem` if we want or switch to another sizing in Tailwind supports it.
+Tailwind currently only supports `rem`. To work around this I've added a postcss plugin which converts all `rem` values to `px`. Postcss works by running scripts against your compiled css. In future we can stick with `rem` if we want or switch to another sizing if Tailwind supports it.
 
 ### CSS Reset
 
@@ -156,7 +157,7 @@ Tailwind includes a [global css reset](https://tailwindcss.com/docs/preflight). 
 
 ### Local development
 
-Setup your [editor](https://tailwindcss.com/docs/editor-setup) with the Tailwind extension for autocompletion. For VSCode the extension is called Tailwind CSS IntelliSensePreview. By default it will only work when you are within `class=""` or `className=""`. We are using a npm library called `classNames` to conditionally apply classes. To get autocomplete working within this object you'll need to open your `settings.json` vscode file and add the below snippet.
+Setup your [editor](https://tailwindcss.com/docs/editor-setup) with the Tailwind extension for autocompletion. For VS Code the extension is called Tailwind CSS IntelliSensePreview. By default it will only work when you are within `class=""` or `className=""`. We are using a npm library called `classNames` to conditionally apply classes. To get autocomplete working within this object you'll need to open your `settings.json` vscode file and add the below snippet:
 
 ```
 "tailwindCSS.experimental.classRegex": [
@@ -172,7 +173,7 @@ Web components are registered using the [preactement lib](https://github.com/jah
 
 ### How the snippet works
 
-This project creates a bundle for each web component. The javascript bundles can be used directly but require a few of additional steps. The user needs to add the html element to their webpage, add the script/css files and pass through their API key.
+This project creates a bundle for each web component. The javascript bundles can be used directly but require a few additional steps - the user needs to add the html element to their webpage, add the script/css files and pass through their API key.
 
 To lower the barrier to entry we have created a snippet. The snippet automates the above steps. Upon inserting the script to the page, it will:
 
@@ -180,7 +181,7 @@ To lower the barrier to entry we have created a snippet. The snippet automates t
 - Insert the web component html element (with <sm-widget> tag) into the page
 - Convert options into attributes on the web component html element. These objects can come from a global variable called `window.smConfig` or from data attributes on the script tag.
 
-An example of data attributes.
+An example of data attributes:
 
 ```
 <script
@@ -189,7 +190,7 @@ An example of data attributes.
 ></script>
 ```
 
-An example of global variable. This is useful if the user cannot add a <script /> tag to their website and needs to paste in the script.
+An example of global variable. This is useful if the user cannot add a `<script />` tag to their website and needs to paste in the script:
 
 ```
 window.smConfig = {
@@ -214,7 +215,7 @@ The supported config options are:
    - it takes the template, populating the filenames using the data from the manifest file. It outputs `widget-snippet.js` into the `dist` folder.
    - when the node env is production, it will preprend the asset urls with the CDN name
 3. You run the above file by typing `npm run build:snippet`
-4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the dist directory as `widget-snippet.min.js`.
+4. After the file is built, UglifyJS is run to minify it and the minified version is outputted into the `dist` folder as `widget-snippet.min.js`.
 
 ### Running the snippet locally
 
@@ -230,7 +231,7 @@ We are pushing navigation events to Segment using a custom addon. If you'd like 
 
 We deploy the bundles via github actions. The bundles are automatically deployed to the dev folder in the CDN, when code is merged in to master. There is a manual trigger which deploys the code to the production CDN.
 
-Helpful urls:
+Helpful links:
 
 - [Dev snippet](https://static.soulmachines.com/dev/widget-snippet.min.js`)
 - [Production snippet](https://static.soulmachines.com/widget-snippet.min.js`)
@@ -250,7 +251,7 @@ The built file name will look like this `web-components-<version-number-here>.js
 
 **Snippet**
 
-We'll always deploy a latest version of the snippet to use. As part of the production release we'll copy the latest files and rename them to a specific version that we get from semantic release. Say we were release version 1.5, you'd find these files in the CDN
+We'll always deploy a latest version of the snippet to use. As part of the production release we'll copy the latest files and rename them to a specific version that we get from semantic release. Say we were release version 1.5, you'd find these files in the CDN:
 
 ```
 dist/widget-snippet.js
