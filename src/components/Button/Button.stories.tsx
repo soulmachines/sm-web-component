@@ -1,14 +1,17 @@
 import { Button, ButtonProps } from '.';
 
 export default {
-  title: `Components / Button`,
+  title: 'Components / Button',
   component: Button,
   argTypes: {
-    theme: { control: 'select', options: ['default', 'outline'], defaultValue: 'outline' },
+    theme: { control: 'select', options: ['default', 'outline'] },
     children: {
       type: { name: 'string' },
-      defaultValue: 'Hello',
     },
+  },
+  args: {
+    theme: 'default',
+    children: 'Hello',
   },
 };
 

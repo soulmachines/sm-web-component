@@ -4,7 +4,7 @@ import { ContentCard } from '../../appComponents/ContentCard';
 import { imageCardContent } from '../../storybook-content';
 
 export default {
-  title: `Content Cards / ImageCardContent`,
+  title: 'Content Cards / ImageCardContent',
   component: ImageCardContent,
   decorators: [SMProviderDecorator],
 };

@@ -3,25 +3,27 @@ import { LoadingIndicator, LoadingIndicatorProps } from '.';
 import { Button } from '../Button';
 
 export default {
-  title: `Components / LoadingIndicator`,
+  title: 'Components / LoadingIndicator',
   component: LoadingIndicator,
   argTypes: {
     stepName: {
       control: { type: 'text' },
-      defaultValue: 'DownloadingAssets',
     },
     percentageLoaded: {
       control: { type: 'number' },
-      defaultValue: 0,
     },
     totalSteps: {
       control: { type: 'number' },
-      defaultValue: 4,
     },
     durationMs: {
       control: { type: 'number' },
-      defaultValue: 3000,
     },
+  },
+  args: {
+    stepName: 'DownloadingAssets',
+    percentageLoaded: 0,
+    totalSteps: 4,
+    durationMs: 3000,
   },
 };
 

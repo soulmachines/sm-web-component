@@ -5,7 +5,7 @@ import { Heading } from '../Heading';
 import { Text } from '../Text';
 
 export default {
-  title: `Components / BackdropBlur`,
+  title: 'Components / BackdropBlur',
   component: BackdropBlur,
   argTypes: {
     scrollOffset: {
@@ -15,12 +15,14 @@ export default {
         max: 20,
         step: 1,
       },
-      defaultValue: 10,
     },
     smallScreenOnly: {
       control: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    scrollOffset: 10,
+    smallScreenOnly: true,
   },
 };
 

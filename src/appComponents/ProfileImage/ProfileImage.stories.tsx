@@ -2,7 +2,7 @@ import { ProfileImage } from '.';
 import { ProfileImageProps } from './ProfileImage';
 
 export default {
-  title: `App Components / ProfileImage`,
+  title: 'App Components / ProfileImage',
   component: ProfileImage,
 };
 

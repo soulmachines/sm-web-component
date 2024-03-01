@@ -3,7 +3,7 @@ import { IconProps } from './Icon';
 import paths from './paths';
 
 export default {
-  title: `Components / Icon`,
+  title: 'Components / Icon',
   component: Icon,
 };
 
