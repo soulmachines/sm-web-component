@@ -1,14 +1,17 @@
 import { Text, TextProps, textSizes } from '.';
 
 export default {
-  title: `Components / Text`,
+  title: 'Components / Text',
   component: Text,
   argTypes: {
     size: { control: 'select', options: textSizes },
     children: {
       type: { name: 'string' },
-      defaultValue: 'Your session has ended. You can reconnect anytime you are ready.',
     },
+  },
+  args: {
+    size: textSizes[0],
+    children: 'Your session has ended. You can reconnect anytime you are ready.',
   },
 };
 

@@ -1,5 +1,5 @@
 export default {
-  title: `Theme / Palette`,
+  title: 'Theme / Palette',
 };
 
 export const Basic = () => {

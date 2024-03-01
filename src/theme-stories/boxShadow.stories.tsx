@@ -1,5 +1,5 @@
 export default {
-  title: `Theme / Box Shadow`,
+  title: 'Theme / Box Shadow',
 };
 
 export const Basic = () => {

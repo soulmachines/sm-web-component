@@ -3,11 +3,15 @@ import { ContentCard } from '../../appComponents/ContentCard';
 import { markdownCardContent } from '../../storybook-content';
 
 export default {
-  title: `Content Cards / MarkdownCardContent`,
+  title: 'Content Cards / MarkdownCardContent',
   component: MarkdownCardContent,
   argTypes: {
-    content: { control: 'object', defaultValue: markdownCardContent },
-    fullHeight: { control: 'boolean', defaultValue: false },
+    content: { control: 'object' },
+    fullHeight: { control: 'boolean' },
+  },
+  args: {
+    content: markdownCardContent,
+    fullHeight: false,
   },
   parameters: {
     docs: {
