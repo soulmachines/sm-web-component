@@ -4,6 +4,8 @@ import * as path from 'path';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import dns from 'dns';
 
+const packageJson = require('./package.json');
+
 // https://vitejs.dev/config/server-options.html#server-host
 // Fixes issue where server opens at 127.0.0.1 instead of localhost
 dns.setDefaultResultOrder('verbatim');
@@ -20,6 +22,7 @@ export default defineConfig(({ mode, command }) => {
       // As of vite 3, process.env are kept in library mode
       // Replaces process.env.NODE_ENV in the code with the current mode (eg: production or development)
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      __APP_VERSION__: JSON.stringify(packageJson.version),
     },
     esbuild: {
       // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803

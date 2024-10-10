@@ -1,4 +1,4 @@
-name: Release Dev
+name: Release Gallery Dev
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          CDN_ENDPOINT: 'https://static.soulmachines.com/dev/'
+          CDN_ENDPOINT: 'https://static.soulmachines.com/gallery-dev/'
           # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
           VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
 
@@ -56,6 +56,6 @@ jobs:
 
       - name: Release to CDN
         run: |
-          aws s3 cp --sse AES256 dist ${{ vars.S3_DEPLOY_PATH }}/ --recursive
+          aws s3 cp --sse AES256 dist s3://static-prod.soulmachines.com/gallery-dev/ --recursive
           aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
           echo "dev release done"
