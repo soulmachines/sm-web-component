@@ -15,6 +15,7 @@ export type SMWidgetProps = {
   profilePicture?: string;
   position?: widgetPosition;
   layout?: widgetLayout;
+  khurramteststring?: string;
   parent: HTMLElement;
 };
 
@@ -38,11 +39,13 @@ export function SMWidget({
   position,
   parent,
   layout,
+  khurramteststring,
 }: SMWidgetProps) {
   useEffect(() => {
     // Add class to parent that contains our global styles
     parent.classList.add('sm-widget');
-
+    console.log(khurramteststring);
+    console.log('Greeting....', greeting);
     // dispatch an event for widget consumers to know when
     // the element's public api is ready to be consumed
     parent.dispatchEvent(new Event('ready'));
@@ -60,6 +63,7 @@ export function SMWidget({
         profilePicture={profilePicture}
         loadingIndicator={connectingIndicator}
         position={position}
+        khurramteststring={khurramteststring}
       />
     </SoulMachinesProvider>
   );

@@ -19,6 +19,7 @@ export type WidgetProps = {
   profilePicture?: string;
   position?: widgetPosition;
   loadingIndicator?: JSX.Element;
+  khurramteststring?: string;
 };
 
 export function Widget({
@@ -26,18 +27,37 @@ export function Widget({
   greeting,
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
+  khurramteststring,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, layout, toggleLayout, cards } =
-    useSoulMachines();
+  const {
+    connectionStatus,
+    connectionState,
+    connect,
+    layout,
+    toggleLayout,
+    cards,
+    enableDebugLogging,
+    toggleMicrophone,
+    isMicrophoneEnabled,
+  } = useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
-
+  console.log('khurram test string in widget......', khurramteststring);
+  console.log('Greeting in Widget......', greeting);
+  if (khurramteststring === 'PingPong' && isMicrophoneEnabled === false) {
+    console.log('check microphone', isMicrophoneEnabled);
+    console.log('Cusom khurram function....');
+    toggleMicrophone();
+    console.log('check microphone', isMicrophoneEnabled);
+    khurramteststring = 'NotPingPong';
+  }
+  enableDebugLogging(true);
   // Connect directly if it's resume session
   useEffect(() => {
-    if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
+    if (isDisconnected) {
       connect();
     }
   }, [connect, isDisconnected]);

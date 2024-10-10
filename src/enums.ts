@@ -28,4 +28,5 @@ export enum SessionDataKeys {
   cameraEnabled = 'sm-camera-enabled',
   microphoneEnabled = 'sm-microphone-enabled',
   videoMuted = 'sm-video-muted',
+  khurramteststring = 'khurramteststring',
 }
