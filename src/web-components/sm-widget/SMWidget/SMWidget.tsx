@@ -6,7 +6,6 @@ import { widgetLayout, widgetPosition } from '../../../enums';
 import { useEffect } from 'preact/hooks';
 import { Persona, Scene } from '@soulmachines/smwebsdk';
 import { BindSpeechMarkersEvents } from '../../../appComponents/BindSpeechMarkersEvents';
-import { version } from '../../../../generators/utils/version';
 export type SMWidgetProps = {
   apiKey?: string;
   tokenServer?: string;
@@ -44,7 +43,6 @@ export function SMWidget({
   useEffect(() => {
     // Add class to parent that contains our global styles
     parent.classList.add('sm-widget');
-    console.log(`Widget Version: ${__APP_VERSION__}`); // Use the version as needed
     console.log(khurramteststring);
     console.log('Greeting....', greeting);
     // dispatch an event for widget consumers to know when
