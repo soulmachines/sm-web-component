@@ -2,6 +2,7 @@ import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../../components/IconButton';
 import { widgetLayout } from '../../enums';
+import { useEffect } from 'preact/hooks';
 
 export function VideoControls() {
   const {
@@ -15,10 +16,13 @@ export function VideoControls() {
     toggleVideoMuted,
     layout,
     toggleLayout,
+    stopSpeaking,
   } = useSoulMachines();
 
   const muteIcon = isVideoMuted ? 'volumeOff' : 'volume';
   const muteText = isVideoMuted ? 'Unmute video' : 'Mute video';
+  const interrputIcon = 'stopSpeaking';
+  const interrputText = 'Interrupt Avatar';
   const microphoneIcon = isMicrophoneEnabled ? 'microphone' : 'microphoneOff';
   const cameraIcon = isCameraEnabled ? 'camera' : 'cameraOff';
   const microphoneText = isMicrophoneEnabled ? 'Disable microphone' : 'Enable microphone';
@@ -37,11 +41,12 @@ export function VideoControls() {
             title={muteText}
             theme={isVideoMuted ? Theme.danger : Theme.default}
           />
-          {layout === widgetLayout.FLOAT ? (
+          <IconButton onClick={disconnect} name="close" title="Close video" />
+          {/* {layout === widgetLayout.FLOAT ? (
             <IconButton onClick={disconnect} name="close" title="Close video" />
           ) : (
             <IconButton onClick={toggleLayout} name={layoutToggleIcon} title={layoutToggleTitle} />
-          )}
+          )} */}
         </div>
       </div>
 
@@ -49,8 +54,13 @@ export function VideoControls() {
         <div className="sm-flex sm-justify-between sm-flex-2">
           <div className="sm-self-end">
             <ConversationState state={conversationState} />
+            <IconButton
+              onClick={stopSpeaking}
+              name={interrputIcon}
+              title={interrputText}
+              theme={Theme.default}
+            />
           </div>
-
           {layout === widgetLayout.FLOAT && (
             <div>
               <IconButton
@@ -68,6 +78,7 @@ export function VideoControls() {
             title={microphoneText}
             theme={isMicrophoneEnabled ? Theme.default : Theme.danger}
           />
+
           <IconButton
             onClick={toggleCamera}
             name={cameraIcon}

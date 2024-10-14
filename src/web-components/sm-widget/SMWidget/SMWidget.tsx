@@ -16,6 +16,9 @@ export type SMWidgetProps = {
   position?: widgetPosition;
   layout?: widgetLayout;
   parent: HTMLElement;
+  enableCamera?: boolean;
+  enableMicrophone?: boolean;
+  autoConnect?: boolean;
 };
 
 /**
@@ -38,6 +41,9 @@ export function SMWidget({
   position,
   parent,
   layout,
+  enableCamera,
+  enableMicrophone,
+  autoConnect,
 }: SMWidgetProps) {
   useEffect(() => {
     // Add class to parent that contains our global styles
@@ -52,7 +58,13 @@ export function SMWidget({
   }, []);
 
   return (
-    <SoulMachinesProvider apiKey={apiKey} tokenServer={tokenServer} initialLayout={layout}>
+    <SoulMachinesProvider
+      apiKey={apiKey}
+      tokenServer={tokenServer}
+      initialLayout={layout}
+      enableCamera={enableCamera}
+      enableMicrophone={enableMicrophone}
+    >
       <BindPublicSmInterface element={parent} />
       <BindSpeechMarkersEvents />
       <Widget
@@ -60,6 +72,7 @@ export function SMWidget({
         profilePicture={profilePicture}
         loadingIndicator={connectingIndicator}
         position={position}
+        autoConnect={autoConnect}
       />
     </SoulMachinesProvider>
   );

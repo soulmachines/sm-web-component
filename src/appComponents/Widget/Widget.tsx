@@ -19,6 +19,7 @@ export type WidgetProps = {
   profilePicture?: string;
   position?: widgetPosition;
   loadingIndicator?: JSX.Element;
+  autoConnect?: boolean;
 };
 
 export function Widget({
@@ -26,6 +27,7 @@ export function Widget({
   greeting,
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
+  autoConnect,
 }: WidgetProps) {
   const { connectionStatus, connectionState, connect, layout, toggleLayout, cards } =
     useSoulMachines();
@@ -40,7 +42,7 @@ export function Widget({
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-  }, [connect, isDisconnected]);
+  }, [connect, isDisconnected, autoConnect]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
   // Android and Firefox browsers do not return the user to the top and sometimes the new content card is not visible

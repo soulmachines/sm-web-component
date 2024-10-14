@@ -15,7 +15,7 @@ import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
 import { useContentCards } from '../../hooks/useContentCards';
 import { useSpeechMarker } from '../../hooks/useSpeechMarker';
-
+import { SessionDataKeys } from '../../enums';
 export type SMContext = {
   scene: Scene;
   persona: Persona;
@@ -40,6 +40,7 @@ export type SMContext = {
   toggleLayout: () => void;
   setLayout: (layout: widgetLayout) => void;
   playVideo: () => void;
+  stopSpeaking: () => void;
 };
 
 // Create context with default values
@@ -50,27 +51,38 @@ type SoulMachinesProviderProps = {
   tokenServer?: string;
   initialLayout?: widgetLayout;
   children: ComponentChildren;
+  enableMicrophone?: boolean;
+  enableCamera?: boolean;
 };
 
 function SoulMachinesProvider({
   children,
   apiKey,
   tokenServer,
-  initialLayout = widgetLayout.FLOAT,
+  initialLayout = widgetLayout.FULL_FRAME,
+  enableMicrophone,
+  enableCamera,
 }: SoulMachinesProviderProps) {
   const scene = useMemo(
     () =>
       new Scene({
         videoElement: document.createElement('video'),
         apiKey,
-        requestedMediaDevices: { microphone: false, camera: false },
-        requiredMediaDevices: { microphone: false, camera: false },
+        requestedMediaDevices: {
+          microphone: enableMicrophone == true,
+          camera: enableCamera == true,
+        },
+        requiredMediaDevices: { microphone: enableMicrophone == true, camera: false },
         sendMetadata: {
           pageUrl: true,
         },
       }),
-    [apiKey],
+    [apiKey, enableMicrophone, enableCamera],
   );
+  //scene.setMediaDeviceActive({ microphone: emicrophone, camera: eCamera })
+  sessionStorage.setItem(SessionDataKeys.microphoneEnabled, (enableMicrophone ?? false).toString());
+  sessionStorage.setItem(SessionDataKeys.cameraEnabled, (enableCamera ?? false).toString());
+
   const persona = new Persona(scene, scene.currentPersonaId);
 
   const sendTextMessage = (text: string) => {
@@ -100,6 +112,7 @@ function SoulMachinesProvider({
     scene,
     tokenServer,
   );
+
   const useMediaData = useSMMedia({
     scene,
     videoRef: useConnectionData.videoRef,
@@ -113,6 +126,10 @@ function SoulMachinesProvider({
     disconnectConnection();
     //reset layout
     setLayout(initialLayout);
+  };
+  //Define a new global stop speaking function
+  const stopSpeaking = () => {
+    persona.stopSpeaking();
   };
 
   return (
@@ -128,6 +145,7 @@ function SoulMachinesProvider({
         sendTextMessage,
         enableDebugLogging,
         disconnect,
+        stopSpeaking,
         ...useConnectionData,
         ...useMediaData,
         ...useConversationStateData,
