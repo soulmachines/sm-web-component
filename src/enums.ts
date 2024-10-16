@@ -7,6 +7,7 @@ export enum ConnectionStatus {
 }
 
 export enum widgetPosition {
+  TOP_LEFT = 'topLeft',
   BOTTOM_LEFT = 'bottomLeft',
   BOTTOM_RIGHT = 'bottomRight',
 }

@@ -45,6 +45,7 @@ const mockUseSoulMachines: SMContext = {
   layout: widgetLayout.FLOAT,
   toggleLayout: jest.fn(),
   setLayout: jest.fn(),
+  stopSpeaking: jest.fn(),
 };
 
 const useSoulMachines = jest.fn(() => mockUseSoulMachines);

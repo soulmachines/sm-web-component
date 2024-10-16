@@ -1,0 +1,61 @@
+name: Release sm-test-widget
+
+on:
+  push:
+    branches:
+      - ENG-1038-Run-widget-in-fullscreen-by-microphone-and-camera-enabled-by-default
+
+permissions:
+  id-token: write # Required for configure AWS credentials
+  contents: read # Required for checkout the source code
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: Set Version
+        id: RELEASE_VERSION
+        run: |
+          version=$(git rev-parse --short HEAD)
+          echo "::set-output name=tag::${version}"
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.15.1'
+
+      - name: Caching Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Package
+        run: npm run build
+        env:
+          NODE_ENV: production
+          CDN_ENDPOINT: 'https://static.soulmachines.com/dev/'
+          # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
+          VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
+      - name: Configure AWS credential
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Release to CDN
+        run: |
+          aws s3 cp --sse AES256 dist ${{ vars.S3_DEPLOY_PATH }}/ --recursive
+          aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+          echo "dev release done"
