@@ -55,9 +55,9 @@ Custom CSS Reset
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 */
 
-.sm-widget * {
+/* .sm-widget * {
   box-sizing: border-box;
-}
+} */
 
 /*
 1. Use a consistent sensible line-height in all browsers.
