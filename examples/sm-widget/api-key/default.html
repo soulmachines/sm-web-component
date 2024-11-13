@@ -4,36 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Key - Default</title>
-    <style>
-      /* Style to position the container in the middle of the page */
-      body,
-      html {
-        height: 100%;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #widget-container {
-        width: 1024px;
-        height: 1024px;
-        max-width: 600px; /* Example max-width */
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        background-color: #f9f9f9;
-      }
-    </style>
   </head>
   <body>
     <div id="widget-container">
       <sm-widget
         api-key="<%= VITE__PROJECT_API_KEY %>"
-        enable-camera="false"
+        enable-camera="true"
         enable-microphone="true"
         auto-connect="true"
-        parent="widget-container"
       ></sm-widget>
     </div>
 

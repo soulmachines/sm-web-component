@@ -27,39 +27,32 @@ export function Widget({
   greeting,
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
-  autoConnect,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, toggleLayout, cards } = useSoulMachines();
+  const { connectionStatus, connectionState, connect, layout, toggleLayout, cards } =
+    useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
-  const layout = widgetLayout.FLOAT;
+
   // Connect directly if it's resume session
   useEffect(() => {
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-  }, [connect, isDisconnected, autoConnect]);
+  }, [connect, isDisconnected]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
   // Android and Firefox browsers do not return the user to the top and sometimes the new content card is not visible
-  // useEffect(() => {
-  //   if (layout === widgetLayout.FULL_FRAME) {
-  //     modalPanelRef.current?.scroll({ top: 0 });
-  //   }
-  // }, [cards, layout]);
+  useEffect(() => {
+    if (layout === widgetLayout.FULL_FRAME) {
+      modalPanelRef.current?.scroll({ top: 0 });
+    }
+  }, [cards, layout]);
 
   return (
-    <div>
-      <div className="sm-w-full sm-h-full sm-round-shadow-box sm-border-2 sm-border-solid sm-border-gray-lightest">
-        <Video autoConnect={false} />
-        <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
-          <VideoControls />
-        </div>
-      </div>
-      {/* <div className="sm-fixed sm-bottom-0 sm-right-0 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full sm-p-5">
+    <div className="sm-fixed sm-bottom-0 sm-right-0 sm-text-primary-text sm-z-max sm-pointer-events-none sm-h-full sm-w-full sm-p-5">
       <div
         className={classNames('sm-h-full sm-flex sm-flex-col sm-justify-end', {
           'sm-gap-y-2 md:sm-gap-y-5': layout === widgetLayout.FLOAT,
@@ -91,9 +84,9 @@ export function Widget({
                 </ConnectButton>
               </div>
             )}
-            <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
+            {/* <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
               <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
-            </ProgressIndicatorWrapper>
+            </ProgressIndicatorWrapper> */}
 
             {layout === widgetLayout.FLOAT && isConnected && (
               <div className="sm-floating-container">
@@ -134,7 +127,6 @@ export function Widget({
           </div>
         </div>
       </Modal>
-    </div> */}
     </div>
   );
 }

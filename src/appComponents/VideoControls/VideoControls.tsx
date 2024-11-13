@@ -32,16 +32,20 @@ export function VideoControls() {
     layout === widgetLayout.FLOAT ? 'Switch to fullframe layout' : 'Switch to float layout';
 
   return (
-    <div className="sm-h-full sm-p-3 sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2">
+    // <div className="sm-h-full sm-p-3 sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2">
+    <div
+      style={{ height: '97%' }}
+      className="sm-h-full sm-p-3 sm-flex sm-flex-col sm-gap-y md:sm-gap-y-2"
+    >
       <div className="sm-flex sm-flex-col">
-        <div className="sm-flex sm-justify-between">
-          <IconButton
+        <div style={{ justifyContent: 'right' }} className="sm-flex sm-justify-between">
+          {/* <IconButton
             onClick={toggleVideoMuted}
             name={muteIcon}
             title={muteText}
             theme={isVideoMuted ? Theme.danger : Theme.default}
-          />
-          <IconButton onClick={disconnect} name="close" title="Close video" />
+          /> */}
+          <IconButton onClick={disconnect} name="close" title="Close video" theme={Theme.danger} />
           {/* {layout === widgetLayout.FLOAT ? (
             <IconButton onClick={disconnect} name="close" title="Close video" />
           ) : (
@@ -53,13 +57,24 @@ export function VideoControls() {
       <div className="sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-flex-1">
         <div className="sm-flex sm-justify-between sm-flex-2">
           <div className="sm-self-end">
-            <ConversationState state={conversationState} />
             <IconButton
+              onClick={toggleVideoMuted}
+              name={muteIcon}
+              title={muteText}
+              theme={isVideoMuted ? Theme.danger : Theme.default}
+            />
+          </div>
+        </div>
+        {/* <div className="sm-flex sm-justify-between sm-flex-2"> */}
+        <div style={{ justifyContent: 'left' }} className="sm-flex sm-justify-between">
+          <div className="sm-self-end">
+            <ConversationState state={conversationState} />
+            {/* <IconButton
               onClick={stopSpeaking}
               name={interrputIcon}
               title={interrputText}
               theme={Theme.default}
-            />
+            /> */}
           </div>
           {layout === widgetLayout.FLOAT && (
             <div>
