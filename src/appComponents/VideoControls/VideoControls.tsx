@@ -69,12 +69,14 @@ export function VideoControls() {
         <div style={{ justifyContent: 'left' }} className="sm-flex sm-justify-between">
           <div className="sm-self-end">
             <ConversationState state={conversationState} />
-            {/* <IconButton
-              onClick={stopSpeaking}
-              name={interrputIcon}
-              title={interrputText}
-              theme={Theme.default}
-            /> */}
+            {
+              <IconButton
+                onClick={stopSpeaking}
+                name={interrputIcon}
+                title={interrputText}
+                theme={Theme.default}
+              />
+            }
           </div>
           {layout === widgetLayout.FLOAT && (
             <div>

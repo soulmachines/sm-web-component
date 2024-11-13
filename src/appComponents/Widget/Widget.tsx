@@ -28,7 +28,7 @@ export function Widget({
   loadingIndicator,
   position = widgetPosition.BOTTOM_RIGHT,
 }: WidgetProps) {
-  const { connectionStatus, connectionState, connect, layout, toggleLayout, cards } =
+  const { connectionStatus, connectionState, connect, disconnect, layout, toggleLayout, cards } =
     useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
@@ -105,7 +105,7 @@ export function Widget({
       <Modal
         title="Interactive Digital Person"
         isOpen={isConnected && layout === widgetLayout.FULL_FRAME}
-        onClose={() => toggleLayout()}
+        onClose={() => disconnect()}
         panelRef={modalPanelRef}
       >
         <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
