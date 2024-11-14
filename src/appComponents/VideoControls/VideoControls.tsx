@@ -38,13 +38,14 @@ export function VideoControls() {
       className="sm-h-full sm-p-3 sm-flex sm-flex-col sm-gap-y md:sm-gap-y-2"
     >
       <div className="sm-flex sm-flex-col">
-        <div style={{ justifyContent: 'right' }} className="sm-flex sm-justify-between">
+        <div className="sm-flex sm-justify-between">
           {/* <IconButton
             onClick={toggleVideoMuted}
             name={muteIcon}
             title={muteText}
             theme={isVideoMuted ? Theme.danger : Theme.default}
           /> */}
+          <ConversationState state={conversationState} />
           <IconButton onClick={disconnect} name="close" title="Close video" theme={Theme.danger} />
           {/* {layout === widgetLayout.FLOAT ? (
             <IconButton onClick={disconnect} name="close" title="Close video" />
@@ -66,27 +67,16 @@ export function VideoControls() {
           </div>
         </div>
         {/* <div className="sm-flex sm-justify-between sm-flex-2"> */}
+
         <div style={{ justifyContent: 'left' }} className="sm-flex sm-justify-between">
           <div className="sm-self-end">
-            <ConversationState state={conversationState} />
-            {
-              <IconButton
-                onClick={stopSpeaking}
-                name={interrputIcon}
-                title={interrputText}
-                theme={Theme.default}
-              />
-            }
+            <IconButton
+              onClick={stopSpeaking}
+              name={interrputIcon}
+              title={interrputText}
+              theme={Theme.default}
+            />
           </div>
-          {layout === widgetLayout.FLOAT && (
-            <div>
-              <IconButton
-                onClick={toggleLayout}
-                name={layoutToggleIcon}
-                title={layoutToggleTitle}
-              />
-            </div>
-          )}
         </div>
         <div className="sm-flex sm-justify-between">
           <IconButton
