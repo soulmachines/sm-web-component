@@ -2,7 +2,10 @@ name: Build for Gallery
 
 on:
   workflow_dispatch:
-
+  push:
+    branches:
+      - ENG-1146-use-smwebsdk-from-repo-and-workflow
+    
 permissions:
   contents: read # Required for checkout the source code
 
