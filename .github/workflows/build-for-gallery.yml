@@ -1,0 +1,74 @@
+name: Build for Gallery
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ENG-1146-use-smwebsdk-from-repo-and-workflow
+      - main-smgallery
+    
+permissions:
+  contents: read # Required for checkout the source code
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Checkout smwebsdk
+        uses: actions/checkout@v4
+        with:
+          repository: soulmachines/smwebsdk
+          path: smwebsdk
+          ref: gallery-main
+          token: ${{ secrets.GH_PAT_smwebsdk }}
+
+      - name: Set Version
+        id: RELEASE_VERSION
+        run: |
+          cd main
+          version=$(git rev-parse --short HEAD)
+          echo "::set-output name=tag::${version}"
+          cd ..
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.15.1'
+
+      - name: Caching Dependencies
+        uses: actions/cache@v3
+        with:
+          path: main/.npm, smwebsdk/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: cd main && npm ci && cd ../smwebsdk && npm ci && cd ..
+
+      - name: Build smwebsdk
+        run: cd smwebsdk && npm run build && cd ..
+
+      - name: Link smwebsdk to be used by sm-web-component
+        run: cd main && npm link ../smwebsdk && cd ..
+        
+      - name: Build Package
+        run: cd main && npm run build && cd ..
+        env:
+          NODE_ENV: production
+          # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
+          VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-gallery
+          path: main/dist
+          # retention-days: 90

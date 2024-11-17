@@ -8,14 +8,13 @@ import {
 } from '@soulmachines/smwebsdk';
 import { MutableRef, useContext, useMemo } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
-import { ConnectionStatus, speechMarkers, widgetLayout } from '../../enums';
+import { ConnectionStatus, speechMarkers, widgetLayout, SessionDataKeys } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
 import { useConversationState } from '../../hooks/useConversationState';
 import { useConnectionState } from '../../hooks/useConnectionState';
 import { useToggleLayout } from '../../hooks/useToggleLayout';
 import { useContentCards } from '../../hooks/useContentCards';
 import { useSpeechMarker } from '../../hooks/useSpeechMarker';
-import { SessionDataKeys } from '../../enums';
 export type SMContext = {
   scene: Scene;
   persona: Persona;
