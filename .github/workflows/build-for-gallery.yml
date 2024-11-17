@@ -31,8 +31,10 @@ jobs:
       - name: Set Version
         id: RELEASE_VERSION
         run: |
+          cd main
           version=$(git rev-parse --short HEAD)
           echo "::set-output name=tag::${version}"
+          cd ..
 
       - name: Setup Node
         uses: actions/setup-node@v3
