@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - ENG-1146-use-smwebsdk-from-repo-and-workflow
+      - main-smgallery
     
 permissions:
   contents: read # Required for checkout the source code
