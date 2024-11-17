@@ -25,7 +25,7 @@ jobs:
         with:
           repository: soulmachines/smwebsdk
           path: smwebsdk
-          ref: ENG-1146-rtc-memory-store
+          ref: gallery-main
           token: ${{ secrets.GH_PAT_smwebsdk }}
 
       - name: Set Version
