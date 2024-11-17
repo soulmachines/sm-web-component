@@ -56,7 +56,7 @@ jobs:
         run: cd smwebsdk && npm run build && cd ..
 
       - name: Link smwebsdk to be used by sm-web-component
-        run: cd main && npm link ~/smwebsdk/dist && cd ..
+        run: cd main && npm link ~/smwebsdk && cd ..
         
       - name: Build Package
         run: cd main && npm run build && cd ..
