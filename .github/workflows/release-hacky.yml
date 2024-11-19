@@ -3,7 +3,7 @@ name: Release sm-test-widget
 on:
   push:
     branches:
-      - ENG-1038-Run-widget-in-fullscreen-by-microphone-and-camera-enabled-by-default
+      - main-smgallery
 
 permissions:
   id-token: write # Required for configure AWS credentials
