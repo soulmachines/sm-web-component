@@ -165,22 +165,22 @@ describe('<VideoControls />', () => {
   //     });
   // });
 
-  //   // it('renders a float layout button', () => {
-  //   //   const { getByTitle } = customRender();
-  //   //   expect(getByTitle('Switch to float layout')).toBeInTheDocument();
-  //   // });
+  //   it('renders a float layout button', () => {
+  //     const { getByTitle } = customRender();
+  //     expect(getByTitle('Switch to float layout')).toBeInTheDocument();
+  //   });
 
   //   it('does not renders a fullframe layout button', () => {
   //     const { queryByTitle } = customRender();
   //     expect(queryByTitle('Switch to fullframe layout')).not.toBeInTheDocument();
   //   });
 
-  //   // it('calls toggleLayout when switch to float layout button is clicked', async () => {
-  //   //   const { getByTitle } = customRender();
-  //   //   const floatButton = getByTitle('Switch to float layout');
-  //   //   await fireEvent.click(floatButton);
+  //   it('calls toggleLayout when switch to float layout button is clicked', async () => {
+  //     const { getByTitle } = customRender();
+  //     const floatButton = getByTitle('Switch to float layout');
+  //     await fireEvent.click(floatButton);
 
-  //   //   expect(SoulMachinesContext.useSoulMachines().toggleLayout).toBeCalledTimes(1);
-  //   // });
+  //      expect(SoulMachinesContext.useSoulMachines().toggleLayout).toBeCalledTimes(1);
+  //    });
   // });
 });
