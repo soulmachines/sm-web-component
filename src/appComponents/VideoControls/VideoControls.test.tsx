@@ -157,6 +157,33 @@ describe('<VideoControls />', () => {
     });
   });
 
+  // describe('when layout is float layout', () => {
+  //   beforeEach(() => {
+  //     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
+  //       ...SoulMachinesContext.useSoulMachines(),
+  //       layout: widgetLayout.FLOAT,
+  //     });
+  //   });
+
+  //   it('renders a fullframe layout button', () => {
+  //     const { getByTitle } = customRender();
+  //     expect(getByTitle('Switch to fullframe layout')).toBeInTheDocument();
+  //   });
+
+  //   it('does not renders a float layout button', () => {
+  //     const { queryByTitle } = customRender();
+  //     expect(queryByTitle('Switch to float layout')).not.toBeInTheDocument();
+  //   });
+
+  //   it('calls toggleLayout when switch to fullframe layout button is clicked', async () => {
+  //     const { getByTitle } = customRender();
+  //     const fullframeButton = getByTitle('Switch to fullframe layout');
+  //     await fireEvent.click(fullframeButton);
+
+  //     expect(SoulMachinesContext.useSoulMachines().toggleLayout).toBeCalledTimes(1);
+  //   });
+  // });
+
   // describe('when layout is fullFrame layout', () => {
   //   beforeEach(() => {
   //     jest.spyOn(SoulMachinesContext, 'useSoulMachines').mockReturnValue({
