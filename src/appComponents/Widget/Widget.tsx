@@ -2,13 +2,8 @@ import { JSX } from 'preact';
 import classNames from 'classnames';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
-import { Notifications } from '../../components/Notifications';
-import { ProfileImage } from '../ProfileImage';
 import { ContentCards } from '../ContentCards';
 import { useEffect, useRef } from 'preact/hooks';
-import { ConnectButton } from './components/ConnectButton';
-import { ProgressIndicator } from './components/ProgressIndicator';
-import { ProgressIndicatorWrapper } from './components/ProgressIndicatorWrapper';
 import { Video } from '../Video';
 import { VideoControls } from '../VideoControls';
 import { Modal } from '../Modal';
@@ -22,17 +17,9 @@ export type WidgetProps = {
   autoConnect?: boolean;
 };
 
-export function Widget({
-  profilePicture,
-  greeting,
-  loadingIndicator,
-  position = widgetPosition.BOTTOM_RIGHT,
-}: WidgetProps) {
-  const { connectionStatus, connectionState, connect, disconnect, layout, toggleLayout, cards } =
-    useSoulMachines();
-  const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
+export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) {
+  const { connectionStatus, connect, disconnect, layout, cards } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
-  const isConnectingOrConnected = connectionStatus === ConnectionStatus.CONNECTING || isConnected;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
 
@@ -71,7 +58,7 @@ export function Widget({
           )}
         >
           <>
-            {!isConnectingOrConnected && (
+            {/* {!isConnectingOrConnected && (
               <div className="sm-max-w-xs sm-z-10">
                 <Notifications greeting={greeting} />
               </div>
@@ -83,7 +70,7 @@ export function Widget({
                   <ProfileImage src={profilePicture} />
                 </ConnectButton>
               </div>
-            )}
+            )} */}
             {/* <ProgressIndicatorWrapper transitionIn={isConnecting} position={position}>
               <ProgressIndicator indicator={loadingIndicator} connectionState={connectionState} />
             </ProgressIndicatorWrapper> */}
