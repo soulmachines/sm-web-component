@@ -1,8 +1,6 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../../components/IconButton';
-import { widgetLayout } from '../../enums';
-import { useEffect } from 'preact/hooks';
 
 export function VideoControls() {
   const {
@@ -14,8 +12,6 @@ export function VideoControls() {
     toggleMicrophone,
     toggleCamera,
     toggleVideoMuted,
-    layout,
-    toggleLayout,
     stopSpeaking,
   } = useSoulMachines();
 
@@ -27,9 +23,6 @@ export function VideoControls() {
   const cameraIcon = isCameraEnabled ? 'camera' : 'cameraOff';
   const microphoneText = isMicrophoneEnabled ? 'Disable microphone' : 'Enable microphone';
   const cameraText = isCameraEnabled ? 'Disable camera' : 'Enable camera';
-  const layoutToggleIcon = layout === widgetLayout.FLOAT ? 'arrowUpRight' : 'arrowDownLeft';
-  const layoutToggleTitle =
-    layout === widgetLayout.FLOAT ? 'Switch to fullframe layout' : 'Switch to float layout';
 
   return (
     // <div className="sm-h-full sm-p-3 sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2">
