@@ -28,7 +28,6 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-    connect();
   }, [connect, isDisconnected]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
