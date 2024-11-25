@@ -6,7 +6,7 @@ on:
     branches:
       - ENG-1146-use-smwebsdk-from-repo-and-workflow
       - main-smgallery
-    
+
 permissions:
   contents: read # Required for checkout the source code
 
@@ -58,7 +58,7 @@ jobs:
 
       - name: Link smwebsdk to be used by sm-web-component
         run: cd main && npm link ../smwebsdk && cd ..
-        
+
       - name: Build Package
         run: cd main && npm run build && cd ..
         env:
