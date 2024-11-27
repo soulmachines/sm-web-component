@@ -3,7 +3,7 @@ name: Release sm-test-widget
 on:
   push:
     branches:
-      - main-smgallery
+      - widget-Zorder-fix
 
 permissions:
   id-token: write # Required for configure AWS credentials
