@@ -40,6 +40,7 @@ export type SMContext = {
   setLayout: (layout: widgetLayout) => void;
   playVideo: () => void;
   stopSpeaking: () => void;
+  parent?: HTMLElement;
 };
 
 // Create context with default values
@@ -52,6 +53,7 @@ type SoulMachinesProviderProps = {
   children: ComponentChildren;
   enableMicrophone?: boolean;
   enableCamera?: boolean;
+  parent?: HTMLElement;
 };
 
 function SoulMachinesProvider({
@@ -61,6 +63,7 @@ function SoulMachinesProvider({
   initialLayout = widgetLayout.FULL_FRAME,
   enableMicrophone,
   enableCamera,
+  parent,
 }: SoulMachinesProviderProps) {
   const scene = useMemo(
     () =>
@@ -145,6 +148,7 @@ function SoulMachinesProvider({
         enableDebugLogging,
         disconnect,
         stopSpeaking,
+        parent,
         ...useConnectionData,
         ...useMediaData,
         ...useConversationStateData,
