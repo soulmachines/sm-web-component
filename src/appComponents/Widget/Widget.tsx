@@ -18,7 +18,8 @@ export type WidgetProps = {
 };
 
 export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) {
-  const { connectionStatus, connect, disconnect, layout, cards } = useSoulMachines();
+  const { connectionStatus, connect, disconnect, layout, cards, parent, connectionError } =
+    useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
@@ -28,7 +29,17 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-  }, [connect, isDisconnected]);
+
+    if (parent && connectionStatus === ConnectionStatus.ERRORED) {
+      parent.dispatchEvent(
+        new ErrorEvent('Connection Errored', { message: connectionError?.message }),
+      );
+    }
+
+    if (parent && connectionStatus === ConnectionStatus.TIMED_OUT) {
+      parent.dispatchEvent(new ErrorEvent('Connection Timeout'));
+    }
+  }, [connect, isDisconnected, connectionStatus, parent]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
   // Android and Firefox browsers do not return the user to the top and sometimes the new content card is not visible

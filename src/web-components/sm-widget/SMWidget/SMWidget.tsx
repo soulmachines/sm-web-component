@@ -64,6 +64,7 @@ export function SMWidget({
       initialLayout={layout}
       enableCamera={enableCamera}
       enableMicrophone={enableMicrophone}
+      parent={parent}
     >
       <BindPublicSmInterface element={parent} />
       <BindSpeechMarkersEvents />
