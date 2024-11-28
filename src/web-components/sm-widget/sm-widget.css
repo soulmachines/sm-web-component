@@ -71,7 +71,7 @@ Custom CSS Reset
   -moz-tab-size: 4; /* 3 */
   tab-size: 4; /* 3 */
   position: absolute;
-  z-index: 9999999;
+  z-index: 100001;
 }
 
 /*
