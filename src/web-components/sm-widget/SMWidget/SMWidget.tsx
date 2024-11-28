@@ -45,6 +45,11 @@ export function SMWidget({
   enableMicrophone,
   autoConnect,
 }: SMWidgetProps) {
+  // force the types to boolean. this should not be necessary however these values are propagating as strings in some cases leading to failed comparisons later
+  const microphoneOn: boolean = /true/i.test(`${enableMicrophone}`);
+  const cameraOn: boolean = /true/i.test(`${enableCamera}`);
+  const autoConnectOn: boolean = /true/i.test(`${autoConnect}`);
+
   useEffect(() => {
     // Add class to parent that contains our global styles
     parent.classList.add('sm-widget');
@@ -62,8 +67,8 @@ export function SMWidget({
       apiKey={apiKey}
       tokenServer={tokenServer}
       initialLayout={layout}
-      enableCamera={enableCamera}
-      enableMicrophone={enableMicrophone}
+      enableCamera={cameraOn}
+      enableMicrophone={microphoneOn}
       parent={parent}
     >
       <BindPublicSmInterface element={parent} />
@@ -73,7 +78,7 @@ export function SMWidget({
         profilePicture={profilePicture}
         loadingIndicator={connectingIndicator}
         position={position}
-        autoConnect={autoConnect}
+        autoConnect={autoConnectOn}
       />
     </SoulMachinesProvider>
   );
