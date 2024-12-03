@@ -16,16 +16,28 @@ function useSMMedia({
 
   const setMicrophoneActive = useCallback(
     async (enabled: boolean) => {
-      try {
-        await scene.setMediaDeviceActive({
-          microphone: enabled,
-        });
-
-        setIsMicrophoneEnabled(enabled);
-        sessionStorage.setItem(SessionDataKeys.microphoneEnabled, enabled.toString());
-      } catch (error) {
-        console.error(error);
+      if (!scene.isMicrophoneConnected()) {
+        try {
+          await scene.setMediaDeviceActive({
+            microphone: enabled,
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          const session = scene.session();
+          if (session) {
+            session.microphoneMuted = !enabled;
+          } else {
+            console.log('Session is undefined, cannot set microphoneMuted state');
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
+      setIsMicrophoneEnabled(enabled);
+      sessionStorage.setItem(SessionDataKeys.microphoneEnabled, enabled.toString());
     },
     [scene],
   );
