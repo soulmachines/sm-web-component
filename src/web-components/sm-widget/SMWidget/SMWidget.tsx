@@ -62,7 +62,7 @@ export function SMWidget({
     const json = atob(apiKey);
     //console.log('dpWidgetConnectDP: ' + json);
     contentsApikey = JSON.parse(json);
-    memoryPrjectId = contentsApikey?.soulId;
+    memoryPrjectId = 'sm-' + contentsApikey?.soulId;
   }
 
   useEffect(() => {
@@ -71,6 +71,7 @@ export function SMWidget({
 
     // dispatch an event for widget consumers to know when
     // the element's public api is ready to be consumed
+
     parent.dispatchEvent(new Event('ready'));
     const setupMemory = async () => {
       console.log('The config object is getting read', configObj);

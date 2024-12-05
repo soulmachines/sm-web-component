@@ -29,9 +29,7 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-    if (isDisconnected) {
-      connect();
-    }
+
     if (parent && connectionStatus === ConnectionStatus.ERRORED) {
       parent.dispatchEvent(
         new ErrorEvent('Connection Errored', { message: connectionError?.message }),
