@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Icon } from '../Icon';
+import { Icon, InterruptIcon } from '../Icon';
 import paths from '../Icon/paths';
 
 export enum Theme {
@@ -8,7 +8,7 @@ export enum Theme {
 }
 
 export type IconButtonProps = {
-  name: keyof typeof paths;
+  name?: keyof typeof paths;
   size?: number;
   title: string;
   shadow?: boolean;
@@ -32,7 +32,11 @@ export function IconButton({ name, size, title, shadow, theme, onClick }: IconBu
         },
       )}
     >
-      <Icon name={name} size={size} title={title} />
+      {title === 'Interrupt Avatar' ? (
+        <InterruptIcon size={size} title={title} />
+      ) : (
+        <Icon name={name!} size={size} title={title} />
+      )}
     </button>
   );
 }

@@ -17,8 +17,8 @@ export function VideoControls() {
 
   const muteIcon = isVideoMuted ? 'volumeOff' : 'volume';
   const muteText = isVideoMuted ? 'Unmute video' : 'Mute video';
-  const interrputIcon = 'stopSpeaking';
-  const interrputText = 'Interrupt Avatar';
+
+  const interruptText = 'Interrupt Avatar';
   const microphoneIcon = isMicrophoneEnabled ? 'microphone' : 'microphoneOff';
   const cameraIcon = isCameraEnabled ? 'camera' : 'cameraOff';
   const microphoneText = isMicrophoneEnabled ? 'Disable microphone' : 'Enable microphone';
@@ -47,7 +47,6 @@ export function VideoControls() {
           )} */}
         </div>
       </div>
-
       <div className="sm-flex sm-flex-col sm-gap-y-[2px] md:sm-gap-y-2 sm-flex-1">
         <div className="sm-flex sm-justify-between sm-flex-2">
           <div className="sm-self-end">
@@ -60,17 +59,17 @@ export function VideoControls() {
           </div>
         </div>
         {/* <div className="sm-flex sm-justify-between sm-flex-2"> */}
-
         <div style={{ justifyContent: 'left' }} className="sm-flex sm-justify-between">
           <div className="sm-self-end">
             <IconButton
               onClick={stopSpeaking}
-              name={interrputIcon}
-              title={interrputText}
+              // name={interrputIcon}
+              title={interruptText}
               theme={Theme.default}
             />
           </div>
         </div>
+
         <div className="sm-flex sm-justify-between">
           <IconButton
             onClick={toggleMicrophone}
