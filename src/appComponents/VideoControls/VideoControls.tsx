@@ -57,19 +57,20 @@ export function VideoControls() {
               theme={isVideoMuted ? Theme.danger : Theme.default}
             />
           </div>
-        </div>
-        {/* <div className="sm-flex sm-justify-between sm-flex-2"> */}
-        <div style={{ justifyContent: 'left' }} className="sm-flex sm-justify-between">
+
           <div className="sm-self-end">
-            <IconButton
-              onClick={stopSpeaking}
-              // name={interrputIcon}
-              title={interruptText}
-              theme={Theme.default}
-            />
+            {conversationState === 'dpSpeaking' ? (
+              <IconButton
+                onClick={stopSpeaking}
+                // name={interrputIcon}
+                title={interruptText}
+                theme={Theme.default}
+              />
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
-
         <div className="sm-flex sm-justify-between">
           <IconButton
             onClick={toggleMicrophone}
@@ -77,7 +78,6 @@ export function VideoControls() {
             title={microphoneText}
             theme={isMicrophoneEnabled ? Theme.default : Theme.danger}
           />
-
           <IconButton
             onClick={toggleCamera}
             name={cameraIcon}
