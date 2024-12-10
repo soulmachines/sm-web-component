@@ -58,7 +58,6 @@ export function VideoControls() {
               theme={isVideoMuted ? Theme.danger : Theme.default}
             />
           </div>
-
           <div className="sm-self-end">
             {conversationState === 'dpSpeaking' ? (
               <IconButton
@@ -70,8 +69,10 @@ export function VideoControls() {
             ) : (
               <div></div>
             )}
+
           </div>
         </div>
+
         <div className="sm-flex sm-justify-between">
           <IconButton
             onClick={toggleMicrophone}

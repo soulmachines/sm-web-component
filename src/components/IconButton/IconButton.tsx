@@ -32,6 +32,7 @@ export function IconButton({ name, size, title, shadow, theme, onClick }: IconBu
         },
       )}
     >
+
       {name === 'stopTalking' ? (
         <InterruptIcon size={size} title={title} />
       ) : (
