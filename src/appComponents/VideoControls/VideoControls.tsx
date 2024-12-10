@@ -19,6 +19,7 @@ export function VideoControls() {
   const muteText = isVideoMuted ? 'Unmute video' : 'Mute video';
 
   const interruptText = 'Interrupt Avatar';
+  const interruptIcon = 'stopTalking';
   const microphoneIcon = isMicrophoneEnabled ? 'microphone' : 'microphoneOff';
   const cameraIcon = isCameraEnabled ? 'camera' : 'cameraOff';
   const microphoneText = isMicrophoneEnabled ? 'Disable microphone' : 'Enable microphone';
@@ -62,7 +63,7 @@ export function VideoControls() {
             {conversationState === 'dpSpeaking' ? (
               <IconButton
                 onClick={stopSpeaking}
-                // name={interrputIcon}
+                name={interruptIcon}
                 title={interruptText}
                 theme={Theme.default}
               />
