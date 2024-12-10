@@ -14,5 +14,5 @@ export default {
 };
 
 export const Basic = ({ theme, shadow, size, name }: IconButtonProps) => (
-  <IconButton name={name} size={size} title={name} shadow={shadow} theme={theme} />
+  <IconButton name={name} size={size} title={name!} shadow={shadow} theme={theme} />
 );
