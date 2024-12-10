@@ -32,10 +32,11 @@ export function IconButton({ name, size, title, shadow, theme, onClick }: IconBu
         },
       )}
     >
-      {title === 'Interrupt Avatar' ? (
+
+      {name === 'stopTalking' ? (
         <InterruptIcon size={size} title={title} />
       ) : (
-        <Icon name={name!} size={size} title={title} />
+        <Icon name={name} size={size} title={title} />
       )}
     </button>
   );
