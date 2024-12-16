@@ -1,6 +1,6 @@
 import { define } from 'preactement';
 import { SMWidget } from './SMWidget';
-import './sm-widget.css';
+//import './sm-widget.css';
 
 define('sm-widget', () => SMWidget, {
   attributes: [

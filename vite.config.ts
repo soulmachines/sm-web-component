@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import preact from '@preact/preset-vite';
 import * as path from 'path';
 import { createHtmlPlugin } from 'vite-plugin-html';
@@ -25,17 +26,19 @@ export default defineConfig(({ mode, command }) => {
       // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
       logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
-    plugins: [preact()],
+    plugins: [preact(), cssInjectedByJsPlugin()],
     preview: {
       port: 5050,
     },
     build: {
-      rollupOptions: {
-        output: {
-          entryFileNames: `web-components.${version}.js`,
-          assetFileNames: `web-components.${version}.[ext]`,
-        },
-      },
+      cssCodeSplit: false,
+      // rollupOptions: {
+      //    output: {
+      //      entryFileNames: `web-components.${version}.js`,
+      //      assetFileNames: `web-components.${version}.[ext]`,
+      //    },
+
+      // },
     },
   };
 
