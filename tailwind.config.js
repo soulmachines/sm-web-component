@@ -74,7 +74,7 @@ module.exports = {
         xs: '17rem',
       },
       zIndex: {
-        max: '9999',
+        max: '100001',
       },
       backdropBlur: {
         // Override default as blur(0) causes a slight blur

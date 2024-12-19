@@ -18,6 +18,7 @@ const persona = new Persona(scene, personID);
 
 const mockUseSoulMachines: SMContext = {
   playVideo: jest.fn(),
+  playCameraFeed: jest.fn(),
   connect: jest.fn(),
   disconnect: jest.fn(),
   sendTextMessage: jest.fn(),
@@ -39,6 +40,7 @@ const mockUseSoulMachines: SMContext = {
   cards: [],
   featureMarkers: {},
   videoRef: { current: null },
+  cameraRef: { current: null },
   toggleMicrophone: jest.fn(),
   toggleCamera: jest.fn(),
   toggleVideoMuted: jest.fn(),

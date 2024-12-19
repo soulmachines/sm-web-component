@@ -70,8 +70,8 @@ Custom CSS Reset
   -webkit-text-size-adjust: 100%; /* 2 */
   -moz-tab-size: 4; /* 3 */
   tab-size: 4; /* 3 */
-  position: relative;
-  z-index: 1000000;
+  position: absolute;
+  z-index: 100001;
 }
 
 /*

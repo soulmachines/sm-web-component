@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
 import { ContentCards } from '../ContentCards';
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { Video } from '../Video';
 import { CameraFeed } from '../CameraFeed';
 import { VideoControls } from '../VideoControls';
 import { Modal } from '../Modal';
 import { BackdropBlur } from '../../components/BackdropBlur';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 export type WidgetProps = {
   greeting?: string;
@@ -24,7 +25,11 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
-
+  const [isVisible, setIsVisible] = useState(true); // State to manage visibility
+  useHotkeys('shift+c', () => {
+    setIsVisible((prev) => !prev);
+    console.log(isVisible);
+  });
   // Connect directly if it's resume session
   useEffect(() => {
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
@@ -113,9 +118,13 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
           <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
             <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
               <VideoControls />
-              <div className="sm-absolute sm-bottom-40 sm-left-20  sm-justify-center sm-w-1/6 ">
-                <CameraFeed autoConnect={false} />
-              </div>
+              {isVisible ? (
+                <div className="sm-absolute sm-bottom-40 sm-left-20  sm-justify-center sm-w-1/6 ">
+                  <CameraFeed />
+                </div>
+              ) : (
+                <div></div>
+              )}
             </BackdropBlur>
           </div>
         </div>

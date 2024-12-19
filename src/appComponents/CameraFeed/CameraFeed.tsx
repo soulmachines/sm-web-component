@@ -1,17 +1,11 @@
 import { JSX } from 'preact';
-import { useCallback, useEffect, useMemo } from 'preact/hooks';
-import useDimensions from 'react-cool-dimensions';
+import { useCallback, useEffect } from 'preact/hooks';
 import { useSpring, animated, config } from 'react-spring';
-import throttle from 'lodash/throttle';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus } from '../../enums';
 import { Scene } from '@soulmachines/smwebsdk';
-import classNames from 'classnames';
 
-type Props = {
-  loadingIndicator?: JSX.Element;
-  autoConnect: boolean;
-};
+import classNames from 'classnames';
 
 export const updateVideoBounds = (scene: Scene, size: { width: number; height: number }) => {
   const width = Math.round(size.width * devicePixelRatio);
@@ -26,22 +20,10 @@ export const updateVideoBounds = (scene: Scene, size: { width: number; height: n
   scene.sendVideoBounds(width, height);
 };
 
-export function CameraFeed({ loadingIndicator, autoConnect }: Props) {
+export function CameraFeed() {
   const { cameraRef, scene, connectionStatus, connect, playCameraFeed } = useSoulMachines();
   const isConnecting = connectionStatus === ConnectionStatus.CONNECTING;
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
-  //const { observe } = useDimensions<HTMLVideoElement>({
-  //   onResize: useMemo(
-  //     () =>
-  //       // Throttle works better than debounce when transitioning from floating to fullframe layout
-  //       // less glitching/blury video
-  //       throttle(({ width, height }) => {
-  //         updateVideoBounds(scene, { width, height });
-  //       }, 200),
-  //     [scene],
-  //   ),
-  // });
-
   useEffect(() => {
     if (cameraRef.current && isConnected) {
       playCameraFeed();
@@ -64,14 +46,6 @@ export function CameraFeed({ loadingIndicator, autoConnect }: Props) {
     config: config.gentle,
   });
 
-  const showLoader = isConnecting && loadingIndicator;
-
-  useEffect(() => {
-    if (autoConnect) {
-      connect();
-    }
-  }, [connect, autoConnect]);
-
   useEffect(() => {
     if (isConnected) {
       document.addEventListener('visibilitychange', onVisibilityChange);
@@ -87,8 +61,6 @@ export function CameraFeed({ loadingIndicator, autoConnect }: Props) {
         'sm-hidden': !isConnected && !isConnecting,
       })}
     >
-      {showLoader && loadingIndicator}
-
       <animated.video
         style={videoAnimation}
         autoPlay

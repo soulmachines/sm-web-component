@@ -10,8 +10,13 @@ describe('useSMMedia()', () => {
   const mockVideoRef = {
     current: { muted: true, mock: 124, srcObject: null, play: mockPlay },
   } as unknown as MutableRef<HTMLVideoElement | null>;
-  const customRender = (scene = mockScene, videoRef = mockVideoRef) =>
-    renderHook(() => useSMMedia({ scene, videoRef }));
+
+  const mockCameraRef = {
+    current: { muted: true, mock: 124, srcObject: null, play: mockPlay },
+  } as unknown as MutableRef<HTMLVideoElement | null>;
+
+  const customRender = (scene = mockScene, videoRef = mockVideoRef, camRef = mockCameraRef) =>
+    renderHook(() => useSMMedia({ scene, videoRef, camRef }));
 
   it('returns a toggleMicrophone function', () => {
     const { result } = customRender();
