@@ -5,9 +5,11 @@ import { SessionDataKeys } from '../../enums';
 function useSMMedia({
   scene,
   videoRef,
+  camRef,
 }: {
   scene: Scene;
   videoRef: MutableRef<HTMLVideoElement | null>;
+  camRef: MutableRef<HTMLVideoElement | null>;
 }) {
   const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(scene.isMicrophoneActive());
@@ -64,7 +66,6 @@ function useSMMedia({
 
   const playVideo = useCallback(async () => {
     const videoStream = scene.videoElement?.srcObject;
-
     if (videoRef.current && videoStream) {
       // Make sure we are testing with auto unmuted
       videoRef.current.muted = false;
@@ -90,6 +91,23 @@ function useSMMedia({
         });
     }
   }, [videoRef, setVideoMuted, scene.videoElement?.srcObject]);
+
+  const playCameraFeed = useCallback(async () => {
+    //const videoStream = scene.videoElement?.srcObject;
+    let cameraStream;
+    let session: any = scene.session();
+    if (session?.userMediaStream) {
+      cameraStream = session?.userMediaStream;
+    }
+    if (camRef.current && cameraStream) {
+      // Make sure we are testing with auto unmuted
+      camRef.current.muted = true;
+      // Attach video stream
+      camRef.current.srcObject = cameraStream;
+
+      return camRef.current.play();
+    }
+  }, [camRef]);
 
   /*
    In resume session, connect with one of mic & cam on while the other off will result in ICE connection fail and websocket close.
@@ -132,6 +150,7 @@ function useSMMedia({
     toggleCamera,
     toggleVideoMuted,
     playVideo,
+    playCameraFeed,
   };
 }
 

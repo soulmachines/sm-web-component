@@ -1,0 +1,1 @@
+export { CameraFeed } from './CameraFeed';

@@ -5,6 +5,7 @@ import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from 
 import { ContentCards } from '../ContentCards';
 import { useEffect, useRef } from 'preact/hooks';
 import { Video } from '../Video';
+import { CameraFeed } from '../CameraFeed';
 import { VideoControls } from '../VideoControls';
 import { Modal } from '../Modal';
 import { BackdropBlur } from '../../components/BackdropBlur';
@@ -108,9 +109,13 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
       >
         <div className="sm-sticky sm-top-0 sm-w-full sm-h-full">
           <Video autoConnect={false} />
+
           <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
             <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
               <VideoControls />
+              <div className="sm-absolute sm-bottom-40 sm-left-20  sm-justify-center sm-w-1/6 ">
+                <CameraFeed autoConnect={false} />
+              </div>
             </BackdropBlur>
           </div>
         </div>
