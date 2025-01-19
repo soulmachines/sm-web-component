@@ -76,7 +76,6 @@ export function SMWidget({
       <Widget
         greeting={greeting}
         profilePicture={profilePicture}
-        loadingIndicator={connectingIndicator}
         position={position}
         autoConnect={autoConnectOn}
       />

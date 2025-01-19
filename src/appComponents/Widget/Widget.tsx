@@ -1,4 +1,3 @@
-import { JSX } from 'preact';
 import classNames from 'classnames';
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConnectionStatus, SessionDataKeys, widgetLayout, widgetPosition } from '../../enums';
@@ -15,7 +14,6 @@ export type WidgetProps = {
   greeting?: string;
   profilePicture?: string;
   position?: widgetPosition;
-  loadingIndicator?: JSX.Element;
   autoConnect?: boolean;
 };
 
@@ -28,14 +26,12 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
   const [isVisible, setIsVisible] = useState(true); // State to manage visibility
   useHotkeys('shift+c', () => {
     setIsVisible((prev) => !prev);
-    console.log(isVisible);
   });
   // Connect directly if it's resume session
   useEffect(() => {
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-
     if (parent && connectionStatus === ConnectionStatus.ERRORED) {
       parent.dispatchEvent(
         new ErrorEvent('Connection Errored', { message: connectionError?.message }),
@@ -118,13 +114,9 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
           <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
             <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
               <VideoControls />
-              {isVisible ? (
-                <div className="sm-absolute sm-bottom-40 sm-left-20  sm-justify-center sm-w-1/6 ">
-                  <CameraFeed />
-                </div>
-              ) : (
-                <div></div>
-              )}
+              <div className="sm-absolute sm-bottom-40 sm-left-20  sm-justify-center sm-w-1/6 ">
+                {isVisible === true && <CameraFeed />}
+              </div>
             </BackdropBlur>
           </div>
         </div>
