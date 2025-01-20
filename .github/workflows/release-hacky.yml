@@ -3,7 +3,7 @@ name: Release sm-test-widget
 on:
   push:
     branches:
-      - main-smgallery
+      - camera-feed-test
 
 permissions:
   id-token: write # Required for configure AWS credentials
@@ -17,12 +17,24 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v3
+        with:
+          path: main
+
+      - name: Checkout smwebsdk
+        uses: actions/checkout@v4
+        with:
+          repository: soulmachines/smwebsdk
+          path: smwebsdk
+          ref: gallery-main
+          token: ${{ secrets.GH_PAT_smwebsdk }}
 
       - name: Set Version
         id: RELEASE_VERSION
         run: |
+          cd main
           version=$(git rev-parse --short HEAD)
           echo "::set-output name=tag::${version}"
+          cd ..
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -32,16 +44,22 @@ jobs:
       - name: Caching Dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: main/.npm, smwebsdk/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install Dependencies
-        run: npm ci
+        run: cd main && npm ci && cd ../smwebsdk && npm ci && cd ..
+
+      - name: Build smwebsdk
+        run: cd smwebsdk && npm run build && cd ..
+
+      - name: Link smwebsdk to be used by sm-web-component
+        run: cd main && npm link ../smwebsdk && cd ..
 
       - name: Build Package
-        run: npm run build
+        run: cd main && npm run build && cd ..
         env:
           NODE_ENV: production
           CDN_ENDPOINT: 'https://static.soulmachines.com/dev/'
@@ -56,6 +74,6 @@ jobs:
 
       - name: Release to CDN
         run: |
-          aws s3 cp --sse AES256 dist ${{ vars.S3_DEPLOY_PATH }}/ --recursive
+          aws s3 cp --sse AES256 main/dist ${{ vars.S3_DEPLOY_PATH }}/ --recursive
           aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
           echo "dev release done"

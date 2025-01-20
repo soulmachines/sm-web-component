@@ -6,7 +6,7 @@ import {
   ConnectionStateData,
   ContentCard,
 } from '@soulmachines/smwebsdk';
-import { MutableRef, useContext, useMemo } from 'preact/hooks';
+import { MutableRef, useContext, useMemo, useRef } from 'preact/hooks';
 import { useConnection } from '../../hooks/useConnection';
 import { ConnectionStatus, speechMarkers, widgetLayout, SessionDataKeys } from '../../enums';
 import { useSMMedia } from '../../hooks/useSMMedia';
@@ -24,6 +24,7 @@ export type SMContext = {
   disconnect: () => void;
   sendTextMessage: (text: string) => void;
   videoRef: MutableRef<HTMLVideoElement | null>;
+  cameraRef: MutableRef<HTMLVideoElement | null>;
   isMicrophoneEnabled: boolean;
   isCameraEnabled: boolean;
   isVideoMuted: boolean;
@@ -39,6 +40,7 @@ export type SMContext = {
   toggleLayout: () => void;
   setLayout: (layout: widgetLayout) => void;
   playVideo: () => void;
+  playCameraFeed: () => void;
   stopSpeaking: () => void;
   parent?: HTMLElement;
 };
@@ -81,6 +83,8 @@ function SoulMachinesProvider({
       }),
     [apiKey, enableMicrophone, enableCamera],
   );
+  const cameraRef = useRef<HTMLVideoElement | null>(null);
+
   //scene.setMediaDeviceActive({ microphone: emicrophone, camera: eCamera })
   sessionStorage.setItem(SessionDataKeys.microphoneEnabled, (enableMicrophone ?? false).toString());
   sessionStorage.setItem(SessionDataKeys.cameraEnabled, (enableCamera ?? false).toString());
@@ -118,6 +122,7 @@ function SoulMachinesProvider({
   const useMediaData = useSMMedia({
     scene,
     videoRef: useConnectionData.videoRef,
+    camRef: cameraRef,
   });
   const { layout, setLayout, toggleLayout } = useToggleLayout(initialLayout);
   const { cards } = useContentCards(scene);
@@ -149,6 +154,7 @@ function SoulMachinesProvider({
         disconnect,
         stopSpeaking,
         parent,
+        cameraRef,
         ...useConnectionData,
         ...useMediaData,
         ...useConversationStateData,
