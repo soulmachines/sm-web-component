@@ -9,6 +9,7 @@ import { VideoControls } from '../VideoControls';
 import { Modal } from '../Modal';
 import { BackdropBlur } from '../../components/BackdropBlur';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { ConversationStateTypes } from '@soulmachines/smwebsdk';
 
 export type WidgetProps = {
   greeting?: string;
@@ -18,12 +19,21 @@ export type WidgetProps = {
 };
 
 export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) {
-  const { connectionStatus, connect, disconnect, layout, cards, parent, connectionError } =
-    useSoulMachines();
+  const {
+    connectionStatus,
+    connect,
+    disconnect,
+    layout,
+    cards,
+    parent,
+    connectionError,
+    conversationState,
+  } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(true); // State to manage visibility
+  const [isUserSpeaking, setUserSpeaking] = useState(true);
   useHotkeys('shift+c', () => {
     setIsVisible((prev) => !prev);
   });
@@ -32,6 +42,7 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
+
     if (parent && connectionStatus === ConnectionStatus.ERRORED) {
       parent.dispatchEvent(
         new ErrorEvent('Connection Errored', { message: connectionError?.message }),
@@ -41,7 +52,24 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     if (parent && connectionStatus === ConnectionStatus.TIMED_OUT) {
       parent.dispatchEvent(new ErrorEvent('Connection Timeout'));
     }
-  }, [connect, isDisconnected, connectionStatus, parent]);
+
+    if (
+      parent &&
+      conversationState == ConversationStateTypes.userSpeaking &&
+      isUserSpeaking == false
+    ) {
+      parent.dispatchEvent(new ErrorEvent('User is speaking', {}));
+      setUserSpeaking(true);
+    }
+    if (
+      parent &&
+      conversationState == ConversationStateTypes.dpSpeaking &&
+      isUserSpeaking == true
+    ) {
+      parent.dispatchEvent(new ErrorEvent('AIA is speaking', {}));
+      setUserSpeaking(false);
+    }
+  }, [connect, isDisconnected, connectionStatus, parent, conversationState]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
   // Android and Firefox browsers do not return the user to the top and sometimes the new content card is not visible
