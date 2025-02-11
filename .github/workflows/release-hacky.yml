@@ -3,7 +3,7 @@ name: Release sm-test-widget
 on:
   push:
     branches:
-      - camera-feed-test
+      - Adjust-cameraFeed-CSS
 
 permissions:
   id-token: write # Required for configure AWS credentials
