@@ -66,7 +66,7 @@ export function CameraFeed() {
         autoPlay
         playsInline
         data-sm-video
-        className={classNames('sm-w-full sm-h-full sm-object-cover', {
+        className={classNames('sm-w-full sm-h-full sm-object-cover sm-rounded-3xl', {
           'sm-hidden': !isConnected,
         })}
         ref={(el: HTMLVideoElement) => {

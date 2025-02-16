@@ -126,7 +126,7 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
           <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
             <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
               <VideoControls />
-              <div className="sm-absolute sm-bottom-40 sm-left-20  sm-justify-center sm-w-1/6 ">
+              <div className="sm-absolute sm-bottom-6 sm-right-20  sm-justify-center sm-w-1/3 md:sm-w-1/6">
                 {isVisible === true && isCameraEnabled === true && <CameraFeed />}
               </div>
             </BackdropBlur>
