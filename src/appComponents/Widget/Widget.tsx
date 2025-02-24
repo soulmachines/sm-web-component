@@ -42,7 +42,6 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
       connect();
     }
-
     if (parent && connectionStatus === ConnectionStatus.ERRORED) {
       parent.dispatchEvent(
         new ErrorEvent('Connection Errored', { message: connectionError?.message }),
@@ -58,7 +57,7 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
       conversationState == ConversationStateTypes.userSpeaking &&
       isUserSpeaking == false
     ) {
-      parent.dispatchEvent(new ErrorEvent('User is speaking', {}));
+      parent.dispatchEvent(new MessageEvent('User is speaking', {}));
       setUserSpeaking(true);
     }
     if (
@@ -66,7 +65,7 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
       conversationState == ConversationStateTypes.dpSpeaking &&
       isUserSpeaking == true
     ) {
-      parent.dispatchEvent(new ErrorEvent('AIA is speaking', {}));
+      parent.dispatchEvent(new MessageEvent('AIA is speaking', {}));
       setUserSpeaking(false);
     }
   }, [connect, isDisconnected, connectionStatus, parent, conversationState]);
