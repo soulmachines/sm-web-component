@@ -28,12 +28,13 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     parent,
     connectionError,
     conversationState,
+    isCameraEnabled,
   } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
-  const [isVisible, setIsVisible] = useState(true); // State to manage visibility
   const [isUserSpeaking, setUserSpeaking] = useState(true);
+  const [isVisible, setIsVisible] = useState(true); // State to manage camera feed visibility
   useHotkeys('shift+c', () => {
     setIsVisible((prev) => !prev);
   });
@@ -68,7 +69,12 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
       parent.dispatchEvent(new MessageEvent('AIA is speaking', {}));
       setUserSpeaking(false);
     }
-  }, [connect, isDisconnected, connectionStatus, parent, conversationState]);
+    //make sure that cameraFeed is visible when user enables camera.
+
+    if (isCameraEnabled) {
+      setIsVisible(true);
+    }
+  }, [connect, isDisconnected, connectionStatus, parent, conversationState, isCameraEnabled]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
   // Android and Firefox browsers do not return the user to the top and sometimes the new content card is not visible
@@ -141,8 +147,8 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
           <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
             <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
               <VideoControls />
-              <div className="sm-absolute sm-bottom-40 sm-left-20  sm-justify-center sm-w-1/6 ">
-                {isVisible === true && <CameraFeed />}
+              <div className="sm-absolute sm-bottom-6 sm-right-20  sm-justify-center sm-w-1/3 md:sm-w-1/6">
+                {isVisible === true && isCameraEnabled === true && <CameraFeed />}
               </div>
             </BackdropBlur>
           </div>
