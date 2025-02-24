@@ -9,6 +9,7 @@ import { VideoControls } from '../VideoControls';
 import { Modal } from '../Modal';
 import { BackdropBlur } from '../../components/BackdropBlur';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { ConversationStateTypes } from '@soulmachines/smwebsdk';
 
 export type WidgetProps = {
   greeting?: string;
@@ -26,11 +27,13 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     cards,
     parent,
     connectionError,
+    conversationState,
     isCameraEnabled,
   } = useSoulMachines();
   const isConnected = connectionStatus === ConnectionStatus.CONNECTED;
   const isDisconnected = connectionStatus === ConnectionStatus.DISCONNECTED;
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
+  const [isUserSpeaking, setUserSpeaking] = useState(true);
   const [isVisible, setIsVisible] = useState(true); // State to manage camera feed visibility
   useHotkeys('shift+c', () => {
     setIsVisible((prev) => !prev);
@@ -49,11 +52,29 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
     if (parent && connectionStatus === ConnectionStatus.TIMED_OUT) {
       parent.dispatchEvent(new ErrorEvent('Connection Timeout'));
     }
+
+    if (
+      parent &&
+      conversationState == ConversationStateTypes.userSpeaking &&
+      isUserSpeaking == false
+    ) {
+      parent.dispatchEvent(new MessageEvent('User is speaking', {}));
+      setUserSpeaking(true);
+    }
+    if (
+      parent &&
+      conversationState == ConversationStateTypes.dpSpeaking &&
+      isUserSpeaking == true
+    ) {
+      parent.dispatchEvent(new MessageEvent('AIA is speaking', {}));
+      setUserSpeaking(false);
+    }
     //make sure that cameraFeed is visible when user enables camera.
+
     if (isCameraEnabled) {
       setIsVisible(true);
     }
-  }, [connect, isDisconnected, connectionStatus, parent, isCameraEnabled]);
+  }, [connect, isDisconnected, connectionStatus, parent, conversationState, isCameraEnabled]);
 
   // When in fullframe mode and content cards change, return the user to the top of the scrollable container
   // Android and Firefox browsers do not return the user to the top and sometimes the new content card is not visible
