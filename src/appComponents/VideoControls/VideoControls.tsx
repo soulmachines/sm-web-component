@@ -1,6 +1,7 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../../components/IconButton';
+import { CircularTimeOutIndicator } from '../Widget/components/CircularTimeOutIndicator';
 
 export function VideoControls() {
   const {
@@ -40,7 +41,7 @@ export function VideoControls() {
             theme={isVideoMuted ? Theme.danger : Theme.default}
           /> */}
           <ConversationState state={conversationState} />
-          <IconButton onClick={disconnect} name="close" title="Close video" theme={Theme.danger} />
+          <CircularTimeOutIndicator />
           {/* {layout === widgetLayout.FLOAT ? (
             <IconButton onClick={disconnect} name="close" title="Close video" />
           ) : (
@@ -69,7 +70,6 @@ export function VideoControls() {
             ) : (
               <div></div>
             )}
-
           </div>
         </div>
 
