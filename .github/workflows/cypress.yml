@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
 
       - name: Set Version
         id: RELEASE_VERSION
