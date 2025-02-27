@@ -4,7 +4,9 @@
   "version": "1.12.0",
   "scripts": {
     "start": "vite",
+    "clean": "rimraf dist docs",
     "build": "tsc && vite build && npm run build:snippet",
+    "build:docs": "npm run build-storybook",
     "build:example": "npm run build && copyfiles -f ./examples/snippet/* ./dist",
     "serve": "sirv dist -p 5050",
     "build:snippet": "node ./scripts/build-snippet.js && uglifyjs dist/widget-snippet.js --output dist/widget-snippet.min.js  --compress --mangle --toplevel",
