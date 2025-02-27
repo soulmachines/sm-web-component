@@ -1,4 +1,4 @@
-describe('scene', () => {
+describe('scene', { testIsolation: false }, () => {
   const clearStorageVisitPage = () => {
     cy.window().then((win) => {
       // Clear session storage to start fresh
