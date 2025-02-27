@@ -4,11 +4,14 @@ import { ContentCard } from '../../appComponents/ContentCard';
 import { optionsCardContent } from '../../storybook-content';
 
 export default {
-  title: `Content Cards / OptionsCardContent`,
+  title: 'Content Cards / OptionsCardContent',
   component: OptionsCardContent,
   decorators: [SMProviderDecorator],
   argTypes: {
-    fullHeight: { control: 'boolean', defaultValue: false },
+    fullHeight: { control: 'boolean' },
+  },
+  args: {
+    fullHeight: false,
   },
 };
 

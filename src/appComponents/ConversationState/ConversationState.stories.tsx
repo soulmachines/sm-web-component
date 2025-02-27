@@ -1,14 +1,16 @@
 import { ConversationState, ConversationStateProps } from '.';
 
 export default {
-  title: `App Components / ConversationState`,
+  title: 'App Components / ConversationState',
   component: ConversationState,
   argTypes: {
     state: {
       control: 'select',
       options: ['dpSpeaking', 'idle', 'userSpeaking', 'dpProcessing'],
-      defaultValue: 'idle',
     },
+  },
+  args: {
+    state: 'idle',
   },
 };
 

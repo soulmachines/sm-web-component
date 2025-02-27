@@ -3,12 +3,17 @@ import { ContentCard } from '../../appComponents/ContentCard';
 import { linkCardContent } from '../../storybook-content';
 
 export default {
-  title: `Content Cards / LinkCardContent`,
+  title: 'Content Cards / LinkCardContent',
   component: LinkCardContent,
   argTypes: {
-    content: { control: 'object', defaultValue: linkCardContent },
-    isExternal: { control: 'boolean', defaultValue: true },
-    fullHeight: { control: 'boolean', defaultValue: false },
+    content: { control: 'object' },
+    isExternal: { control: 'boolean' },
+    fullHeight: { control: 'boolean' },
+  },
+  args: {
+    content: linkCardContent,
+    isExternal: true,
+    fullHeight: false,
   },
 };
 

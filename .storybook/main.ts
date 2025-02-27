@@ -17,8 +17,12 @@ module.exports = {
       },
     });
   },
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+
+  stories: ['../**/*.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-essentials'],
-  framework: '@storybook/preact',
-  core: { builder: '@storybook/builder-vite' },
+
+  framework: {
+    name: '@storybook/preact-vite',
+    options: {},
+  },
 };

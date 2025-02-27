@@ -21,7 +21,7 @@ import {
 import { ContentCard } from '../appComponents/ContentCard';
 
 export default {
-  title: `Theme / Preview`,
+  title: 'Theme / Preview',
   decorators: [SMProviderDecorator],
 };
 

@@ -1,11 +1,15 @@
 import { ContentCard, ContentCardProps } from '.';
 
 export default {
-  title: `App Components / Content Card`,
+  title: 'App Components / Content Card',
   component: ContentCard,
   argTypes: {
-    flush: { control: 'boolean', defaultValue: false },
-    fullHeight: { control: 'boolean', defaultValue: false },
+    flush: { control: 'boolean' },
+    fullHeight: { control: 'boolean' },
+  },
+  args: {
+    flush: false,
+    fullHeight: false,
   },
 };
 

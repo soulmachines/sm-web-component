@@ -8,16 +8,18 @@ export default {
   argTypes: {
     title: {
       control: 'text',
-      defaultValue: 'Modal Title',
     },
     description: {
       control: 'text',
-      defaultValue: 'Modal Description',
     },
     isOpen: {
       control: 'boolean',
-      defaultValue: true,
     },
+  },
+  args: {
+    title: 'Modal Title',
+    description: 'Modal Description',
+    isOpen: true,
   },
 };
 
