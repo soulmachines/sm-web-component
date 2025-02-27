@@ -4,14 +4,11 @@ on:
   pull_request:
 
 jobs:
-  cypress-install:
+  build:
     runs-on: ubuntu-latest
-    container: cypress/browsers:22.14.0
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.SMGITHUBBOT_REPO_COMMIT }}
 
       - name: Set Version
         id: RELEASE_VERSION
@@ -19,14 +16,9 @@ jobs:
           version=$(git rev-parse --short HEAD)
           echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-        # Installs our npm deps and cypress tests
-      - name: Cypress install
-        uses: cypress-io/github-action@v4
-        env:
-          HUSKY: 0
-        with:
-          # Disable running of tests within install job
-          runTests: false
+      - name: Install Dependencies
+        run: npm ci
+
       - run: npm run build:example
         env:
           # Since we are not using semantic release in dev, use the commit hash for versioning so its traceable
@@ -42,9 +34,8 @@ jobs:
 
   cypress-run-chrome:
     runs-on: ubuntu-latest
-    # This step wont run until the "cypress-install" step is complete
-    needs: cypress-install
-    container: cypress/browsers:22.14.0
+    needs: build
+    container: cypress/included:14.1.0
     # Cancel job in 15mins if it has not completed
     timeout-minutes: 15
     strategy:
@@ -84,8 +75,8 @@ jobs:
 
   cypress-run-edge:
     runs-on: ubuntu-latest
-    needs: cypress-install
-    container: cypress/browsers:22.14.0
+    needs: build
+    container: cypress/included:14.1.0
     # Cancel job in 15mins if it has not completed
     timeout-minutes: 15
     strategy:
