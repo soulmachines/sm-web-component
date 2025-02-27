@@ -1,6 +1,6 @@
 import corpusCommands from '../support/corpusCommands';
 
-describe('conversation state', () => {
+describe('conversation state', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
     cy.launchScene();

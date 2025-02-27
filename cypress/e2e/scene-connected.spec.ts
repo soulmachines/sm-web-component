@@ -1,4 +1,4 @@
-describe('scene', () => {
+describe('scene', { testIsolation: false }, () => {
   const setVisibilityState = (state: string) => {
     cy.document().then((document) => {
       cy.stub(document, 'visibilityState').value(state);

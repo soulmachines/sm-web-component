@@ -1,4 +1,4 @@
-describe('when a scene error occurs', () => {
+describe('when a scene error occurs', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/invalid-api-key.html');
     cy.get('[data-sm-cy=connectButton]').should('be.visible').click();

@@ -1,4 +1,4 @@
-describe('scene disconnected', () => {
+describe('scene disconnected', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
   });
