@@ -6,10 +6,10 @@ on:
 jobs:
   cypress-install:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
+    container: cypress/browsers:22.14.0
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set Version
         id: RELEASE_VERSION
@@ -32,7 +32,7 @@ jobs:
 
       # Upload build folder to be used in subsequent jobs (run-chrome, run-edge etc)
       - name: Save dist folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           if-no-files-found: error
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     # This step wont run until the "cypress-install" step is complete
     needs: cypress-install
-    container: cypress/browsers:node14.17.6-slim-chrome100-ff99-edge
+    container: cypress/browsers:22.14.0
     # Cancel job in 15mins if it has not completed
     timeout-minutes: 15
     strategy:
@@ -56,10 +56,10 @@ jobs:
         containers: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download the dist folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
@@ -83,7 +83,7 @@ jobs:
   cypress-run-edge:
     runs-on: ubuntu-latest
     needs: cypress-install
-    container: cypress/browsers:node14.17.6-slim-chrome100-ff99-edge
+    container: cypress/browsers:22.14.0
     # Cancel job in 15mins if it has not completed
     timeout-minutes: 15
     strategy:
@@ -97,10 +97,10 @@ jobs:
         containers: [1, 2, 3, 4]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download the dist folder
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
