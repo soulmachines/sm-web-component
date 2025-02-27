@@ -17,7 +17,7 @@ jobs:
         id: RELEASE_VERSION
         run: |
           version=$(git rev-parse --short HEAD)
-          echo "::set-output name=tag::${version}"
+          echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
         # Installs our npm deps and cypress tests
       - name: Cypress install
