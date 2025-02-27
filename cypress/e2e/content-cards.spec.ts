@@ -1,9 +1,14 @@
 import corpusCommands from '../support/corpusCommands';
 
-describe('content cards', () => {
+describe('content cards', { testIsolation: false }, () => {
   before(() => {
     cy.visit('/');
     cy.launchScene();
+  });
+
+  it('renders an image card', () => {
+    cy.sendTextMessage(corpusCommands.imageCard);
+    cy.get('[data-sm-content=image]', { timeout: 6000 }).should('exist');
   });
 
   it('renders an options card and hides the card once its interacted with', () => {
@@ -11,11 +16,6 @@ describe('content cards', () => {
     cy.get('[data-sm-content=options]', { timeout: 6000 }).should('exist');
     cy.get('button').contains('Tell me a joke').should('exist').click();
     cy.get('[data-sm-content=options]').should('not.exist');
-  });
-
-  it('renders an image card', () => {
-    cy.sendTextMessage(corpusCommands.imageCard);
-    cy.get('[data-sm-content=image]', { timeout: 6000 }).should('exist');
   });
 
   it('renders an external link card', () => {
@@ -33,7 +33,7 @@ describe('content cards', () => {
     cy.get('[data-sm-content=markdown]', { timeout: 6000 }).should('exist');
   });
 
-  it('renders a Markdown Card', () => {
+  it('renders markdown as HTML elements in a Markdown card', () => {
     cy.sendTextMessage(corpusCommands.markdownCard);
     cy.get('h1').contains('Structured Text').should('exist');
     cy.get('h2').contains('Subheadings').should('exist');
