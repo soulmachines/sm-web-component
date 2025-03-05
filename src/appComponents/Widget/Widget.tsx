@@ -16,9 +16,10 @@ export type WidgetProps = {
   profilePicture?: string;
   position?: widgetPosition;
   autoConnect?: boolean;
+  duration?: number;
 };
 
-export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) {
+export function Widget({ position = widgetPosition.BOTTOM_RIGHT, duration = 0 }: WidgetProps) {
   const {
     connectionStatus,
     connect,
@@ -35,12 +36,16 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
   const modalPanelRef = useRef<HTMLDivElement | null>(null);
   const [isUserSpeaking, setUserSpeaking] = useState(true);
   const [isVisible, setIsVisible] = useState(true); // State to manage camera feed visibility
+
   useHotkeys('shift+c', () => {
     setIsVisible((prev) => !prev);
   });
   // Connect directly if it's resume session
   useEffect(() => {
     if (isDisconnected && sessionStorage.getItem(SessionDataKeys.sessionId)) {
+      connect();
+    }
+    if (isDisconnected) {
       connect();
     }
 
@@ -147,7 +152,7 @@ export function Widget({ position = widgetPosition.BOTTOM_RIGHT }: WidgetProps) 
 
           <div className="sm-absolute sm-top-0 sm-left-0 sm-w-full sm-h-full">
             <BackdropBlur scrollTargetRef={modalPanelRef} smallScreenOnly={true}>
-              <VideoControls />
+              <VideoControls duration={duration} />
               <div className="sm-absolute sm-bottom-6 sm-right-20  sm-justify-center sm-w-1/3 md:sm-w-1/6">
                 {isVisible === true && isCameraEnabled === true && <CameraFeed />}
               </div>

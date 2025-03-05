@@ -19,6 +19,7 @@ export type SMWidgetProps = {
   enableCamera?: boolean;
   enableMicrophone?: boolean;
   autoConnect?: boolean;
+  duration?: number;
 };
 
 /**
@@ -44,6 +45,7 @@ export function SMWidget({
   enableCamera,
   enableMicrophone,
   autoConnect,
+  duration,
 }: SMWidgetProps) {
   // force the types to boolean. this should not be necessary however these values are propagating as strings in some cases leading to failed comparisons later
   const microphoneOn: boolean = /true/i.test(`${enableMicrophone}`);
@@ -78,6 +80,7 @@ export function SMWidget({
         profilePicture={profilePicture}
         position={position}
         autoConnect={autoConnectOn}
+        duration={duration}
       />
     </SoulMachinesProvider>
   );

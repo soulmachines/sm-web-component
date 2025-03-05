@@ -49,7 +49,15 @@ export function CircularTimeOutIndicator({ duration = 0 }: CircularTimeOutIndica
           </CircularProgressbarWithChildren>
         )}
         {duration == 0 && (
-          <IconButton onClick={disconnect} name="hangUp" title={title} theme={Theme.danger} />
+          <CircularProgressbarWithChildren
+            value={percentage}
+            styles={buildStyles({
+              pathColor: 'transparent',
+              trailColor: 'transparent',
+            })}
+          >
+            <IconButton onClick={disconnect} name="hangUp" title={title} theme={Theme.danger} />
+          </CircularProgressbarWithChildren>
         )}
       </div>
     </div>
