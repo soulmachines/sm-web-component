@@ -4,7 +4,7 @@ import '../src/web-components/sm-widget/sm-widget.css';
 export const parameters = {
   options: {
     storySort: {
-      order: ['Components', 'App Components'],
+      order: ['Web Components', 'React Components', 'App Components', 'Components'],
     },
   },
   backgrounds: {
