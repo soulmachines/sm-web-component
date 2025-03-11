@@ -21,6 +21,7 @@
     "paths": {
       "react-markdown": ["./node_modules/preact/compat/"], // Fixes issue with react types
       "react": ["./node_modules/preact/compat/"],
+      "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"],
       "react-dom": ["./node_modules/preact/compat/"]
     }
   },
