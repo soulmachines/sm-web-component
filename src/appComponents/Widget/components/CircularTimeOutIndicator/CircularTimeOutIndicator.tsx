@@ -50,8 +50,8 @@ export function CircularTimeOutIndicator({
           <CircularProgressbarWithChildren
             value={percentage}
             styles={buildStyles({
-              pathColor: '#C3B1E1',
-              trailColor: '#FF0000',
+              pathColor: '#EE3C59',
+              trailColor: '#FFFFFF' + '33', //0.33 opacity
             })}
           >
             <IconButton onClick={disconnect} name="hangUp" title={title} theme={Theme.danger} />
