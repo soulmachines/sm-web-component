@@ -14,5 +14,6 @@ define('sm-widget', () => SMWidget, {
     'enable-microphone',
     'auto-connect',
     'duration',
+    'delay',
   ],
 });

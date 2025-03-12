@@ -5,9 +5,10 @@ import { CircularTimeOutIndicator } from '../Widget/components/CircularTimeOutIn
 
 export type VideoControlsProps = {
   duration?: number;
+  delay?: number;
 };
 
-export function VideoControls({ duration }: VideoControlsProps) {
+export function VideoControls({ duration, delay }: VideoControlsProps) {
   const {
     disconnect,
     isMicrophoneEnabled,
@@ -45,7 +46,7 @@ export function VideoControls({ duration }: VideoControlsProps) {
             theme={isVideoMuted ? Theme.danger : Theme.default}
           /> */}
           <ConversationState state={conversationState} />
-          <CircularTimeOutIndicator duration={duration} />
+          <CircularTimeOutIndicator duration={duration} delay={delay} />
           {/* {layout === widgetLayout.FLOAT ? (
             <IconButton onClick={disconnect} name="close" title="Close video" />
           ) : (
