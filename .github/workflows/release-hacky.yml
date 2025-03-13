@@ -3,7 +3,7 @@ name: Release sm-test-widget
 on:
   push:
     branches:
-      - Adjust-cameraFeed-CSS
+      - ENG-1751-The-conversation-limit-is-abrupt-and-has-no-warning-add-countdown-timer
 
 permissions:
   id-token: write # Required for configure AWS credentials
