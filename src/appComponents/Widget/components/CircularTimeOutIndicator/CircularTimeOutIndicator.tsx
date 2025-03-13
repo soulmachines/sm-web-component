@@ -25,11 +25,16 @@ export function CircularTimeOutIndicator({
     if (isRunning && secondsLeft > 0) {
       timer = setInterval(() => {
         setSecondsLeft((prevSeconds) => prevSeconds - 1);
+  useEffect(() => {
+      if (secondsLeft === 0) {
+        setIsRunning(false);
+      }
         if (delay && duration) {
           setTitle(`Close video (${secondsLeft}s left)`);
         } else {
           setTitle(`Close video`);
         }
+   }, [delay, duration, secondsLeft]);
         //console.log(`Close video (${secondsLeft}s left)`);
       }, 1000);
     }
