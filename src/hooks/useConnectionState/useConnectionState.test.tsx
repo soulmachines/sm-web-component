@@ -1,5 +1,5 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/preact';
 import { useConnectionState } from '.';
 
 describe('useConnectionState()', () => {

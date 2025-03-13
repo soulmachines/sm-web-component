@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/preact';
 import { widgetLayout } from '../../enums';
 import { useToggleLayout } from './useToggleLayout';
 

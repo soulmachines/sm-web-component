@@ -52,7 +52,6 @@
     "@storybook/theming": "^8.6.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/preact": "^3.2.2",
-    "@testing-library/react-hooks": "^8.0.1",
     "@thedutchcoder/postcss-rem-to-px": "0.0.2",
     "@types/can-autoplay": "^3.0.1",
     "@types/jest": "^27.4.1",

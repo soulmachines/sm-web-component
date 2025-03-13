@@ -1,6 +1,5 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { fireEvent } from '@testing-library/preact';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { fireEvent, renderHook, act, waitFor } from '@testing-library/preact';
 import 'preact/hooks';
 import { useConnection } from '.';
 import { ConnectionStatus, SessionDataKeys } from '../../enums';
@@ -152,16 +151,16 @@ describe('useConnection()', () => {
       });
 
       it('calls scene.connect once with an object containing the token server creds', async () => {
-        const { result, waitForNextUpdate } = customRender();
+        const { result } = customRender();
         result.current.connect();
 
-        await waitForNextUpdate();
-
-        expect(fetch).toHaveBeenCalledWith(tokenServer);
-        expect(mockScene.connect).toHaveBeenCalledWith({
-          tokenServer: { uri: mockCreds.url, token: mockCreds.jwt },
+        await waitFor(() => {
+          expect(fetch).toHaveBeenCalledWith(tokenServer);
+          expect(mockScene.connect).toHaveBeenCalledWith({
+            tokenServer: { uri: mockCreds.url, token: mockCreds.jwt },
+          });
+          expect(mockScene.connect).toHaveBeenCalledTimes(1);
         });
-        expect(mockScene.connect).toHaveBeenCalledTimes(1);
       });
 
       it('calls loadVideo on the video ref', () => {
@@ -171,19 +170,21 @@ describe('useConnection()', () => {
       });
 
       it('updates the connection status to connected', async () => {
-        const { result, waitForNextUpdate } = customRender();
+        const { result } = customRender();
         result.current.connect();
-        await waitForNextUpdate();
 
-        expect(result.current.connectionStatus).toEqual(ConnectionStatus.CONNECTED);
+        await waitFor(() => {
+          expect(result.current.connectionStatus).toEqual(ConnectionStatus.CONNECTED);
+        });
       });
 
       it('updates connectionError to null', async () => {
-        const { result, waitForNextUpdate } = customRender();
+        const { result } = customRender();
         result.current.connect();
-        await waitForNextUpdate();
 
-        expect(result.current.connectionError).toEqual(null);
+        await waitFor(() => {
+          expect(result.current.connectionError).toEqual(null);
+        });
       });
 
       it('updates the connection status to disconnected when disconnect is called', () => {
@@ -209,10 +210,11 @@ describe('useConnection()', () => {
         const customRender = async () => {
           const testUtils = renderHook(() => useConnection(mockScene, tokenServer));
           testUtils.result.current.connect();
-          await testUtils.waitForNextUpdate();
 
-          act(() => {
-            mockScene.onDisconnectedEvent.call();
+          waitFor(() => {
+            act(() => {
+              mockScene.onDisconnectedEvent.call();
+            });
           });
 
           return testUtils;
@@ -233,21 +235,23 @@ describe('useConnection()', () => {
       });
 
       it('updates connectionError with the error', async () => {
-        const { result, waitForNextUpdate } = customRender();
+        const { result } = customRender();
 
         result.current.connect();
-        await waitForNextUpdate();
 
-        expect(result.current.connectionError).toEqual(error);
+        waitFor(() => {
+          expect(result.current.connectionError).toEqual(error);
+        });
       });
 
       it('updates connection status to errored', async () => {
-        const { result, waitForNextUpdate } = customRender();
+        const { result } = customRender();
 
         result.current.connect();
-        await waitForNextUpdate();
 
-        expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
+        waitFor(() => {
+          expect(result.current.connectionStatus).toEqual(ConnectionStatus.ERRORED);
+        });
       });
 
       it('clears session storage data', () => {

@@ -1,5 +1,5 @@
 import { Scene } from '@soulmachines/smwebsdk';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/preact';
 import { MutableRef } from 'preact/hooks';
 import { useSMMedia } from '.';
 import { SessionDataKeys } from '../../enums';

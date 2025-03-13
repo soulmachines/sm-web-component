@@ -1,5 +1,5 @@
 import { Persona, Scene } from '@soulmachines/smwebsdk';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/preact';
 import { useSpeechMarker } from './useSpeechMarker';
 
 describe('useSpeechMarker', () => {
