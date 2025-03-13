@@ -41,25 +41,24 @@ export function CircularTimeOutIndicator({
     return () => clearInterval(timer);
   }, [isRunning, secondsLeft]);
 
-  const percentage = ((duration - secondsLeft) / duration) * 100;
-
   return (
     <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-base">
       <div style={{ width: '70px', textAlign: 'center' }}>
-        {secondsLeft < duration && (
+        {secondsLeft <= duration && (
           <CircularProgressbarWithChildren
-            value={percentage}
+            value={(duration - secondsLeft) / duration) * 100}
             styles={buildStyles({
               pathColor: '#EE3C59',
               trailColor: '#FFFFFF' + '33', //0.33 opacity
             })}
+            
           >
             <IconButton onClick={disconnect} name="hangUp" title={title} theme={Theme.danger} />
           </CircularProgressbarWithChildren>
         )}
-        {secondsLeft >= duration && (
+        {secondsLeft > duration && (
           <CircularProgressbarWithChildren
-            value={percentage}
+            value={0}
             styles={buildStyles({
               pathColor: 'transparent',
               trailColor: 'transparent',
