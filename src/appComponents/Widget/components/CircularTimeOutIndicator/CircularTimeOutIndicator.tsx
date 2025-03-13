@@ -39,9 +39,6 @@ export function CircularTimeOutIndicator({
       }, 1000);
     }
 
-    if (secondsLeft === 0) {
-      setIsRunning(false);
-    }
 
     return () => clearInterval(timer);
   }, [isRunning, secondsLeft]);
