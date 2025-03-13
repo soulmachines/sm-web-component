@@ -41,7 +41,7 @@ export function CircularTimeOutIndicator({
 
 
     return () => clearInterval(timer);
-  }, [isRunning, secondsLeft]);
+  }, [isRunning]);
 
   return (
     <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-base">
