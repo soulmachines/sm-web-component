@@ -22,7 +22,7 @@ export function CircularTimeOutIndicator({
   useEffect(() => {
     let timer: any;
 
-    if (isRunning && secondsLeft > 0) {
+    if (isRunning) {
       timer = setInterval(() => {
         setSecondsLeft((prevSeconds) => prevSeconds - 1);
   useEffect(() => {
