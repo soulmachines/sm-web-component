@@ -1,6 +1,6 @@
-const { mergeConfig } = require('vite');
+import { mergeConfig } from 'vite';
 
-module.exports = {
+export default {
   // Function that allows vite config overrides
   async viteFinal(config) {
     return mergeConfig(config, {

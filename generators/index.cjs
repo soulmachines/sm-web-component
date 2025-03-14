@@ -1,7 +1,7 @@
-const componentGenerator = require('./components/index.js');
-const appComponentGenerator = require('./appComponents/index.js');
-const contentCardGenerator = require('./contentCards/index.js');
-const widgetSnippetGenerator = require('./widget-snippet/index.js');
+const componentGenerator = require('./components/index.cjs');
+const appComponentGenerator = require('./appComponents/index.cjs');
+const contentCardGenerator = require('./contentCards/index.cjs');
+const widgetSnippetGenerator = require('./widget-snippet/index.cjs');
 
 module.exports = (plop) => {
   plop.setGenerator('component', componentGenerator);

@@ -1,4 +1,4 @@
-const componentExists = require('./componentExists');
+const componentExists = require('./componentExists.cjs');
 
 function generateComponent(type) {
   return {

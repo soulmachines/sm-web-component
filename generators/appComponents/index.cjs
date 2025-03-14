@@ -1,5 +1,5 @@
 'use strict';
 
-const generateComponent = require('../utils/generateComponent');
+const generateComponent = require('../utils/generateComponent.cjs');
 
 module.exports = generateComponent('appComponents');

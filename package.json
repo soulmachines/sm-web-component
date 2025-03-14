@@ -2,6 +2,7 @@
   "name": "@soulmachines/web-components",
   "private": true,
   "version": "1.12.0",
+  "type": "module",
   "scripts": {
     "start": "vite",
     "clean": "rimraf dist docs",
@@ -9,7 +10,7 @@
     "build:docs": "npm run build-storybook",
     "build:example": "npm run build && copyfiles -f ./examples/snippet/* ./dist",
     "serve": "sirv dist -p 5050 --host",
-    "build:snippet": "node ./scripts/build-snippet.js && uglifyjs dist/widget-snippet.js --output dist/widget-snippet.min.js  --compress --mangle --toplevel",
+    "build:snippet": "node ./scripts/build-snippet.cjs && uglifyjs dist/widget-snippet.js --output dist/widget-snippet.min.js  --compress --mangle --toplevel",
     "cypress:open": "cypress open",
     "test:cypress:chrome": "cypress run --headless --browser chrome",
     "test:cypress:edge": "cypress run --headless --browser edge",
