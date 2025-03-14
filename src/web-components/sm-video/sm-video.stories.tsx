@@ -32,6 +32,12 @@ const meta: Meta = {
   title: 'Web Components / sm-video',
   component: SMVideo,
   render: (args: WidgetWebComponentProps) => <sm-video {...args} />,
+  parameters: {
+    html: {
+      // enable HTML tab
+      disable: false,
+    },
+  },
   argTypes: {
     'api-key': { control: 'text' },
     'token-server': { control: 'text' },

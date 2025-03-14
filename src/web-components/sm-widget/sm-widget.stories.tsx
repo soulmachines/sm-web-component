@@ -36,6 +36,12 @@ const meta: Meta = {
   title: 'Web Components / sm-widget',
   component: SMWidget,
   render: (args: WidgetWebComponentProps) => <sm-widget {...args} />,
+  parameters: {
+    html: {
+      // enable HTML tab
+      disable: false,
+    },
+  },
   argTypes: {
     'api-key': { control: 'text' },
     'token-server': { control: 'text' },
