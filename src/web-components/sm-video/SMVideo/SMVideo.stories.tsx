@@ -2,7 +2,7 @@ import { SMVideo, SMVideoProps } from './SMVideo';
 import { FixedHeightDecorator } from '../../../../.storybook/decorators/FixedHeightDecorator';
 
 export default {
-  title: 'Web Components / SMVideo',
+  title: 'React Components / SMVideo',
   component: SMVideo,
   decorators: [FixedHeightDecorator],
 };
