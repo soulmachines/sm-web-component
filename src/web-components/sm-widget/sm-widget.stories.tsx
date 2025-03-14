@@ -1,32 +1,19 @@
 import { widgetLayout, widgetPosition } from '../../enums';
-import { SMWidget } from './SMWidget';
 import type { Meta, StoryObj } from '@storybook/preact';
 import './index';
+import { SMWidgetElement } from './SMWidget';
 
 /**
- * Add the sm-widget tag to the JSX namespace
- * so we can use it in our stories without TS errors
+ * Add the sm-widget element to the JSX namespace
+ * so we can use it in our JSX-based stories without TS errors
  */
 declare module 'preact' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      'sm-widget': JSX.HTMLAttributes<HTMLElement>;
+      'sm-widget': JSX.HTMLAttributes<SMWidgetElement>;
     }
   }
-}
-
-/**
- * Define the props for the sm-widget tag
- * so we can use it in our stories with TS types
- */
-interface WidgetWebComponentProps {
-  'api-key'?: string;
-  'token-server'?: string;
-  greeting?: string;
-  'profile-picture'?: string;
-  position?: widgetPosition;
-  layout?: widgetLayout;
 }
 
 /**
@@ -34,8 +21,6 @@ interface WidgetWebComponentProps {
  */
 const meta: Meta = {
   title: 'Web Components / sm-widget',
-  component: SMWidget,
-  render: (args: WidgetWebComponentProps) => <sm-widget {...args} />,
   parameters: {
     html: {
       // enable HTML tab
@@ -51,7 +36,10 @@ const meta: Meta = {
       control: 'inline-radio',
       options: [widgetPosition.BOTTOM_LEFT, widgetPosition.BOTTOM_RIGHT],
     },
-    layout: { control: 'inline-radio', options: [widgetLayout.FLOAT, widgetLayout.FULL_FRAME] },
+    layout: {
+      control: 'inline-radio',
+      options: [widgetLayout.FLOAT, widgetLayout.FULL_FRAME],
+    },
   },
   // default values
   args: {
@@ -72,12 +60,8 @@ export default meta;
  */
 export const DefaultStory: StoryObj = {
   name: 'sm-widget',
+  render: (args) => <sm-widget {...args} />,
   args: {
     'api-key': import.meta.env.VITE__PROJECT_API_KEY,
-  },
-  parameters: {
-    controls: {
-      include: ['api-key'],
-    },
   },
 };
