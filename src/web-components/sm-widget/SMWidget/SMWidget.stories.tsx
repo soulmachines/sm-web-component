@@ -57,16 +57,16 @@ ConnectWithTokenServer.parameters = {
 };
 
 export const AdvancedCustomization = (args: SMWidgetProps) => <SMWidget {...args} />;
-(AdvancedCustomization.args = {
+AdvancedCustomization.args = {
   apiKey: import.meta.env.VITE__PROJECT_API_KEY,
   greeting: 'This is a customized greeting!',
   profilePicture:
     'https://assets.cdn.soulmachines.cloud/AvatarCoverImages/2024stocks/UpgradedVesper.png',
   position: widgetPosition.BOTTOM_RIGHT,
   layout: widgetLayout.FLOAT,
-}),
-  (AdvancedCustomization.parameters = {
-    controls: {
-      exclude: ['parent', 'tokenServer'],
-    },
-  });
+};
+AdvancedCustomization.parameters = {
+  controls: {
+    exclude: ['parent', 'tokenServer'],
+  },
+};
