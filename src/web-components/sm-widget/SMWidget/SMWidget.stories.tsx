@@ -2,18 +2,11 @@ import { widgetLayout, widgetPosition } from '../../../enums';
 import { SMWidget, SMWidgetProps } from './SMWidget';
 
 /**
- * parent is usually injected by preact at runtime,
- * but we need to provide it for the storybook preview
- */
-const parentEl = document.createElement('div');
-
-/**
  * Component Setup
  */
 export default {
   title: 'React Components / SMWidget',
   component: SMWidget,
-  // render: (args: SMWidgetProps) => <SMWidget {...args} />,
   argTypes: {
     apiKey: { control: 'text' },
     tokenServer: { control: 'text' },
@@ -28,7 +21,7 @@ export default {
   // default values
   args: {
     apiKey: import.meta.env.VITE__PROJECT_API_KEY,
-    parent: parentEl,
+    parent: document.createElement('div'),
   },
 };
 
@@ -36,21 +29,21 @@ export default {
  * Stories
  */
 
-export const ConnectWithApiKey = (args: SMWidgetProps) => <SMWidget {...args} />;
-ConnectWithApiKey.args = {
+export const ApiKey = (args: SMWidgetProps) => <SMWidget {...args} />;
+ApiKey.args = {
   apiKey: import.meta.env.VITE__PROJECT_API_KEY,
 };
-ConnectWithApiKey.parameters = {
+ApiKey.parameters = {
   controls: {
     include: ['apiKey'],
   },
 };
 
-export const ConnectWithTokenServer = (args: SMWidgetProps) => <SMWidget {...args} />;
-ConnectWithTokenServer.args = {
+export const TokenServer = (args: SMWidgetProps) => <SMWidget {...args} />;
+TokenServer.args = {
   tokenServer: import.meta.env.VITE__TOKEN_SERVER,
 };
-ConnectWithTokenServer.parameters = {
+TokenServer.parameters = {
   controls: {
     include: ['tokenServer'],
   },
