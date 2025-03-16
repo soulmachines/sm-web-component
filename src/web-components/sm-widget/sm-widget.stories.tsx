@@ -68,7 +68,7 @@ export default meta;
  * - and it is the only named exported story
  */
 export const DefaultStory = (args: SMWidgetAttributes) => <sm-widget {...args} />;
-DefaultStory.name = 'sm-widget';
+DefaultStory.storyName = 'sm-widget';
 DefaultStory.args = {
   'api-key': import.meta.env.VITE__PROJECT_API_KEY,
 };
