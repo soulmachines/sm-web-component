@@ -1,5 +1,5 @@
 import { widgetLayout, widgetPosition } from '../../enums';
-import type { Meta, StoryObj } from '@storybook/preact';
+import type { Meta } from '@storybook/preact';
 import './index';
 import { SMWidgetElement } from './SMWidget';
 
@@ -14,6 +14,15 @@ declare module 'preact' {
       'sm-widget': JSX.HTMLAttributes<SMWidgetElement>;
     }
   }
+}
+
+interface SMWidgetAttributes {
+  'api-key': string;
+  'token-server': string;
+  greeting: string;
+  'profile-picture': string;
+  position: widgetPosition;
+  layout: widgetLayout;
 }
 
 /**
@@ -58,10 +67,8 @@ export default meta;
  * - it matches the last part of the `title` property in component setup
  * - and it is the only named exported story
  */
-export const DefaultStory: StoryObj = {
-  name: 'sm-widget',
-  render: (args) => <sm-widget {...args} />,
-  args: {
-    'api-key': import.meta.env.VITE__PROJECT_API_KEY,
-  },
+export const DefaultStory = (args: SMWidgetAttributes) => <sm-widget {...args} />;
+DefaultStory.name = 'sm-widget';
+DefaultStory.args = {
+  'api-key': import.meta.env.VITE__PROJECT_API_KEY,
 };
