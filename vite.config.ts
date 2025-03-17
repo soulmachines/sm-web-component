@@ -2,11 +2,6 @@ import { defineConfig, loadEnv } from 'vite';
 import preact from '@preact/preset-vite';
 import * as path from 'path';
 import { createHtmlPlugin } from 'vite-plugin-html';
-import dns from 'dns';
-
-// https://vitejs.dev/config/server-options.html#server-host
-// Fixes issue where server opens at 127.0.0.1 instead of localhost
-dns.setDefaultResultOrder('verbatim');
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
@@ -20,10 +15,6 @@ export default defineConfig(({ mode, command }) => {
       // As of vite 3, process.env are kept in library mode
       // Replaces process.env.NODE_ENV in the code with the current mode (eg: production or development)
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    },
-    esbuild: {
-      // Ignore warning https://github.com/vitejs/vite/issues/8644#issuecomment-1159308803
-      logOverride: { 'this-is-undefined-in-esm': 'silent' },
     },
     plugins: [preact()],
     preview: {
