@@ -19,7 +19,13 @@ export default {
   },
 
   stories: ['../**/*.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-essentials'],
+  addons: [
+    // adds the `HTML` tab in stories, displaying the rendered HTML of the story
+    // https://github.com/whitespace-se/storybook-addon-html
+    '@whitespace/storybook-addon-html',
+    // adds the 'controls' and 'outputs' tabs in stories
+    '@storybook/addon-essentials',
+  ],
 
   framework: {
     name: '@storybook/preact-vite',
