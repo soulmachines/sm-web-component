@@ -46,7 +46,7 @@ export function CircularTimeOutIndicator({
   return (
     <div className="sm-flex sm-h-full sm-items-center sm-justify-center sm-text-primary-base">
       <div style={{ width: '70px', textAlign: 'center' }}>
-        {secondsLeft === 0 ? (
+        {secondsLeft == 0 || secondsLeft > duration ? (
           <CircularProgressbarWithChildren
             value={0}
             styles={buildStyles({
