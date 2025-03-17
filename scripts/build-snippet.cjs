@@ -10,7 +10,7 @@ try {
   let cssFileName = cdnUrl + styleManifest.file;
 
   shell.exec(
-    `npx plop widget-snippet --plopfile generators/index.js -- --javascriptFileName ${jsFileName} --cssFileName ${cssFileName} --version ${version}`,
+    `npx plop widget-snippet --plopfile generators/index.cjs -- --javascriptFileName ${jsFileName} --cssFileName ${cssFileName} --version ${version}`,
   );
 } catch (error) {
   console.error(`Something went wrong: ${error}`);
