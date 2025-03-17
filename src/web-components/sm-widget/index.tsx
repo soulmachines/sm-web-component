@@ -13,5 +13,7 @@ define('sm-widget', () => SMWidget, {
     'enable-camera',
     'enable-microphone',
     'auto-connect',
+    'duration',
+    'delay',
   ],
 });

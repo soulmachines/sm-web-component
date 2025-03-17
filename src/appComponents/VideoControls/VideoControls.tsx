@@ -1,8 +1,14 @@
 import { useSoulMachines } from '../../contexts/SoulMachinesContext';
 import { ConversationState } from '../ConversationState';
 import { IconButton, Theme } from '../../components/IconButton';
+import { CircularTimeOutIndicator } from '../Widget/components/CircularTimeOutIndicator';
 
-export function VideoControls() {
+export type VideoControlsProps = {
+  duration?: number;
+  delay?: number;
+};
+
+export function VideoControls({ duration, delay }: VideoControlsProps) {
   const {
     disconnect,
     isMicrophoneEnabled,
@@ -32,7 +38,7 @@ export function VideoControls() {
       className="sm-h-full sm-p-3 sm-flex sm-flex-col sm-gap-y md:sm-gap-y-2"
     >
       <div className="sm-flex sm-flex-col">
-        <div className="sm-flex sm-justify-between">
+        <div className="sm-flex sm-justify-between sm-items-center">
           {/* <IconButton
             onClick={toggleVideoMuted}
             name={muteIcon}
@@ -40,7 +46,7 @@ export function VideoControls() {
             theme={isVideoMuted ? Theme.danger : Theme.default}
           /> */}
           <ConversationState state={conversationState} />
-          <IconButton onClick={disconnect} name="close" title="Close video" theme={Theme.danger} />
+          <CircularTimeOutIndicator duration={duration} delay={delay} />
           {/* {layout === widgetLayout.FLOAT ? (
             <IconButton onClick={disconnect} name="close" title="Close video" />
           ) : (
@@ -69,7 +75,6 @@ export function VideoControls() {
             ) : (
               <div></div>
             )}
-
           </div>
         </div>
 
