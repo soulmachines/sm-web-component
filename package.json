@@ -57,6 +57,8 @@
     "@types/jest": "^27.4.1",
     "@types/jest-axe": "^3.5.5",
     "@types/lodash": "^4.14.184",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@whitespace/storybook-addon-html": "^6.1.1",
