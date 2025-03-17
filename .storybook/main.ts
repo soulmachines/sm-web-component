@@ -6,6 +6,9 @@ export default {
     return mergeConfig(config, {
       // customize the Vite config here
       base: '',
+      esbuild: {
+        jsxInject: `import { h } from 'preact'`,
+      },
       resolve: {
         alias: {
           react: 'preact/compat',
