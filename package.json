@@ -96,6 +96,9 @@
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   },
+  "resolutions": {
+    "@types/react": "^17.0.38"
+  },
   "release": {
     "branches": [
       "master"
