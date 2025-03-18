@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - publish-web-components-dev-cdn # TODO: REMOVE
 
 permissions:
   id-token: write # Required for configure AWS credentials
