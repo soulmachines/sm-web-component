@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - publish-web-components-dev-cdn
 
 permissions:
   id-token: write # Required for configure AWS credentials
@@ -56,5 +57,5 @@ jobs:
 
       - name: Deploy to CDN
         run: |
-          aws s3 cp --sse AES256 dist/web-components ${{ vars.S3_DEPLOY_PATH }}/web-components --recursive
+          aws s3 cp --sse AES256 dist/web-components ${{ vars.S3_DEPLOY_PATH }}/web-components --recursive --cache-control "no-store"
           aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
