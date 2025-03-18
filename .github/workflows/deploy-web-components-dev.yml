@@ -1,0 +1,60 @@
+name: Deploy Web Components Dev [auto]
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  id-token: write # Required for configure AWS credentials
+  contents: read # Required for checkout the source code
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # For dev deploys we want to always overwrite the same file
+      # so we will always set the version to "dev"
+      - name: Set Version
+        id: RELEASE_VERSION
+        run: |
+          echo "::set-output name=tag::dev"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16.15.1'
+
+      - name: Caching Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Web Components
+        run: npm run build:web-components
+        env:
+          NODE_ENV: production
+          CDN_ENDPOINT: 'https://static.soulmachines.com/dev/'
+          VERSION: ${{ steps.RELEASE_VERSION.outputs.tag }}
+
+      - name: Configure AWS credential
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy to CDN
+        run: |
+          aws s3 cp --sse AES256 dist/web-components ${{ vars.S3_DEPLOY_PATH }}/web-components --recursive --cache-control "no-store"
+          aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
