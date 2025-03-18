@@ -11,7 +11,7 @@ permissions:
   contents: read # Required for checkout the source code
 
 jobs:
-  release:
+  build-and-deploy:
     runs-on: ubuntu-latest
     environment: dev
 
@@ -55,7 +55,7 @@ jobs:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Release to CDN
+      - name: Deploy to CDN
         run: |
-          aws s3 cp --sse AES256 dist/web-components ${{ vars.S3_DEPLOY_PATH }}/web-components --recursive --dryrun
+          aws s3 cp --sse AES256 dist/web-components ${{ vars.S3_DEPLOY_PATH }}/web-components --recursive
           aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
