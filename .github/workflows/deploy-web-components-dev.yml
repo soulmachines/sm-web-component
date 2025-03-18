@@ -57,6 +57,6 @@ jobs:
 
       - name: Release to CDN
         run: |
-          aws s3 cp --sse AES256 dist/web-components ${{ vars.S3_DEPLOY_PATH }}/web-components --recursive --dry-run
+          aws s3 cp --sse AES256 dist/web-components ${{ vars.S3_DEPLOY_PATH }}/web-components --recursive --dryrun
           aws cloudfront create-invalidation --distribution-id=${{ vars.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
           echo "Deployed web-components to ${{ vars.S3_DEPLOY_PATH }}/web-components with version ${{ steps.RELEASE_VERSION.outputs.tag }}"
