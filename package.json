@@ -9,6 +9,7 @@
     "build": "tsc && vite build && npm run build:snippet",
     "build:docs": "npm run build-storybook",
     "build:example": "npm run build && copyfiles -f ./examples/snippet/* ./dist",
+    "build:web-components": "vite build --config vite.build-web-components.ts",
     "serve": "sirv dist -p 5050 --host",
     "build:snippet": "node ./scripts/build-snippet.cjs && uglifyjs dist/widget-snippet.js --output dist/widget-snippet.min.js  --compress --mangle --toplevel",
     "cypress:open": "cypress open",
@@ -88,6 +89,7 @@
     "typescript": "^4.8.2",
     "uglify-js": "^3.17.4",
     "vite": "^4.5.9",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
     "vite-plugin-html": "^3.2.0"
   },
   "lint-staged": {
